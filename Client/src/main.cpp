@@ -1,5 +1,3 @@
-#include <iostream>
-#include <stdio.h>
 #include "GameManager.h"
 
 int main(int argc, char** argv) {

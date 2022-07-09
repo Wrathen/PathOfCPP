@@ -1,12 +1,11 @@
 #include "GameManager.h"
+#include "InputManager.h"
 #include "Entity.h"
+#include "Renderer.h"
 
 // Base Functions
 void GameManager::Init() {
-    SDL_Init(SDL_INIT_EVERYTHING);
-
-    GAME.window = SDL_CreateWindow("Path of CPP", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
-    GAME.renderer = SDL_CreateRenderer(window, -1, 0);
+    Render.Init();
     Start();
 }
 void GameManager::Start() {
@@ -34,14 +33,8 @@ void GameManager::Update() {
             }
         }
 
-        Draw();
+        Render.Draw();
     }
-}
-void GameManager::Draw() {
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-
-    SDL_RenderPresent(renderer);
 }
 void GameManager::Quit() {
     GAME.isGameRunning = false;
