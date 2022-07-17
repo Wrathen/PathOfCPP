@@ -5,7 +5,7 @@
 void EntityManager::AddEntity(Entity* entity) {
     if (entity == nullptr) return;
 
-    static unsigned int guid;
+    static GUID guid;
     entity->AssignGUID(guid);
     entityList[guid++] = entity;
 }

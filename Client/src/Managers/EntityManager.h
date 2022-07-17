@@ -1,6 +1,6 @@
 #pragma once
 #include <unordered_map>
-#include "Entity.h"
+#include "../Entities/Entity.h"
 
 #define EntityMgr EntityManager::GetInstance()
 class EntityManager {

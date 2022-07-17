@@ -4,6 +4,10 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/src/Components/",
+                "${workspaceFolder}/src/Managers/",
+                "${workspaceFolder}/src/Miscellaneous/",
+                "${workspaceFolder}/src/Entities/",
                 "${workspaceFolder}/sdk/sdl2/include"
             ],
             "defines": [

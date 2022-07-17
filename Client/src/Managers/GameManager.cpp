@@ -1,11 +1,11 @@
 #include "GameManager.h"
 #include "InputManager.h"
-#include "Entity.h"
-#include "Renderer.h"
+#include "../Entities/Entity.h"
+#include "RenderManager.h"
 
 // Base Functions
 void GameManager::Init() {
-    Render.Init();
+    MainRenderer.Init();
     Start();
 }
 void GameManager::Start() {
@@ -33,7 +33,7 @@ void GameManager::Update() {
             }
         }
 
-        Render.Draw();
+        MainRenderer.Draw();
     }
 }
 void GameManager::Quit() {

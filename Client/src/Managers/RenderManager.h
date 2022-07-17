@@ -1,8 +1,11 @@
 #pragma once
 #include <SDL_image.h>
+#include <unordered_map>
 #include "GameManager.h"
+#include "../Components/BaseRenderer.h"
+#include "../Miscellaneous/GUID.h"
 
-#define Render Renderer::GetInstance()
+#define MainRenderer Renderer::GetInstance()
 class Renderer {
 public:
     static Renderer& GetInstance() {
@@ -15,17 +18,13 @@ public:
     void Draw();
 
     void LoadTexture(std::string path, SDL_Texture** output);
+    void AddRenderer(BaseRenderer* renderer);
+    void RemoveRenderer(BaseRenderer* renderer);
+    BaseRenderer* GetRenderer(GUID guid);
 
 private:
     Renderer() {}
-    ~Renderer() {
-        GAME.Debug("Quitting Game -- Destroy SDL");
-        SDL_DestroyTexture(gTexture);
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        IMG_Quit();
-    }
+    ~Renderer();
     Renderer(Renderer const&) = delete;
     void operator=(Renderer const&) = delete;
 
@@ -37,4 +36,7 @@ public:
 
     const int SCREEN_WIDTH = 1280;
     const int SCREEN_HEIGHT = 720;
+
+public:
+    std::unordered_map<GUID, BaseRenderer*> rendererList;
 };
