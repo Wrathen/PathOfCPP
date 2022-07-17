@@ -1,7 +1,8 @@
 #include "GameManager.h"
 #include "InputManager.h"
-#include "../Entities/Entity.h"
 #include "RenderManager.h"
+#include "../Entities/Entity.h"
+#include "../Entities/Monster.h"
 
 // Base Functions
 void GameManager::Init() {
@@ -11,9 +12,11 @@ void GameManager::Init() {
 void GameManager::Start() {
     Entity* player = new Entity("Wrathen");
     Entity* someEnemy = new Entity("Rat");
+    Monster* veryDangerousMonster = new Monster("Sirus");
 
     GAME.Debug(player->ToString());
     GAME.Debug(someEnemy->ToString());
+    GAME.Debug(veryDangerousMonster->ToString());
 
     Update();
 }

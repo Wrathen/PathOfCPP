@@ -6,7 +6,8 @@
 
 class Monster : public Entity {
 public:
-    Monster() {}
+    Monster();
+    Monster(std::string name);
 private:
     Transform transform;
     MonsterRenderer renderer;
