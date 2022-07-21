@@ -26,6 +26,14 @@ void EntityManager::PrintAllEntities() {
     for (auto& entity : entityList)
         GAME.Debug(entity.second->ToString());
 }
+void EntityManager::UpdateAllEntities() {
+    for (auto& entity : entityList)
+        entity.second->Update();
+}
+void EntityManager::RenderAllEntities() {
+    for (auto& entity : entityList)
+        entity.second->Render();
+}
 
 EntityManager::~EntityManager() {
     for (auto& entity : entityList) delete entity.second;

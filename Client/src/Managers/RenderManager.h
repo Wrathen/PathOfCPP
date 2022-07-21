@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 #include <unordered_map>
 #include "GameManager.h"
-#include "../Components/BaseRenderer.h"
+#include "../Components/SpriteRenderer.h"
 #include "../Miscellaneous/GUID.h"
 
 #define MainRenderer Renderer::GetInstance()
@@ -17,10 +17,7 @@ public:
     void Start();
     void Draw();
 
-    void LoadTexture(std::string path, SDL_Texture** output);
-    void AddRenderer(BaseRenderer* renderer);
-    void RemoveRenderer(BaseRenderer* renderer);
-    BaseRenderer* GetRenderer(GUID guid);
+    static void LoadTexture(std::string path, SDL_Texture** output);
 
 private:
     Renderer() {}
@@ -32,11 +29,6 @@ public:
     SDL_Window* window;
     SDL_Renderer* renderer;
 
-    SDL_Texture* gTexture = nullptr;
-
     const int SCREEN_WIDTH = 1280;
     const int SCREEN_HEIGHT = 720;
-
-public:
-    std::unordered_map<GUID, BaseRenderer*> rendererList;
 };

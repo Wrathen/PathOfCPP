@@ -1,6 +1,7 @@
 #include "InputManager.h"
 #include "GameManager.h"
 #include "EntityManager.h"
+#include "Entities/Monster.h"
 
 void InputManager::OnKeyDown(SDL_Keycode keyCode) {
     switch (keyCode) {
@@ -8,6 +9,13 @@ void InputManager::OnKeyDown(SDL_Keycode keyCode) {
             GAME.Quit();
             break;
         case SDLK_1:
+            {
+                // [To:Do]
+                // You know we shouldn't load the same texture 10000 times, right?
+                // Have some loaded textures stored or smthn
+                for (int i = 0; i < 10000; ++i)
+                    new Monster("assets/monster.png", "War boar");
+            }
             EntityMgr.PrintAllEntities();
             break;
         case SDLK_2:

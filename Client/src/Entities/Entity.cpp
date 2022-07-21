@@ -1,11 +1,18 @@
 #include "Entity.h"
 #include "Managers/EntityManager.h"
 
-Entity::Entity() { EntityMgr.AddEntity(this); }
-Entity::Entity(std::string name) { EntityMgr.AddEntity(this); this->name = name; }
+Entity::Entity() { EntityMgr.AddEntity(this); renderer.AssignTransform(&transform); Start(); }
+Entity::Entity(std::string _name) : Entity() { name = _name; }
+Entity::Entity(std::string texturePath, std::string _name) : Entity(_name) { renderer.AssignTexture(texturePath); }
 
 void Entity::Delete() { EntityMgr.RemoveEntity(this); }
-std::string Entity::ToString() {
-    if (this == nullptr) return "This entity has already been deleted. What are you doing?!";
-    return "Entity " + name + " with GUID: " + std::to_string(guid);
+
+void Entity::Start() {}
+void Entity::Update() {
+    if (++transform.position.x > 800) {
+        if (++transform.position.y > 600) transform.position.y = 0;
+        transform.position.x = 0;
+    }
+    ++transform.rotation;
 }
+void Entity::Render() { renderer.Render(); }

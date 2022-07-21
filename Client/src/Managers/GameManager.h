@@ -14,6 +14,7 @@ public:
     void Init();
     void Start();
     void Update();
+    void PollEvents();
     void Quit();
 
     // Main Functions

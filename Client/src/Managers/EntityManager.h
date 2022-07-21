@@ -15,6 +15,8 @@ public:
     Entity* GetEntity(GUID guid);
 
     void PrintAllEntities();
+    void UpdateAllEntities();
+    void RenderAllEntities();
 
 private:
     EntityManager() {}
