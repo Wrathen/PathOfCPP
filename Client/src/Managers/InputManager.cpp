@@ -9,13 +9,7 @@ void InputManager::OnKeyDown(SDL_Keycode keyCode) {
             GAME.Quit();
             break;
         case SDLK_1:
-            {
-                // [To:Do]
-                // You know we shouldn't load the same texture 10000 times, right?
-                // Have some loaded textures stored or smthn
-                for (int i = 0; i < 10000; ++i)
-                    new Monster("assets/monster.png", "War boar");
-            }
+            for (int i = 0; i < 10; ++i) new Monster("assets/monster.png", "War boar");
             EntityMgr.PrintAllEntities();
             break;
         case SDLK_2:
@@ -25,6 +19,11 @@ void InputManager::OnKeyDown(SDL_Keycode keyCode) {
             GAME.Debug(EntityMgr.GetEntity(1)->ToString());
             break;
         case SDLK_4:
+            // [TO-DO] So, when you destroy Entity with GUID 0, which is the player
+            // Our player pointer in the GameManager doesn't get nullified (set to nullptr).
+            // I currently don't know if there's a general rule to fix this (maybe smart pointers or smthn?)
+            // I can set it to nullptr manually, but I'll see if I will ever need to delete player pointer.
+            // By then, leave it as is.
             EntityMgr.RemoveEntity(EntityMgr.GetEntity(0));
             break;
         case SDLK_5:

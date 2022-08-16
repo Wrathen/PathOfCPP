@@ -13,13 +13,9 @@ void Renderer::Init() {
 void Renderer::Start() {}
 void Renderer::Draw() {
 	SDL_RenderClear(renderer);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	EntityMgr.RenderAllEntities();
 	SDL_RenderPresent(renderer);
-}
-
-void Renderer::LoadTexture(std::string path, SDL_Texture** output) {
-	*output = IMG_LoadTexture(MainRenderer.renderer, path.c_str());
-	if (*output == nullptr) GAME.Debug("Unable to load the texture! Path: " + path);
 }
 
 Renderer::~Renderer() {

@@ -15,32 +15,32 @@ public:
     static float DotBetween(Vector2 a, Vector2 b);
 
     // Operator Overloads
-    Vector2& operator +(Vector2& other) {
+    Vector2& operator +=(Vector2& other) {
         x += other.x;
         y += other.y;
         return *this;
     }
-    Vector2& operator -(Vector2& other) {
+    Vector2& operator -=(Vector2& other) {
         x -= other.x;
         y -= other.y;
         return *this;
     }
-    Vector2& operator *(Vector2& other) {
+    Vector2& operator *=(Vector2& other) {
         x *= other.x;
         y *= other.y;
         return *this;
     }
-    Vector2& operator /(Vector2& other) {
+    Vector2& operator /=(Vector2& other) {
         x /= other.x;
         y /= other.y;
         return *this;
     }
-    Vector2& operator *(float value) {
+    Vector2& operator *=(float value) {
         x *= value;
         y *= value;
         return *this;
     }
-    Vector2& operator /(float value) {
+    Vector2& operator /=(float value) {
         x /= value;
         y /= value;
         return *this;

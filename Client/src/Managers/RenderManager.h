@@ -17,8 +17,6 @@ public:
     void Start();
     void Draw();
 
-    static void LoadTexture(std::string path, SDL_Texture** output);
-
 private:
     Renderer() {}
     ~Renderer();

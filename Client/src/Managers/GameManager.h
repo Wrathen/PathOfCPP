@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <iostream>
+#include "../Entities/Player.h"
 
 #define GAME GameManager::GetInstance()
 class GameManager {
@@ -19,6 +20,7 @@ public:
 
     // Main Functions
     void Debug(std::string_view msg);
+    Player* GetPlayer() const;
 
 private:
     GameManager() {}
@@ -29,4 +31,5 @@ private:
 public:
     SDL_Event event;
     bool isGameRunning = true;
+    Player* player;
 };

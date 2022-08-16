@@ -2,8 +2,10 @@
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "EntityManager.h"
+#include "CameraManager.h"
 #include "../Entities/Entity.h"
 #include "../Entities/Monster.h"
+#include "../Entities/Player.h"
 
 // Base Functions
 void GameManager::Init() {
@@ -11,14 +13,10 @@ void GameManager::Init() {
     Start();
 }
 void GameManager::Start() {
-    Entity* player = new Entity("Wrathen");
-    Entity* someEnemy = new Entity("Rat");
-    Monster* veryDangerousMonster = new Monster("Sirus");
-    Monster* finallyAVisibleMonster = new Monster("assets/monster.png", "Cortex");
+    player = new Player("Wrathen");
+    Monster* finallyAVisibleMonster = new Monster("assets/monster.png", "Zombie");
 
     GAME.Debug(player->ToString());
-    GAME.Debug(someEnemy->ToString());
-    GAME.Debug(veryDangerousMonster->ToString());
     GAME.Debug(finallyAVisibleMonster->ToString());
 
     Update();
@@ -26,6 +24,7 @@ void GameManager::Start() {
 void GameManager::Update() {
     while (GAME.isGameRunning) {
         PollEvents();
+        Camera.Update();
         EntityMgr.UpdateAllEntities();
         MainRenderer.Draw();
     }
@@ -51,3 +50,4 @@ void GameManager::Quit() { GAME.isGameRunning = false; }
 void GameManager::Debug(std::string_view msg) {
     std::cout << msg << std::endl;
 }
+Player* GameManager::GetPlayer() const { return player; }

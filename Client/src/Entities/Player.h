@@ -1,19 +1,20 @@
 #pragma once
 #include "Entity.h"
 #include "../Components/SpriteRenderer.h"
-#include "../Components/MonsterStats.h"
+#include "../Components/PlayerStats.h"
 #include "../Components/Transform.h"
 
-class Monster : public Entity {
+class Player : public Entity {
 public:
-    Monster();
-    Monster(std::string name);
-    Monster(std::string texturePath, std::string name);
+    Player();
+    Player(std::string name);
 
-    std::string ToString() override {
+    std::string ToString() {
         if (this == nullptr) return "This entity has already been deleted. What are you doing?!";
         return "A level " + std::to_string(stats.level) + " " + name + " with GUID: " + std::to_string(guid);
     }
+
+    void Update();
 private:
-    MonsterStats stats;
+    PlayerStats stats;
 };

@@ -9,10 +9,14 @@ class SpriteRenderer {
 public:
     SpriteRenderer();
     ~SpriteRenderer();
+    void SetVisible(bool flag);
     void AssignTexture(SDL_Texture* _tex);
     void AssignTexture(std::string path);
     void AssignTransform(Transform* _transform);
     void Render();
+
+    bool isVisible = true;
+    bool isFollowedByCamera = false;
 
     Transform* transform = nullptr;
     SDL_Texture* tex = nullptr;
