@@ -1,13 +1,12 @@
 #include "Player.h"
 
-Player::Player() : Player("Unnamed"){}
-Player::Player(std::string name) : Entity(name) {
-	renderer.isFollowedByCamera = true;
-	renderer.AssignTexture("assets/player.png");
+Player::Player(std::string name) : Entity("assets/player.png", name) { Start(); }
 
-	transform.SetVelocity(0.03f, 0.03f);
+void Player::Start() {
+	stats = new PlayerStats();
+	stats->moveSpeed = 45.0f;
 }
 
 void Player::Update() {
-	transform.position += transform.velocity;
+	transform.Move(transform.velocity.Normalize(), stats->moveSpeed);
 }

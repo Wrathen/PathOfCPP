@@ -1,20 +1,24 @@
 #pragma once
 #include "Entity.h"
-#include "../Components/SpriteRenderer.h"
 #include "../Components/PlayerStats.h"
-#include "../Components/Transform.h"
 
 class Player : public Entity {
 public:
-    Player();
     Player(std::string name);
+    ~Player() { delete stats; stats = nullptr; }
 
-    std::string ToString() {
-        if (this == nullptr) return "This entity has already been deleted. What are you doing?!";
-        return "A level " + std::to_string(stats.level) + " " + name + " with GUID: " + std::to_string(guid);
+    // Base Functions
+    void Start() override;
+    void Update() override;
+
+    // Main Functions
+    Stats* GetStats() override { return stats; }
+
+    // Utility Functions
+    std::string ToString() override {
+        if (!this) return "This entity has already been deleted. What are you doing?!";
+        return "A level " + std::to_string(stats->level) + " " + name + " with GUID: " + std::to_string(guid);
     }
 
-    void Update();
-private:
-    PlayerStats stats;
+    PlayerStats* stats;
 };

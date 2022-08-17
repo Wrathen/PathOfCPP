@@ -158,6 +158,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Miscellaneous\Random.h" />
+    <ClInclude Include="src\Behaviour\AI\MoveTowardsTarget.h" />
+    <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Managers\CameraManager.h" />
     <ClInclude Include="src\Components\PlayerStats.h" />
     <ClInclude Include="src\Entities\Player.h" />
@@ -245,7 +248,6 @@
     <ClInclude Include="src\Components\SpriteRenderer.h" />
     <ClInclude Include="src\Components\Stats.h" />
     <ClInclude Include="src\Components\Transform.h" />
-    <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Entities\Monster.h" />
     <ClInclude Include="src\Managers\EntityManager.h" />
     <ClInclude Include="src\Managers\GameManager.h" />
@@ -254,8 +256,10 @@
     <ClInclude Include="src\Miscellaneous\GUID.h" />
     <ClInclude Include="src\Miscellaneous\Vector.h" />
     <ClInclude Include="src\Managers\TextureManager.h" />
+    <ClInclude Include="src\Miscellaneous\Time.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Behaviour\AI\MoveTowardsTarget.cpp" />
     <ClCompile Include="src\Managers\CameraManager.cpp" />
     <ClCompile Include="src\Entities\Player.cpp" />
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -268,6 +272,7 @@
     <ClCompile Include="src\Managers\RenderManager.cpp" />
     <ClCompile Include="src\Miscellaneous\Vector.cpp" />
     <ClCompile Include="src\Managers\TextureManager.cpp" />
+    <ClCompile Include="src\Miscellaneous\Time.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

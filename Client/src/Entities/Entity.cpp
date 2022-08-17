@@ -8,7 +8,5 @@ Entity::Entity(std::string texturePath, std::string _name) : Entity(_name) { ren
 void Entity::Delete() { EntityMgr.RemoveEntity(this); }
 
 void Entity::Start() {}
-void Entity::Update() {
-    transform.position += transform.velocity;
-}
+void Entity::Update() {}
 void Entity::Render() { renderer.Render(); }

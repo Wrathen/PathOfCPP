@@ -1,5 +1,6 @@
 #pragma once
 #include "../Miscellaneous/Vector.h"
+#include "../Miscellaneous/Time.h"
 
 class Transform {
 public:
@@ -15,4 +16,5 @@ public:
     void SetScale(const Vector2& vec) { scale.x = vec.x; scale.y = vec.y; }
     void SetVelocity(const Vector2& vec) { velocity.x = vec.x; velocity.y = vec.y; }
     void SetRotation(float x) { rotation = x; }
+    void Move(Vector2 dir, float spd) { position += dir * (spd * Time::deltaTime); }
 };

@@ -1,2 +1,5 @@
 #pragma once
-class Stats { };
+class Stats {
+public:
+	float moveSpeed = 15.0f;
+};
