@@ -6,6 +6,7 @@
 #include "../Entities/Entity.h"
 #include "../Entities/Player.h"
 #include "../Entities/Monster.h"
+#include "../Miscellaneous/Log.h"
 
 // Base Functions
 void GameManager::Init() {
@@ -22,8 +23,8 @@ void GameManager::Start() {
 		new Monster("assets/monster2.png", "Boar");
 	}
 
-	GAME.Debug(player->ToString());
-	GAME.Debug(finallyAVisibleMonster->ToString());
+	Debug(player->ToString());
+	Debug(finallyAVisibleMonster->ToString());
 
 	Update();
 }
@@ -33,7 +34,7 @@ void GameManager::Update() {
 
 	while (GAME.isGameRunning) {
 		frameStart = SDL_GetTicks64();
-		
+
 		// Main Stuff
 		PollEvents();
 		Camera.Update();
@@ -50,7 +51,7 @@ void GameManager::Update() {
 		// Update deltaTime
 		Time::deltaTime = 1.0f / frameTime;
 
-		Debug("FPS: " + std::to_string(1000/(frameTime == 0 ? 1 : frameTime)));
+		//Debug("FPS: " + std::to_string(1000 / (frameTime == 0 ? 1 : frameTime)));
 	}
 }
 void GameManager::PollEvents() {
@@ -60,11 +61,17 @@ void GameManager::PollEvents() {
 			GAME.Quit();
 			break;
 		case SDL_KEYDOWN:
-			if (!event.key.repeat) 
+			if (!event.key.repeat)
 				InputMgr.OnKeyDown(event.key.keysym.sym);
 			break;
 		case SDL_KEYUP:
 			InputMgr.OnKeyUp(event.key.keysym.sym);
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			InputMgr.OnMouseDown();
+			break;
+		case SDL_MOUSEBUTTONUP:
+			InputMgr.OnMouseUp();
 			break;
 		}
 	}
@@ -72,7 +79,4 @@ void GameManager::PollEvents() {
 void GameManager::Quit() { GAME.isGameRunning = false; }
 
 // Main Functions
-void GameManager::Debug(std::string_view msg) {
-	std::cout << msg << std::endl;
-}
 Player* GameManager::GetPlayer() const { return player; }

@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL_image.h>
 #include <unordered_map>
-#include "GameManager.h"
 #include "../Components/SpriteRenderer.h"
 #include "../Miscellaneous/GUID.h"
 

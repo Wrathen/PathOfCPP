@@ -14,7 +14,7 @@ public:
 
 	// Main Functions
 	void SetTarget(Entity* t) { target = t; }
-	const Vector2& GetPosition() { return transform.position; }
+	const Vector2& GetPosition() const { return transform.position; }
 
 	Entity* target;
 	Transform transform;

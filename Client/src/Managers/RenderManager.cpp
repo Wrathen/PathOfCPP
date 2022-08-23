@@ -1,5 +1,6 @@
 #include "RenderManager.h"
 #include "EntityManager.h"
+#include "../Miscellaneous/Log.h"
 
 void Renderer::Init() {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -19,7 +20,7 @@ void Renderer::Draw() {
 }
 
 Renderer::~Renderer() {
-	GAME.Debug("Quitting Game -- Destroy SDL");
+	Debug("Quitting Game -- Destroy SDL");
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

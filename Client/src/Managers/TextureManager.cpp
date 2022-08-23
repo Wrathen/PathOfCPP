@@ -1,5 +1,6 @@
 #include "TextureManager.h"
 #include "RenderManager.h"
+#include "../Miscellaneous/Log.h"
 
 SDL_Texture* TextureManager::LoadTextureFromCache(std::string path) {
 	auto entity = textureCache.find(path);
@@ -8,7 +9,7 @@ SDL_Texture* TextureManager::LoadTextureFromCache(std::string path) {
 void TextureManager::LoadTexture(std::string path, SDL_Texture** output) {
 	auto cache = LoadTextureFromCache(path);
 	if (cache) {
-		GAME.Debug("Loading " + path + " from cached textures.");
+		Debug("Loading " + path + " from cached textures.");
 
 		*output = cache;
 		return;
@@ -16,5 +17,5 @@ void TextureManager::LoadTexture(std::string path, SDL_Texture** output) {
 
 	*output = IMG_LoadTexture(MainRenderer.renderer, path.c_str());
 	textureCache[path] = *output;
-	if (*output == nullptr) GAME.Debug("Unable to load the texture! Path: " + path);
+	if (*output == nullptr) Warn("Unable to load the texture! Path: " + path);
 }

@@ -65,13 +65,25 @@ public:
         y *= value;
         return *this;
     }
-    Vector2& operator *(float value) const {
-        Vector2 vec(x * value, y * value);
-        return vec;
-    }
     Vector2& operator /=(float value) {
         x /= value;
         y /= value;
         return *this;
+    }
+    Vector2 operator +(Vector2 value) const {
+        Vector2 vec(x + value.x, y + value.y);
+        return vec;
+    }
+    Vector2 operator -(Vector2 value) const {
+        Vector2 vec(x - value.x, y - value.y);
+        return vec;
+    }
+    Vector2 operator *(float value) const {
+        Vector2 vec(x * value, y * value);
+        return vec;
+    }
+    Vector2 operator /(float value) const {
+        Vector2 vec(x / value, y / value);
+        return vec;
     }
 };

@@ -20,7 +20,6 @@ public:
 	void Quit();
 
 	// Main Functions
-	void Debug(std::string_view msg);
 	Player* GetPlayer() const;
 
 private:

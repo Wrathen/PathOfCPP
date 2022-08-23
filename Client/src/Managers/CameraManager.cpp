@@ -1,12 +1,13 @@
 #include "CameraManager.h"
 #include "GameManager.h"
 #include "RenderManager.h"
+#include "../Miscellaneous/Log.h"
 
 void CameraManager::Update() {
 	// Get Player position and offset it by sprite dimensions.
 	Player* player = GAME.GetPlayer();
 	if (!player) {
-		GAME.Debug("Player not found!");
+		Debug("Player not found!");
 		return;
 	}
 

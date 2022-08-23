@@ -100,6 +100,8 @@
     <ClInclude Include="src\Behaviour\AI\MoveTowardsTarget.h" />
     <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Miscellaneous\Random.h" />
+    <ClInclude Include="src\Entities\Projectile.h" />
+    <ClInclude Include="src\Miscellaneous\Log.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -116,5 +118,7 @@
     <ClCompile Include="src\Managers\CameraManager.cpp" />
     <ClCompile Include="src\Miscellaneous\Time.cpp" />
     <ClCompile Include="src\Behaviour\AI\MoveTowardsTarget.cpp" />
+    <ClCompile Include="src\Entities\Projectile.cpp" />
+    <ClCompile Include="src\Components\Transform.cpp" />
   </ItemGroup>
 </Project>

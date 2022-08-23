@@ -15,7 +15,7 @@ public:
     void Update() override;
 
     // Main Functions
-    Stats* GetStats() override { return stats; }
+    MonsterStats* GetStats() override { return stats; }
 
     // Utility Functions
     std::string ToString() override {

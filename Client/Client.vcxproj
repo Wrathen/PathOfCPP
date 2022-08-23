@@ -158,6 +158,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\Projectile.h" />
+    <ClInclude Include="src\Miscellaneous\Log.h" />
     <ClInclude Include="src\Miscellaneous\Random.h" />
     <ClInclude Include="src\Behaviour\AI\MoveTowardsTarget.h" />
     <ClInclude Include="src\Entities\Entity.h" />
@@ -259,6 +261,8 @@
     <ClInclude Include="src\Miscellaneous\Time.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Entities\Projectile.cpp" />
     <ClCompile Include="src\Behaviour\AI\MoveTowardsTarget.cpp" />
     <ClCompile Include="src\Managers\CameraManager.cpp" />
     <ClCompile Include="src\Entities\Player.cpp" />

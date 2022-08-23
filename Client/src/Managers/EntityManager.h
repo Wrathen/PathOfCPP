@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_map>
+#include <vector>
 #include "../Entities/Entity.h"
 
 #define EntityMgr EntityManager::GetInstance()
@@ -24,6 +25,10 @@ private:
     EntityManager(EntityManager const&) = delete;
     void operator=(EntityManager const&) = delete;
 
+    void DeleteEntity(Entity* entity);
+    void DeleteAllQueuedEntities();
+
 private:
     std::unordered_map<GUID, Entity*> entityList;
+    std::vector<Entity*> toBeDeletedList;
 };

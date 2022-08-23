@@ -1,6 +1,7 @@
 #include "Monster.h"
 #include "../Managers/GameManager.h"
 #include "../Miscellaneous/Random.h"
+#include "../Miscellaneous/Log.h"
 
 Monster::Monster() : Monster("Unnamed") {}
 Monster::Monster(std::string name) : Monster("assets/monster.png", name) {}
@@ -17,7 +18,7 @@ void Monster::Start() {
 	int randx = RandomInt(3778) - 3778 / 2;
 	int randy = RandomInt(3778) - 3778 / 2;
 
-	GAME.Debug(std::to_string(randx) + ", " + std::to_string(randy));
+	Debug(std::to_string(randx) + ", " + std::to_string(randy));
 	transform.SetPosition(randx, randy);
 }
 

@@ -10,6 +10,8 @@ public:
     }
     void OnKeyDown(SDL_Keycode keyCode);
     void OnKeyUp(SDL_Keycode keyCode);
+    void OnMouseDown();
+    void OnMouseUp();
 
 private:
     InputManager() {};
