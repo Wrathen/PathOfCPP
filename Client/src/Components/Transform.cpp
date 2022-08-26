@@ -1,4 +1,7 @@
 #include "Transform.h"
 #include "../Managers/CameraManager.h"
 
-const Vector2& Transform::GetScreenPosition() const { return GetPosition() - Camera.GetPosition(); }
+// I was returning a reference like (Vector2&). It should have give me errors/bugs because I'm allocating in Stack.
+// Why did it work perfectly fine? I guess compiler did shady stuff behind my back. Even though the compile fixed
+// the errors, I'd rather just get a bug/error instead of this. I am now just returning a new Vector2.
+const Vector2 Transform::GetScreenPosition() const { return GetPosition() - Camera.GetPosition(); }

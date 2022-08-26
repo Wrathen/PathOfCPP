@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\Monsters\Boar.h" />
     <ClInclude Include="src\Entities\Projectile.h" />
     <ClInclude Include="src\Miscellaneous\Log.h" />
     <ClInclude Include="src\Miscellaneous\Random.h" />
@@ -259,8 +260,10 @@
     <ClInclude Include="src\Miscellaneous\Vector.h" />
     <ClInclude Include="src\Managers\TextureManager.h" />
     <ClInclude Include="src\Miscellaneous\Time.h" />
+    <ClInclude Include="src\Entities\Monsters\Zombie.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\Monsters\Boar.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Entities\Projectile.cpp" />
     <ClCompile Include="src\Behaviour\AI\MoveTowardsTarget.cpp" />
@@ -277,6 +280,7 @@
     <ClCompile Include="src\Miscellaneous\Vector.cpp" />
     <ClCompile Include="src\Managers\TextureManager.cpp" />
     <ClCompile Include="src\Miscellaneous\Time.cpp" />
+    <ClCompile Include="src\Entities\Monsters\Zombie.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

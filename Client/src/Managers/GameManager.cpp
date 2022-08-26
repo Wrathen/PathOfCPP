@@ -5,7 +5,8 @@
 #include "CameraManager.h"
 #include "../Entities/Entity.h"
 #include "../Entities/Player.h"
-#include "../Entities/Monster.h"
+#include "../Entities/Monsters/Zombie.h"
+#include "../Entities/Monsters/Boar.h"
 #include "../Miscellaneous/Log.h"
 
 // Base Functions
@@ -15,16 +16,14 @@ void GameManager::Init() {
 }
 void GameManager::Start() {
 	player = new Player("Wrathen");
-	Monster* finallyAVisibleMonster = new Monster("assets/monster.png", "Zombie");
 
 	// [To:Do] Delete--Debug
 	for (int i = 0; i < 500; ++i) {
-		new Monster("assets/monster.png", "Zombie");
-		new Monster("assets/monster2.png", "Boar");
+		new Zombie("Zombie " + i);
+		new Boar("Boar " + i);
 	}
 
 	Debug(player->ToString());
-	Debug(finallyAVisibleMonster->ToString());
 
 	Update();
 }

@@ -6,7 +6,8 @@ public:
 	Projectile(Entity* src, Vector2 position, float rotation, float speed, float duration = 3.0f);
 
 	// Base Functions
-	void Update();
+	void Start() override;
+	void Update() override;
 
 	// Main Functions
 	void CheckCollisions();

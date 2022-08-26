@@ -2,7 +2,7 @@
 #include "Projectile.h"
 #include "../Miscellaneous/Log.h"
 
-Player::Player(std::string name) : Entity("assets/player.png", name) { Start(); }
+Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { Start(); }
 
 void Player::Start() {
 	stats = new PlayerStats();
@@ -25,5 +25,5 @@ void Player::Update() {
 
 void Player::ShootArrow(const Vector2& targetPos) {
 	float rotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
-	Projectile* arrow = new Projectile(this, transform.GetPosition(), rotation, stats->projectileSpeed);
+	new Projectile(this, transform.GetPosition(), rotation, stats->projectileSpeed);
 }

@@ -17,10 +17,10 @@ public:
 	}
 
 	int Next(int max = 9999999) {
-		int randNumber = rand() % max;
 		i *= 1.03f;
 		srand(++i);
-		return randNumber;
+
+		return rand() % max;
 	}
 
 	unsigned int i = 0;

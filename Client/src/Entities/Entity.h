@@ -12,8 +12,8 @@ public:
 	Entity(std::string texturePath, std::string name);
 
 	// Base Functions
-	virtual void Start();
-	virtual void Update();
+	virtual void Start() = 0;
+	virtual void Update() = 0;
 	virtual void Render();
 
 	// Main Functions

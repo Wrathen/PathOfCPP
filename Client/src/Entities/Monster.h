@@ -3,13 +3,8 @@
 #include "../Components/MonsterStats.h"
 #include "../Behaviour/AI/MoveTowardsTarget.h"
 
-class Monster : public Entity {
+class Monster: public Entity {
 public:
-    Monster();
-    Monster(std::string name);
-    Monster(std::string texturePath, std::string name);
-    ~Monster() { delete stats; stats = nullptr; }
-
     // Base Functions
     void Start() override;
     void Update() override;
@@ -25,4 +20,10 @@ public:
 
     MonsterStats* stats;
     MoveTowardsTarget moveTowardsTarget;
+
+protected:
+    Monster() = delete;
+    Monster(std::string name);
+    Monster(std::string texturePath, std::string name);
+    ~Monster() { delete stats; stats = nullptr; }
 };

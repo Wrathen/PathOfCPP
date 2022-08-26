@@ -14,7 +14,7 @@ void EntityManager::RemoveEntity(Entity* entity) { if (entity) toBeDeletedList.p
 void EntityManager::DeleteEntity(Entity* entity) {
 	if (entity == nullptr) return;
 
-	auto iter = entityList.erase(entity->guid);
+	entityList.erase(entity->guid);
 
 	Debug("Deleted " + entity->ToString());
 	delete entity;

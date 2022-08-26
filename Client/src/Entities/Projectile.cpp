@@ -1,6 +1,6 @@
 #include "Projectile.h"
 
-Projectile::Projectile(Entity* src, Vector2 position, float rotation, float speed, float duration) : Entity("assets/arrow.png", "Arrow") {
+Projectile::Projectile(Entity* src, Vector2 position, float rotation, float speed, float duration) : Entity("assets/sprites/arrow.png", "Arrow") {
 	source = src;
 
 	Vector2 velocity = Vector2::FromAngle(rotation) * speed;
@@ -9,8 +9,10 @@ Projectile::Projectile(Entity* src, Vector2 position, float rotation, float spee
 	transform.SetRotation(rotation);
 
 	lifetime = SDL_GetTicks64() + static_cast<int>(duration * 1000);
+	Start();
 }
 
+void Projectile::Start() {}
 void Projectile::Update() {
 	transform.Move();
 	CheckCollisions();

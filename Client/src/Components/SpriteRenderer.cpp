@@ -10,13 +10,7 @@ SpriteRenderer::~SpriteRenderer() { /*SDL_DestroyTexture(tex);*/ }
 void SpriteRenderer::SetVisible(bool flag) { isVisible = flag; }
 void SpriteRenderer::AssignTransform(Transform* _transform) { transform = _transform; }
 void SpriteRenderer::AssignTexture(SDL_Texture* _tex) { tex = _tex; }
-void SpriteRenderer::AssignTexture(std::string texturePath) {
-    if (tex != nullptr) {
-        Warn("[ERROR] Already assigned a texture to this entity!");
-        return;
-    }
-    TextureMgr.LoadTexture(texturePath, &tex);
-}
+void SpriteRenderer::AssignTexture(std::string texturePath) { TextureMgr.LoadTexture(texturePath, &tex); }
 
 void SpriteRenderer::Render() {
     if (!isVisible || transform == nullptr || tex == nullptr) return;
