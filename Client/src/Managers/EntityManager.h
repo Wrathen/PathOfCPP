@@ -1,7 +1,7 @@
 #pragma once
+#include "../Entities/Entity.h"
 #include <unordered_map>
 #include <vector>
-#include "../Entities/Entity.h"
 
 #define EntityMgr EntityManager::GetInstance()
 class EntityManager {
@@ -18,6 +18,7 @@ public:
     void PrintAllEntities();
     void UpdateAllEntities();
     void RenderAllEntities();
+    auto GetAllEntities() { return &entityList; }
 
 private:
     EntityManager() {}

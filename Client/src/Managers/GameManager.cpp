@@ -3,6 +3,7 @@
 #include "RenderManager.h"
 #include "EntityManager.h"
 #include "CameraManager.h"
+#include "UIManager.h"
 #include "../Entities/Entity.h"
 #include "../Entities/Player.h"
 #include "../Entities/Monsters/Zombie.h"
@@ -16,6 +17,7 @@ void GameManager::Init() {
 }
 void GameManager::Start() {
 	player = new Player("Wrathen");
+	new UIElement();
 
 	// [To:Do] Delete--Debug
 	for (int i = 0; i < 500; ++i) {
@@ -36,8 +38,11 @@ void GameManager::Update() {
 
 		// Main Stuff
 		PollEvents();
+		
 		Camera.Update();
 		EntityMgr.UpdateAllEntities();
+		UIMgr.UpdateAllElements();
+		
 		MainRenderer.Draw();
 
 		// Frame Timers, Delays

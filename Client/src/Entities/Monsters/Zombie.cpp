@@ -14,4 +14,6 @@ Zombie::Zombie() : Zombie("Zombie") {};
 Zombie::Zombie(std::string name): Monster(name) {
 	stats->rarity = ((MonsterRarity)RandomInt(4));
 	renderer.AssignTexture(all_TexturePaths[(int)stats->rarity]);
+
+	transform.SetScale((int)(stats->rarity) * 0.40f + 2, (int)(stats->rarity) * 0.40f + 2);
 };

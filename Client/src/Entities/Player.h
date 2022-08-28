@@ -1,11 +1,17 @@
 #pragma once
 #include "Entity.h"
 #include "../Components/PlayerStats.h"
+#include "../Components/HealthBar.h"
 
 class Player : public Entity {
 public:
     Player(std::string name);
-    ~Player() { delete stats; stats = nullptr; }
+    ~Player() {
+        delete stats;
+        stats = nullptr;
+        healthBar->Delete();
+        healthBar = nullptr;
+    }
 
     // Base Functions
     void Start() override;
@@ -22,4 +28,5 @@ public:
     }
 
     PlayerStats* stats;
+    HealthBar* healthBar;
 };

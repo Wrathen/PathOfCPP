@@ -1,6 +1,7 @@
 #include "InputManager.h"
 #include "GameManager.h"
 #include "EntityManager.h"
+#include "UIManager.h"
 
 void InputManager::OnKeyDown(SDL_Keycode keyCode) {
 	Player* player = GAME.GetPlayer();
@@ -45,10 +46,20 @@ void InputManager::OnKeyUp(SDL_Keycode keyCode) {
 }
 
 void InputManager::OnMouseDown() {
+	// Notify UIManager
+	bool raycast = UIMgr.OnMouseDown(); // bunu yaz
+	if (raycast) return; // If we clicked any UI Element, we shouldn't fire arrows
+
+	// Player Attack State
 	Player* player = GAME.GetPlayer();
 	if (player) player->GetStats()->isAttacking = true;
 }
 void InputManager::OnMouseUp() {
+	// Notify UIManager
+	bool raycast = UIMgr.OnMouseDown();
+	if (raycast) return; // If we clicked any UI Element, we shouldn't fire arrows
+
+	// Player Attack State
 	Player* player = GAME.GetPlayer();
 	if (player) player->GetStats()->isAttacking = false;
 }

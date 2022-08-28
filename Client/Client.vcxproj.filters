@@ -104,6 +104,9 @@
     <ClInclude Include="src\Miscellaneous\Log.h" />
     <ClInclude Include="src\Entities\Monsters\Zombie.h" />
     <ClInclude Include="src\Entities\Monsters\Boar.h" />
+    <ClInclude Include="src\Managers\UIManager.h" />
+    <ClInclude Include="src\UI\UIElement.h" />
+    <ClInclude Include="src\Components\HealthBar.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -124,5 +127,8 @@
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Entities\Monsters\Zombie.cpp" />
     <ClCompile Include="src\Entities\Monsters\Boar.cpp" />
+    <ClCompile Include="src\Managers\UIManager.cpp" />
+    <ClCompile Include="src\UI\UIElement.cpp" />
+    <ClCompile Include="src\Components\HealthBar.cpp" />
   </ItemGroup>
 </Project>

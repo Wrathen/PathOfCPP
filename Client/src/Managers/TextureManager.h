@@ -10,6 +10,12 @@ public:
 		static TextureManager instance;
 		return instance;
 	}
+	static SDL_Point GetDimensions(SDL_Texture* tex) {
+		SDL_Point size;
+		SDL_QueryTexture(tex, NULL, NULL, &size.x, &size.y);
+		return size;
+	}
+
 	void LoadTexture(std::string path, SDL_Texture** output);
 
 private:

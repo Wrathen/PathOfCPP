@@ -6,9 +6,10 @@ Entity::Entity(std::string _name) : Entity("assets/sprites/nosprite.png", _name)
 Entity::Entity(std::string texturePath, std::string _name) {
 	name = _name;
 
-	EntityMgr.AddEntity(this); 
+	EntityMgr.AddEntity(this);
 	renderer.AssignTransform(&transform);
-	renderer.AssignTexture(texturePath); 
+	renderer.AssignTexture(texturePath);
+	renderer.shouldDrawCentered = true;
 }
 
 void Entity::Render() { renderer.Render(); }

@@ -7,6 +7,13 @@ Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { S
 void Player::Start() {
 	stats = new PlayerStats();
 	stats->moveSpeed = 45.0f;
+
+	healthBar = new HealthBar(this);
+	healthBar->transform.SetScale(3.5f, 3.0f);
+	
+	transform.SetScale(2.2f, 2.2f);
+
+	collisionTag = EntityCollisionTag::Friendly;
 }
 
 void Player::Update() {

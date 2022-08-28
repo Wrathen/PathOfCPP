@@ -9,7 +9,7 @@ SDL_Texture* TextureManager::LoadTextureFromCache(std::string path) {
 void TextureManager::LoadTexture(std::string path, SDL_Texture** output) {
 	auto cache = LoadTextureFromCache(path);
 	if (cache) {
-		Debug("Loading " + path + " from cached textures.");
+		//Debug("Loading " + path + " from cached textures.");
 
 		*output = cache;
 		return;

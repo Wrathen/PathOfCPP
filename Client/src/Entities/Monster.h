@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "../Components/MonsterStats.h"
+#include "../Components/HealthBar.h"
 #include "../Behaviour/AI/MoveTowardsTarget.h"
 
 class Monster: public Entity {
@@ -20,10 +21,16 @@ public:
 
     MonsterStats* stats;
     MoveTowardsTarget moveTowardsTarget;
+    HealthBar* healthBar;
 
 protected:
     Monster() = delete;
     Monster(std::string name);
     Monster(std::string texturePath, std::string name);
-    ~Monster() { delete stats; stats = nullptr; }
+    ~Monster() { 
+        delete stats; 
+        stats = nullptr;
+        healthBar->Delete();
+        healthBar = nullptr;
+    }
 };

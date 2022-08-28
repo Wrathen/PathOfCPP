@@ -1,4 +1,6 @@
 #include "Projectile.h"
+#include "../Managers/EntityManager.h"
+#include "../Miscellaneous/Log.h"
 
 Projectile::Projectile(Entity* src, Vector2 position, float rotation, float speed, float duration) : Entity("assets/sprites/arrow.png", "Arrow") {
 	source = src;
@@ -12,7 +14,7 @@ Projectile::Projectile(Entity* src, Vector2 position, float rotation, float spee
 	Start();
 }
 
-void Projectile::Start() {}
+void Projectile::Start() { collisionTag = EntityCollisionTag::Friendly; }
 void Projectile::Update() {
 	transform.Move();
 	CheckCollisions();
@@ -21,4 +23,32 @@ void Projectile::Update() {
 	if (ticks > lifetime) Delete();
 }
 
-void Projectile::CheckCollisions() {}
+// THIS IS DEBUG-ONLY. WILL IMPLEMENT MUCH BETTER COLLISION DETECTION soon(tm).
+// Just trying to have some fun while coding. This made my day for now.
+// Even though this is terrible bruteforce collision detection, I'm actually surprised by how C++
+// is performing. It's insane. I'm loving this language already. Give me more! :D
+void Projectile::CheckCollisions() {
+	auto allEntities = EntityMgr.GetAllEntities();
+	Vector2 myPos = transform.GetPosition();
+	Vector2 boxCollider(5, 5);
+	Vector2 enemyBoxCollider(5, 5);
+
+	bool piercing = true;
+	for (auto& entity : *allEntities) {
+		if (collisionTag == entity.second->collisionTag) continue;
+
+		Vector2 pos = entity.second->transform.GetPosition();
+		bool hit = myPos.x + boxCollider.x > pos.x - enemyBoxCollider.x && myPos.x - boxCollider.x < pos.x + enemyBoxCollider.x &&
+				   myPos.y + boxCollider.y > pos.y - enemyBoxCollider.y && myPos.y - boxCollider.y < pos.y + enemyBoxCollider.y;
+
+		if (hit) {
+			Debug("Feel the thrill of the VOID! DIEEE!!");
+			entity.second->Delete();
+
+			if (!piercing) {
+				Delete();
+				break;
+			}
+		}
+	}
+}

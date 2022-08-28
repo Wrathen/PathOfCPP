@@ -4,6 +4,12 @@
 #include "../Miscellaneous/GUID.h"
 #include "../Components/SpriteRenderer.h"
 
+// Temporary -- Delete Later
+enum class EntityCollisionTag {
+	Hostile,
+	Friendly
+};
+
 class Entity {
 	friend class EntityManager;
 public:
@@ -35,4 +41,5 @@ public:
 
 	Transform transform;
 	SpriteRenderer renderer;
+	EntityCollisionTag collisionTag;
 };

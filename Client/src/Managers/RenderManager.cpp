@@ -1,5 +1,6 @@
 #include "RenderManager.h"
 #include "EntityManager.h"
+#include "UIManager.h"
 #include "../Miscellaneous/Log.h"
 
 void Renderer::Init() {
@@ -15,7 +16,10 @@ void Renderer::Start() {}
 void Renderer::Draw() {
 	SDL_RenderClear(renderer);
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
 	EntityMgr.RenderAllEntities();
+	UIMgr.RenderAllElements();
+
 	SDL_RenderPresent(renderer);
 }
 
