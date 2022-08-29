@@ -1,8 +1,14 @@
 #pragma once
 #include "Entity.h"
-#include "../Components/MonsterStats.h"
 #include "../Components/HealthBar.h"
 #include "../Behaviour/AI/MoveTowardsTarget.h"
+
+enum class MonsterRarity {
+    Common = 0,
+    Magic = 1,
+    Rare = 2,
+    Unique = 3
+};
 
 class Monster: public Entity {
 public:
@@ -10,26 +16,21 @@ public:
     void Start() override;
     void Update() override;
 
-    // Main Functions
-    MonsterStats* GetStats() override { return stats; }
-
     // Utility Functions
     std::string ToString() override {
         if (!this) return "This entity has already been deleted. What are you doing?!";
-        return "A level " + std::to_string(stats->level) + " " + name + " with GUID: " + std::to_string(guid);
+        return "A level " + std::to_string(GetLevel()) + " " + name + " with GUID: " + std::to_string(guid);
     }
 
-    MonsterStats* stats;
     MoveTowardsTarget moveTowardsTarget;
     HealthBar* healthBar;
+    MonsterRarity rarity = MonsterRarity::Common;
 
 protected:
     Monster() = delete;
     Monster(std::string name);
     Monster(std::string texturePath, std::string name);
-    ~Monster() { 
-        delete stats; 
-        stats = nullptr;
+    ~Monster() {
         healthBar->Delete();
         healthBar = nullptr;
     }

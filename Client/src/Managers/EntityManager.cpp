@@ -10,13 +10,17 @@ void EntityManager::AddEntity(Entity* entity) {
 	entity->AssignGUID(guid);
 	entityList[guid++] = entity;
 }
-void EntityManager::RemoveEntity(Entity* entity) { if (entity) toBeDeletedList.push_back(entity); }
+void EntityManager::RemoveEntity(Entity* entity) { 
+	if (!entity) return;
+	toBeDeletedList.push_back(entity);
+	entity->isToBeDeleted = true;
+}
 void EntityManager::DeleteEntity(Entity* entity) {
-	if (entity == nullptr) return;
+	if (!entity) return;
 
+	//Debug("Deleted " + entity->ToString());
 	entityList.erase(entity->guid);
 
-	Debug("Deleted " + entity->ToString());
 	delete entity;
 }
 Entity* EntityManager::GetEntity(GUID guid) {

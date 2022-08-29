@@ -5,8 +5,7 @@
 Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { Start(); }
 
 void Player::Start() {
-	stats = new PlayerStats();
-	stats->moveSpeed = 45.0f;
+	SetMoveSpeed(45.0f);
 
 	healthBar = new HealthBar(this);
 	healthBar->transform.SetScale(3.5f, 3.0f);
@@ -17,20 +16,20 @@ void Player::Start() {
 }
 
 void Player::Update() {
-	transform.Move(transform.velocity.Normalize(), stats->moveSpeed);
+	transform.Move(transform.velocity.Normalize(), GetMoveSpeed());
 
-	if (stats->isAttacking && SDL_GetTicks64() > stats->nextAttackTick) {
+	if (GetAttackingState() && SDL_GetTicks64() > GetNextAttackTick()) {
 		int mouseX, mouseY;
 		SDL_GetMouseState(&mouseX, &mouseY);
 
 		Vector2 mousePos(mouseX, mouseY);
 		ShootArrow(mousePos);
 
-		stats->nextAttackTick = SDL_GetTicks64() + (stats->attackSpeed * 1000);
+		SetNextAttackTick(SDL_GetTicks64() + (GetAttackSpeed() * 1000));
 	}
 }
 
 void Player::ShootArrow(const Vector2& targetPos) {
 	float rotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
-	new Projectile(this, transform.GetPosition(), rotation, stats->projectileSpeed);
+	new Projectile(this, transform.GetPosition(), rotation, GetProjectileSpeed());
 }

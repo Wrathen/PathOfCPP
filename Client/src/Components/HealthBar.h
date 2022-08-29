@@ -11,7 +11,7 @@ public:
 
 	Entity* targetEntity;
 	Transform* targetTransform;
-	Stats* targetStats;
+	const Stats* targetStats;
 
 	SpriteRenderer bg_renderer;
 	Vector2 offset;

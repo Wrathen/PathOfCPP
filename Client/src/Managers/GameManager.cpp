@@ -21,8 +21,8 @@ void GameManager::Start() {
 
 	// [To:Do] Delete--Debug
 	for (int i = 0; i < 500; ++i) {
-		new Zombie("Zombie " + i);
-		new Boar("Boar " + i);
+		new Zombie("Zombie " + std::to_string(i));
+		new Boar("Boar " + std::to_string(i));
 	}
 
 	Debug(player->ToString());

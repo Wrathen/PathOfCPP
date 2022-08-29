@@ -11,9 +11,6 @@ static std::string uniqueRarity_TexturePath = "assets/sprites/monsters/zombie/un
 static std::string all_TexturePaths[4] = { commonRarity_TexturePath, magicRarity_TexturePath, rareRarity_TexturePath, uniqueRarity_TexturePath };
 
 Zombie::Zombie() : Zombie("Zombie") {};
-Zombie::Zombie(std::string name): Monster(name) {
-	stats->rarity = ((MonsterRarity)RandomInt(4));
-	renderer.AssignTexture(all_TexturePaths[(int)stats->rarity]);
-
-	transform.SetScale((int)(stats->rarity) * 0.40f + 2, (int)(stats->rarity) * 0.40f + 2);
+Zombie::Zombie(std::string _name): Monster(_name) {
+	renderer.AssignTexture(all_TexturePaths[(int)rarity]);
 };

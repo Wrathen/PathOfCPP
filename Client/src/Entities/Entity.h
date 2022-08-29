@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../Components/Stats.h"
+#include "../Behaviour/StatBehaviour.h"
 #include "../Miscellaneous/GUID.h"
 #include "../Components/SpriteRenderer.h"
 
@@ -10,7 +10,7 @@ enum class EntityCollisionTag {
 	Friendly
 };
 
-class Entity {
+class Entity: public StatBehaviour {
 	friend class EntityManager;
 public:
 	Entity();
@@ -24,7 +24,6 @@ public:
 
 	// Main Functions
 	void Delete();
-	virtual Stats* GetStats() { return nullptr; }
 
 	// Utility Functions
 	virtual std::string ToString() {
@@ -42,4 +41,6 @@ public:
 	Transform transform;
 	SpriteRenderer renderer;
 	EntityCollisionTag collisionTag;
+
+	bool isToBeDeleted = false;
 };

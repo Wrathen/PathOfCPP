@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="src\Components\MonsterStats.h" />
     <ClInclude Include="src\Components\SpriteRenderer.h" />
     <ClInclude Include="src\Components\Stats.h" />
     <ClInclude Include="src\Components\Transform.h" />
@@ -94,7 +93,6 @@
     <ClInclude Include="sdk\sdl2\include\SDL_vulkan.h" />
     <ClInclude Include="src\Managers\TextureManager.h" />
     <ClInclude Include="src\Entities\Player.h" />
-    <ClInclude Include="src\Components\PlayerStats.h" />
     <ClInclude Include="src\Managers\CameraManager.h" />
     <ClInclude Include="src\Miscellaneous\Time.h" />
     <ClInclude Include="src\Behaviour\AI\MoveTowardsTarget.h" />
@@ -107,6 +105,7 @@
     <ClInclude Include="src\Managers\UIManager.h" />
     <ClInclude Include="src\UI\UIElement.h" />
     <ClInclude Include="src\Components\HealthBar.h" />
+    <ClInclude Include="src\Behaviour\StatBehaviour.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -130,5 +129,6 @@
     <ClCompile Include="src\Managers\UIManager.cpp" />
     <ClCompile Include="src\UI\UIElement.cpp" />
     <ClCompile Include="src\Components\HealthBar.cpp" />
+    <ClCompile Include="src\Behaviour\StatBehaviour.cpp" />
   </ItemGroup>
 </Project>

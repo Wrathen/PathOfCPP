@@ -3,6 +3,7 @@
 #include "../Miscellaneous/Log.h"
 
 Projectile::Projectile(Entity* src, Vector2 position, float rotation, float speed, float duration) : Entity("assets/sprites/arrow.png", "Arrow") {
+	collisionTag = EntityCollisionTag::Friendly;
 	source = src;
 
 	Vector2 velocity = Vector2::FromAngle(rotation) * speed;
@@ -14,7 +15,7 @@ Projectile::Projectile(Entity* src, Vector2 position, float rotation, float spee
 	Start();
 }
 
-void Projectile::Start() { collisionTag = EntityCollisionTag::Friendly; }
+void Projectile::Start() { }
 void Projectile::Update() {
 	transform.Move();
 	CheckCollisions();
@@ -36,13 +37,14 @@ void Projectile::CheckCollisions() {
 	bool piercing = true;
 	for (auto& entity : *allEntities) {
 		if (collisionTag == entity.second->collisionTag) continue;
+		if (entity.second->isToBeDeleted) continue;
 
 		Vector2 pos = entity.second->transform.GetPosition();
 		bool hit = myPos.x + boxCollider.x > pos.x - enemyBoxCollider.x && myPos.x - boxCollider.x < pos.x + enemyBoxCollider.x &&
 				   myPos.y + boxCollider.y > pos.y - enemyBoxCollider.y && myPos.y - boxCollider.y < pos.y + enemyBoxCollider.y;
 
 		if (hit) {
-			Debug("Feel the thrill of the VOID! DIEEE!!");
+			//Debug("[" + std::to_string(guid) + "] Colliding with: " + entity.second->ToString());
 			entity.second->Delete();
 
 			if (!piercing) {
