@@ -16,6 +16,9 @@ public:
     void Start() override;
     void Update() override;
 
+    // Main Functions
+    void OnKill() override {}
+
     // Utility Functions
     std::string ToString() override {
         if (!this) return "This entity has already been deleted. What are you doing?!";

@@ -3,16 +3,20 @@
 #include "../Miscellaneous/Time.h"
 
 class Transform {
+private:
+    Vector2 scale = Vector2(1, 1);
+
 public:
     Vector2 position = Vector2(0, 0);
-    Vector2 scale = Vector2(1, 1);
     Vector2 velocity = Vector2(0, 0);
     float rotation = 0;
+    float scaleModifier = 1.0f;
 
     const Vector2& GetPosition() const { return position; }
     const Vector2 GetScreenPosition() const;
     void SetPosition(float  x, float y) { position.x = x; position.y = y; }
     void SetScale(float  x, float y) { scale.x = x; scale.y = y; }
+    void SetScaleModifier(float value) { scaleModifier = value; }
     void SetVelocity(float  x, float y) { velocity.x = x; velocity.y = y; }
     void SetPosition(const Vector2& vec) { position.x = vec.x; position.y = vec.y; }
     void SetScale(const Vector2& vec) { scale.x = vec.x; scale.y = vec.y; }
@@ -20,4 +24,5 @@ public:
     void SetRotation(float x) { rotation = x; }
     void Move(Vector2 dir, float spd) { position += dir * (spd * Time::deltaTime); }
     void Move() { position += velocity * Time::deltaTime; }
+    Vector2 GetScale() { return Vector2(scale.x * scaleModifier, scale.y * scaleModifier); }
 };

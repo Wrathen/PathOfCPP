@@ -12,6 +12,7 @@ public:
 	virtual void Render();
 
 	// Main Functions
+	void SetInteractable(bool value) { isInteractable = value; }
 	void Delete();
 
 	// Utility Functions
@@ -29,4 +30,6 @@ public:
 	GUID guid = 0;
 	Transform transform;
 	SpriteRenderer renderer;
+
+	bool isInteractable = true;
 };

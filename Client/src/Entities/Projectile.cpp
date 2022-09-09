@@ -45,6 +45,7 @@ void Projectile::CheckCollisions() {
 
 		if (hit) {
 			//Debug("[" + std::to_string(guid) + "] Colliding with: " + entity.second->ToString());
+			source->OnKill();
 			entity.second->Delete();
 
 			if (!piercing) {

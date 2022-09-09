@@ -106,6 +106,7 @@
     <ClInclude Include="src\UI\UIElement.h" />
     <ClInclude Include="src\Components\HealthBar.h" />
     <ClInclude Include="src\Behaviour\StatBehaviour.h" />
+    <ClInclude Include="src\Components\Collision\BoxCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -130,5 +131,6 @@
     <ClCompile Include="src\UI\UIElement.cpp" />
     <ClCompile Include="src\Components\HealthBar.cpp" />
     <ClCompile Include="src\Behaviour\StatBehaviour.cpp" />
+    <ClCompile Include="src\Components\Collision\BoxCollider.cpp" />
   </ItemGroup>
 </Project>

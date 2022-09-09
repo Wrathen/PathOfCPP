@@ -30,6 +30,54 @@ void Player::Update() {
 }
 
 void Player::ShootArrow(const Vector2& targetPos) {
-	float rotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
-	new Projectile(this, transform.GetPosition(), rotation, GetProjectileSpeed());
+	int numberOfProjectiles = GetNumberOfProjectiles();
+	float mainRotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
+
+	float spreadDistance = 1.30895833f / numberOfProjectiles; // this magic number is just PI/2.4 = ~75 degrees spread distance
+	bool isEven = numberOfProjectiles % 2 == 0;
+
+	for (int i = 0; i < numberOfProjectiles; ++i) {
+		int multiplier = i - numberOfProjectiles/2;
+		if (isEven && multiplier >= 0) ++multiplier;
+
+		float offset = spreadDistance * multiplier;
+		float rotation = mainRotation + offset;
+
+		new Projectile(this, transform.GetPosition(), rotation, GetProjectileSpeed());
+	}
+}
+
+void Player::OnKill() {
+	FUN_Headhunter();
+}
+
+// Let's have a headhunter in Path of CPP cuz I can't afford it in league LMAO
+void Player::FUN_Headhunter() {
+	int hhChance = 25;
+	bool shouldStealBuff = RandomInt(100) < hhChance;
+	if (!shouldStealBuff) return;
+
+	int rnd = RandomInt(6);
+	switch (rnd) {
+	case 0:
+		SetSizeMultiplier(GetSizeMultiplier() * 1.05f);
+		transform.SetScaleModifier(GetSizeMultiplier());
+		break;
+	case 1:
+		SetMoveSpeed(GetMoveSpeed() * 1.05f);
+		break;
+	case 2:
+		SetProjectileSpeed(GetProjectileSpeed() * 1.05f);
+		break;
+	case 3:
+		SetAttackSpeed(GetAttackSpeed() * 0.95f);
+		break;
+	case 4:
+		SetMaxHealth(GetMaxHealth() * 1.25f);
+		SetHealth(GetHealth() * 1.25f);
+		break;
+	case 5:
+		SetNumberOfProjectiles(GetNumberOfProjectiles() + 1);
+		break;
+	}
 }

@@ -47,6 +47,7 @@ void UIManager::RenderAllElements() {
 bool UIManager::OnMouseDown() {
 	// get mouse pos
 	for (auto& element : allElements) {
+		if (!element.second->isInteractable) continue;
 		// if mouse pos collides
 		// return true and send onmousedonw to that element
 	}

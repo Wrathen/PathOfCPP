@@ -11,8 +11,9 @@ public:
 
 	// Main Functions
 	void CheckCollisions();
+	void OnKill() override {};
 
 	// Members
-	const Entity* source;
+	Entity* source;
 	Uint64 lifetime;
 };

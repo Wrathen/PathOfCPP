@@ -1,6 +1,7 @@
 #pragma once
 #include "../Components/Stats.h"
 #include "../Miscellaneous/Log.h"
+#include "../Miscellaneous/Random.h"
 
 class StatBehaviour {
 public:
@@ -20,6 +21,8 @@ public:
 	unsigned long long GetNextAttackTick() const { return stats->nextAttackTick; }
 	float GetAttackSpeed() const { return stats->attackSpeed; }
 	bool GetAttackingState() const { return stats->isAttacking; }
+	float GetSizeMultiplier() const { return stats->sizeMultiplier; }
+	unsigned int GetNumberOfProjectiles() const { return stats->numberOfProjectiles; }
 
 	// Setters
 	void SetLevel(unsigned int value) { stats->level = value; }
@@ -33,6 +36,8 @@ public:
 	void SetNextAttackTick(unsigned long long value) { stats->nextAttackTick = value; }
 	void SetAttackSpeed(float value) { stats->attackSpeed = value; }
 	void SetAttackingState(bool value) { stats->isAttacking = value; }
+	void SetSizeMultiplier(float value) { stats->sizeMultiplier = value; }
+	void SetNumberOfProjectiles(unsigned int value) { stats->numberOfProjectiles = value; }
 
 protected:
 	StatBehaviour();

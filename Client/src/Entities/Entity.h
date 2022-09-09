@@ -24,6 +24,7 @@ public:
 
 	// Main Functions
 	void Delete();
+	virtual void OnKill() = 0;
 
 	// Utility Functions
 	virtual std::string ToString() {

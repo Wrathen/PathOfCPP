@@ -21,7 +21,7 @@ void SpriteRenderer::Render() {
 
     // Update Renderer Position
     Vector2 pos = transform->position;
-    Vector2 scale = transform->scale;
+    Vector2 scale = transform->GetScale();
     SDL_Rect srcRect;
     SDL_Rect destRect;
 
@@ -47,6 +47,6 @@ void SpriteRenderer::Render() {
     }
 
     // Draw
-    float rotationDegrees = transform->rotation * 57.2957795;
+    float rotationDegrees = transform->rotation * 57.2957795; // radians to degrees formula
     SDL_RenderCopyEx(MainRenderer.renderer, tex, &srcRect, &destRect, rotationDegrees, NULL, SDL_FLIP_NONE);
 }

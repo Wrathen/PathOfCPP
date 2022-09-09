@@ -158,6 +158,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Collision\BoxCollider.h" />
     <ClInclude Include="src\Components\HealthBar.h" />
     <ClInclude Include="src\Entities\Monsters\Boar.h" />
     <ClInclude Include="src\Entities\Projectile.h" />
@@ -265,6 +266,7 @@
     <ClInclude Include="src\Behaviour\StatBehaviour.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Collision\BoxCollider.cpp" />
     <ClCompile Include="src\Components\HealthBar.cpp" />
     <ClCompile Include="src\Entities\Monsters\Boar.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
