@@ -20,7 +20,7 @@ void GameManager::Start() {
 	new UIElement();
 
 	// [To:Do] Delete--Debug
-	for (int i = 0; i < 500; ++i) {
+	for (int i = 0; i < 3000; ++i) {
 		new Zombie("Zombie " + std::to_string(i));
 		new Boar("Boar " + std::to_string(i));
 	}
@@ -47,15 +47,15 @@ void GameManager::Update() {
 
 		// Frame Timers, Delays
 		frameTime = SDL_GetTicks() - frameStart;
-		if (Time::FRAME_DELAY > frameTime) {
-			SDL_Delay(Time::FRAME_DELAY - frameTime);
-			frameTime = SDL_GetTicks() - frameStart;
-		}
+		//if (Time::FRAME_DELAY > frameTime) {
+		//	SDL_Delay(Time::FRAME_DELAY - frameTime);
+		//	frameTime = SDL_GetTicks() - frameStart;
+		//}
 
 		// Update deltaTime
 		Time::deltaTime = 1.0f / frameTime;
 
-		//Debug("FPS: " + std::to_string(1000 / (frameTime == 0 ? 1 : frameTime)));
+		Debug("FPS: " + std::to_string(1000 / (frameTime == 0 ? 1 : frameTime)));
 	}
 }
 void GameManager::PollEvents() {

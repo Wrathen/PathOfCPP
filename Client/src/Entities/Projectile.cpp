@@ -36,8 +36,8 @@ void Projectile::CheckCollisions() {
 
 	bool piercing = true;
 	for (auto& entity : *allEntities) {
-		if (collisionTag == entity.second->collisionTag) continue;
 		if (entity.second->isToBeDeleted) continue;
+		if (collisionTag == entity.second->collisionTag) continue;
 
 		Vector2 pos = entity.second->transform.GetPosition();
 		bool hit = myPos.x + boxCollider.x > pos.x - enemyBoxCollider.x && myPos.x - boxCollider.x < pos.x + enemyBoxCollider.x &&

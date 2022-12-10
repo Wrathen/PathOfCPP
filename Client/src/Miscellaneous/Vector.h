@@ -25,50 +25,37 @@ public:
     std::string ToString() const { return std::string(std::to_string(x) + ", " + std::to_string(y)); }
 
     // Operator Overloads
-    Vector2& operator +=(const Vector2& other) {
+    void operator +=(const Vector2& other) {
         x += other.x;
         y += other.y;
-        return *this;
     }
-    Vector2& operator +=(Vector2& other) {
-        x += other.x;
-        y += other.y;
-        return *this;
-    }
-    Vector2& operator -=(Vector2& other) {
+    void operator -=(const Vector2& other) {
         x -= other.x;
         y -= other.y;
-        return *this;
     }
-    Vector2& operator *=(Vector2& other) {
+    void operator *=(const Vector2& other) {
         x *= other.x;
         y *= other.y;
-        return *this;
     }
-    Vector2& operator /=(Vector2& other) {
+    void operator /=(const Vector2& other) {
         x /= other.x;
         y /= other.y;
-        return *this;
     }
-    Vector2& operator +=(float value) {
+    void operator +=(float value) {
         x += value;
         y += value;
-        return *this;
     }
-    Vector2& operator -=(float value) {
+    void operator -=(float value) {
         x += value;
         y += value;
-        return *this;
     }
-    Vector2& operator *=(float value) {
+    void operator *=(float value) {
         x *= value;
         y *= value;
-        return *this;
     }
-    Vector2& operator /=(float value) {
+    void operator /=(float value) {
         x /= value;
         y /= value;
-        return *this;
     }
     Vector2 operator +(Vector2 value) const {
         Vector2 vec(x + value.x, y + value.y);

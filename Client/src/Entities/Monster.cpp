@@ -25,8 +25,9 @@ void Monster::Start() {
 	moveTowardsTarget.SetTarget((Entity*)GAME.GetPlayer());
 
 	// [To:Do] Delete--Debug
-	int randx = RandomInt(3778) - 3778 / 2;
-	int randy = RandomInt(3778) - 3778 / 2;
+	int offset = 4600;
+	int randx = RandomInt(offset) - offset / 2;
+	int randy = RandomInt(offset) - offset / 2;
 
 	//Debug(std::to_string(randx) + ", " + std::to_string(randy));
 	transform.SetPosition(randx, randy);

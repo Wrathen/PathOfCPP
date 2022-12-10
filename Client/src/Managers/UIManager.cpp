@@ -13,10 +13,10 @@ void UIManager::AddElement(UIElement* element) {
 void UIManager::RemoveElement(UIElement* element) { if (element) toBeDeletedList.push_back(element); }
 void UIManager::DeleteElement(UIElement* element) {
 	if (!element) return;
-
+	
 	allElements.erase(element->guid);
 
-	Debug("Deleted " + element->ToString());
+	//Debug("Deleted " + element->ToString());
 	delete element;
 }
 UIElement* UIManager::GetElement(GUID guid) {

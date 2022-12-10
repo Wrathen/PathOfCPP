@@ -26,6 +26,7 @@ private:
 
 public:
 	UIElement(std::string texturePath = "assets/sprites/nosprite.png");
+	virtual ~UIElement() {}
 
 	GUID guid = 0;
 	Transform transform;

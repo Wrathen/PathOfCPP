@@ -16,6 +16,7 @@ public:
 	Entity();
 	Entity(std::string name);
 	Entity(std::string texturePath, std::string name);
+	virtual ~Entity() = default;
 
 	// Base Functions
 	virtual void Start() = 0;

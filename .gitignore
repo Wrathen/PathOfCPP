@@ -1,3 +1,11 @@
 /Client/Debug/
 /Client/Release/
 /Client/build/*.pdb
+*.ipch
+*.vsidx
+*.lock
+*.db-wal
+*.opendb
+*.db-shm
+*.db
+.vs/PoC/v17/.suo
