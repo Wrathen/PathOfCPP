@@ -1,36 +1,20 @@
 #pragma once
-#include "../UI/UIElement.h"
 #include <unordered_map>
 #include <vector>
+#include "../UI/UIElement.h"
+#include "../Miscellaneous/Collection.h"
+#include "../Miscellaneous/Singleton.h"
 
 #define UIMgr UIManager::GetInstance()
-class UIManager {
+class UIManager: public Collection<UIElement>, public Singleton<UIManager> { friend class Singleton;
 public:
-	static UIManager& GetInstance() {
-		static UIManager instance;
-		return instance;
-	}
-
-    void AddElement(UIElement* entity);
-    void RemoveElement(UIElement* entity);
-    UIElement* GetElement(GUID guid);
-
-    void PrintAllElements();
-    void UpdateAllElements();
-    void RenderAllElements();
-
+	void Update();
+    void RenderAll();
     bool OnMouseDown();
 
 private:
-    UIManager() {}
-    ~UIManager();
-    UIManager(UIManager const&) = delete;
-    void operator=(UIManager const&) = delete;
-
-    void DeleteElement(UIElement* element);
-    void DeleteAllQueuedElements();
-
-private:
-	std::unordered_map<GUID, UIElement*> allElements;
-    std::vector<UIElement*> toBeDeletedList;
+	UIManager() {}
+	~UIManager() {};
+	UIManager(UIManager const&) = delete;
+	void operator=(UIManager const&) = delete;
 };

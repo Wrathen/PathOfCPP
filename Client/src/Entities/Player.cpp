@@ -5,7 +5,7 @@
 Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { Start(); }
 
 void Player::Start() {
-	SetMoveSpeed(45.0f);
+	SetMoveSpeed(25.0f);
 
 	healthBar = new HealthBar(this);
 	healthBar->transform.SetScale(3.5f, 3.0f);

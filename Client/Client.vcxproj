@@ -78,10 +78,12 @@
     <TargetName>Path of CPP</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Client\build\</OutDir>
     <TargetName>Path of CPP</TargetName>
     <ExtensionsToDeleteOnClean>*.cdf;*.cache;*.obj;*.obj.enc;*.ilk;*.ipdb;*.iobj;*.resources;*.tlb;*.tli;*.tlh;*.tmp;*.rsp;*.pgc;*.pgd;*.meta;*.tlog;*.manifest;*.res;*.pch;*.exp;*.idb;*.rep;*.xdc;*.pdb;*_manifest.rc;*.bsc;*.sbr;*.xml;*.metagen;*.bi</ExtensionsToDeleteOnClean>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -117,7 +119,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\frosty\source\repos\PoC\Client\sdk\sdl2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)sdk\sdl2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -125,7 +127,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\frosty\source\repos\PoC\Client\sdk\sdl2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)sdk\sdl2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -158,6 +160,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Miscellaneous\Singleton.h" />
+    <ClInclude Include="src\Miscellaneous\Collection.h" />
+    <ClInclude Include="src\Components\Collision\Collider.h" />
+    <ClInclude Include="src\Managers\CollisionManager.h" />
     <ClInclude Include="src\Components\Collision\BoxCollider.h" />
     <ClInclude Include="src\Components\HealthBar.h" />
     <ClInclude Include="src\Entities\Monsters\Boar.h" />
@@ -257,6 +263,7 @@
     <ClInclude Include="src\Managers\InputManager.h" />
     <ClInclude Include="src\Managers\RenderManager.h" />
     <ClInclude Include="src\Miscellaneous\GUID.h" />
+    <ClInclude Include="src\Miscellaneous\Timer.h" />
     <ClInclude Include="src\Miscellaneous\Vector.h" />
     <ClInclude Include="src\Managers\TextureManager.h" />
     <ClInclude Include="src\Miscellaneous\Time.h" />
@@ -266,6 +273,8 @@
     <ClInclude Include="src\Behaviour\StatBehaviour.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Collision\Collider.cpp" />
+    <ClCompile Include="src\Managers\CollisionManager.cpp" />
     <ClCompile Include="src\Components\Collision\BoxCollider.cpp" />
     <ClCompile Include="src\Components\HealthBar.cpp" />
     <ClCompile Include="src\Entities\Monsters\Boar.cpp" />

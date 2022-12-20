@@ -3,17 +3,22 @@
 #include "RenderManager.h"
 #include "EntityManager.h"
 #include "CameraManager.h"
+#include "CollisionManager.h"
 #include "UIManager.h"
 #include "../Entities/Entity.h"
 #include "../Entities/Player.h"
 #include "../Entities/Monsters/Zombie.h"
 #include "../Entities/Monsters/Boar.h"
 #include "../Miscellaneous/Log.h"
+#include "../Miscellaneous/Collection.h"
+#include "../Miscellaneous/Timer.h"
 
 // Base Functions
 void GameManager::Init() {
 	MainRenderer.Init();
 	Start();
+
+	Collection<Monster> s();
 }
 void GameManager::Start() {
 	player = new Player("Wrathen");
@@ -34,28 +39,28 @@ void GameManager::Update() {
 	Uint64 frameStart, frameTime;
 
 	while (GAME.isGameRunning) {
+		Timer timer;
 		frameStart = SDL_GetTicks64();
 
 		// Main Stuff
 		PollEvents();
-		
+
+		EntityMgr.Update();
+		CollisionMgr.Update();
 		Camera.Update();
-		EntityMgr.UpdateAllEntities();
-		UIMgr.UpdateAllElements();
+		UIMgr.Update();
 		
 		MainRenderer.Draw();
 
 		// Frame Timers, Delays
-		frameTime = SDL_GetTicks() - frameStart;
+		frameTime = SDL_GetTicks64() - frameStart;
 		//if (Time::FRAME_DELAY > frameTime) {
 		//	SDL_Delay(Time::FRAME_DELAY - frameTime);
-		//	frameTime = SDL_GetTicks() - frameStart;
+		//	frameTime = SDL_GetTicks64() - frameStart;
 		//}
 
-		// Update deltaTime
-		Time::deltaTime = 1.0f / frameTime;
-
-		Debug("FPS: " + std::to_string(1000 / (frameTime == 0 ? 1 : frameTime)));
+		Time::deltaTime = timer.GetTimeMS();
+		Debug("FPS: " + std::to_string(1000.0f / Time::deltaTime) + ", MS: " + std::to_string(Time::deltaTime));
 	}
 }
 void GameManager::PollEvents() {

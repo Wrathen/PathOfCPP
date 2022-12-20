@@ -1,17 +1,18 @@
 #pragma once
+#include "Collider.h"
 #include "../../Entities/Entity.h"
 
-typedef unsigned int uint;
-class BoxCollider {
+class BoxCollider: public Collider {
 public:
 	BoxCollider(Entity* _entity, uint width, uint height, uint offsetX, uint offsetY);
 	bool Intersects(const BoxCollider& other) const;
 
-	unsigned int width = 0;
-	unsigned int height = 0;
-	unsigned int offsetX = 0;
-	unsigned int offsetY = 0;
+	uint width = 0;
+	uint height = 0;
+	uint offsetX = 0;
+	uint offsetY = 0;
 
+	virtual void OnCollisionEnter(Entity* col) = 0;
 protected:
 	Entity* entity;
 	Transform* transform;

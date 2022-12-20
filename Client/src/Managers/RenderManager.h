@@ -1,16 +1,18 @@
 #pragma once
 #include <SDL_image.h>
 #include <unordered_map>
-#include "../Components/SpriteRenderer.h"
+#include "../Miscellaneous/Singleton.h"
 #include "../Miscellaneous/GUID.h"
+#include "../Components/SpriteRenderer.h"
 
 #define MainRenderer Renderer::GetInstance()
-class Renderer {
+class Renderer : public Singleton<Renderer> { friend class Singleton;
 public:
-    static Renderer& GetInstance() {
-        static Renderer instance;
-        return instance;
-    }
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+
+    const int SCREEN_WIDTH = 1280;
+    const int SCREEN_HEIGHT = 720;
 
     void Init();
     void Start();
@@ -21,11 +23,4 @@ private:
     ~Renderer();
     Renderer(Renderer const&) = delete;
     void operator=(Renderer const&) = delete;
-
-public:
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-
-    const int SCREEN_WIDTH = 1280;
-    const int SCREEN_HEIGHT = 720;
 };

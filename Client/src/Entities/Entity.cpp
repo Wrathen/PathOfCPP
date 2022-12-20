@@ -6,11 +6,16 @@ Entity::Entity(std::string _name) : Entity("assets/sprites/nosprite.png", _name)
 Entity::Entity(std::string texturePath, std::string _name) {
 	name = _name;
 
-	EntityMgr.AddEntity(this);
+	EntityMgr.Add(this);
 	renderer.AssignTransform(&transform);
 	renderer.AssignTexture(texturePath);
 	renderer.shouldDrawCentered = true;
 }
 
 void Entity::Render() { renderer.Render(); }
-void Entity::Delete() { EntityMgr.RemoveEntity(this); }
+void Entity::Delete() { EntityMgr.Remove(this); }
+
+std::string Entity::ToString() {
+	if (!this) return "This entity has already been deleted. What are you doing?!";
+	return "Entity " + name + " with GUID: " + std::to_string(guid);
+}

@@ -1,35 +1,19 @@
 #pragma once
-#include "../Entities/Entity.h"
 #include <unordered_map>
 #include <vector>
+#include "../Miscellaneous/Singleton.h"
+#include "../Entities/Entity.h"
+#include "../Miscellaneous/Collection.h"
 
 #define EntityMgr EntityManager::GetInstance()
-class EntityManager {
+class EntityManager : public Collection<Entity>, public Singleton<EntityManager> { friend class Singleton;
 public:
-    static EntityManager& GetInstance() {
-        static EntityManager instance;
-        return instance;
-    }
-
-    void AddEntity(Entity* entity);
-    void RemoveEntity(Entity* entity);
-    Entity* GetEntity(GUID guid);
-
-    void PrintAllEntities();
-    void UpdateAllEntities();
-    void RenderAllEntities();
-    auto GetAllEntities() { return &entityList; }
+    void Update();
+    void RenderAll();
 
 private:
-    EntityManager() {}
-    ~EntityManager();
-    EntityManager(EntityManager const&) = delete;
-    void operator=(EntityManager const&) = delete;
-
-    void DeleteEntity(Entity* entity);
-    void DeleteAllQueuedEntities();
-
-private:
-    std::unordered_map<GUID, Entity*> entityList;
-    std::vector<Entity*> toBeDeletedList;
+	EntityManager() {}
+	~EntityManager() {}
+	EntityManager(EntityManager const&) = delete;
+	void operator=(EntityManager const&) = delete;
 };

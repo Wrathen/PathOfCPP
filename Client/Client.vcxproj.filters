@@ -107,6 +107,11 @@
     <ClInclude Include="src\Components\HealthBar.h" />
     <ClInclude Include="src\Behaviour\StatBehaviour.h" />
     <ClInclude Include="src\Components\Collision\BoxCollider.h" />
+    <ClInclude Include="src\Managers\CollisionManager.h" />
+    <ClInclude Include="src\Components\Collision\Collider.h" />
+    <ClInclude Include="src\Miscellaneous\Collection.h" />
+    <ClInclude Include="src\Miscellaneous\Singleton.h" />
+    <ClInclude Include="src\Miscellaneous\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -132,5 +137,7 @@
     <ClCompile Include="src\Components\HealthBar.cpp" />
     <ClCompile Include="src\Behaviour\StatBehaviour.cpp" />
     <ClCompile Include="src\Components\Collision\BoxCollider.cpp" />
+    <ClCompile Include="src\Managers\CollisionManager.cpp" />
+    <ClCompile Include="src\Components\Collision\Collider.cpp" />
   </ItemGroup>
 </Project>

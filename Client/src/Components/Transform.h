@@ -22,7 +22,7 @@ public:
     void SetScale(const Vector2& vec) { scale.x = vec.x; scale.y = vec.y; }
     void SetVelocity(const Vector2& vec) { velocity.x = vec.x; velocity.y = vec.y; }
     void SetRotation(float x) { rotation = x; }
-    void Move(Vector2 dir, float spd) { position += dir * (spd * Time::deltaTime); }
-    void Move() { position += velocity * Time::deltaTime; }
+    void Move(Vector2 dir, float spd) { position += dir * (spd * (Time::deltaTime / 100.0)); }
+    void Move() { position += velocity * (Time::deltaTime / 100.0); }
     Vector2 GetScale() { return Vector2(scale.x * scaleModifier, scale.y * scaleModifier); }
 };

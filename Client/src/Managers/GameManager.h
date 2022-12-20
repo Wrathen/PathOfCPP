@@ -1,16 +1,16 @@
 #pragma once
 #include <SDL.h>
 #include <iostream>
+#include "../Miscellaneous/Singleton.h"
 #include "../Miscellaneous/Time.h"
 #include "../Entities/Player.h"
 
 #define GAME GameManager::GetInstance()
-class GameManager {
+class GameManager: public Singleton<GameManager> { friend class Singleton;
 public:
-	static GameManager& GetInstance() {
-		static GameManager instance;
-		return instance;
-	}
+	SDL_Event event;
+	bool isGameRunning = true;
+	Player* player;
 
 	// Base Functions
 	void Init();
@@ -27,9 +27,4 @@ private:
 	~GameManager() {}
 	GameManager(GameManager const&) = delete;
 	void operator=(GameManager const&) = delete;
-
-public:
-	SDL_Event event;
-	bool isGameRunning = true;
-	Player* player;
 };

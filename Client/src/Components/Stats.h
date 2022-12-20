@@ -19,7 +19,7 @@ public:
 
     // Utility
     float sizeMultiplier = 1.0f;
-    float moveSpeed = 15.0f;
+    float moveSpeed = 25.0f;
     float projectileSpeed = 35.00f;
 
     // Attacking

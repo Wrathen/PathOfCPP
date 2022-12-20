@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include "../Behaviour/StatBehaviour.h"
 #include "../Miscellaneous/GUID.h"
+#include "../Behaviour/StatBehaviour.h"
 #include "../Components/SpriteRenderer.h"
 
 // Temporary -- Delete Later
@@ -11,7 +11,16 @@ enum class EntityCollisionTag {
 };
 
 class Entity: public StatBehaviour {
-	friend class EntityManager;
+public:
+	std::string name;
+	GUID guid = 0;
+
+	Transform transform;
+	SpriteRenderer renderer;
+	EntityCollisionTag collisionTag;
+
+	bool isToBeDeleted = false;
+
 public:
 	Entity();
 	Entity(std::string name);
@@ -28,21 +37,6 @@ public:
 	virtual void OnKill() = 0;
 
 	// Utility Functions
-	virtual std::string ToString() {
-		if (this == nullptr) return "This entity has already been deleted. What are you doing?!";
-		return "Entity " + name + " with GUID: " + std::to_string(guid);
-	}
-
-private:
-	void AssignGUID(GUID guid) { this->guid = guid; }
-
-public:
-	std::string name;
-	GUID guid = 0;
-
-	Transform transform;
-	SpriteRenderer renderer;
-	EntityCollisionTag collisionTag;
-
-	bool isToBeDeleted = false;
+	void AssignGUID(GUID _guid) { if (guid != 0) return; guid = _guid; }
+	virtual std::string ToString();
 };

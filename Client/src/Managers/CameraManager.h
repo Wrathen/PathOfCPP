@@ -1,13 +1,12 @@
 #pragma once
+#include "../Miscellaneous/Singleton.h"
 #include "../Entities/Entity.h"
 
 #define Camera CameraManager::GetInstance()
-class CameraManager {
+class CameraManager : public Singleton<CameraManager> { friend class Singleton;
 public:
-	static CameraManager& GetInstance() {
-		static CameraManager instance;
-		return instance;
-	}
+	Entity* target;
+	Transform transform;
 
 	// Base Functions
 	void Update();
@@ -16,6 +15,9 @@ public:
 	void SetTarget(Entity* t) { target = t; }
 	const Vector2& GetPosition() const { return transform.position; }
 
-	Entity* target;
-	Transform transform;
+private:
+	CameraManager() {}
+	~CameraManager() {}
+	CameraManager(CameraManager const&) = delete;
+	void operator=(CameraManager const&) = delete;
 };

@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL_image.h>
-#include "../Miscellaneous/GUID.h"
 #include "Transform.h"
 
 class SpriteRenderer {

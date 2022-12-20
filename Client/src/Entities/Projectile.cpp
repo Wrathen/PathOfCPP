@@ -29,7 +29,7 @@ void Projectile::Update() {
 // Even though this is terrible bruteforce collision detection, I'm actually surprised by how C++
 // is performing. It's insane. I'm loving this language already. Give me more! :D
 void Projectile::CheckCollisions() {
-	auto allEntities = EntityMgr.GetAllEntities();
+	auto allEntities = EntityMgr.GetAll();
 	Vector2 myPos = transform.GetPosition();
 	Vector2 boxCollider(5, 5);
 	Vector2 enemyBoxCollider(5, 5);

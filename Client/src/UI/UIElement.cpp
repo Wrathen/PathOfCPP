@@ -2,7 +2,7 @@
 #include "../Managers/UIManager.h"
 
 UIElement::UIElement(std::string texturePath) {
-	UIMgr.AddElement(this);
+	UIMgr.Add(this);
 	renderer.AssignTransform(&transform);
 	renderer.AssignTexture(texturePath);
 
@@ -12,4 +12,4 @@ UIElement::UIElement(std::string texturePath) {
 void UIElement::Start() { renderer.SetPositionAbsolute(); }
 void UIElement::Update() {}
 void UIElement::Render() { renderer.Render(); }
-void UIElement::Delete() { UIMgr.RemoveElement(this); }
+void UIElement::Delete() { UIMgr.Remove(this); }
