@@ -2,10 +2,10 @@
 #include "../Managers/UIManager.h"
 
 UIElement::UIElement(std::string texturePath) {
-	UIMgr.Add(this);
 	renderer.AssignTransform(&transform);
 	renderer.AssignTexture(texturePath);
 
+	UIMgr.Add(this);
 	Start();
 }
 

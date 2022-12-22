@@ -20,7 +20,7 @@ public:
 		i *= 1.03f;
 		srand(++i);
 
-		return rand() % max;
+		return max == 0 ? 0: rand() % max;
 	}
 
 	unsigned int i = 0;

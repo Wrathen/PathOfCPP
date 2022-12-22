@@ -10,21 +10,21 @@
 #include "../Entities/Monsters/Zombie.h"
 #include "../Entities/Monsters/Boar.h"
 #include "../Miscellaneous/Log.h"
-#include "../Miscellaneous/Collection.h"
 #include "../Miscellaneous/Timer.h"
 
 // Base Functions
 void GameManager::Init() {
 	MainRenderer.Init();
 	Start();
-
-	Collection<Monster> s();
 }
 void GameManager::Start() {
 	player = new Player("Wrathen");
 	new UIElement();
 
 	// [To:Do] Delete--Debug
+	// Did 1 million at the same time. Didn't crash! And no memory leak!
+	// Woo-hoo! But it was like 0.1 fps when they all gathered
+	// Let's just make it back to 6000 total.
 	for (int i = 0; i < 3000; ++i) {
 		new Zombie("Zombie " + std::to_string(i));
 		new Boar("Boar " + std::to_string(i));

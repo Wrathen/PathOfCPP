@@ -112,6 +112,8 @@
     <ClInclude Include="src\Miscellaneous\Collection.h" />
     <ClInclude Include="src\Miscellaneous\Singleton.h" />
     <ClInclude Include="src\Miscellaneous\Timer.h" />
+    <ClInclude Include="src\Components\Collision\QuadTree.h" />
+    <ClInclude Include="src\Components\Collision\SpatialHash.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />

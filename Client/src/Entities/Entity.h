@@ -21,7 +21,6 @@ public:
 
 	bool isToBeDeleted = false;
 
-public:
 	Entity();
 	Entity(std::string name);
 	Entity(std::string texturePath, std::string name);

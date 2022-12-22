@@ -5,7 +5,12 @@
 
 Monster::Monster(std::string name): Entity(name) { Start(); }
 Monster::Monster(std::string texturePath, std::string name): Entity(texturePath, name) { Start(); }
-
+Monster::~Monster() {
+	healthBar->Delete();
+	healthBar = nullptr;
+	collider->Delete();
+	collider = nullptr;
+}
 void Monster::Start() {
 	// Rarity & Related
 	rarity = ((MonsterRarity)RandomInt(4));
@@ -20,12 +25,15 @@ void Monster::Start() {
 	healthBar = new HealthBar(this);
 	healthBar->transform.SetScale(3.5f, 3.0f);
 
+	// Box Collider
+	collider = new BoxCollider(this, 15, 15);
+
 	// AI
 	moveTowardsTarget.SetSource(this);
 	moveTowardsTarget.SetTarget((Entity*)GAME.GetPlayer());
 
 	// [To:Do] Delete--Debug
-	int offset = 4600;
+	int offset = 4800;
 	int randx = RandomInt(offset) - offset / 2;
 	int randy = RandomInt(offset) - offset / 2;
 

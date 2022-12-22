@@ -7,6 +7,10 @@ Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { S
 void Player::Start() {
 	SetMoveSpeed(25.0f);
 
+	SetProjectileSpeed(60);
+	SetNumberOfProjectiles(1);
+	SetAttackSpeed(0.09f);
+
 	healthBar = new HealthBar(this);
 	healthBar->transform.SetScale(3.5f, 3.0f);
 	
@@ -51,6 +55,7 @@ void Player::OnKill() {
 	FUN_Headhunter();
 }
 
+// HH nerfs in this patch. Sadge
 // Let's have a headhunter in Path of CPP cuz I can't afford it in league LMAO
 void Player::FUN_Headhunter() {
 	int hhChance = 25;
@@ -60,16 +65,20 @@ void Player::FUN_Headhunter() {
 	int rnd = RandomInt(6);
 	switch (rnd) {
 	case 0:
+		if (GetSizeMultiplier() > 4.0f) return;
 		SetSizeMultiplier(GetSizeMultiplier() * 1.05f);
 		transform.SetScaleModifier(GetSizeMultiplier());
 		break;
 	case 1:
+		if (GetMoveSpeed() > 100) return;
 		SetMoveSpeed(GetMoveSpeed() * 1.05f);
 		break;
 	case 2:
+		if (GetProjectileSpeed() > 160) return;
 		SetProjectileSpeed(GetProjectileSpeed() * 1.05f);
 		break;
 	case 3:
+		if (GetAttackSpeed() < 0.0001f) return;
 		SetAttackSpeed(GetAttackSpeed() * 0.95f);
 		break;
 	case 4:

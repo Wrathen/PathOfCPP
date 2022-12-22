@@ -1,10 +1,13 @@
 #include "EntityManager.h"
 
+
 void EntityManager::Update() {
 	Collection::Update();
+
+	for (auto& entity : *GetAll())
+		entity.second->Update();
 }
 void EntityManager::RenderAll() {
-	auto* entityList = GetAll();
-	for (auto entity : *entityList)
+	for (auto& entity : *GetAll())
 		entity.second->Render();
 } 

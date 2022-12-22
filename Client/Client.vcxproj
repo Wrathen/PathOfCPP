@@ -160,6 +160,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Collision\QuadTree.h" />
+    <ClInclude Include="src\Components\Collision\SpatialHash.h" />
     <ClInclude Include="src\Miscellaneous\Singleton.h" />
     <ClInclude Include="src\Miscellaneous\Collection.h" />
     <ClInclude Include="src\Components\Collision\Collider.h" />

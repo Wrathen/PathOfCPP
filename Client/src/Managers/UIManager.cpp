@@ -2,17 +2,18 @@
 
 void UIManager::Update() {
 	Collection::Update();
+
+	for (auto& element : *GetAll())
+		element.second->Update();
 }
 
 void UIManager::RenderAll() {
-	auto* allElements = GetAll();
-	for (auto& element : *allElements)
+	for (auto& element : *GetAll())
 		element.second->Render();
 }
 
 bool UIManager::OnMouseDown() {
-	auto* allElements = GetAll();
-	for (auto& element : *allElements) {
+	for (auto& element : *GetAll()) {
 		if (!element.second->isInteractable) continue;
 		// if mouse pos collides
 		// return true and send onmousedown to that element

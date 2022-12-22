@@ -1,4 +1,5 @@
 #include "Projectile.h"
+#include "../Managers/CollisionManager.h"
 #include "../Managers/EntityManager.h"
 #include "../Miscellaneous/Log.h"
 
@@ -18,37 +19,45 @@ Projectile::Projectile(Entity* src, Vector2 position, float rotation, float spee
 void Projectile::Start() { }
 void Projectile::Update() {
 	transform.Move();
+
+	if (CheckIfTooFarAway()) {
+		Delete();
+		return;
+	}
 	CheckCollisions();
 
 	Uint64 ticks = SDL_GetTicks64();
 	if (ticks > lifetime) Delete();
 }
 
-// THIS IS DEBUG-ONLY. WILL IMPLEMENT MUCH BETTER COLLISION DETECTION soon(tm).
-// Just trying to have some fun while coding. This made my day for now.
-// Even though this is terrible bruteforce collision detection, I'm actually surprised by how C++
-// is performing. It's insane. I'm loving this language already. Give me more! :D
+bool Projectile::CheckIfTooFarAway() {
+	auto screenPos = transform.GetScreenPosition();
+	bool isFarAway = screenPos.x < -GAME.gameWidth/2 || screenPos.x > 3*GAME.gameWidth/2
+				  || screenPos.y < -GAME.gameHeight/2 || screenPos.y > 3*GAME.gameHeight/2;
+	return isFarAway;
+}
 void Projectile::CheckCollisions() {
-	auto allEntities = EntityMgr.GetAll();
-	Vector2 myPos = transform.GetPosition();
+	Vector2 myPos = transform.GetScreenPosition();
 	Vector2 boxCollider(5, 5);
 	Vector2 enemyBoxCollider(5, 5);
+	int piercing = 2;
 
-	bool piercing = true;
-	for (auto& entity : *allEntities) {
-		if (entity.second->isToBeDeleted) continue;
-		if (collisionTag == entity.second->collisionTag) continue;
+	auto allEntities = CollisionMgr.spatialHash.Query(myPos.x, myPos.y, 1, 1);
+	//Debug(allEntities.size());
+	for (auto* entity : allEntities) {
+		if (entity->isToBeDeleted) continue;
+		if (collisionTag == entity->collisionTag) continue;
 
-		Vector2 pos = entity.second->transform.GetPosition();
+		Vector2 pos = entity->transform.GetScreenPosition();
 		bool hit = myPos.x + boxCollider.x > pos.x - enemyBoxCollider.x && myPos.x - boxCollider.x < pos.x + enemyBoxCollider.x &&
 				   myPos.y + boxCollider.y > pos.y - enemyBoxCollider.y && myPos.y - boxCollider.y < pos.y + enemyBoxCollider.y;
 
 		if (hit) {
-			//Debug("[" + std::to_string(guid) + "] Colliding with: " + entity.second->ToString());
+			//Debug("[" + std::to_string(guid) + "] Colliding with: " + entity->ToString());
 			source->OnKill();
-			entity.second->Delete();
+			entity->Delete();
 
-			if (!piercing) {
+			if (--piercing <= 0) {
 				Delete();
 				break;
 			}

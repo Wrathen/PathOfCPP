@@ -52,12 +52,7 @@ protected:
         itemList.clear();
     }
 
-    void Update() {
-        DeleteAllQueued();
-
-        for (auto& item : itemList)
-            item.second->Update();
-    }
+    void Update() { DeleteAllQueued(); }
     void Delete(T* item) {
         if (!item) return;
 

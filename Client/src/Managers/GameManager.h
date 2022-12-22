@@ -5,12 +5,16 @@
 #include "../Miscellaneous/Time.h"
 #include "../Entities/Player.h"
 
+
 #define GAME GameManager::GetInstance()
 class GameManager: public Singleton<GameManager> { friend class Singleton;
 public:
 	SDL_Event event;
-	bool isGameRunning = true;
 	Player* player;
+
+	int gameWidth = 1920;
+	int gameHeight = 1080;
+	bool isGameRunning = true;
 
 	// Base Functions
 	void Init();

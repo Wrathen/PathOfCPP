@@ -1,8 +1,8 @@
 #pragma once
 #include <unordered_map>
 #include <vector>
-#include "../Miscellaneous/Singleton.h"
 #include "../Entities/Entity.h"
+#include "../Miscellaneous/Singleton.h"
 #include "../Miscellaneous/Collection.h"
 
 #define EntityMgr EntityManager::GetInstance()

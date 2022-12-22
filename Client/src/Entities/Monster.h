@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "../Components/HealthBar.h"
 #include "../Behaviour/AI/MoveTowardsTarget.h"
+#include "../Components/Collision/BoxCollider.h"
 
 enum class MonsterRarity {
     Common = 0,
@@ -12,6 +13,11 @@ enum class MonsterRarity {
 
 class Monster: public Entity {
 public:
+    MonsterRarity rarity = MonsterRarity::Common;
+    MoveTowardsTarget moveTowardsTarget;
+    BoxCollider* collider;
+    HealthBar* healthBar;
+
     // Base Functions
     void Start() override;
     void Update() override;
@@ -25,16 +31,9 @@ public:
         return "A level " + std::to_string(GetLevel()) + " " + name + " with GUID: " + std::to_string(guid);
     }
 
-    MoveTowardsTarget moveTowardsTarget;
-    HealthBar* healthBar;
-    MonsterRarity rarity = MonsterRarity::Common;
-
 protected:
     Monster() = delete;
     Monster(std::string name);
     Monster(std::string texturePath, std::string name);
-    ~Monster() {
-        healthBar->Delete();
-        healthBar = nullptr;
-    }
+    ~Monster();
 };

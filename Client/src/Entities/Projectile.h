@@ -10,6 +10,7 @@ public:
 	void Update() override;
 
 	// Main Functions
+	bool CheckIfTooFarAway();
 	void CheckCollisions();
 	void OnKill() override {};
 
