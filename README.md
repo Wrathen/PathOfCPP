@@ -10,3 +10,7 @@ Headhunter Edition
 
 https://user-images.githubusercontent.com/36766122/189256835-dbbf47ae-a957-47f7-b5ff-d606f14529cc.mp4
 
+HH Edition v2 -- 6000 initial monsters, 16000 bullets/seconds after HH buffs, Acceptable FPS, but still, there's room for improvement
+
+https://user-images.githubusercontent.com/36766122/209038620-d7285a0d-d38a-45f9-a6a3-4cf64d3be8fc.mp4
+
