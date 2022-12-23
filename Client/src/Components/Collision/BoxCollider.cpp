@@ -17,5 +17,5 @@ bool BoxCollider::Intersects(const BoxCollider& other) const {
 }
 
 void BoxCollider::OnCollisionEnter(Collider* other) {
-	Debug("Hey, I just collided with another collider! LMAO!");
+	//Debug("Hey, I just collided with another collider! LMAO!");
 }

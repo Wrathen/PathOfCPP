@@ -9,7 +9,6 @@
 class UIManager: public Collection<UIElement>, public Singleton<UIManager> { friend class Singleton;
 public:
 	void Update();
-    void RenderAll();
     bool OnMouseDown();
 
 private:

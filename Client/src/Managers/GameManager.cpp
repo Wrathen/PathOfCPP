@@ -1,14 +1,12 @@
+#include <iomanip>
 #include "GameManager.h"
 #include "InputManager.h"
 #include "RenderManager.h"
 #include "EntityManager.h"
 #include "CameraManager.h"
 #include "CollisionManager.h"
+#include "EnemySpawnManager.h"
 #include "UIManager.h"
-#include "../Entities/Entity.h"
-#include "../Entities/Player.h"
-#include "../Entities/Monsters/Zombie.h"
-#include "../Entities/Monsters/Boar.h"
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Timer.h"
 
@@ -21,46 +19,50 @@ void GameManager::Start() {
 	player = new Player("Wrathen");
 	new UIElement();
 
-	// [To:Do] Delete--Debug
-	// Did 1 million at the same time. Didn't crash! And no memory leak!
-	// Woo-hoo! But it was like 0.1 fps when they all gathered
-	// Let's just make it back to 6000 total.
-	for (int i = 0; i < 3000; ++i) {
-		new Zombie("Zombie " + std::to_string(i));
-		new Boar("Boar " + std::to_string(i));
-	}
-
 	Debug(player->ToString());
 
 	Update();
 }
 void GameManager::Update() {
+	static Timer debugTimer{};
+
 	// Count frames
-	Uint64 frameStart, frameTime;
+	Timer timer;
+	float frameTime;
 
 	while (GAME.isGameRunning) {
-		Timer timer;
-		frameStart = SDL_GetTicks64();
+		timer.Reset();
 
-		// Main Stuff
+		// Main Loop
 		PollEvents();
-
-		EntityMgr.Update();
+		MainRenderer.Clear();
+		EnemySpawner.Update();
+		EntityMgr.Update(); // This also renders!
+		player->Update();
 		CollisionMgr.Update();
 		Camera.Update();
-		UIMgr.Update();
-		
+		UIMgr.Update(); // This also renders!
 		MainRenderer.Draw();
 
 		// Frame Timers, Delays
-		frameTime = SDL_GetTicks64() - frameStart;
-		//if (Time::FRAME_DELAY > frameTime) {
-		//	SDL_Delay(Time::FRAME_DELAY - frameTime);
-		//	frameTime = SDL_GetTicks64() - frameStart;
-		//}
+		bool limitFramerate = false;
+		frameTime = timer.GetTimeMS();
+		if (limitFramerate && Time::FRAME_DELAY > frameTime) {
+			SDL_Delay(Time::FRAME_DELAY - frameTime);
+			frameTime = timer.GetTimeMS();
+		}
 
-		Time::deltaTime = timer.GetTimeMS();
-		Debug("FPS: " + std::to_string(1000.0f / Time::deltaTime) + ", MS: " + std::to_string(Time::deltaTime));
+		Time::deltaTime = frameTime;
+
+		// Debug Stuff
+		if (debugTimer.GetTimeMS() > 300) {
+			debugTimer.Reset();
+			std::cout << std::setprecision(2) << std::fixed << ("FPS: " + std::to_string(1000.0f / Time::deltaTime) +
+				", MS: " + std::to_string(Time::deltaTime)) +
+				", TotalSpawnedEnemies: " + std::to_string(EnemySpawner.totalNumberOfSpawnedEnemies) +
+				", TotalKilledEnemies: " + std::to_string(GetPlayer()->totalKills) +
+				", NumberOfProjectiles: " + std::to_string(GetPlayer()->GetNumberOfProjectiles()) << std::endl;
+		}
 	}
 }
 void GameManager::PollEvents() {

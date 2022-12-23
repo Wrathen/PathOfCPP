@@ -20,30 +20,34 @@
 class SpatialHash {
 public:
     // Constructor
-    SpatialHash(int width, int height, float cellSize) :
+    SpatialHash(int width, int height, int cellSize) :
         m_cellSize(cellSize),
         m_width(width),
         m_height(height),
         m_numCellsX(static_cast<int>(width / cellSize)),
         m_numCellsY(static_cast<int>(height / cellSize)),
+        m_halfWidth(width/2),
+        m_halfHeight(height/2),
+        m_halfNumCellsX(m_numCellsX/2),
+        m_halfNumCellsY(m_numCellsY/2),
         m_hash(m_numCellsX* m_numCellsY) {}
 
     // Insert an entity into the hash
     void Insert(Entity* entity) {
         auto entityPos = entity->transform.GetScreenPosition();
 
-        if (entityPos.x <= -m_width / 2) return;
-        else if (entityPos.x >= m_width / 2) return;
-        else if (entityPos.y <= -m_height / 2) return;
-        else if (entityPos.y >= m_height / 2) return;
+        if (entityPos.x <= -m_halfWidth) return;
+        else if (entityPos.x >= m_halfWidth) return;
+        else if (entityPos.y <= -m_halfHeight) return;
+        else if (entityPos.y >= m_halfHeight) return;
 
-        int cellX = static_cast<int>(entityPos.x / m_cellSize);
-        int cellY = static_cast<int>(entityPos.y / m_cellSize);
+        int cellX = entityPos.x / m_cellSize;
+        int cellY = entityPos.y / m_cellSize;
 
         // Shift the cell indices by the number of cells in the negative direction
         // to ensure that they are always positive
-        cellX += m_numCellsX / 2;
-        cellY += m_numCellsY / 2;
+        cellX += m_halfNumCellsX;
+        cellY += m_halfNumCellsY;
 
         int cellIndex = cellY * m_numCellsX + cellX;
         m_hash[cellIndex].push_back(entity);
@@ -54,8 +58,21 @@ public:
     // Remove an entity from the hash
     void Remove(Entity* entity) {
         auto entityPos = entity->transform.GetScreenPosition();
+
+        if (entityPos.x <= -m_width / 2) return;
+        else if (entityPos.x >= m_width / 2) return;
+        else if (entityPos.y <= -m_height / 2) return;
+        else if (entityPos.y >= m_height / 2) return;
+
         int cellX = static_cast<int>(entityPos.x / m_cellSize);
         int cellY = static_cast<int>(entityPos.y / m_cellSize);
+
+        cellX += m_numCellsX / 2;
+        cellY += m_numCellsY / 2;
+
+        if (cellX < 0 || cellX >= m_numCellsX) return;
+        else if (cellY < 0 || cellY >= m_numCellsY) return;
+
         int cellIndex = cellY * m_numCellsX + cellX;
         auto& cell = m_hash[cellIndex];
         cell.erase(std::remove(cell.begin(), cell.end(), entity), cell.end());
@@ -65,23 +82,23 @@ public:
     std::vector<Entity*> Query(int x, int y, int width, int height) {
         std::vector<Entity*> result;
 
-        if (x <= -m_width / 2) return result;
-        else if (x >= m_width / 2) return result;
-        else if (y <= -m_height / 2) return result;
-        else if (y >= m_height / 2) return result;
+        if (x <= -m_halfWidth) return result;
+        else if (x >= m_halfWidth) return result;
+        else if (y <= -m_halfHeight) return result;
+        else if (y >= m_halfHeight) return result;
 
         // Calculate the indices of the cells in the region
-        int minCellX = static_cast<int>(x / m_cellSize);
-        int maxCellX = static_cast<int>((x + width - 1) / m_cellSize);
-        int minCellY = static_cast<int>(y / m_cellSize);
-        int maxCellY = static_cast<int>((y + height - 1) / m_cellSize);
+        int minCellX = x / m_cellSize;
+        int maxCellX = (x + width - 1) / m_cellSize;
+        int minCellY = y / m_cellSize;
+        int maxCellY = (y + height - 1) / m_cellSize;
 
         // Shift the cell indices by the number of cells in the negative direction
         // to ensure that they are always positive
-        minCellX += m_numCellsX / 2;
-        maxCellX += m_numCellsX / 2;
-        minCellY += m_numCellsY / 2;
-        maxCellY += m_numCellsY / 2;
+        minCellX += m_halfNumCellsX;
+        maxCellX += m_halfNumCellsX;
+        minCellY += m_halfNumCellsY;
+        maxCellY += m_halfNumCellsY;
 
         minCellX = std::max(0, minCellX);
         maxCellX = std::min(m_numCellsX - 1, maxCellX);
@@ -158,13 +175,18 @@ public:
 
 private:
     // The size of each cell in the hash
-    float m_cellSize;
+    int m_cellSize;
 
     // The number of cells in the x and y directions
     int m_width;
     int m_height;
     int m_numCellsX;
     int m_numCellsY;
+
+    int m_halfWidth;
+    int m_halfHeight;
+    int m_halfNumCellsX;
+    int m_halfNumCellsY;
 
     // The hash table, mapping cell indices to lists of entity pointers
     std::vector<std::vector<Entity*>> m_hash;

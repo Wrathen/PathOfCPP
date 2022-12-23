@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include "../Miscellaneous/GUID.h"
-#include "../Behaviour/StatBehaviour.h"
+#include "../Components/Stats.h"
 #include "../Components/SpriteRenderer.h"
 
 // Temporary -- Delete Later
@@ -10,7 +10,7 @@ enum class EntityCollisionTag {
 	Friendly
 };
 
-class Entity: public StatBehaviour {
+class Entity {
 public:
 	std::string name;
 	GUID guid = 0;
@@ -21,6 +21,7 @@ public:
 
 	bool isToBeDeleted = false;
 
+	// Constructors & Deconstructors
 	Entity();
 	Entity(std::string name);
 	Entity(std::string texturePath, std::string name);
@@ -33,6 +34,8 @@ public:
 
 	// Main Functions
 	void Delete();
+
+	// Events
 	virtual void OnKill() = 0;
 
 	// Utility Functions

@@ -1,8 +1,8 @@
 #pragma once
 #include "Entity.h"
 #include "../Components/HealthBar.h"
-#include "../Behaviour/AI/MoveTowardsTarget.h"
 #include "../Components/Collision/BoxCollider.h"
+#include "../Behaviour/AI/MoveTowardsTarget.h"
 
 enum class MonsterRarity {
     Common = 0,
@@ -11,12 +11,12 @@ enum class MonsterRarity {
     Unique = 3
 };
 
-class Monster: public Entity {
+class Monster: public Entity, public Stats {
 public:
     MonsterRarity rarity = MonsterRarity::Common;
-    MoveTowardsTarget moveTowardsTarget;
+    HealthBar<Monster>* healthBar;
     BoxCollider* collider;
-    HealthBar* healthBar;
+    MoveTowardsTarget moveTowardsTarget;
 
     // Base Functions
     void Start() override;

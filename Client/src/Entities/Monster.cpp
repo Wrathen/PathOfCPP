@@ -22,7 +22,7 @@ void Monster::Start() {
 	SetHealth(RandomInt(GetMaxHealth()) + 1);
 
 	// Healthbar
-	healthBar = new HealthBar(this);
+	healthBar = new HealthBar<Monster>(this);
 	healthBar->transform.SetScale(3.5f, 3.0f);
 
 	// Box Collider
@@ -33,7 +33,7 @@ void Monster::Start() {
 	moveTowardsTarget.SetTarget((Entity*)GAME.GetPlayer());
 
 	// [To:Do] Delete--Debug
-	int offset = 4800;
+	int offset = 800;
 	int randx = RandomInt(offset) - offset / 2;
 	int randy = RandomInt(offset) - offset / 2;
 

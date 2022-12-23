@@ -9,7 +9,6 @@
 class EntityManager : public Collection<Entity>, public Singleton<EntityManager> { friend class Singleton;
 public:
     void Update();
-    void RenderAll();
 
 private:
 	EntityManager() {}

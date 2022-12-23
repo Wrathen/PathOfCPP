@@ -16,6 +16,7 @@ public:
 
     void Init();
     void Start();
+    void Clear();
     void Draw();
 
 private:

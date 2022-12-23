@@ -1,8 +1,7 @@
 #pragma once
 #include "../../Entities/Entity.h"
 
-class MoveTowardsTarget
-{
+class MoveTowardsTarget {
 public:
 	// Base Functions
 	void Update();

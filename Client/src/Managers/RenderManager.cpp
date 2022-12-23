@@ -13,13 +13,9 @@ void Renderer::Init() {
 	Start();
 }
 void Renderer::Start() {}
+void Renderer::Clear() { SDL_RenderClear(renderer); }
 void Renderer::Draw() {
-	SDL_RenderClear(renderer);
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-
-	EntityMgr.RenderAll();
-	UIMgr.RenderAll();
-
+	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 30);
 	SDL_RenderPresent(renderer);
 }
 

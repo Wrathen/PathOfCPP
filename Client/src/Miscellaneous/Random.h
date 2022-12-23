@@ -1,27 +1,40 @@
 #pragma once
-
-#define Rand Random::GetInstance()
-#define RandomInt Random::GetInstance().Next
 #include <random>
-#include <ctime>
 #include <chrono>
+#include <ctime>
+#include "Singleton.h"
 
-// [To:Do] This random class is so bad, it's like necromancer ascendancy after the recent changes.
-// Either implement or yoink a good one.
-class Random
-{
+//#define Rand Random::GetInstance()
+
+class Random : public Singleton<Random> {
+private:
+	static std::mt19937 rng;
+
+	// Static member initialization function to seed the random number generator with the current time
+	static std::mt19937& GetRNG() {
+		static std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
+		return rng;
+	}
+
 public:
-	static Random& GetInstance() {
-		static Random instance;
-		return instance;
+	static int Next(int min, int max) {
+		std::uniform_int_distribution<int> uni(min, max - 1);
+		return uni(GetRNG());
 	}
-
-	int Next(int max = 9999999) {
-		i *= 1.03f;
-		srand(++i);
-
-		return max == 0 ? 0: rand() % max;
+	static float Next(float min, float max) {
+		std::uniform_real_distribution<float> uni(min, max);
+		return uni(GetRNG());
 	}
-
-	unsigned int i = 0;
 };
+
+// Returns an integer between min [inclusive] and max [exclusive].
+static int RandomInt(int min, int max) { return Random::GetInstance().Next(min, max); }
+
+// Returns an integer between 0 [inclusive] and max [exclusive].
+static int RandomInt(int max) { return Random::GetInstance().Next(0, max); }
+
+// Returns a float between min [inclusive] and max [inclusive].
+static float RandomFloat(float min, float max) { return Random::GetInstance().Next(min, max); }
+
+// Returns a float between 0 [inclusive] and max [inclusive].
+static float RandomFloat(float max) { return Random::GetInstance().Next(0.0f, max); }

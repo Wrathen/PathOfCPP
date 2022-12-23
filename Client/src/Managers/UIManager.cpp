@@ -3,13 +3,10 @@
 void UIManager::Update() {
 	Collection::Update();
 
-	for (auto& element : *GetAll())
+	for (auto& element : *GetAll()) {
 		element.second->Update();
-}
-
-void UIManager::RenderAll() {
-	for (auto& element : *GetAll())
 		element.second->Render();
+	}
 }
 
 bool UIManager::OnMouseDown() {

@@ -2,6 +2,8 @@
 #include "../Managers/CollisionManager.h"
 #include "../Managers/EntityManager.h"
 #include "../Miscellaneous/Log.h"
+#include "../Miscellaneous/Timer.h"
+#include "../Components/Collision/BoxCollider.h"
 
 Projectile::Projectile(Entity* src, Vector2 position, float rotation, float speed, float duration) : Entity("assets/sprites/arrow.png", "Arrow") {
 	collisionTag = EntityCollisionTag::Friendly;
@@ -38,15 +40,15 @@ bool Projectile::CheckIfTooFarAway() {
 }
 void Projectile::CheckCollisions() {
 	Vector2 myPos = transform.GetScreenPosition();
-	Vector2 boxCollider(5, 5);
-	Vector2 enemyBoxCollider(5, 5);
-	int piercing = 2;
+	int piercing = 500;
 
-	auto allEntities = CollisionMgr.spatialHash.Query(myPos.x, myPos.y, 1, 1);
-	//Debug(allEntities.size());
+	auto allEntities = CollisionMgr.spatialHash.Query(myPos.x - boxCollider.x, myPos.y - boxCollider.y, 2, 2);
+
 	for (auto* entity : allEntities) {
-		if (entity->isToBeDeleted) continue;
-		if (collisionTag == entity->collisionTag) continue;
+		if (entity->isToBeDeleted) {
+			CollisionMgr.spatialHash.Remove(entity);
+			continue;
+		}
 
 		Vector2 pos = entity->transform.GetScreenPosition();
 		bool hit = myPos.x + boxCollider.x > pos.x - enemyBoxCollider.x && myPos.x - boxCollider.x < pos.x + enemyBoxCollider.x &&

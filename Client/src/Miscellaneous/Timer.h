@@ -19,6 +19,8 @@ public:
 
 		return end - start;
 	}
+
+	void Reset() { initTime = cclock::now(); }
 	void Log() {
 		auto duration = GetTime();
 		double ms = duration * 0.001;

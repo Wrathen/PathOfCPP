@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Managers\EnemySpawnManager.h" />
     <ClInclude Include="src\Components\Collision\QuadTree.h" />
     <ClInclude Include="src\Components\Collision\SpatialHash.h" />
     <ClInclude Include="src\Miscellaneous\Singleton.h" />
@@ -272,13 +273,12 @@
     <ClInclude Include="src\Entities\Monsters\Zombie.h" />
     <ClInclude Include="src\Managers\UIManager.h" />
     <ClInclude Include="src\UI\UIElement.h" />
-    <ClInclude Include="src\Behaviour\StatBehaviour.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Managers\EnemySpawnManager.cpp" />
     <ClCompile Include="src\Components\Collision\Collider.cpp" />
     <ClCompile Include="src\Managers\CollisionManager.cpp" />
     <ClCompile Include="src\Components\Collision\BoxCollider.cpp" />
-    <ClCompile Include="src\Components\HealthBar.cpp" />
     <ClCompile Include="src\Entities\Monsters\Boar.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Entities\Projectile.cpp" />
@@ -299,7 +299,6 @@
     <ClCompile Include="src\Entities\Monsters\Zombie.cpp" />
     <ClCompile Include="src\Managers\UIManager.cpp" />
     <ClCompile Include="src\UI\UIElement.cpp" />
-    <ClCompile Include="src\Behaviour\StatBehaviour.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,6 @@
 #include "MoveTowardsTarget.h"
 #include "../../Managers/GameManager.h"
+#include "../../Entities/Monster.h"
 
 void MoveTowardsTarget::Update() {
 	if (!isEnabled || !target) return;
@@ -14,5 +15,5 @@ void MoveTowardsTarget::Update() {
 	// Calculate the direction and move towards the target.
 	float angle = Vector2::AngleBetween(sourceTransform->position, targetTransform->position);
 	Vector2 dir = Vector2::FromAngle(angle);
-	sourceTransform->Move(dir, source->GetStats()->moveSpeed);
+	sourceTransform->Move(dir, ((Monster*)source)->GetMoveSpeed());
 }

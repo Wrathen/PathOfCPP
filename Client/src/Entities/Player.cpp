@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "Projectile.h"
+#include "Monsters/Boar.h"
 #include "../Miscellaneous/Log.h"
+#include "../Miscellaneous/Random.h"
 
 Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { Start(); }
 
@@ -9,9 +11,9 @@ void Player::Start() {
 
 	SetProjectileSpeed(60);
 	SetNumberOfProjectiles(1);
-	SetAttackSpeed(0.09f);
+	SetAttackSpeed(0.3f);
 
-	healthBar = new HealthBar(this);
+	healthBar = new HealthBar<Player>(this);
 	healthBar->transform.SetScale(3.5f, 3.0f);
 	
 	transform.SetScale(2.2f, 2.2f);
@@ -22,14 +24,14 @@ void Player::Start() {
 void Player::Update() {
 	transform.Move(transform.velocity.Normalize(), GetMoveSpeed());
 
-	if (GetAttackingState() && SDL_GetTicks64() > GetNextAttackTick()) {
+	if (GetAttackingState() && attackTimer.GetTimeMS() > (GetAttackSpeed() * 1000)) {
 		int mouseX, mouseY;
 		SDL_GetMouseState(&mouseX, &mouseY);
 
 		Vector2 mousePos(mouseX, mouseY);
 		ShootArrow(mousePos);
 
-		SetNextAttackTick(SDL_GetTicks64() + (GetAttackSpeed() * 1000));
+		attackTimer.Reset();
 	}
 }
 
@@ -37,7 +39,8 @@ void Player::ShootArrow(const Vector2& targetPos) {
 	int numberOfProjectiles = GetNumberOfProjectiles();
 	float mainRotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
 
-	float spreadDistance = 1.30895833f / numberOfProjectiles; // this magic number is just PI/2.4 = ~75 degrees spread distance
+	// used to be 1.30895833f or PI/2.4 = ~75 degrees spread.
+	float spreadDistance = (3.1415f * GetProjectileAngleMultiplier()) / numberOfProjectiles;
 	bool isEven = numberOfProjectiles % 2 == 0;
 
 	for (int i = 0; i < numberOfProjectiles; ++i) {
@@ -46,12 +49,13 @@ void Player::ShootArrow(const Vector2& targetPos) {
 
 		float offset = spreadDistance * multiplier;
 		float rotation = mainRotation + offset;
-
+		
 		new Projectile(this, transform.GetPosition(), rotation, GetProjectileSpeed());
 	}
 }
 
 void Player::OnKill() {
+	++totalKills;
 	FUN_Headhunter();
 }
 
@@ -86,6 +90,7 @@ void Player::FUN_Headhunter() {
 		SetHealth(GetHealth() * 1.25f);
 		break;
 	case 5:
+		if (GetNumberOfProjectiles() > 1000) return;
 		SetNumberOfProjectiles(GetNumberOfProjectiles() + 1);
 		break;
 	}
