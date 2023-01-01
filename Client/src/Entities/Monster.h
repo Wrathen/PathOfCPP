@@ -11,12 +11,13 @@ enum class MonsterRarity {
     Unique = 3
 };
 
-class Monster: public Entity, public Stats {
+class Monster: public Entity {
 public:
     MonsterRarity rarity = MonsterRarity::Common;
-    HealthBar<Monster>* healthBar;
-    BoxCollider* collider;
-    MoveTowardsTarget moveTowardsTarget;
+    Stats* stats = nullptr;
+    HealthBar* healthBar = nullptr;
+    BoxCollider* collider = nullptr;
+    MoveTowardsTarget* moveTowardsTarget = nullptr;
 
     // Base Functions
     void Start() override;
@@ -28,7 +29,7 @@ public:
     // Utility Functions
     std::string ToString() override {
         if (!this) return "This entity has already been deleted. What are you doing?!";
-        return "A level " + std::to_string(GetLevel()) + " " + name + " with GUID: " + std::to_string(guid);
+        return "A level " + std::to_string(stats->GetLevel()) + " " + name + " with GUID: " + std::to_string(guid);
     }
 
 protected:

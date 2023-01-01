@@ -52,7 +52,7 @@ void InputManager::OnMouseDown() {
 
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
-	if (player) player->SetAttackingState(true);
+	if (player) player->stats->SetAttackingState(true);
 }
 void InputManager::OnMouseUp() {
 	// Notify UIManager
@@ -61,5 +61,5 @@ void InputManager::OnMouseUp() {
 
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
-	if (player) player->SetAttackingState(false);
+	if (player) player->stats->SetAttackingState(false);
 }

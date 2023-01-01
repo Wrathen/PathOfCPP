@@ -1,21 +1,20 @@
 #pragma once
 #include <string>
+#include "../Component.h"
 #include "../../Entities/Entity.h"
 #include "../../Miscellaneous/GUID.h"
 
-class Collider {
+class Collider: public Component {
 public:
-	Entity* entity;
 	Transform* transform;
 	GUID guid = 0;
 	bool isToBeDeleted = false;
 
 	// Base Functions
-	Collider();
 	virtual ~Collider() = default;
 
-	virtual void Start() = 0;
-	virtual void Update() = 0;
+	virtual void Start();
+	virtual void Update();
 
 	// Main Functions
 	void Delete();

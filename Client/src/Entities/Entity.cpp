@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "../Managers/EntityManager.h"
+#include "../Managers/GameManager.h"
 
 Entity::Entity(): Entity("Unnamed") {}
 Entity::Entity(std::string _name) : Entity("assets/sprites/nosprite.png", _name) {}
@@ -11,7 +12,10 @@ Entity::Entity(std::string texturePath, std::string _name) {
 	renderer.AssignTexture(texturePath);
 	renderer.shouldDrawCentered = true;
 }
-void Entity::Render() { renderer.Render(); }
+void Entity::Render() { 
+	renderer.Render();
+	//GAME.DrawRect(transform.GetScreenPosition(), 15, 15);
+}
 
 // Main functions
 void Entity::Delete() { EntityMgr.Remove(this); }

@@ -1,7 +1,6 @@
 #include "Monster.h"
 #include "../Managers/GameManager.h"
 #include "../Miscellaneous/Random.h"
-#include "../Miscellaneous/Log.h"
 
 Monster::Monster(std::string name): Entity(name) { Start(); }
 Monster::Monster(std::string texturePath, std::string name): Entity(texturePath, name) { Start(); }
@@ -17,32 +16,25 @@ void Monster::Start() {
 	transform.SetScale((int)(rarity) * 0.40f + 2, (int)(rarity) * 0.40f + 2);
 
 	// Stats
-	SetMoveSpeed(8.0f + ((int)rarity * 2.0f));
-	SetMaxHealth(100 + ((int)rarity * 27.45f));
-	SetHealth(RandomInt(GetMaxHealth()) + 1);
+	stats = AddComponent<Stats>();
+	stats->SetMoveSpeed(8.0f + ((int)rarity * 2.0f));
+	stats->SetMaxHealth(100 + ((int)rarity * 27.45f));
+	stats->SetHealth(RandomInt(stats->GetMaxHealth()) + 1);
 
 	// Healthbar
-	healthBar = new HealthBar<Monster>(this);
+	healthBar = AddComponent<HealthBar>();
 	healthBar->transform.SetScale(3.5f, 3.0f);
 
 	// Box Collider
-	collider = new BoxCollider(this, 15, 15);
+	collider = AddComponent<BoxCollider>();
 
 	// AI
-	moveTowardsTarget.SetSource(this);
-	moveTowardsTarget.SetTarget((Entity*)GAME.GetPlayer());
-
-	// [To:Do] Delete--Debug
-	int offset = 800;
-	int randx = RandomInt(offset) - offset / 2;
-	int randy = RandomInt(offset) - offset / 2;
-
-	//Debug(std::to_string(randx) + ", " + std::to_string(randy));
-	transform.SetPosition(randx, randy);
+	moveTowardsTarget = AddComponent<MoveTowardsTarget>();
+	moveTowardsTarget->SetTarget(GAME.GetPlayer());
 
 	collisionTag = EntityCollisionTag::Hostile;
 }
 
 void Monster::Update() {
-	moveTowardsTarget.Update();
+	moveTowardsTarget->Update();
 }

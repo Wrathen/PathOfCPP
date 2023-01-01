@@ -1,7 +1,8 @@
 #include "Collider.h"
 #include "../../Managers/CollisionManager.h"
 
-Collider::Collider() { CollisionMgr.Add(this); }
+void Collider::Start() { CollisionMgr.Add(this); }
+void Collider::Update() {}
 void Collider::Delete() { CollisionMgr.Remove(this); }
 
 std::string Collider::ToString() {

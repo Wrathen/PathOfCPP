@@ -1,6 +1,6 @@
 #pragma once
-#include "../Entities/Entity.h"
-class Stats {
+#include "Component.h"
+class Stats: public Component {
 public:
     // General Stats
     unsigned int level = 1;
@@ -13,16 +13,18 @@ public:
     int intelligence = -6;
 
     // Offensive
-    float meleePower = 5;
+    float attackPower = 5;
     float haste = 0;
-    float crit = 0;
+    float critChance = 10.0f;
+	float critMultiplier = 1.0f;
+	float versatility = 0;
 
 	// Projectiles
 	unsigned int numberOfProjectiles = 1;
 	float projectileSpeed = 35.00f;
 	float projectileAngleMultiplier = 0.15f;
+	int piercingAmount = 1;
 	
-
     // Utility
     float sizeMultiplier = 1.0f;
     float moveSpeed = 25.0f;
@@ -37,9 +39,11 @@ public:
 	// Getters
 	unsigned int GetLevel() const { return level; }
 	float GetMoveSpeed() const { return moveSpeed; }
-	float GetMeleePower() const { return meleePower; }
+	float GetAttackPower() const { return attackPower; }
 	float GetHaste() const { return haste; }
-	float GetCrit() const { return crit; }
+	float GetCritChance() const { return critChance; }
+	float GetCritMultiplier() const { return critMultiplier; }
+	float GetVersatility() const { return versatility; }
 	float GetProjectileSpeed() const { return projectileSpeed; }
 	float GetProjectileAngleMultiplier() const { return projectileAngleMultiplier; }
 	unsigned int GetNumberOfProjectiles() const { return numberOfProjectiles; }
@@ -48,13 +52,16 @@ public:
 	float GetAttackSpeed() const { return attackSpeed; }
 	bool GetAttackingState() const { return isAttacking; }
 	float GetSizeMultiplier() const { return sizeMultiplier; }
+	int GetPiercingAmount() const { return piercingAmount; }
+	float GetDamageAmount() const { return attackPower; }
 
 	// Setters
 	void SetLevel(unsigned int value) { level = value; }
 	void SetMoveSpeed(float value) { moveSpeed = value; }
-	void SetMeleePower(float value) { meleePower = value; }
+	void SetAttackPower(float value) { attackPower = value; }
 	void SetHaste(float value) { haste = value; }
-	void SetCrit(float value) { crit = value; }
+	void SetCritChance(float value) { critChance = value; }
+	void SetCritMultiplier(float value) { critMultiplier = value; }
 	void SetProjectileSpeed(float value) { projectileSpeed = value; }
 	void SetHealth(float value) { health = value; }
 	void SetMaxHealth(float value) { maxHealth = value; }
@@ -62,6 +69,8 @@ public:
 	void SetAttackingState(bool value) { isAttacking = value; }
 	void SetSizeMultiplier(float value) { sizeMultiplier = value; }
 	void SetNumberOfProjectiles(unsigned int value) { numberOfProjectiles = value; }
+	void SetPiercingAmount(int value) { piercingAmount = value; }
 
-	friend class Entity;
+	// Enforced Method by Component Base Class
+	void Start() {}
 };

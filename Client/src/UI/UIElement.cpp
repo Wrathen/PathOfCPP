@@ -6,10 +6,10 @@ UIElement::UIElement(std::string texturePath) {
 	renderer.AssignTexture(texturePath);
 
 	UIMgr.Add(this);
-	Start();
+	renderer.SetPositionAbsolute();
 }
 
-void UIElement::Start() { renderer.SetPositionAbsolute(); }
+void UIElement::Start() {}
 void UIElement::Update() {}
 void UIElement::Render() { renderer.Render(); }
 void UIElement::Delete() { UIMgr.Remove(this); }

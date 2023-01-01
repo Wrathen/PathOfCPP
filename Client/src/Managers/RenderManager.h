@@ -8,8 +8,8 @@
 #define MainRenderer Renderer::GetInstance()
 class Renderer : public Singleton<Renderer> { friend class Singleton;
 public:
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+    SDL_Window* window = nullptr;
+    SDL_Renderer* renderer = nullptr;
 
     const int SCREEN_WIDTH = 1280;
     const int SCREEN_HEIGHT = 720;

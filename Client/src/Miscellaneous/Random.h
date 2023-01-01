@@ -12,7 +12,7 @@ private:
 
 	// Static member initialization function to seed the random number generator with the current time
 	static std::mt19937& GetRNG() {
-		static std::mt19937 rng(std::chrono::system_clock::now().time_since_epoch().count());
+		static std::mt19937 rng(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
 		return rng;
 	}
 

@@ -160,6 +160,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\UI\Background.h" />
+    <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Managers\EnemySpawnManager.h" />
     <ClInclude Include="src\Components\Collision\QuadTree.h" />
     <ClInclude Include="src\Components\Collision\SpatialHash.h" />

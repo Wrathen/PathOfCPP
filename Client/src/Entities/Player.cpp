@@ -7,13 +7,14 @@
 Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { Start(); }
 
 void Player::Start() {
-	SetMoveSpeed(25.0f);
+	stats = AddComponent<Stats>();
+	stats->SetMoveSpeed(25.0f);
 
-	SetProjectileSpeed(60);
-	SetNumberOfProjectiles(1);
-	SetAttackSpeed(0.3f);
+	stats->SetProjectileSpeed(60);
+	stats->SetNumberOfProjectiles(1);
+	stats->SetAttackSpeed(0.3f);
 
-	healthBar = new HealthBar<Player>(this);
+	healthBar = AddComponent<HealthBar>();
 	healthBar->transform.SetScale(3.5f, 3.0f);
 	
 	transform.SetScale(2.2f, 2.2f);
@@ -22,9 +23,9 @@ void Player::Start() {
 }
 
 void Player::Update() {
-	transform.Move(transform.velocity.Normalize(), GetMoveSpeed());
+	transform.Move(transform.velocity.Normalize(), stats->GetMoveSpeed());
 
-	if (GetAttackingState() && attackTimer.GetTimeMS() > (GetAttackSpeed() * 1000)) {
+	if (stats->GetAttackingState() && attackTimer.GetTimeMS() > (stats->GetAttackSpeed() * 1000)) {
 		int mouseX, mouseY;
 		SDL_GetMouseState(&mouseX, &mouseY);
 
@@ -36,11 +37,11 @@ void Player::Update() {
 }
 
 void Player::ShootArrow(const Vector2& targetPos) {
-	int numberOfProjectiles = GetNumberOfProjectiles();
+	int numberOfProjectiles = stats->GetNumberOfProjectiles();
 	float mainRotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
 
 	// used to be 1.30895833f or PI/2.4 = ~75 degrees spread.
-	float spreadDistance = (3.1415f * GetProjectileAngleMultiplier()) / numberOfProjectiles;
+	float spreadDistance = (3.1415f * stats->GetProjectileAngleMultiplier()) / numberOfProjectiles;
 	bool isEven = numberOfProjectiles % 2 == 0;
 
 	for (int i = 0; i < numberOfProjectiles; ++i) {
@@ -50,12 +51,12 @@ void Player::ShootArrow(const Vector2& targetPos) {
 		float offset = spreadDistance * multiplier;
 		float rotation = mainRotation + offset;
 		
-		new Projectile(this, transform.GetPosition(), rotation, GetProjectileSpeed());
+		new Projectile(this, transform.GetPosition(), rotation, stats->GetProjectileSpeed());
 	}
 }
 
 void Player::OnKill() {
-	++totalKills;
+	++stats->totalKills;
 	FUN_Headhunter();
 }
 
@@ -69,29 +70,29 @@ void Player::FUN_Headhunter() {
 	int rnd = RandomInt(6);
 	switch (rnd) {
 	case 0:
-		if (GetSizeMultiplier() > 4.0f) return;
-		SetSizeMultiplier(GetSizeMultiplier() * 1.05f);
-		transform.SetScaleModifier(GetSizeMultiplier());
+		if (stats->GetSizeMultiplier() > 4.0f) return;
+		stats->SetSizeMultiplier(stats->GetSizeMultiplier() * 1.05f);
+		transform.SetScaleModifier(stats->GetSizeMultiplier());
 		break;
 	case 1:
-		if (GetMoveSpeed() > 100) return;
-		SetMoveSpeed(GetMoveSpeed() * 1.05f);
+		if (stats->GetMoveSpeed() > 100) return;
+		stats->SetMoveSpeed(stats->GetMoveSpeed() * 1.05f);
 		break;
 	case 2:
-		if (GetProjectileSpeed() > 160) return;
-		SetProjectileSpeed(GetProjectileSpeed() * 1.05f);
+		if (stats->GetProjectileSpeed() > 160) return;
+		stats->SetProjectileSpeed(stats->GetProjectileSpeed() * 1.05f);
 		break;
 	case 3:
-		if (GetAttackSpeed() < 0.0001f) return;
-		SetAttackSpeed(GetAttackSpeed() * 0.95f);
+		if (stats->GetAttackSpeed() < 0.0001f) return;
+		stats->SetAttackSpeed(stats->GetAttackSpeed() * 0.95f);
 		break;
 	case 4:
-		SetMaxHealth(GetMaxHealth() * 1.25f);
-		SetHealth(GetHealth() * 1.25f);
+		stats->SetMaxHealth(stats->GetMaxHealth() * 1.25f);
+		stats->SetHealth(stats->GetHealth() * 1.25f);
 		break;
 	case 5:
-		if (GetNumberOfProjectiles() > 1000) return;
-		SetNumberOfProjectiles(GetNumberOfProjectiles() + 1);
+		if (stats->GetNumberOfProjectiles() > 1000) return;
+		stats->SetNumberOfProjectiles(stats->GetNumberOfProjectiles() + 1);
 		break;
 	}
 }

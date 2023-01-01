@@ -8,11 +8,7 @@ public:
 	int xOffset = 0;
 	int yOffset = 0;
 
-	BoxCollider(Entity* _entity, int _w, int _h, int _xOffset = 0, int _yOffset = 0);
-	BoxCollider() = delete;
-
-	void Start() override;
-	void Update() override;
+	void SetProperties(int _w, int _h, int _xOffset = 0, int _yOffset = 0);
 
 	bool Intersects(const BoxCollider& other) const;
 	void OnCollisionEnter(Collider* other) override;

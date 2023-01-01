@@ -4,13 +4,15 @@
 #include "../Miscellaneous/Singleton.h"
 #include "../Miscellaneous/Time.h"
 #include "../Entities/Player.h"
+#include "../UI/Background.h"
 
 
 #define GAME GameManager::GetInstance()
 class GameManager: public Singleton<GameManager> { friend class Singleton;
 public:
+	Player* player = nullptr;
+	Background background;
 	SDL_Event event;
-	Player* player;
 
 	int gameWidth = 1920;
 	int gameHeight = 1080;
@@ -25,6 +27,8 @@ public:
 
 	// Main Functions
 	Player* GetPlayer() const;
+	void DrawRect(int x, int y, int w, int h);
+	void DrawRect(Vector2 pos, int w, int h);
 
 private:
 	GameManager() {}

@@ -1,12 +1,11 @@
 #include "BoxCollider.h"
 
-void BoxCollider::Start() {}
-void BoxCollider::Update() {}
-
-BoxCollider::BoxCollider(Entity* _entity, int _w, int _h, int _xOffset, int _yOffset)
-	: w(_w), h(_h), xOffset(_xOffset), yOffset(_yOffset) {
-	entity = _entity;
-	transform = &entity->transform;
+void BoxCollider::SetProperties(int _w, int _h, int _xOffset, int _yOffset) {
+	transform = &source->transform;
+	w = _w;
+	h = _h;
+	xOffset = _xOffset;
+	yOffset = _yOffset;
 }
 
 bool BoxCollider::Intersects(const BoxCollider& other) const {
@@ -17,5 +16,5 @@ bool BoxCollider::Intersects(const BoxCollider& other) const {
 }
 
 void BoxCollider::OnCollisionEnter(Collider* other) {
-	//Debug("Hey, I just collided with another collider! LMAO!");
+	//Debug("Hey, I just collided with another collider!");
 }

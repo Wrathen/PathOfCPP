@@ -114,6 +114,8 @@
     <ClInclude Include="src\Components\Collision\QuadTree.h" />
     <ClInclude Include="src\Components\Collision\SpatialHash.h" />
     <ClInclude Include="src\Managers\EnemySpawnManager.h" />
+    <ClInclude Include="src\Components\Component.h" />
+    <ClInclude Include="src\UI\Background.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />

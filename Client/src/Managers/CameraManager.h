@@ -5,7 +5,7 @@
 #define Camera CameraManager::GetInstance()
 class CameraManager : public Singleton<CameraManager> { friend class Singleton;
 public:
-	Entity* target;
+	Entity* target = nullptr;
 	Transform transform;
 
 	// Base Functions

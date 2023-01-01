@@ -10,9 +10,9 @@ class EnemySpawnManager: public Singleton<EnemySpawnManager> { friend class Sing
 private:
 	Timer timer;
 	// Wave Spawn Interval in Milliseconds
-	float spawnInterval = 500;
+	float spawnInterval = 1000;
 	// Number of enemies to spawn per wave
-	int spawnAmount = 2;
+	int spawnAmount = 3;
 
 public:
 	int totalNumberOfSpawnedEnemies = 0;

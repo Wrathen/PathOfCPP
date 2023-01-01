@@ -6,11 +6,11 @@ public:
 	Entity* source;
 	Uint64 lifetime;
 
-private:
-	Vector2 boxCollider{ 15, 15 };
-	Vector2 enemyBoxCollider{ 15, 15 };
+	Vector2 boxCollider{ 20, 15 };
+	Vector2 enemyBoxCollider{ 70, 70 };
+	int piercingAmount = 1;
+	float damageAmount = 1;
 
-public:
 	// Constructor
 	Projectile(Entity* src, Vector2 position, float rotation, float speed, float duration = 3.0f);
 
@@ -21,5 +21,6 @@ public:
 	// Main Functions
 	bool CheckIfTooFarAway();
 	void CheckCollisions();
+	void CheckLifetime();
 	void OnKill() override {};
 };

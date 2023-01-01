@@ -1,7 +1,9 @@
 #pragma once
+#include <unordered_map>
+#include <typeindex>
+#include <typeinfo>
 #include <string>
 #include "../Miscellaneous/GUID.h"
-#include "../Components/Stats.h"
 #include "../Components/SpriteRenderer.h"
 
 // Temporary -- Delete Later
@@ -41,4 +43,24 @@ public:
 	// Utility Functions
 	void AssignGUID(GUID _guid) { if (guid != 0) return; guid = _guid; }
 	virtual std::string ToString();
+
+	// ECS
+	template <typename T>
+	T* AddComponent() {
+		T* component = new T();
+		component->SetSource(this);
+		component->Start();
+		components_[std::type_index(typeid(T))] = component;
+		return component;
+	}
+
+	template <typename T>
+	T* GetComponent() {
+		auto it = components_.find(std::type_index(typeid(T)));
+		if (it == components_.end()) return nullptr;
+		return static_cast<T*>(it->second);
+	}
+
+private:
+	std::unordered_map<std::type_index, void*> components_;
 };

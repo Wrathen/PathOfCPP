@@ -10,16 +10,26 @@
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Timer.h"
 
+// Utility functions, will move them out of here/class.
+void GameManager::DrawRect(int x, int y, int w, int h) {
+	SDL_Rect rect;
+	rect.x = x;
+	rect.y = y;
+	rect.w = w;
+	rect.h = h;
+	SDL_SetRenderDrawColor(MainRenderer.renderer, 0, 255, 0, 255);
+	SDL_RenderFillRect(MainRenderer.renderer, &rect);
+}
+void GameManager::DrawRect(Vector2 pos, int w, int h) { DrawRect(pos.x, pos.y, w, h); }
+
 // Base Functions
 void GameManager::Init() {
 	MainRenderer.Init();
 	Start();
 }
 void GameManager::Start() {
+	background.SetProperties("assets/2.png", MainRenderer.SCREEN_WIDTH, MainRenderer.SCREEN_HEIGHT);
 	player = new Player("Wrathen");
-	new UIElement();
-
-	Debug(player->ToString());
 
 	Update();
 }
@@ -34,15 +44,40 @@ void GameManager::Update() {
 		timer.Reset();
 
 		// Main Loop
+		Timer benchmark1("PollEvents");
 		PollEvents();
+		benchmark1.Pause();
+
+		Timer benchmark2("MainRenderer.Clear");
 		MainRenderer.Clear();
+		benchmark2.Pause();
+
+		// Draw some background here, before anything else is drawn
+		background.Render();
+
+		Timer benchmark3("EnemySpawner.Update");
 		EnemySpawner.Update();
+		benchmark3.Pause();
+
+		Timer benchmark4("EntityMgr.Update");
 		EntityMgr.Update(); // This also renders!
-		player->Update();
+		benchmark4.Pause();
+
+		Timer benchmark5("CollisionMgr.Update");
 		CollisionMgr.Update();
+		benchmark5.Pause();
+
+		Timer benchmark6("Camera.Update");
 		Camera.Update();
+		benchmark6.Pause();
+
+		Timer benchmark7("UIMgr.Update");
 		UIMgr.Update(); // This also renders!
+		benchmark7.Pause();
+
+		Timer benchmark8("MainRenderer.Draw");
 		MainRenderer.Draw();
+		benchmark8.Pause();
 
 		// Frame Timers, Delays
 		bool limitFramerate = false;
@@ -55,13 +90,24 @@ void GameManager::Update() {
 		Time::deltaTime = frameTime;
 
 		// Debug Stuff
-		if (debugTimer.GetTimeMS() > 300) {
-			debugTimer.Reset();
-			std::cout << std::setprecision(2) << std::fixed << ("FPS: " + std::to_string(1000.0f / Time::deltaTime) +
+		if (debugTimer.GetTimeMS() > 1500) {
+			std::cout << "<----------------------------------------------------->" << std::endl;
+			std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / Time::deltaTime) +
 				", MS: " + std::to_string(Time::deltaTime)) +
 				", TotalSpawnedEnemies: " + std::to_string(EnemySpawner.totalNumberOfSpawnedEnemies) +
-				", TotalKilledEnemies: " + std::to_string(GetPlayer()->totalKills) +
-				", NumberOfProjectiles: " + std::to_string(GetPlayer()->GetNumberOfProjectiles()) << std::endl;
+				", TotalKilledEnemies: " + std::to_string(GetPlayer()->stats->totalKills) +
+				", NumberOfProjectiles: " + std::to_string(GetPlayer()->stats->GetNumberOfProjectiles()) << std::endl;
+			std::cout << "<----------------------------------------------------->" << std::endl;
+
+			benchmark1.Log();
+			benchmark2.Log();
+			benchmark3.Log();
+			benchmark4.Log();
+			benchmark5.Log();
+			benchmark6.Log();
+			benchmark7.Log();
+			benchmark8.Log();
+			debugTimer.Reset();
 		}
 	}
 }

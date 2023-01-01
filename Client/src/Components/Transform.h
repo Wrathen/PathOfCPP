@@ -1,14 +1,13 @@
 #pragma once
+#pragma warning( disable : 4244 )
 #include "../Miscellaneous/Vector.h"
 #include "../Miscellaneous/Time.h"
 
 class Transform {
-private:
-    Vector2 scale = Vector2(1, 1);
-
 public:
     Vector2 position = Vector2(0, 0);
     Vector2 velocity = Vector2(0, 0);
+    Vector2 scale = Vector2(1, 1);
     float rotation = 0;
     float scaleModifier = 1.0f;
 
