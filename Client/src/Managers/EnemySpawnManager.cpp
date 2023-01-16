@@ -7,7 +7,7 @@
 void EnemySpawnManager::SetSpawnInterval(float interval) { spawnInterval = interval; }
 void EnemySpawnManager::SetSpawnAmount(int amount) { spawnAmount = amount; }
 void EnemySpawnManager::SpawnEnemy() {
-	if (totalNumberOfSpawnedEnemies > 1000000) return;
+	if (totalNumberOfSpawnedEnemies >= maxSpawnAmount) return;
 
 	auto random = RandomInt(0, 2);
 	Monster* enemy = nullptr;

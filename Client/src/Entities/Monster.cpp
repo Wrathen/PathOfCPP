@@ -1,6 +1,7 @@
 #include "Monster.h"
 #include "../Managers/GameManager.h"
 #include "../Miscellaneous/Random.h"
+#include "../Item.h"
 
 Monster::Monster(std::string name): Entity(name) { Start(); }
 Monster::Monster(std::string texturePath, std::string name): Entity(texturePath, name) { Start(); }
@@ -37,4 +38,9 @@ void Monster::Start() {
 
 void Monster::Update() {
 	moveTowardsTarget->Update();
+}
+
+void Monster::OnDeath() {
+	if (lootChance > RandomFloat(1.0f))
+		Item::DropItem(transform.GetPosition());
 }

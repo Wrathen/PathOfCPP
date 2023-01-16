@@ -47,7 +47,7 @@ void InputManager::OnKeyUp(SDL_Keycode keyCode) {
 
 void InputManager::OnMouseDown() {
 	// Notify UIManager
-	bool raycast = UIMgr.OnMouseDown(); // bunu yaz
+	bool raycast = UIMgr.OnMouseDown();
 	if (raycast) return; // If we clicked any UI Element, we shouldn't fire arrows
 
 	// Player Attack State

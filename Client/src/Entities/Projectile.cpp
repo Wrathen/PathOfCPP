@@ -57,7 +57,7 @@ void Projectile::CheckCollisions() {
 	Vector2 myPos = transform.GetScreenPosition() - boxCollider / 2;
 	
 	// [Debug -- DELETE LATER] draw collisions
-	GAME.DrawRect(myPos, boxCollider.x, boxCollider.y);
+	//GAME.DrawRect(myPos, boxCollider.x, boxCollider.y);
 	auto allEntities = CollisionMgr.spatialHash.Query(myPos.x, myPos.y, 2, 2);
 
 	for (auto* entity : allEntities) {
@@ -67,7 +67,7 @@ void Projectile::CheckCollisions() {
 		}
 
 		// [Debug -- DELETE LATER] draw collisions
-		GAME.DrawRect(entity->transform.GetScreenPosition() - enemyBoxCollider / 2, enemyBoxCollider.x, enemyBoxCollider.y);
+		//GAME.DrawRect(entity->transform.GetScreenPosition() - enemyBoxCollider / 2, enemyBoxCollider.x, enemyBoxCollider.y);
 
 		Vector2 pos = entity->transform.GetScreenPosition();
 		bool hit = myPos.x > pos.x - enemyBoxCollider.x/2 && myPos.x < pos.x + enemyBoxCollider.x/2 &&
@@ -76,6 +76,7 @@ void Projectile::CheckCollisions() {
 		if (hit) {
 			//Debug("[" + std::to_string(guid) + "] Colliding with: " + entity->ToString());
 			source->OnKill();
+			entity->OnDeath();
 			entity->Delete();
 
 			if (--piercingAmount <= 0) {

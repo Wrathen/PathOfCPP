@@ -14,11 +14,16 @@ public:
 
 	bool isInteractable = true;
 	bool isToBeDeleted = false;
+	bool isBlockingRaycasts = true;
 
 	// Base Functions
 	virtual void Start();
 	virtual void Update();
 	virtual void Render();
+
+	// Events
+	// Returns a boolean to block raycasts
+	virtual bool OnClick();
 
 	// Main Functions
 	void SetInteractable(bool value) { isInteractable = value; }

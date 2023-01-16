@@ -39,6 +39,7 @@ public:
 
 	// Events
 	virtual void OnKill() = 0;
+	virtual void OnDeath() = 0;
 
 	// Utility Functions
 	void AssignGUID(GUID _guid) { if (guid != 0) return; guid = _guid; }

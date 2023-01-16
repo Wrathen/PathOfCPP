@@ -4,8 +4,8 @@ void CollisionManager::ResetSpatialHash() {
 	spatialHash.Clear();
 
 	for (auto& collider : *GetAll()) {
-		if (collider.second->source->isToBeDeleted) continue;
-		spatialHash.Insert(collider.second->source);
+		if (collider->source->isToBeDeleted) continue;
+		spatialHash.Insert(collider->source);
 	}
 }
 

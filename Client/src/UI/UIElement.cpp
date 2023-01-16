@@ -13,3 +13,5 @@ void UIElement::Start() {}
 void UIElement::Update() {}
 void UIElement::Render() { renderer.Render(); }
 void UIElement::Delete() { UIMgr.Remove(this); }
+
+bool UIElement::OnClick() { return isBlockingRaycasts; }

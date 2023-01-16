@@ -23,6 +23,7 @@ public:
     // Main Functions
     void ShootArrow(const Vector2& targetPos);
     void OnKill() override;
+    void OnDeath() override;
     void FUN_Headhunter();
 
     // Utility Functions

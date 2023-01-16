@@ -10,7 +10,7 @@ template <typename T>
 class Collection
 {
 private:
-    std::unordered_map<GUID, T*> itemList;
+    std::vector<T*> itemList;
     std::vector<T*> toBeDeletedList;
 
 public:
@@ -20,7 +20,7 @@ public:
 
         static GUID guid;
         item->AssignGUID(guid);
-        itemList[guid++] = item;
+        itemList.insert(itemList.end(), item);
     }
 
     void Remove(T* item) {
@@ -40,15 +40,19 @@ public:
     }
     auto GetAll() { return &itemList; }
 
-protected:
-    Collection<T>() {}
+    Collection<T>() {
+        Debug("Hey, a new collection have arrived!");
+
+        itemList = std::vector<T*>();
+        itemList.reserve(100000);
+    }
     Collection<T>(Collection<T> const&) = delete;
     void operator=(Collection<T> const&) = delete;
     ~Collection<T>() {
         //Debug(typeid(T).name());
         // I don't know how to enforce this Delete function on each item type, YET.
         // But, so far, I've used this only in Entity, UIElement and Collider's respective managers.
-        for (auto& item : itemList) item.second->Delete();
+        for (auto& item : itemList) item->Delete();
         itemList.clear();
     }
 
@@ -56,9 +60,14 @@ protected:
     void Delete(T* item) {
         if (!item) return;
 
-        //Debug("Deleted " + item->ToString());
-        itemList.erase(item->guid);
+        auto position = std::find(itemList.begin(), itemList.end(), item);
+        if (position == itemList.end()) {
+            Warn("Somehow, the item was not found in Collection::Delete");
+            return;
+        }
 
+        //Debug("Deleting " + item->ToString());
+        itemList.erase(position);
         delete item;
     }
     void DeleteAllQueued() {

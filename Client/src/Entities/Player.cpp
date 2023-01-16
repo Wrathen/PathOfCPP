@@ -3,6 +3,7 @@
 #include "Monsters/Boar.h"
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Random.h"
+#include "../Miscellaneous/Mouse.h"
 
 Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { Start(); }
 
@@ -26,12 +27,7 @@ void Player::Update() {
 	transform.Move(transform.velocity.Normalize(), stats->GetMoveSpeed());
 
 	if (stats->GetAttackingState() && attackTimer.GetTimeMS() > (stats->GetAttackSpeed() * 1000)) {
-		int mouseX, mouseY;
-		SDL_GetMouseState(&mouseX, &mouseY);
-
-		Vector2 mousePos(mouseX, mouseY);
-		ShootArrow(mousePos);
-
+		ShootArrow(Mouse::GetPosition());
 		attackTimer.Reset();
 	}
 }
@@ -55,6 +51,9 @@ void Player::ShootArrow(const Vector2& targetPos) {
 	}
 }
 
+void Player::OnDeath() {
+	Warn("Implement Player::OnDeath.");
+}
 void Player::OnKill() {
 	++stats->totalKills;
 	FUN_Headhunter();

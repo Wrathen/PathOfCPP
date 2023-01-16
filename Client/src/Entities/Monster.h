@@ -18,6 +18,7 @@ public:
     HealthBar* healthBar = nullptr;
     BoxCollider* collider = nullptr;
     MoveTowardsTarget* moveTowardsTarget = nullptr;
+    float lootChance = 0.17f;
 
     // Base Functions
     void Start() override;
@@ -25,6 +26,7 @@ public:
 
     // Main Functions
     void OnKill() override {}
+    void OnDeath() override;
 
     // Utility Functions
     std::string ToString() override {

@@ -23,4 +23,5 @@ public:
 	void CheckCollisions();
 	void CheckLifetime();
 	void OnKill() override {};
+	void OnDeath() override {};
 };

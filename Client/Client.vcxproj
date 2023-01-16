@@ -160,6 +160,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Miscellaneous\Mouse.h" />
+    <ClInclude Include="src\LootableItem.h" />
+    <ClInclude Include="src\Item.h" />
     <ClInclude Include="src\UI\Background.h" />
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\Managers\EnemySpawnManager.h" />
@@ -277,6 +280,8 @@
     <ClInclude Include="src\UI\UIElement.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\LootableItem.cpp" />
+    <ClCompile Include="src\Item.cpp" />
     <ClCompile Include="src\Managers\EnemySpawnManager.cpp" />
     <ClCompile Include="src\Components\Collision\Collider.cpp" />
     <ClCompile Include="src\Managers\CollisionManager.cpp" />

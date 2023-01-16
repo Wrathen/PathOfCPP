@@ -6,7 +6,7 @@
 
 class Collider: public Component {
 public:
-	Transform* transform;
+	Transform* transform = nullptr;
 	GUID guid = 0;
 	bool isToBeDeleted = false;
 
