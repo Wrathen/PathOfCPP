@@ -1,10 +1,12 @@
 #pragma once
 #include "Entity.h"
+#include "../Components/TextRenderer.h"
 #include "../Components/HealthBar.h"
 #include "../Miscellaneous/Timer.h"
 
 class Player : public Entity {
 public:
+    TextRenderer nameTag;
     Stats* stats;
     HealthBar* healthBar;
     Timer attackTimer;
@@ -19,6 +21,7 @@ public:
     // Base Functions
     void Start() override;
     void Update() override;
+    void Render() override;
 
     // Main Functions
     void ShootArrow(const Vector2& targetPos);

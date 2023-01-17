@@ -17,6 +17,12 @@ void Player::Start() {
 
 	healthBar = AddComponent<HealthBar>();
 	healthBar->transform.SetScale(3.5f, 3.0f);
+
+	nameTag.AssignTransform(&transform);
+	nameTag.SetText(name, SDL_Color{0, 0, 0});
+	nameTag.SetOffset(0, -75);
+	nameTag.SetFontSize(10);
+	nameTag.shouldDrawCentered = true;
 	
 	transform.SetScale(2.2f, 2.2f);
 
@@ -30,6 +36,10 @@ void Player::Update() {
 		ShootArrow(Mouse::GetPosition());
 		attackTimer.Reset();
 	}
+}
+void Player::Render() {
+	renderer.Render();
+	nameTag.Render();
 }
 
 void Player::ShootArrow(const Vector2& targetPos) {

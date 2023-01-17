@@ -119,6 +119,11 @@
     <ClInclude Include="src\Item.h" />
     <ClInclude Include="src\LootableItem.h" />
     <ClInclude Include="src\Miscellaneous\Mouse.h" />
+    <ClInclude Include="src\Components\TextRenderer.h" />
+    <ClInclude Include="src\Entities\NPCs\NPC.h" />
+    <ClInclude Include="src\Entities\NPCs\Gambler.h" />
+    <ClInclude Include="src\Entities\NPCs\Merchant.h" />
+    <ClInclude Include="src\Entities\NPCs\Blacksmith.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -147,5 +152,10 @@
     <ClCompile Include="src\Managers\EnemySpawnManager.cpp" />
     <ClCompile Include="src\Item.cpp" />
     <ClCompile Include="src\LootableItem.cpp" />
+    <ClCompile Include="src\Components\TextRenderer.cpp" />
+    <ClCompile Include="src\Entities\NPCs\NPC.cpp" />
+    <ClCompile Include="src\Entities\NPCs\Gambler.cpp" />
+    <ClCompile Include="src\Entities\NPCs\Merchant.cpp" />
+    <ClCompile Include="src\Entities\NPCs\Blacksmith.cpp" />
   </ItemGroup>
 </Project>

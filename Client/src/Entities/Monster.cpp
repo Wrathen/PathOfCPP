@@ -29,6 +29,13 @@ void Monster::Start() {
 	// Box Collider
 	collider = AddComponent<BoxCollider>();
 
+	// Name Tag
+	nameTag.AssignTransform(&transform);
+	nameTag.SetText(name, SDL_Color{ 0, 0, 0 });
+	nameTag.SetOffset(0, -75);
+	nameTag.SetFontSize(10);
+	nameTag.shouldDrawCentered = true;
+
 	// AI
 	moveTowardsTarget = AddComponent<MoveTowardsTarget>();
 	moveTowardsTarget->SetTarget(GAME.GetPlayer());
@@ -38,6 +45,10 @@ void Monster::Start() {
 
 void Monster::Update() {
 	moveTowardsTarget->Update();
+}
+void Monster::Render() {
+	renderer.Render();
+	nameTag.Render();
 }
 
 void Monster::OnDeath() {

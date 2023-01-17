@@ -6,10 +6,12 @@
 void Renderer::Init() {
 	SDL_Init(SDL_INIT_VIDEO);
 	IMG_Init(IMG_INIT_PNG);
+	TTF_Init();
 
 	window = SDL_CreateWindow("Path of CPP", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
+	font = TTF_OpenFont("assets/fonts/CHERL___.ttf", 16);
+	
 	Start();
 }
 void Renderer::Start() {}
@@ -23,6 +25,8 @@ Renderer::~Renderer() {
 	Debug("Quitting Game -- Destroy SDL");
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	TTF_CloseFont(font);
 	SDL_Quit();
 	IMG_Quit();
+	TTF_Quit();
 }

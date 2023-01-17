@@ -160,6 +160,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\NPCs\Blacksmith.h" />
+    <ClInclude Include="src\Entities\NPCs\Merchant.h" />
+    <ClInclude Include="src\Entities\NPCs\Gambler.h" />
+    <ClInclude Include="src\Entities\NPCs\NPC.h" />
     <ClInclude Include="src\Miscellaneous\Mouse.h" />
     <ClInclude Include="src\LootableItem.h" />
     <ClInclude Include="src\Item.h" />
@@ -278,8 +282,13 @@
     <ClInclude Include="src\Entities\Monsters\Zombie.h" />
     <ClInclude Include="src\Managers\UIManager.h" />
     <ClInclude Include="src\UI\UIElement.h" />
+    <ClInclude Include="src\Components\TextRenderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\NPCs\Blacksmith.cpp" />
+    <ClCompile Include="src\Entities\NPCs\Merchant.cpp" />
+    <ClCompile Include="src\Entities\NPCs\Gambler.cpp" />
+    <ClCompile Include="src\Entities\NPCs\NPC.cpp" />
     <ClCompile Include="src\LootableItem.cpp" />
     <ClCompile Include="src\Item.cpp" />
     <ClCompile Include="src\Managers\EnemySpawnManager.cpp" />
@@ -306,6 +315,7 @@
     <ClCompile Include="src\Entities\Monsters\Zombie.cpp" />
     <ClCompile Include="src\Managers\UIManager.cpp" />
     <ClCompile Include="src\UI\UIElement.cpp" />
+    <ClCompile Include="src\Components\TextRenderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

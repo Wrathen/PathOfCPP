@@ -12,8 +12,8 @@ private:
 	// Wave Spawn Interval in Milliseconds
 	float spawnInterval = 333;
 	// Number of enemies to spawn per wave
-	int spawnAmount = 3000;
-	int maxSpawnAmount = 100000;
+	int spawnAmount = 2;
+	int maxSpawnAmount = 1000;
 
 public:
 	int totalNumberOfSpawnedEnemies = 0;
@@ -24,10 +24,12 @@ public:
 	void SetSpawnInterval(float interval);
 	void SetSpawnAmount(int amount);
 	void SpawnEnemy();
+
+	void Start();
 	void Update();
 
 private:
-	EnemySpawnManager() {}
+	EnemySpawnManager() { Start(); }
 	~EnemySpawnManager() {}
 	EnemySpawnManager(EnemySpawnManager const&) = delete;
 	void operator=(EnemySpawnManager const&) = delete;

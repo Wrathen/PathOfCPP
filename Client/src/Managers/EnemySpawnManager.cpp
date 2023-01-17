@@ -4,6 +4,10 @@
 #include "../Behaviour/AI/MoveTowardsTarget.h"
 #include "../Miscellaneous/Log.h"
 
+#include "../Entities/NPCs/Blacksmith.h"
+#include "../Entities/NPCs/Merchant.h"
+#include "../Entities/NPCs/Gambler.h"
+
 void EnemySpawnManager::SetSpawnInterval(float interval) { spawnInterval = interval; }
 void EnemySpawnManager::SetSpawnAmount(int amount) { spawnAmount = amount; }
 void EnemySpawnManager::SpawnEnemy() {
@@ -27,6 +31,36 @@ void EnemySpawnManager::SpawnEnemy() {
 
 	// Do some statistics :^)
 	++totalNumberOfSpawnedEnemies;
+}
+
+void SpawnNPC(int type) {
+	NPC* npc = nullptr;
+	switch (type) {
+		case 0:
+			npc = new Merchant("Bilbo");
+			break;
+		case 1:
+			npc = new Gambler("Zeus");
+			break;
+		default:
+			npc = new Blacksmith("Patrick");
+			break;
+	}
+
+	// Set the created enemy's position randomly in a circular way.
+	float direction = RandomFloat(0.0f, 6.283f);
+	float distance = RandomFloat(150.0f, 350.0f);
+	Vector2 offset = GAME.GetPlayer()->transform.GetPosition();
+
+	float x = cos(direction) * distance + offset.x;
+	float y = sin(direction) * distance + offset.y;
+	npc->transform.SetPosition(x, y);
+}
+
+void EnemySpawnManager::Start() {
+	SpawnNPC(0);
+	SpawnNPC(1);
+	SpawnNPC(2);
 }
 void EnemySpawnManager::Update() {
 	// Elapse the time between the last wave

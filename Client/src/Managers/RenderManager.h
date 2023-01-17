@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <unordered_map>
 #include "../Miscellaneous/Singleton.h"
 #include "../Miscellaneous/GUID.h"
@@ -10,9 +11,10 @@ class Renderer : public Singleton<Renderer> { friend class Singleton;
 public:
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
+    TTF_Font* font = nullptr;
 
-    const int SCREEN_WIDTH = 1280;
-    const int SCREEN_HEIGHT = 720;
+    const int SCREEN_WIDTH = 1920;
+    const int SCREEN_HEIGHT = 1080;
 
     void Init();
     void Start();
