@@ -14,3 +14,7 @@ HH Edition v2 -- 6000 initial monsters, 16000 bullets/seconds after HH buffs, Ac
 
 https://user-images.githubusercontent.com/36766122/209038620-d7285a0d-d38a-45f9-a6a3-4cf64d3be8fc.mp4
 
+[January 17th 2023] NPC, Background, Profiling, Name tags and many more!
+
+https://user-images.githubusercontent.com/36766122/212797753-31ac921f-3786-41eb-8048-c9f28693c930.mp4
+
