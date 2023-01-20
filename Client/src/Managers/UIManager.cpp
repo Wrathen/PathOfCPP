@@ -6,9 +6,6 @@ void UIManager::Update() {
 	Collection::Update();
 
 	for (auto& element : *GetAll()) {
-		//auto s = static_cast<HealthBar<Monster>*>(element.second);
-		//s->UpdateDirect();
-		//s->RenderDirect();
 		element->Update();
 		element->Render();
 	}

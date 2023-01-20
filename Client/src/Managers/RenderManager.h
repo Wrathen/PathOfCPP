@@ -11,7 +11,7 @@ class Renderer : public Singleton<Renderer> { friend class Singleton;
 public:
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
-    TTF_Font* font = nullptr;
+    std::unordered_map<int, TTF_Font*> fontMap;
 
     const int SCREEN_WIDTH = 1920;
     const int SCREEN_HEIGHT = 1080;
@@ -20,6 +20,7 @@ public:
     void Start();
     void Clear();
     void Draw();
+    TTF_Font* GetFont(int size);
 
 private:
     Renderer() {}

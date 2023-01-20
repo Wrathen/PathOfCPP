@@ -10,6 +10,8 @@
 
 void EnemySpawnManager::SetSpawnInterval(float interval) { spawnInterval = interval; }
 void EnemySpawnManager::SetSpawnAmount(int amount) { spawnAmount = amount; }
+void EnemySpawnManager::SetMaxSpawnAmount(int amount) { maxSpawnAmount = amount; }
+
 void EnemySpawnManager::SpawnEnemy() {
 	if (totalNumberOfSpawnedEnemies >= maxSpawnAmount) return;
 
@@ -32,8 +34,7 @@ void EnemySpawnManager::SpawnEnemy() {
 	// Do some statistics :^)
 	++totalNumberOfSpawnedEnemies;
 }
-
-void SpawnNPC(int type) {
+void EnemySpawnManager::SpawnNPC(int type) {
 	NPC* npc = nullptr;
 	switch (type) {
 		case 0:
@@ -48,7 +49,7 @@ void SpawnNPC(int type) {
 	}
 
 	// Set the created enemy's position randomly in a circular way.
-	float direction = RandomFloat(0.0f, 6.283f);
+	float direction = RandomFloat(0.0f, 6.283f) * 25.0f;
 	float distance = RandomFloat(150.0f, 350.0f);
 	Vector2 offset = GAME.GetPlayer()->transform.GetPosition();
 
@@ -57,11 +58,7 @@ void SpawnNPC(int type) {
 	npc->transform.SetPosition(x, y);
 }
 
-void EnemySpawnManager::Start() {
-	SpawnNPC(0);
-	SpawnNPC(1);
-	SpawnNPC(2);
-}
+void EnemySpawnManager::Start() {}
 void EnemySpawnManager::Update() {
 	// Elapse the time between the last wave
 	auto elapsedTime = timer.GetTimeMS();

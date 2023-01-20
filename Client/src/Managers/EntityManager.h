@@ -11,7 +11,7 @@ public:
     void Update();
 
 private:
-	EntityManager() {}
+	EntityManager() : Collection<Entity>(100000) {}
 	~EntityManager() {}
 	EntityManager(EntityManager const&) = delete;
 	void operator=(EntityManager const&) = delete;

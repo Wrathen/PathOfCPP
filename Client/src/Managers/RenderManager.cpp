@@ -10,7 +10,6 @@ void Renderer::Init() {
 
 	window = SDL_CreateWindow("Path of CPP", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	font = TTF_OpenFont("assets/fonts/CHERL___.ttf", 16);
 	
 	Start();
 }
@@ -21,11 +20,21 @@ void Renderer::Draw() {
 	SDL_RenderPresent(renderer);
 }
 
+TTF_Font* Renderer::GetFont(int size) {
+	if (fontMap.count(size) == 0)
+		fontMap[size] = TTF_OpenFont("assets/fonts/CHERL___.ttf", size);
+
+	return fontMap[size];
+}
+
 Renderer::~Renderer() {
 	Debug("Quitting Game -- Destroy SDL");
+
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-	TTF_CloseFont(font);
+	for (auto fontPair: fontMap)
+		TTF_CloseFont(fontPair.second);
+
 	SDL_Quit();
 	IMG_Quit();
 	TTF_Quit();

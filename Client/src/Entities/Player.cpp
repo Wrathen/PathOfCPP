@@ -60,13 +60,35 @@ void Player::ShootArrow(const Vector2& targetPos) {
 		new Projectile(this, transform.GetPosition(), rotation, stats->GetProjectileSpeed());
 	}
 }
+void Player::GainXP(float value) {
+	float xp = stats->GetXP();
+	float maxXP = stats->GetMaxXP();
+	xp += value + RandomFloat(value);
+
+	while (xp >= maxXP) {
+		xp -= maxXP;
+		maxXP *= 1.37f;
+		stats->SetMaxXP(maxXP);
+
+		LevelUp();
+	}
+
+	stats->SetXP(xp);
+}
+void Player::LevelUp() {
+	stats->SetMaxHealth(stats->GetMaxHealth() + 12);
+	stats->SetHealth(stats->GetMaxHealth());
+	stats->SetLevel(stats->GetLevel() + 1);
+	// Show Power-up Options
+}
 
 void Player::OnDeath() {
 	Warn("Implement Player::OnDeath.");
 }
 void Player::OnKill() {
 	++stats->totalKills;
-	FUN_Headhunter();
+	GainXP(1);
+	if (stats->hasHeadHunter) FUN_Headhunter();
 }
 
 // HH nerfs in this patch. Sadge

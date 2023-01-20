@@ -7,6 +7,13 @@ public:
     float health = 100.0f;
     float maxHealth = 100.0f;
 
+	// Buffs
+	bool hasHeadHunter = true;
+
+	// Player-only --> will change the structure later
+	float xp = 0;
+	float maxXP = 1;
+
     // Attributes
     int strength = 24;
     int dexterity = 27;
@@ -37,26 +44,30 @@ public:
     bool isAttacking = false;
 
 	// Getters
-	unsigned int GetLevel() const { return level; }
-	float GetMoveSpeed() const { return moveSpeed; }
-	float GetAttackPower() const { return attackPower; }
-	float GetHaste() const { return haste; }
-	float GetCritChance() const { return critChance; }
-	float GetCritMultiplier() const { return critMultiplier; }
-	float GetVersatility() const { return versatility; }
-	float GetProjectileSpeed() const { return projectileSpeed; }
-	float GetProjectileAngleMultiplier() const { return projectileAngleMultiplier; }
-	unsigned int GetNumberOfProjectiles() const { return numberOfProjectiles; }
-	float GetHealth() const { return health; }
-	float GetMaxHealth() const { return maxHealth; }
-	float GetAttackSpeed() const { return attackSpeed; }
-	bool GetAttackingState() const { return isAttacking; }
-	float GetSizeMultiplier() const { return sizeMultiplier; }
-	int GetPiercingAmount() const { return piercingAmount; }
-	float GetDamageAmount() const { return attackPower; }
+	unsigned int inline GetNumberOfProjectiles() const { return numberOfProjectiles; }
+	unsigned int inline GetLevel() const { return level; }
+	float inline GetXP() const { return xp; }
+	float inline GetMaxXP() const { return maxXP; }
+	float inline GetMoveSpeed() const { return moveSpeed; }
+	float inline GetAttackPower() const { return attackPower; }
+	float inline GetHaste() const { return haste; }
+	float inline GetCritChance() const { return critChance; }
+	float inline GetCritMultiplier() const { return critMultiplier; }
+	float inline GetVersatility() const { return versatility; }
+	float inline GetProjectileSpeed() const { return projectileSpeed; }
+	float inline GetProjectileAngleMultiplier() const { return projectileAngleMultiplier; }
+	float inline GetHealth() const { return health; }
+	float inline GetMaxHealth() const { return maxHealth; }
+	float inline GetAttackSpeed() const { return attackSpeed; }
+	float inline GetSizeMultiplier() const { return sizeMultiplier; }
+	float inline GetDamageAmount() const { return attackPower; }
+	int inline GetPiercingAmount() const { return piercingAmount; }
+	bool inline GetAttackingState() const { return isAttacking; }
 
 	// Setters
 	void SetLevel(unsigned int value) { level = value; }
+	void SetXP(float value) { xp = value; }
+	void SetMaxXP(float value) { maxXP = value; }
 	void SetMoveSpeed(float value) { moveSpeed = value; }
 	void SetAttackPower(float value) { attackPower = value; }
 	void SetHaste(float value) { haste = value; }

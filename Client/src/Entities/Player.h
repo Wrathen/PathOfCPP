@@ -25,9 +25,13 @@ public:
 
     // Main Functions
     void ShootArrow(const Vector2& targetPos);
+    void LevelUp();
+    void GainXP(float value);
+    void FUN_Headhunter();
+
+    // Events
     void OnKill() override;
     void OnDeath() override;
-    void FUN_Headhunter();
 
     // Utility Functions
     std::string ToString() override {

@@ -1,0 +1,54 @@
+<--- Bugs List: --->
+---------------------
+	[x] Once you release mouse on an item won't stop player shooting
+
+<--- To-Do List: --->
+---------------------
+Managers:
+	[x] Font Manager
+
+Scene System:
+	[x] Town
+	[x] Changing Scenes
+	[-] Instance Portals
+
+Instance System:
+	[-] Create new, enter existing one
+	[-] Loot Generation
+	[-] Instance Generation
+	[-] Enemy Generation
+	[-] Power ups
+
+Gameplay Systems:  
+	[x] Basic UI
+	[-] Currency
+	[-] Inventory
+	[-] Equipment
+	[-] Talents
+	[-] Player Death, Damage (instead of oneshotting)
+	[-] Explosions, Particles
+
+NPC:
+	[-] On Nearby Visuals
+	[-] On Nearby Interaction
+
+Gambler NPC:
+	[-] Character Model
+	[-] UI Panel
+
+Merchant NPC:
+	[-] Character Model
+	[-] UI Panel
+
+Blacksmith NPC:
+	[-] Character Model
+	[-] UI Panel
+
+Miscellaneous:
+	[-] Save & Load System
+	[-] Animations
+	[-] Boss Enemies
+	[-] Cursor
+	[-] Sound, Music, Ambience
+
+

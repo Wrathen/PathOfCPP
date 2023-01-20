@@ -2,6 +2,7 @@
 #include "GameManager.h"
 #include "EntityManager.h"
 #include "UIManager.h"
+#include "SceneManager.h"
 
 void InputManager::OnKeyDown(SDL_Keycode keyCode) {
 	Player* player = GAME.GetPlayer();
@@ -10,6 +11,12 @@ void InputManager::OnKeyDown(SDL_Keycode keyCode) {
 	switch (keyCode) {
 		case SDLK_ESCAPE:
 			GAME.Quit();
+			break;
+		case SDLK_1:
+			SceneMgr.ChangeScene("Town");
+			break;
+		case SDLK_2:
+			SceneMgr.ChangeScene("Forest");
 			break;
 		case SDLK_w:
 			player->transform.velocity.y -= 1;
@@ -56,8 +63,8 @@ void InputManager::OnMouseDown() {
 }
 void InputManager::OnMouseUp() {
 	// Notify UIManager
-	bool raycast = UIMgr.OnMouseDown();
-	if (raycast) return; // If we clicked any UI Element, we shouldn't fire arrows
+	//bool raycast = UIMgr.OnMouseUp();
+	//if (raycast) return; // If we clicked any UI Element, we shouldn't fire arrows
 
 	// Player Attack State
 	Player* player = GAME.GetPlayer();

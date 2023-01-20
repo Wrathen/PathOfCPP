@@ -16,7 +16,7 @@ public:
 	void Update();
 
 private:
-	CollisionManager() {}
+	CollisionManager(): Collection<Collider>(100000) {}
 	~CollisionManager() {}
 	CollisionManager(CollisionManager const&) = delete;
 	void operator=(CollisionManager const&) = delete;

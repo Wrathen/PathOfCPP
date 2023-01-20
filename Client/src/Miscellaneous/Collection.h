@@ -7,8 +7,7 @@
 #include "Log.h"
 
 template <typename T>
-class Collection
-{
+class Collection {
 private:
     std::vector<T*> itemList;
     std::vector<T*> toBeDeletedList;
@@ -40,11 +39,11 @@ public:
     }
     auto GetAll() { return &itemList; }
 
-    Collection<T>() {
-        Debug("Hey, a new collection have arrived!");
+    Collection<T>(int reserveSize) {
+        Debug("Hey, a new collection have arrived! " + std::string(typeid(T).name()));
 
         itemList = std::vector<T*>();
-        itemList.reserve(100000);
+        itemList.reserve(reserveSize);
     }
     Collection<T>(Collection<T> const&) = delete;
     void operator=(Collection<T> const&) = delete;

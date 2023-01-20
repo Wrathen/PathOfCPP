@@ -5,7 +5,7 @@
 #include "EntityManager.h"
 #include "CameraManager.h"
 #include "CollisionManager.h"
-#include "EnemySpawnManager.h"
+#include "SceneManager.h"
 #include "UIManager.h"
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Timer.h"
@@ -23,26 +23,21 @@ void GameManager::DrawRect(int x, int y, int w, int h) {
 void GameManager::DrawRect(Vector2 pos, int w, int h) { DrawRect(pos.x, pos.y, w, h); }
 
 // Base Functions
-void GameManager::Init() {
+void GameManager::Init() { 
 	MainRenderer.Init();
-	Start();
-}
-void GameManager::Start() {
-	background.SetProperties("assets/2.png", MainRenderer.SCREEN_WIDTH, MainRenderer.SCREEN_HEIGHT);
-	player = new Player("Wrathen");
+	SceneMgr.Init();
 
+	player = new Player("Wrathen");
+	SceneMgr.ChangeScene("Town");
 	Update();
 }
 void GameManager::Update() {
-	static Timer debugTimer{};
-
 	// Count frames
+	static Timer debugTimer{};
 	Timer timer;
 	float frameTime;
 
 	while (GAME.isGameRunning) {
-		timer.Reset();
-
 		// Main Loop
 		Timer benchmark1("PollEvents");
 		PollEvents();
@@ -52,11 +47,13 @@ void GameManager::Update() {
 		MainRenderer.Clear();
 		benchmark2.Pause();
 
-		// Draw some background here, before anything else is drawn
-		background.Render();
-
-		Timer benchmark3("EnemySpawner.Update");
-		EnemySpawner.Update();
+		Timer benchmark3("Scene.Update");
+		Scene* currentScene = SceneMgr.GetCurrentScene();
+		if (!currentScene) {
+			Warn("SCENE NOT FOUND!");
+			//continue;
+		}
+		currentScene->Update();
 		benchmark3.Pause();
 
 		Timer benchmark4("EntityMgr.Update");
@@ -94,7 +91,6 @@ void GameManager::Update() {
 			std::cout << "<----------------------------------------------------->" << std::endl;
 			std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / Time::deltaTime) +
 				", MS: " + std::to_string(Time::deltaTime)) +
-				", TotalSpawnedEnemies: " + std::to_string(EnemySpawner.totalNumberOfSpawnedEnemies) +
 				", TotalKilledEnemies: " + std::to_string(GetPlayer()->stats->totalKills) +
 				", NumberOfProjectiles: " + std::to_string(GetPlayer()->stats->GetNumberOfProjectiles()) << std::endl;
 			std::cout << "<----------------------------------------------------->" << std::endl;
@@ -109,6 +105,10 @@ void GameManager::Update() {
 			benchmark8.Log();
 			debugTimer.Reset();
 		}
+
+		// Late-Update the Scene
+		if (currentScene) currentScene->LateUpdate();
+		timer.Reset();
 	}
 }
 void GameManager::PollEvents() {

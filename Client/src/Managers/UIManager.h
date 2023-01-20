@@ -12,7 +12,7 @@ public:
     bool OnMouseDown();
 
 private:
-	UIManager() {}
+	UIManager() : Collection<UIElement>(100000) {}
 	~UIManager() {};
 	UIManager(UIManager const&) = delete;
 	void operator=(UIManager const&) = delete;

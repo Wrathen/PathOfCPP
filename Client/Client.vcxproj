@@ -160,6 +160,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Scenes\Scene_Forest.h" />
+    <ClInclude Include="src\Managers\SceneManager.h" />
+    <ClInclude Include="src\Scenes\Scene_Town.h" />
+    <ClInclude Include="src\Scenes\Scene.h" />
     <ClInclude Include="src\Entities\NPCs\Blacksmith.h" />
     <ClInclude Include="src\Entities\NPCs\Merchant.h" />
     <ClInclude Include="src\Entities\NPCs\Gambler.h" />
@@ -283,8 +287,13 @@
     <ClInclude Include="src\Managers\UIManager.h" />
     <ClInclude Include="src\UI\UIElement.h" />
     <ClInclude Include="src\Components\TextRenderer.h" />
+    <ClInclude Include="src\UI\XPBar.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Scenes\Scene_Forest.cpp" />
+    <ClCompile Include="src\Managers\SceneManager.cpp" />
+    <ClCompile Include="src\Components\HealthBar.cpp" />
+    <ClCompile Include="src\Scenes\Scene_Town.cpp" />
     <ClCompile Include="src\Entities\NPCs\Blacksmith.cpp" />
     <ClCompile Include="src\Entities\NPCs\Merchant.cpp" />
     <ClCompile Include="src\Entities\NPCs\Gambler.cpp" />
@@ -316,6 +325,10 @@
     <ClCompile Include="src\Managers\UIManager.cpp" />
     <ClCompile Include="src\UI\UIElement.cpp" />
     <ClCompile Include="src\Components\TextRenderer.cpp" />
+    <ClCompile Include="src\UI\XPBar.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\ToDoList.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
