@@ -14,6 +14,7 @@ private:
 	// Number of enemies to spawn per wave
 	int spawnAmount = 2;
 	int maxSpawnAmount = 110000;
+	int monsterLevel = 1;
 
 public:
 	int totalNumberOfSpawnedEnemies = 0;
@@ -21,9 +22,11 @@ public:
 
 	float GetSpawnInterval() { return spawnInterval; }
 	int GetSpawnAmount() { return spawnAmount; }
+	int GetMonsterLevel() { return monsterLevel; }
 	void SetSpawnInterval(float interval);
 	void SetSpawnAmount(int amount);
 	void SetMaxSpawnAmount(int amount);
+	void SetMonsterLevel(int value);
 	void SpawnEnemy();
 	void SpawnNPC(int type);
 

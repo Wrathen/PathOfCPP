@@ -4,7 +4,7 @@
 #include "Stats.h"
 #include "Component.h"
 
-class HealthBar: public Component, public UIElement {
+class HealthBar : public Component, public UIElement {
 public:
 	Transform* sourceTransform = nullptr;
 	Stats* stats = nullptr;
@@ -16,4 +16,8 @@ public:
 	void Start() override;
 	void Update() override;
 	void Render() override;
+	void OnDelete() override {}
+	void OnMouseEnter() override {}
+	void OnMouseOver() override {}
+	void OnMouseLeave() override {}
 };

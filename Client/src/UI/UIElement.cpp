@@ -12,6 +12,15 @@ UIElement::UIElement(std::string texturePath) {
 void UIElement::Start() {}
 void UIElement::Update() {}
 void UIElement::Render() { renderer.Render(); }
-void UIElement::Delete() { UIMgr.Remove(this); }
+void UIElement::Delete() { OnDelete(); UIMgr.Remove(this); }
 
 bool UIElement::OnClick() { return isBlockingRaycasts; }
+
+void UIElement::SetVisible(bool value) { renderer.SetVisible(value); }
+void UIElement::SetInteractable(bool value) { isInteractable = value; }
+
+void UIElement::AssignGUID(GUID _guid) { if (guid != 0) return; guid = _guid; }
+std::string UIElement::ToString() {
+	if (!this) return "This UIElement has already been deleted. What are you doing?!";
+	return "UIElement with GUID: " + std::to_string(guid);
+}

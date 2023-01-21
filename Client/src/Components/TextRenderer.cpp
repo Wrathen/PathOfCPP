@@ -10,7 +10,7 @@ void TextRenderer::SetText(std::string text, SDL_Color color) {
 
 	_text = text;
 	_color = color;
-	SDL_Surface* surface = TTF_RenderText_Solid(MainRenderer.GetFont(_size), _text.c_str(), color);
+	SDL_Surface* surface = TTF_RenderText_Solid_Wrapped(MainRenderer.GetFont(_size), _text.c_str(), color, 0);
 	SpriteRenderer::AssignTexture(SDL_CreateTextureFromSurface(MainRenderer.renderer, surface));
 
 	SDL_FreeSurface(surface);

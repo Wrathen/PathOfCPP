@@ -4,7 +4,11 @@
 // [TO-DO] FIX HARD CODED STUFF
 // THERE IS A LOT OF HARD CODING IN HERE
 
-XPBar::XPBar() : UIElement("assets/sprites/UI/xpbar/frontground.png") { Start(); }
+XPBar::XPBar() : UIElement("assets/sprites/UI/xpbar/frontground.png") {
+	isAutomaticRenderingDisabled = true;
+	isToBeDeletedOnSceneChange = false; 
+	Start();
+}
 void XPBar::Start() {
 	corners_renderer.AssignTransform(&transform);
 	corners_renderer.AssignTexture("assets/sprites/UI/xpbar/corners.png");
@@ -52,6 +56,8 @@ void XPBar::Render() {
 void XPBar::SetXP(float _xp) { xp = _xp; }
 void XPBar::SetMaxXP(float _maxXP) { maxXP = _maxXP; }
 void XPBar::SetLevel(int _level) {
+	if (level == _level) return;
+
 	level = _level;
 	levelText.SetText("Level " + std::to_string(level), { 0, 0, 0 });
 }

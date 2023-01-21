@@ -12,14 +12,14 @@ public:
 	virtual void Update() {};
 	virtual void LateUpdate() {};
 	virtual void Clear() {
-		Player* player = GAME.GetPlayer();
-
 		auto& allEntities = *EntityMgr.GetAll();
-		for (auto entity : allEntities)
-			if (entity != player) entity->Delete();
+		for (auto& entity : allEntities)
+			if (entity->isToBeDeletedOnSceneChange)
+				entity->Delete();
 
 		auto& allUIElements = *UIMgr.GetAll();
 		for (auto& element : allUIElements)
-			element->Delete();
+			if (element->isToBeDeletedOnSceneChange)
+				element->Delete();
 	};
 };

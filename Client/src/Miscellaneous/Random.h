@@ -38,3 +38,10 @@ static float RandomFloat(float min, float max) { return Random::GetInstance().Ne
 
 // Returns a float between 0 [inclusive] and max [inclusive].
 static float RandomFloat(float max) { return Random::GetInstance().Next(0.0f, max); }
+
+// Returns a random entry from an Enum. 
+// Assumes enumerator starts from <0> inclusive and goes to <count> exclusive.
+template <typename T>
+static T RandomEnum(T count) {
+	return static_cast<T>(RandomInt((int)count));
+}

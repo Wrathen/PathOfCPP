@@ -17,6 +17,7 @@ public:
 
 	void SetPositionAbsolute();
 	void SetPositionRelative();
+	void SetColor(int r, int g, int b);
 
 	void Render();
 

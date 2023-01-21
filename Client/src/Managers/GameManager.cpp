@@ -7,6 +7,7 @@
 #include "CollisionManager.h"
 #include "SceneManager.h"
 #include "UIManager.h"
+#include "../UI/UserInterface.h"
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Timer.h"
 
@@ -29,11 +30,14 @@ void GameManager::Init() {
 
 	player = new Player("Wrathen");
 	SceneMgr.ChangeScene("Town");
+
+	UI.Init();
 	Update();
 }
 void GameManager::Update() {
 	// Count frames
 	static Timer debugTimer{};
+	static bool debugProfilerMsgEnabled = true;
 	Timer timer;
 	float frameTime;
 
@@ -68,13 +72,21 @@ void GameManager::Update() {
 		Camera.Update();
 		benchmark6.Pause();
 
-		Timer benchmark7("UIMgr.Update");
-		UIMgr.Update(); // This also renders!
+		Timer benchmark7("InputManager.Update");
+		InputMgr.Update();
 		benchmark7.Pause();
 
-		Timer benchmark8("MainRenderer.Draw");
-		MainRenderer.Draw();
+		Timer benchmark8("UIMgr.Update");
+		UIMgr.Update(); // This also renders!
 		benchmark8.Pause();
+
+		Timer benchmark9("UserInterface.Update");
+		UI.Update(); // This also renders!
+		benchmark9.Pause();
+
+		Timer benchmark10("MainRenderer.Draw");
+		MainRenderer.Draw();
+		benchmark10.Pause();
 
 		// Frame Timers, Delays
 		bool limitFramerate = false;
@@ -88,21 +100,25 @@ void GameManager::Update() {
 
 		// Debug Stuff
 		if (debugTimer.GetTimeMS() > 1500) {
-			std::cout << "<----------------------------------------------------->" << std::endl;
-			std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / Time::deltaTime) +
-				", MS: " + std::to_string(Time::deltaTime)) +
-				", TotalKilledEnemies: " + std::to_string(GetPlayer()->stats->totalKills) +
-				", NumberOfProjectiles: " + std::to_string(GetPlayer()->stats->GetNumberOfProjectiles()) << std::endl;
-			std::cout << "<----------------------------------------------------->" << std::endl;
+			if (debugProfilerMsgEnabled) {
+				std::cout << "<----------------------------------------------------->" << std::endl;
+				std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / Time::deltaTime) +
+					", MS: " + std::to_string(Time::deltaTime)) +
+					", TotalKilledEnemies: " + std::to_string(GetPlayer()->stats->totalKills) +
+					", NumberOfProjectiles: " + std::to_string(GetPlayer()->stats->GetNumberOfProjectiles()) << std::endl;
+				std::cout << "<----------------------------------------------------->" << std::endl;
 
-			benchmark1.Log();
-			benchmark2.Log();
-			benchmark3.Log();
-			benchmark4.Log();
-			benchmark5.Log();
-			benchmark6.Log();
-			benchmark7.Log();
-			benchmark8.Log();
+				benchmark1.Log();
+				benchmark2.Log();
+				benchmark3.Log();
+				benchmark4.Log();
+				benchmark5.Log();
+				benchmark6.Log();
+				benchmark7.Log();
+				benchmark8.Log();
+				benchmark9.Log();
+				benchmark10.Log();
+			}
 			debugTimer.Reset();
 		}
 

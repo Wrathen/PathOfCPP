@@ -3,6 +3,16 @@
 #include "EntityManager.h"
 #include "UIManager.h"
 #include "SceneManager.h"
+#include "../Miscellaneous/Mouse.h"
+
+void InputManager::Update() {
+	Vector2 mousePos = Mouse::GetPosition();
+
+	if (lastMousePos.x != mousePos.x || lastMousePos.y != mousePos.y) {
+		lastMousePos = mousePos;
+		OnMouseMove();
+	}
+}
 
 void InputManager::OnKeyDown(SDL_Keycode keyCode) {
 	Player* player = GAME.GetPlayer();
@@ -53,20 +63,21 @@ void InputManager::OnKeyUp(SDL_Keycode keyCode) {
 }
 
 void InputManager::OnMouseDown() {
-	// Notify UIManager
-	bool raycast = UIMgr.OnMouseDown();
-	if (raycast) return; // If we clicked any UI Element, we shouldn't fire arrows
-
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
 	if (player) player->stats->SetAttackingState(true);
+
+	// Notify UIManager
+	bool raycast = UIMgr.OnMouseDown();
+	if (raycast) return;
 }
 void InputManager::OnMouseUp() {
-	// Notify UIManager
-	//bool raycast = UIMgr.OnMouseUp();
-	//if (raycast) return; // If we clicked any UI Element, we shouldn't fire arrows
-
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
 	if (player) player->stats->SetAttackingState(false);
+
+	// Notify UIManager
+	//bool raycast = UIMgr.OnMouseUp();
+	//if (raycast) return;
 }
+void InputManager::OnMouseMove() { UIMgr.OnMouseMove(); }

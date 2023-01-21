@@ -15,6 +15,8 @@ public:
 	bool isInteractable = true;
 	bool isToBeDeleted = false;
 	bool isBlockingRaycasts = true;
+	bool isToBeDeletedOnSceneChange = true;
+	bool isAutomaticRenderingDisabled = false;
 
 	// Base Functions
 	virtual void Start();
@@ -24,15 +26,17 @@ public:
 	// Events
 	// Returns a boolean to block raycasts
 	virtual bool OnClick();
+	virtual void OnDelete() = 0;
+	virtual void OnMouseEnter() = 0;
+	virtual void OnMouseOver() = 0;
+	virtual void OnMouseLeave() = 0;
 
 	// Main Functions
-	void SetInteractable(bool value) { isInteractable = value; }
+	virtual void SetVisible(bool value);
+	void SetInteractable(bool value);
 	void Delete();
 
 	// Utility Functions
-	void AssignGUID(GUID _guid) { if (guid != 0) return; guid = _guid; }
-	virtual std::string ToString() {
-		if (!this) return "This UIElement has already been deleted. What are you doing?!";
-		return "UIElement with GUID: " + std::to_string(guid);
-	}
+	void AssignGUID(GUID _guid);
+	virtual std::string ToString();
 };

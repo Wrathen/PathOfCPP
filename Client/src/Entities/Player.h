@@ -10,6 +10,7 @@ public:
     Stats* stats;
     HealthBar* healthBar;
     Timer attackTimer;
+    int goldAmount;
 
     // Constructor & Deconstructor
     Player(std::string name);

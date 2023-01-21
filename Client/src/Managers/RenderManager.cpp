@@ -22,7 +22,7 @@ void Renderer::Draw() {
 
 TTF_Font* Renderer::GetFont(int size) {
 	if (fontMap.count(size) == 0)
-		fontMap[size] = TTF_OpenFont("assets/fonts/CHERL___.ttf", size);
+		fontMap[size] = TTF_OpenFont(fontPath, size);
 
 	return fontMap[size];
 }

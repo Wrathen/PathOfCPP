@@ -30,6 +30,7 @@ void EnemySpawnManager::SpawnEnemy() {
 	float x = cos(direction) * distance + offset.x;
 	float y = sin(direction) * distance + offset.y;
 	enemy->transform.SetPosition(x, y);
+	enemy->stats->SetLevel(monsterLevel);
 
 	// Do some statistics :^)
 	++totalNumberOfSpawnedEnemies;
@@ -57,6 +58,8 @@ void EnemySpawnManager::SpawnNPC(int type) {
 	float y = sin(direction) * distance + offset.y;
 	npc->transform.SetPosition(x, y);
 }
+
+void EnemySpawnManager::SetMonsterLevel(int value) { monsterLevel = value; }
 
 void EnemySpawnManager::Start() {}
 void EnemySpawnManager::Update() {

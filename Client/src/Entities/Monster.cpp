@@ -1,11 +1,13 @@
 #include "Monster.h"
 #include "../Managers/GameManager.h"
 #include "../Miscellaneous/Random.h"
-#include "../Item.h"
+#include "../Game/Item/Item.h"
 
 Monster::Monster(std::string name): Entity(name) { Start(); }
 Monster::Monster(std::string texturePath, std::string name): Entity(texturePath, name) { Start(); }
 Monster::~Monster() {
+	// [TO-DO - Bug] Healthbar gets deleted twice on scene change, Scene::Clear()
+	// Priority: Very Low
 	healthBar->Delete();
 	healthBar = nullptr;
 	collider->Delete();
@@ -53,5 +55,5 @@ void Monster::Render() {
 
 void Monster::OnDeath() {
 	if (lootChance > RandomFloat(1.0f))
-		Item::DropItem(transform.GetPosition());
+		Item::DropItem(stats->GetLevel(), transform.GetPosition());
 }

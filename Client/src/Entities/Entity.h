@@ -22,6 +22,7 @@ public:
 	EntityCollisionTag collisionTag;
 
 	bool isToBeDeleted = false;
+	bool isToBeDeletedOnSceneChange = true;
 
 	// Constructors & Deconstructors
 	Entity();

@@ -15,6 +15,7 @@ void SpriteRenderer::UpdateTextureDimensions() {
 }
 void SpriteRenderer::SetPositionAbsolute() { isAbsolutePositioned = true; }
 void SpriteRenderer::SetPositionRelative() { isAbsolutePositioned = false; }
+void SpriteRenderer::SetColor(int r, int g, int b) { if (!tex) return; SDL_SetTextureColorMod(tex, r, g, b); }
 
 void SpriteRenderer::Render() {
     if (!isVisible || transform == nullptr || tex == nullptr) return;

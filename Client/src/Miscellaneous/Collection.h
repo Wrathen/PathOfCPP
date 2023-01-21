@@ -61,7 +61,8 @@ public:
 
         auto position = std::find(itemList.begin(), itemList.end(), item);
         if (position == itemList.end()) {
-            Warn("Somehow, the item was not found in Collection::Delete");
+            //Warn("Somehow, the item was not found in Collection::Delete");
+            //Warn(typeid(T).name());
             return;
         }
 

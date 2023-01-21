@@ -58,9 +58,9 @@ void Projectile::CheckCollisions() {
 	
 	// [Debug -- DELETE LATER] draw collisions
 	//GAME.DrawRect(myPos, boxCollider.x, boxCollider.y);
-	auto allEntities = CollisionMgr.spatialHash.Query(myPos.x, myPos.y, 2, 2);
+	auto& allEntities = CollisionMgr.spatialHash.Query(myPos.x, myPos.y, 2, 2);
 
-	for (auto* entity : allEntities) {
+	for (auto& entity : allEntities) {
 		if (entity->isToBeDeleted) {
 			CollisionMgr.spatialHash.Remove(entity);
 			continue;

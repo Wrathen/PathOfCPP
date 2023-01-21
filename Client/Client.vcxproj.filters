@@ -116,8 +116,8 @@
     <ClInclude Include="src\Managers\EnemySpawnManager.h" />
     <ClInclude Include="src\Components\Component.h" />
     <ClInclude Include="src\UI\Background.h" />
-    <ClInclude Include="src\Item.h" />
-    <ClInclude Include="src\LootableItem.h" />
+    <ClInclude Include="src\Game\Item\Item.h" />
+    <ClInclude Include="src\Game\Item\LootableItem.h" />
     <ClInclude Include="src\Miscellaneous\Mouse.h" />
     <ClInclude Include="src\Components\TextRenderer.h" />
     <ClInclude Include="src\Entities\NPCs\NPC.h" />
@@ -129,6 +129,15 @@
     <ClInclude Include="src\UI\XPBar.h" />
     <ClInclude Include="src\Managers\SceneManager.h" />
     <ClInclude Include="src\Scenes\Scene_Forest.h" />
+    <ClInclude Include="src\Game\Item\Equipment\Equipment.h" />
+    <ClInclude Include="src\Game\Item\Currency\Currency.h" />
+    <ClInclude Include="src\Game\Item\Equipment\EquipmentStats.h" />
+    <ClInclude Include="src\Game\Item\Equipment\EquipmentTexturePaths.h" />
+    <ClInclude Include="src\UI\UserInterface.h" />
+    <ClInclude Include="src\UI\CurrencyBar.h" />
+    <ClInclude Include="src\UI\Tooltip.h" />
+    <ClInclude Include="src\Miscellaneous\Rect.h" />
+    <ClInclude Include="src\Miscellaneous\Point.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -155,8 +164,8 @@
     <ClCompile Include="src\Managers\CollisionManager.cpp" />
     <ClCompile Include="src\Components\Collision\Collider.cpp" />
     <ClCompile Include="src\Managers\EnemySpawnManager.cpp" />
-    <ClCompile Include="src\Item.cpp" />
-    <ClCompile Include="src\LootableItem.cpp" />
+    <ClCompile Include="src\Game\Item\Item.cpp" />
+    <ClCompile Include="src\Game\Item\LootableItem.cpp" />
     <ClCompile Include="src\Components\TextRenderer.cpp" />
     <ClCompile Include="src\Entities\NPCs\NPC.cpp" />
     <ClCompile Include="src\Entities\NPCs\Gambler.cpp" />
@@ -167,6 +176,13 @@
     <ClCompile Include="src\Components\HealthBar.cpp" />
     <ClCompile Include="src\Managers\SceneManager.cpp" />
     <ClCompile Include="src\Scenes\Scene_Forest.cpp" />
+    <ClCompile Include="src\Game\Item\Equipment\Equipment.cpp" />
+    <ClCompile Include="src\Game\Item\Currency\Currency.cpp" />
+    <ClCompile Include="src\UI\UserInterface.cpp" />
+    <ClCompile Include="src\UI\CurrencyBar.cpp" />
+    <ClCompile Include="src\UI\Tooltip.cpp" />
+    <ClCompile Include="src\Miscellaneous\Point.cpp" />
+    <ClCompile Include="src\Miscellaneous\Rect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\ToDoList.txt" />

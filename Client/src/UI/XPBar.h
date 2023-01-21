@@ -10,9 +10,9 @@ private:
 	// Inheriting from UIElement
 	TextRenderer levelText;
 
-	float xp = 0;
-	float maxXP = 1;
-	int level = 1;
+	float xp = -1;
+	float maxXP = -1;
+	int level = -1;
 
 public:
 	XPBar();
@@ -23,4 +23,10 @@ public:
 	void Start() override;
 	void Update() override;
 	void Render() override;
+
+	void OnDelete() override {}
+
+	void OnMouseEnter() override {}
+	void OnMouseOver() override {}
+	void OnMouseLeave() override {}
 };

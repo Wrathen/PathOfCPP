@@ -12,6 +12,7 @@ public:
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     std::unordered_map<int, TTF_Font*> fontMap;
+    const char* fontPath = "assets/fonts/Friz Quadrata Regular.ttf"; // CHERL___
 
     const int SCREEN_WIDTH = 1920;
     const int SCREEN_HEIGHT = 1080;

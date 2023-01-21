@@ -5,7 +5,10 @@
 #include "../Miscellaneous/Random.h"
 #include "../Miscellaneous/Mouse.h"
 
-Player::Player(std::string name) : Entity("assets/sprites/player.png", name) { Start(); }
+Player::Player(std::string name) : Entity("assets/sprites/player.png", name) {
+	isToBeDeletedOnSceneChange = false;
+	Start();
+}
 
 void Player::Start() {
 	stats = AddComponent<Stats>();
@@ -17,6 +20,7 @@ void Player::Start() {
 
 	healthBar = AddComponent<HealthBar>();
 	healthBar->transform.SetScale(3.5f, 3.0f);
+	healthBar->isToBeDeletedOnSceneChange = false;
 
 	nameTag.AssignTransform(&transform);
 	nameTag.SetText(name, SDL_Color{0, 0, 0});

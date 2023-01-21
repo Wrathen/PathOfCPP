@@ -30,7 +30,9 @@ public:
         m_halfHeight(height/2),
         m_halfNumCellsX(m_numCellsX/2),
         m_halfNumCellsY(m_numCellsY/2),
-        m_hash(m_numCellsX* m_numCellsY) {}
+        m_hash(m_numCellsX* m_numCellsY) {
+        result.reserve(100);
+    }
 
     // Insert an entity into the hash
     void Insert(Entity* entity) {
@@ -79,8 +81,8 @@ public:
     }
 
     // Query the hash for all entities within a certain rectangle
-    std::vector<Entity*> Query(int x, int y, int width, int height) {
-        std::vector<Entity*> result;
+    std::vector<Entity*>& Query(int x, int y, int width, int height) {
+        result.clear();
 
         if (x <= -m_halfWidth) return result;
         else if (x >= m_halfWidth) return result;
@@ -118,7 +120,7 @@ public:
 
     // Query the hash for all entities within a certain distance of a point
     std::vector<Entity*> QueryRange(int x, int y, float radius) {
-        std::vector<Entity*> result;
+        result.clear();
 
         if (x <= -m_width / 2) return result;
         else if (x >= m_width / 2) return result;
@@ -190,4 +192,5 @@ private:
 
     // The hash table, mapping cell indices to lists of entity pointers
     std::vector<std::vector<Entity*>> m_hash;
+    std::vector<Entity*> result;
 };
