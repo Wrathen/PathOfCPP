@@ -18,3 +18,9 @@ https://user-images.githubusercontent.com/36766122/209038620-d7285a0d-d38a-45f9-
 
 https://user-images.githubusercontent.com/36766122/212797753-31ac921f-3786-41eb-8048-c9f28693c930.mp4
 
+[January 21th 2023] Scene System, Item Generation, Tooltips, User Interface, Dynamic Background
+
+https://user-images.githubusercontent.com/36766122/213858623-4ae6faa8-57be-4ad8-b6e7-4a3a471ae1f6.mp4
+
+https://user-images.githubusercontent.com/36766122/213858638-79e12e9f-1d2b-4110-8406-cd6e3518c66a.mp4
+
