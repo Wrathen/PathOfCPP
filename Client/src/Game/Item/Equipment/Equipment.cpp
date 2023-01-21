@@ -3,7 +3,7 @@
 #include "EquipmentTexturePaths.h"
 #include <regex>
 
-std::string namePrefixes[] = {
+static std::string namePrefixes[] = {
 	"Superior",
 	"Gladiator's",
 	"Devilish",
@@ -23,7 +23,7 @@ std::string namePrefixes[] = {
 	"Blessed",
 	"Thundering"
 };
-std::string names[] = {
+static std::string names[] = {
 	"Helm",
 	"Chest",
 	"Feet",
@@ -31,7 +31,7 @@ std::string names[] = {
 	"Ring",
 	"Amulet"
 };
-std::string nameAffixes[] = {
+static std::string nameAffixes[] = {
 	"of the Damned",
 	"of the Banished",
 	"of the Boar",
@@ -41,7 +41,7 @@ std::string nameAffixes[] = {
 	"of the Sanguine",
 	"of the Elementals",
 	"of Storms",
-	"of the Windseeker"
+	"of the Windseeker",
 	"of the Thunder",
 	"of the Night",
 	"the Nightbreaker",

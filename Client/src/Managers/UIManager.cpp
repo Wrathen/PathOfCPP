@@ -13,7 +13,7 @@ void UIManager::Update() {
 }
 
 void UIManager::OnMouseMove() {
-	if (currentHoveredElement)
+	if (currentHoveredElement && !currentHoveredElement->isToBeDeleted)
 		currentHoveredElement->OnMouseOver();
 
 	Vector2 mousePos = Mouse::GetPosition();
@@ -34,7 +34,7 @@ void UIManager::OnMouseMove() {
 			mousePos.y > targetPos.y && mousePos.y < targetPos.y + targetHeight;
 
 		if (collides) {
-			if (currentHoveredElement) {
+			if (currentHoveredElement && !currentHoveredElement->isToBeDeleted) {
 				if (element != currentHoveredElement){
 					currentHoveredElement->OnMouseLeave();
 					element->OnMouseEnter();
@@ -48,13 +48,13 @@ void UIManager::OnMouseMove() {
 		}
 	}
 
-	if (currentHoveredElement) {
+	if (currentHoveredElement && !currentHoveredElement->isToBeDeleted) {
 		currentHoveredElement->OnMouseLeave();
 		currentHoveredElement = nullptr;
 	}
 }
 bool UIManager::OnMouseDown() {
-	if (currentHoveredElement)
+	if (currentHoveredElement && !currentHoveredElement->isToBeDeleted)
 		return currentHoveredElement->OnClick();
 
 	Vector2 mousePos = Mouse::GetPosition();
