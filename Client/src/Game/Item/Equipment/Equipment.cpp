@@ -21,7 +21,8 @@ static std::string namePrefixes[] = {
 	"Soothed",
 	"Wealthy",
 	"Blessed",
-	"Thundering"
+	"Thundering",
+	"Thunderfury"
 };
 static std::string names[] = {
 	"Helm",
@@ -74,7 +75,7 @@ Equipment::Equipment(EquipmentType _equipmentType): Equipment() {
 
 	bool containsPrefix = RandomInt(100) > 80;
 	bool containsAffix = RandomInt(100) > 40;
-	name = (containsPrefix ? namePrefixes[RandomInt(18)] + " ": "") + 
+	name = (containsPrefix ? namePrefixes[RandomInt(19)] + " ": "") + 
 		   names[(int)equipmentType] + (containsAffix ? " " + nameAffixes[RandomInt(24)]: "");
 }
 
@@ -90,7 +91,7 @@ Equipment* Equipment::CreateRandomEquipment(int itemLevel) {
 							itemRarity == ItemRarity::Rare ? "Seeking more, MORE!":
 							itemRarity == ItemRarity::Legendary ? "Wow! This might be one of\n it's kind.":
 							itemRarity == ItemRarity::Artifact ? "Still sane exile?": "A worthy equipment for the filthy.";
-	equipment->stats.Randomize(itemLevel, (int)itemRarity + 1, (int)itemRarity, ((int)itemRarity * 0.67f) + 1);
+	equipment->stats.Randomize(itemLevel, (int)itemRarity + 1, (int)itemRarity, ((int)itemRarity * 0.67f) + 1.0f);
 
 	return equipment;
 }

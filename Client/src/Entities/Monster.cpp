@@ -6,8 +6,6 @@
 Monster::Monster(std::string name): Entity(name) { Start(); }
 Monster::Monster(std::string texturePath, std::string name): Entity(texturePath, name) { Start(); }
 Monster::~Monster() {
-	// [TO-DO - Bug] Healthbar gets deleted twice on scene change, Scene::Clear()
-	// Priority: Very Low
 	healthBar->Delete();
 	healthBar = nullptr;
 	collider->Delete();
@@ -27,6 +25,7 @@ void Monster::Start() {
 	// Healthbar
 	healthBar = AddComponent<HealthBar>();
 	healthBar->transform.SetScale(3.5f, 3.0f);
+	healthBar->isToBeDeletedOnSceneChange = false;
 
 	// Box Collider
 	collider = AddComponent<BoxCollider>();

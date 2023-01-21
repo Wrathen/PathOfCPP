@@ -43,35 +43,37 @@ public:
 	void Randomize(float itemLevel, int prefixCount, int suffixCount, float multiplier) {
 		for (int i = 0; i < prefixCount; ++i) {
 			ItemModifier stat = all_prefixes[RandomInt(4)];
+			float randomMultiplier = RandomFloat(1.0f, multiplier);
 			bool statAlreadyExists = false;
 
 			for (int j = 0; j < prefixes.size(); ++j) {
 				if (prefixes[j].type == stat.type) {
 					statAlreadyExists = true;
-					prefixes[j].value += itemLevel * multiplier;
+					prefixes[j].value += itemLevel * randomMultiplier;
 					break;
 				}
 			}
 
 			if (!statAlreadyExists) {
-				stat.value += itemLevel * multiplier;
+				stat.value += itemLevel * randomMultiplier;
 				prefixes.insert(prefixes.end(), stat);
 			}
 		}
 		for (int i = 0; i < suffixCount; ++i) {
 			ItemModifier stat = all_suffixes[RandomInt(4)];
+			float randomMultiplier = RandomFloat(1.0f, multiplier);
 			bool statAlreadyExists = false;
 
 			for (int j = 0; j < suffixes.size(); ++j) {
 				if (suffixes[j].type == stat.type) {
 					statAlreadyExists = true;
-					suffixes[j].value += itemLevel * multiplier;
+					suffixes[j].value += itemLevel * randomMultiplier;
 					return;
 				}
 			}
 
 			if (!statAlreadyExists) {
-				stat.value += itemLevel * multiplier;
+				stat.value += itemLevel * randomMultiplier;
 				suffixes.insert(suffixes.end(), stat);
 			}
 		}
