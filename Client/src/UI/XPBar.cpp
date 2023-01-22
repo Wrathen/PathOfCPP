@@ -23,7 +23,6 @@ void XPBar::Start() {
 	levelText.SetOffset(0, -45);
 	levelText.SetFontSize(64);
 	levelText.SetPositionAbsolute();
-	
 	levelText.shouldDrawCentered = true;
 
 	// Positioning

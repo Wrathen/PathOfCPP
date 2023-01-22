@@ -6,7 +6,7 @@ void EntityManager::Update() {
 	Collection::Update();
 	
 	for (auto& entity : *GetAll()) {
-		entity->Update();
+		if (!GAME.isGamePaused) entity->Update();
 		entity->Render();
 	}
 }

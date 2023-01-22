@@ -17,6 +17,7 @@ void UIElement::Delete() { OnDelete(); UIMgr.Remove(this); }
 bool UIElement::OnClick() { return isBlockingRaycasts; }
 
 void UIElement::SetVisible(bool value) { renderer.SetVisible(value); }
+bool UIElement::GetVisible() { return renderer.GetVisible(); }
 void UIElement::SetInteractable(bool value) { isInteractable = value; }
 
 void UIElement::AssignGUID(GUID _guid) { if (guid != 0) return; guid = _guid; }

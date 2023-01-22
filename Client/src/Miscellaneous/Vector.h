@@ -2,6 +2,7 @@
 #include <cmath>
 #include <string_view>
 #include <string>
+#include "Point.h"
 
 class Vector2 {
 public:
@@ -22,6 +23,7 @@ public:
     static Vector2 FromAngle(float angle) { return Vector2(cos(angle), sin(angle)); }
 
     // Utility Functions
+    Point ToPoint() { return Point(x, y); }
     std::string ToString() const { return std::string(std::to_string(x) + ", " + std::to_string(y)); }
 
     // Operator Overloads

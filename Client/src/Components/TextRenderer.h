@@ -5,12 +5,13 @@
 class TextRenderer: public SpriteRenderer {
 private:
 	std::string _text;
-	SDL_Color _color;
-	unsigned int _size;
+	SDL_Color _color { 0, 0, 0 };
+	unsigned int _size { 16 };
 
 public:
 	void SetText(std::string text, SDL_Color color);
 	void SetFontSize(unsigned int size);
 	void CollectGarbage();
+
 	~TextRenderer();
 };

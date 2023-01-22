@@ -10,6 +10,7 @@ public:
     Vector2 scale = Vector2(1, 1);
     float rotation = 0;
     float scaleModifier = 1.0f;
+    bool isAbsolutePositioned = false;
 
     const Vector2& GetPosition() const { return position; }
     const Vector2 GetScreenPosition() const;

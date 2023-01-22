@@ -63,6 +63,8 @@ void EnemySpawnManager::SetMonsterLevel(int value) { monsterLevel = value; }
 
 void EnemySpawnManager::Start() {}
 void EnemySpawnManager::Update() {
+	if (GAME.isGamePaused) return;
+
 	// Elapse the time between the last wave
 	auto elapsedTime = timer.GetTimeMS();
 	if (elapsedTime < spawnInterval) return;

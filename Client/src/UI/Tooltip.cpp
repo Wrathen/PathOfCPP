@@ -9,6 +9,8 @@ Tooltip::Tooltip() : UIElement("assets/sprites/Item/LootableItem.png") {
 	Start();
 }
 void Tooltip::Start() {
+	SetInteractable(false);
+
 	// Renderer background
 	renderer.SetWidth(320);
 	renderer.SetHeight(300);

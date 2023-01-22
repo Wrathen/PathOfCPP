@@ -10,6 +10,7 @@
 #include "../UI/UserInterface.h"
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Timer.h"
+#include "../Game/PowerUp/PowerUp.h"
 
 // Utility functions, will move them out of here/class.
 void GameManager::DrawRect(int x, int y, int w, int h) {
@@ -27,6 +28,7 @@ void GameManager::DrawRect(Vector2 pos, int w, int h) { DrawRect(pos.x, pos.y, w
 void GameManager::Init() { 
 	MainRenderer.Init();
 	SceneMgr.Init();
+	PowerUp::InitAllPowerUps();
 
 	player = new Player("Wrathen");
 	SceneMgr.ChangeScene("Town");
@@ -65,7 +67,7 @@ void GameManager::Update() {
 		benchmark4.Pause();
 
 		Timer benchmark5("CollisionMgr.Update");
-		CollisionMgr.Update();
+		if (!isGamePaused) CollisionMgr.Update();
 		benchmark5.Pause();
 
 		Timer benchmark6("Camera.Update");
@@ -150,6 +152,7 @@ void GameManager::PollEvents() {
 	}
 }
 void GameManager::Quit() { GAME.isGameRunning = false; }
+void GameManager::PauseGame(bool value) { isGamePaused = value; }
 
 // Main Functions
 Player* GameManager::GetPlayer() const { return player; }

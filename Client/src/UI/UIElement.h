@@ -33,6 +33,7 @@ public:
 
 	// Main Functions
 	virtual void SetVisible(bool value);
+	bool GetVisible ();
 	void SetInteractable(bool value);
 	void Delete();
 

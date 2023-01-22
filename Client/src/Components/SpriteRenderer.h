@@ -5,11 +5,6 @@
 class SpriteRenderer {
 	friend class Renderer;
 public:
-	void SetOffset(int x, int y) { offset.x = x; offset.y = y; }
-	void SetOffset(const Vector2& vec) { offset.x = vec.x; offset.y = vec.y; }
-	void SetWidth(unsigned int _w) { width = _w; }
-	void SetHeight(unsigned int _h) { height = _h; }
-	void SetVisible(bool flag);
 	void AssignTexture(SDL_Texture* _tex);
 	void AssignTexture(std::string path);
 	void AssignTransform(Transform* _transform);
@@ -20,6 +15,19 @@ public:
 	void SetColor(int r, int g, int b);
 
 	void Render();
+
+	// Setters
+	void SetOffset(int x, int y);
+	void SetOffset(const Vector2& vec);
+	void SetWidth(unsigned int _w);
+	void SetHeight(unsigned int _h);
+	void SetVisible(bool flag);
+
+	// Getters
+	Vector2& GetOffset();
+	unsigned int GetWidth();
+	unsigned int GetHeight();
+	bool GetVisible();
 
 	Transform* transform = nullptr;
 	SDL_Texture* tex = nullptr;

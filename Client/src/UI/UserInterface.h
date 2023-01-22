@@ -4,6 +4,7 @@
 #include "XPBar.h"
 #include "CurrencyBar.h"
 #include "Tooltip.h"
+#include "PowerUpGroup.h"
 
 #define UI UserInterface::GetInstance()
 class UserInterface : public Singleton<UserInterface> { friend class Singleton;
@@ -12,6 +13,7 @@ public:
 	XPBar* xpBar = nullptr;
 	CurrencyBar* currencyBar = nullptr;
 	Tooltip* tooltip = nullptr;
+	PowerUpGroup* powerUpGroup = nullptr;
 
 	void Init();
 	void Update();
@@ -23,17 +25,23 @@ public:
 	void UpdateTooltip(Item* item);
 	void UpdateEquipment();
 	void UpdateInventory();
+	void UpdatePowerUps();
 
 	void ShowTooltip();
 	void ShowInventory();
 	void ShowEquipment();
 	void ShowXPBar();
 	void ShowGold();
+	void ShowPowerUps();
+
 	void HideTooltip();
 	void HideInventory();
 	void HideEquipment();
 	void HideXPBar();
 	void HideGold();
+	void HidePowerUps();
+
+	void ClearPowerUps();
 
 private:
 	UserInterface() {}

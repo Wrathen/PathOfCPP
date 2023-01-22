@@ -53,6 +53,20 @@ void Monster::Render() {
 }
 
 void Monster::OnDeath() {
+	auto playerStats = GAME.GetPlayer()->stats;
+	auto playerLuck = playerStats->GetLuck();
+	auto playerChanceDoubleLoot = playerStats->GetChanceToDoubleLoot();
+
+	auto monsterLevel = stats->GetLevel();
+	if (stats->dropsEnhancedLoot) {
+		lootChance *= 1.30f;
+		monsterLevel = (int)(monsterLevel * 1.30f);
+	}
+
+	lootChance *= playerLuck;
+
 	if (lootChance > RandomFloat(1.0f))
-		Item::DropItem(stats->GetLevel(), transform.GetPosition());
+		Item::DropItem(monsterLevel, transform.GetPosition());
+	if (playerChanceDoubleLoot > RandomFloat(1.0f))
+		Item::DropItem(monsterLevel, transform.GetPosition());
 }

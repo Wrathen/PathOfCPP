@@ -1,6 +1,8 @@
 #include "UIManager.h"
 #include "GameManager.h"
 #include "../Miscellaneous/Mouse.h"
+#include "../Miscellaneous/Point.h"
+#include "../UI/UserInterface.h"
 
 void UIManager::Update() {
 	Collection::Update();
@@ -13,10 +15,16 @@ void UIManager::Update() {
 }
 
 void UIManager::OnMouseMove() {
+	// If Power Ups are shown, we should only check 3 UIElements
+	bool powerUpsAreShown = UI.powerUpGroup && UI.powerUpGroup->GetVisible();
+	if (powerUpsAreShown) return;
+
 	if (currentHoveredElement && !currentHoveredElement->isToBeDeleted)
 		currentHoveredElement->OnMouseOver();
 
-	Vector2 mousePos = Mouse::GetPosition();
+	// Get Mouse Position
+	Point mousePos = Mouse::GetPosition().ToPoint();
+
 	int gameWidth = GAME.gameWidth;
 	int gameHeight = GAME.gameHeight;
 
@@ -26,18 +34,25 @@ void UIManager::OnMouseMove() {
 		if (elementScreenPos.x > gameWidth || elementScreenPos.x < 0 || 
 			elementScreenPos.y > gameHeight || elementScreenPos.y < 0) continue;
 
-		Vector2 targetPos = element->transform.GetScreenPosition();
-		auto targetWidth = element->renderer.width;
-		auto targetHeight = element->renderer.height;
+		auto target = element;
+		Vector2 targetPos = elementScreenPos;
+		auto targetWidth = target->renderer.width;
+		auto targetHeight = target->renderer.height;
+		Rect targetCollider{ (int)targetPos.x, (int)targetPos.y, (int)targetWidth, (int)targetHeight };
 
-		bool collides = mousePos.x > targetPos.x && mousePos.x < targetPos.x + targetWidth &&
-			mousePos.y > targetPos.y && mousePos.y < targetPos.y + targetHeight;
+		// If it gets offsetted by getting drawn centered, we should offset back.
+		if (target->renderer.shouldDrawCentered) {
+			targetCollider.x -= targetWidth / 2;
+			targetCollider.y -= targetHeight / 2;
+		}
 
-		if (collides) {
+		if (mousePos.Intersects(targetCollider)) {
 			if (currentHoveredElement && !currentHoveredElement->isToBeDeleted) {
 				if (element != currentHoveredElement){
 					currentHoveredElement->OnMouseLeave();
-					element->OnMouseEnter();
+
+					currentHoveredElement = element;
+					currentHoveredElement->OnMouseEnter();
 					return;
 				}
 			}
@@ -54,27 +69,42 @@ void UIManager::OnMouseMove() {
 	}
 }
 bool UIManager::OnMouseDown() {
-	if (currentHoveredElement && !currentHoveredElement->isToBeDeleted)
+	// If Power Ups are shown, we should only check 3 UIElements
+	bool powerUpsAreShown = UI.powerUpGroup && UI.powerUpGroup->GetVisible();
+
+	// If we are already hovering over an element, just click it
+	if (!powerUpsAreShown && currentHoveredElement && !currentHoveredElement->isToBeDeleted)
 		return currentHoveredElement->OnClick();
 
-	Vector2 mousePos = Mouse::GetPosition();
+	// Get Mouse Position
+	Point mousePos = Mouse::GetPosition().ToPoint();
 
-	for (auto& element : *GetAll()) {
-		if (!element->isInteractable) continue;
+	// Get The List of Elements we are going to check
+	auto elementVector = 
+		powerUpsAreShown ? UI.powerUpGroup->GetCurrentShownPowerUps() : *GetAll();
+
+	// Iterate over all viable elements and send them the OnClick event.
+	for (auto& element : elementVector) {
+		if (!element || !element->isInteractable) continue;
 		auto target = element;
 
 		Vector2 targetPos = target->transform.GetScreenPosition();
 		auto targetWidth = target->renderer.width;
 		auto targetHeight = target->renderer.height;
-
-		bool collides = mousePos.x > targetPos.x && mousePos.x < targetPos.x + targetWidth &&
-			mousePos.y > targetPos.y && mousePos.y < targetPos.y + targetHeight;
+		Rect targetCollider{ (int)targetPos.x, (int)targetPos.y, (int)targetWidth, (int)targetHeight};
 		
-		if (collides) {
+		// If it gets offsetted by getting drawn centered, we should offset back.
+		if (target->renderer.shouldDrawCentered) {
+			targetCollider.x -= targetWidth / 2;
+			targetCollider.y -= targetHeight / 2;
+		}
+
+		if (mousePos.Intersects(targetCollider)) {
 			bool raycastBlocked = target->OnClick();
 			if (raycastBlocked) return true;
 		}
 	}
 
+	// Return false, indicating further raycasts are not blocked.
 	return false;
 }

@@ -25,12 +25,14 @@ public:
     void Render() override;
 
     // Main Functions
+    void Leech(float damageAmount);
     void ShootArrow(const Vector2& targetPos);
     void LevelUp();
     void GainXP(float value);
     void FUN_Headhunter();
 
     // Events
+    void OnLevelUp();
     void OnKill() override;
     void OnDeath() override;
 

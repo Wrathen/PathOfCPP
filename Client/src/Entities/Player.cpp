@@ -4,6 +4,8 @@
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Random.h"
 #include "../Miscellaneous/Mouse.h"
+#include "../UI/UserInterface.h"
+#include "../Managers/GameManager.h"
 
 Player::Player(std::string name) : Entity("assets/sprites/player.png", name) {
 	isToBeDeletedOnSceneChange = false;
@@ -46,12 +48,23 @@ void Player::Render() {
 	nameTag.Render();
 }
 
+void Player::Leech(float damageAmount) {
+	float leechPercentage = stats->GetLeech();
+	float healthAmount = damageAmount * leechPercentage;
+
+	float hp = stats->GetHealth() + healthAmount;
+	float maxHP = stats->GetMaxHealth();
+	if (hp > maxHP) hp = maxHP;
+
+	stats->SetHealth(hp);
+}
+
 void Player::ShootArrow(const Vector2& targetPos) {
 	int numberOfProjectiles = stats->GetNumberOfProjectiles();
 	float mainRotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
 
 	// used to be 1.30895833f or PI/2.4 = ~75 degrees spread.
-	float spreadDistance = (3.1415f * stats->GetProjectileAngleMultiplier()) / numberOfProjectiles;
+	float spreadDistance = (3.1415f * stats->GetProjectileSpread()) / numberOfProjectiles;
 	bool isEven = numberOfProjectiles % 2 == 0;
 
 	for (int i = 0; i < numberOfProjectiles; ++i) {
@@ -71,7 +84,7 @@ void Player::GainXP(float value) {
 
 	while (xp >= maxXP) {
 		xp -= maxXP;
-		maxXP *= 1.37f;
+		maxXP *= 1.49f;
 		stats->SetMaxXP(maxXP);
 
 		LevelUp();
@@ -83,16 +96,33 @@ void Player::LevelUp() {
 	stats->SetMaxHealth(stats->GetMaxHealth() + 12);
 	stats->SetHealth(stats->GetMaxHealth());
 	stats->SetLevel(stats->GetLevel() + 1);
-	// Show Power-up Options
+
+	OnLevelUp();
 }
 
+// Events
+void Player::OnLevelUp() {
+	// Show Power-up Options
+	GAME.PauseGame(true);
+	UI.HideTooltip();
+	UI.UpdatePowerUps();
+	UI.ShowPowerUps();
+}
 void Player::OnDeath() {
+	int lastStandCount = stats->GetLastStandCount();
+	if (lastStandCount > 0) {
+		stats->guardianAngelExpireTime = SDL_GetTicks64() + 3000;
+		--stats->lastStandCount;
+		return;
+	}
+
 	Warn("Implement Player::OnDeath.");
 }
 void Player::OnKill() {
 	++stats->totalKills;
 	GainXP(1);
-	if (stats->hasHeadHunter) FUN_Headhunter();
+
+	if (stats->HasHH()) FUN_Headhunter();
 }
 
 // HH nerfs in this patch. Sadge

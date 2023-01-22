@@ -2,6 +2,7 @@
 
 HealthBar::HealthBar() : UIElement("assets/sprites/UI/healthbar/health.png") {}
 void HealthBar::Start() {
+	SetInteractable(false);
 	sourceTransform = &source->transform;
 
 	bg_renderer.AssignTransform(&transform);
