@@ -9,6 +9,7 @@ public:
 	Vector2 boxCollider{ 20, 15 };
 	Vector2 enemyBoxCollider{ 70, 70 };
 	int piercingAmount = 1;
+	int overlappingProjectiles = 0;
 	float damageAmount = 1;
 
 	// Constructor

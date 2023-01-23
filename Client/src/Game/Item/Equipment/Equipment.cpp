@@ -60,7 +60,7 @@ static std::string nameAffixes[] = {
 };
 
 // Constructors & Deconstructors
-Equipment::Equipment() { type = ItemType::Equipment; }
+Equipment::Equipment() { type = ItemType::Equipment; equipmentType = EquipmentType::Count; }
 Equipment::Equipment(EquipmentType _equipmentType): Equipment() {
 	// Will notify me that I need to change here when I add more types.
 	static_assert((int)EquipmentType::Count == 6);
@@ -85,13 +85,13 @@ Equipment* Equipment::CreateRandomEquipment(int itemLevel) {
 	ItemRarity itemRarity = RandomEnum(ItemRarity::Count);
 	Equipment* equipment = new Equipment(equipmentType);
 	equipment->equipmentType = equipmentType;
-	equipment->itemLevel = itemLevel;
+	equipment->itemLevel = (float)itemLevel;
 	equipment->rarity = itemRarity;
 	equipment->description = itemRarity == ItemRarity::Magic ? "Magical it seems, yet so weak.":
 							itemRarity == ItemRarity::Rare ? "Seeking more, MORE!":
 							itemRarity == ItemRarity::Legendary ? "Wow! This might be one of\n it's kind.":
 							itemRarity == ItemRarity::Artifact ? "Still sane exile?": "A worthy equipment for the filthy.";
-	equipment->stats.Randomize(itemLevel, (int)itemRarity + 1, (int)itemRarity, ((int)itemRarity * 0.67f) + 1.0f);
+	equipment->stats.Randomize((float)itemLevel, (int)itemRarity + 1, (int)itemRarity, ((int)itemRarity * 0.67f) + 1.0f);
 
 	return equipment;
 }

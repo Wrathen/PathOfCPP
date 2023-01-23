@@ -18,8 +18,8 @@ enum class ItemType {
 class Item {
 public:
 	// Members
-	ItemType type;
-	ItemRarity rarity;
+	ItemType type { ItemType::Count };
+	ItemRarity rarity { ItemRarity::Common };
 	std::string name;
 	std::string description;
 	std::string texturePath;

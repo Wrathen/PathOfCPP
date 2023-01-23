@@ -46,7 +46,7 @@ public:
 			float randomMultiplier = RandomFloat(1.0f, multiplier);
 			bool statAlreadyExists = false;
 
-			for (int j = 0; j < prefixes.size(); ++j) {
+			for (size_t j = 0; j < prefixes.size(); ++j) {
 				if (prefixes[j].type == stat.type) {
 					statAlreadyExists = true;
 					prefixes[j].value += itemLevel * randomMultiplier;
@@ -64,7 +64,7 @@ public:
 			float randomMultiplier = RandomFloat(1.0f, multiplier);
 			bool statAlreadyExists = false;
 
-			for (int j = 0; j < suffixes.size(); ++j) {
+			for (size_t j = 0; j < suffixes.size(); ++j) {
 				if (suffixes[j].type == stat.type) {
 					statAlreadyExists = true;
 					suffixes[j].value += itemLevel * randomMultiplier;

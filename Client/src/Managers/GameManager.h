@@ -9,7 +9,7 @@
 class GameManager: public Singleton<GameManager> { friend class Singleton;
 public:
 	Player* player = nullptr;
-	SDL_Event event;
+	SDL_Event event {};
 
 	int gameWidth = 1920;
 	int gameHeight = 1080;

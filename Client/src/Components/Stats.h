@@ -73,9 +73,9 @@ public:
 	float lootChanceMultiplier = 1.0f;
 	bool hasReplicaHeadhunter = false;
 	float chanceToGainRandomModOnReplicaHH = 0.0f;
-	bool hasHeadhunter = false;
+	bool hasHeadhunter = true;
 	float chanceToGainRandomModOnHH = 0.0f;
-	bool critDamageMultiplier = 1.0f;
+	float critDamageMultiplier = 1.0f;
 	float critChance = 10.0f;
 	float critMultiplier = 1.0f;
 	bool hasGuardianAngel = false;
@@ -123,7 +123,7 @@ public:
 	float inline GetProjectileSpread() const { return projectileSpread * projectileSpreadMultiplier; }
 	float inline GetHealth() const { return health; }
 	float inline GetMaxHealth() const { return maxHealth * maxHealthMultiplier; }
-	float inline GetAttackSpeed() const { return attackSpeed * attackSpeedMultiplier; }
+	float inline GetAttackSpeed() const { return attackSpeed / attackSpeedMultiplier; }
 	float inline GetSizeMultiplier() const { return sizeMultiplier; }
 	float inline GetDamageAmount() const { return (GetAttackPower() + GetStrength()) * damageMultiplier; }
 	int inline GetPiercingAmount() const { return piercingAmount; }

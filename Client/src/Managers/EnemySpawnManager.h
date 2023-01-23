@@ -20,6 +20,7 @@ public:
 	int totalNumberOfSpawnedEnemies = 0;
 	int totalNumberOfSpawnedWaves = 0;
 
+	void Reset() { totalNumberOfSpawnedEnemies = 0; totalNumberOfSpawnedWaves = 0; }
 	float GetSpawnInterval() { return spawnInterval; }
 	int GetSpawnAmount() { return spawnAmount; }
 	int GetMonsterLevel() { return monsterLevel; }

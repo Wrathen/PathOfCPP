@@ -1,4 +1,4 @@
-#include "PowerUp.h";
+#include "PowerUp.h"
 #include "../../Miscellaneous/Log.h"
 #include "../../Managers/GameManager.h"
 #include "../../Managers/CollisionManager.h"

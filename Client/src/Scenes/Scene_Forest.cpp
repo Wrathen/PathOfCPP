@@ -8,8 +8,9 @@ void Scene_Forest::Start() {
 	
 	EnemySpawner.SetMonsterLevel(1);
 	EnemySpawner.SetSpawnAmount(7);
-	EnemySpawner.SetMaxSpawnAmount(10000);
+	EnemySpawner.SetMaxSpawnAmount(60000);
 	EnemySpawner.SetSpawnInterval(333);
+	EnemySpawner.Reset();
 }
 void Scene_Forest::Update() {
 	EnemySpawner.Update();

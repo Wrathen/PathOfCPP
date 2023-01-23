@@ -67,14 +67,26 @@ void Player::ShootArrow(const Vector2& targetPos) {
 	float spreadDistance = (3.1415f * stats->GetProjectileSpread()) / numberOfProjectiles;
 	bool isEven = numberOfProjectiles % 2 == 0;
 
+	static float previousOffset = -999;
+	static float epsilon = 0.025f;
+	Projectile* lastInstantiatedProjectile = nullptr;
+	previousOffset = -999;
 	for (int i = 0; i < numberOfProjectiles; ++i) {
 		int multiplier = i - numberOfProjectiles/2;
 		if (isEven && multiplier >= 0) ++multiplier;
 
 		float offset = spreadDistance * multiplier;
 		float rotation = mainRotation + offset;
-		
-		new Projectile(this, transform.GetPosition(), rotation, stats->GetProjectileSpeed());
+
+		// Do not instantiate close projectiles, instead give the previous one piercing.
+		if (offset - epsilon < previousOffset && previousOffset < offset + epsilon) {
+			if (lastInstantiatedProjectile)
+				++lastInstantiatedProjectile->overlappingProjectiles;
+			continue;
+		}	
+
+		previousOffset = offset;
+		lastInstantiatedProjectile = new Projectile(this, transform.GetPosition(), rotation, stats->GetProjectileSpeed());
 	}
 }
 void Player::GainXP(float value) {
