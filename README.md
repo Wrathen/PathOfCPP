@@ -24,3 +24,10 @@ https://user-images.githubusercontent.com/36766122/213858623-4ae6faa8-57be-4ad8-
 
 https://user-images.githubusercontent.com/36766122/213858638-79e12e9f-1d2b-4110-8406-cd6e3518c66a.mp4
 
+
+[January 26th 2023] Performance Showcase, Projectiles Optimization, Powerups (videos are 30fps due to 10mb restriction on each video by Github)
+
+https://user-images.githubusercontent.com/36766122/214795075-49cbe76f-ec95-4718-8cb3-7868d43d7491.mp4
+
+https://user-images.githubusercontent.com/36766122/214795441-8a6cb649-6fd4-4da2-9c49-9086232779e3.mp4
+
