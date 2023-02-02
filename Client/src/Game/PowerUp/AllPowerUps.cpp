@@ -6,7 +6,7 @@
 #define NUMBER_OF_POWERUPS 31
 static PowerUp* allPowerUps[NUMBER_OF_POWERUPS];
 
-#define stats GAME.GetPlayer()->stats
+#define stats GAME.GetPlayer()->CStats
 // Static Function
 void PowerUp::InitAllPowerUps() {
 	PowerUp* tempArray[] = { new PowerUp{ "Double Shot",
@@ -51,7 +51,10 @@ void PowerUp::InitAllPowerUps() {
 
 		new PowerUp{ "Healthy Diet",
 		"Increases Maximum Health by 27%",
-		[] { stats->maxHealthMultiplier += 0.27f; } },
+		[] { 
+			auto CHealth = GAME.GetPlayer()->CHealth;
+			CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() + 0.27f); 
+		}},
 
 		new PowerUp{ "Hit two birds, with one stone",
 		"Your projectiles are spread 30% more.",
@@ -67,7 +70,7 @@ void PowerUp::InitAllPowerUps() {
 
 		new PowerUp{ "PIERCE!",
 		"Your projectiles will pierce\nthrough 1 additional enemy.",
-		[] { ++stats->piercingAmount; } },
+		[] { stats->SetPiercingAmount(stats->GetPiercingAmount() + 1); } },
 
 		new PowerUp{ "Giant",
 		"Increases Size by 30%.\nDecreases Move Speed by 4%.\nReceive 2% less damage from all sources.\n(Additive)",
@@ -79,13 +82,16 @@ void PowerUp::InitAllPowerUps() {
 
 		new PowerUp{ "BLOODBORNE!",
 		"Instantly kill nearby enemies.\nAll the loot is enhanced.",
-		[] { float nearbyDistance = 60;
+		[] { float nearbyDistance = 800;
 			 auto player = GAME.GetPlayer();
-			 auto playerPos = player->transform.GetPosition();
-			 auto allNearbyEnemies = CollisionMgr.spatialHash.QueryRange(playerPos.x, playerPos.y, nearbyDistance); 
+			 auto playerPos = player->transform.GetScreenPosition();
+			 auto& allNearbyEnemies = CollisionMgr.spatialHash.QueryRange(playerPos.x, playerPos.y, nearbyDistance);
 			 for (auto enemy: allNearbyEnemies) {
+				 // To-Do: Implement Entity Type and query based on type
+				 // Below code is preventing projectiles getting destroyed.
+				 if (enemy->collisionTag == EntityCollisionTag::Friendly) continue;
+				 if (!enemy || enemy->isToBeDeleted) continue;
 				 enemy->GetComponent<Stats>()->dropsEnhancedLoot = true;
-				 player->OnKill();
 				 enemy->OnDeath();
 			 }
 		}},
@@ -128,7 +134,7 @@ void PowerUp::InitAllPowerUps() {
 
 		new PowerUp{ "Guardian Angel",
 		"Protects from all damage for 30 seconds.",
-		[] { stats->hasGuardianAngel = true; stats->guardianAngelExpireTime = SDL_GetTicks64() + 30000; } },
+		[] { GAME.GetPlayer()->CHealth->SetGuardianAngel(30); }},
 
 		new PowerUp{ "Quick Learner",
 		"Increase all XP gain by 35%",

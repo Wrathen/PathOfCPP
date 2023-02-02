@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include "../Components/TextRenderer.h"
+#include "../Components/Health.h"
 #include "../Components/HealthBar.h"
 #include "../Components/Collision/BoxCollider.h"
 #include "../Behaviour/AI/MoveTowardsTarget.h"
@@ -14,13 +15,17 @@ enum class MonsterRarity {
 
 class Monster: public Entity {
 public:
+    // Components
+    Stats* CStats = nullptr;
+    Health* CHealth = nullptr;
+    HealthBar* CHealthBar = nullptr;
+    MoveTowardsTarget* CMoveTowardsTarget = nullptr;
+    BoxCollider* CCollider = nullptr;
+
+    // Other Members
     TextRenderer nameTag;
     MonsterRarity rarity = MonsterRarity::Common;
-    Stats* stats = nullptr;
-    HealthBar* healthBar = nullptr;
-    BoxCollider* collider = nullptr;
-    MoveTowardsTarget* moveTowardsTarget = nullptr;
-    float lootChance = 0.17f;
+    float lootChance = 0.12f;
 
     // Base Functions
     void Start() override;
@@ -34,7 +39,7 @@ public:
     // Utility Functions
     std::string ToString() override {
         if (!this) return "This entity has already been deleted. What are you doing?!";
-        return "A level " + std::to_string(stats->GetLevel()) + " " + name + " monster with GUID: " + std::to_string(guid);
+        return "A level " + std::to_string(CStats->GetLevel()) + " " + name + " monster with GUID: " + std::to_string(guid);
     }
 
 protected:

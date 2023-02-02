@@ -65,7 +65,7 @@ void InputManager::OnKeyUp(SDL_Keycode keyCode) {
 void InputManager::OnMouseDown() {
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
-	if (player) player->stats->SetAttackingState(true);
+	if (player) player->CStats->SetAttackingState(true);
 
 	// Notify UIManager
 	bool raycast = UIMgr.OnMouseDown();
@@ -74,7 +74,7 @@ void InputManager::OnMouseDown() {
 void InputManager::OnMouseUp() {
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
-	if (player) player->stats->SetAttackingState(false);
+	if (player) player->CStats->SetAttackingState(false);
 
 	// Notify UIManager
 	//bool raycast = UIMgr.OnMouseUp();

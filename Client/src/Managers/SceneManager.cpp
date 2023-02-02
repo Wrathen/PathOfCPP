@@ -17,4 +17,14 @@ void SceneManager::ChangeScene(const std::string& name) {
 	currentScene = sceneList[name];
 	currentScene->Start();
 }
+
 Scene* SceneManager::GetCurrentScene() { return currentScene; }
+
+// Events
+void SceneManager::OnPlayerDeath() {
+	ChangeScene("Town");
+
+	Player* player = GAME.GetPlayer();
+	player->CStats->ResetPowerUps();
+	player->CHealth->SetHealth(player->CHealth->GetBaseMaxHealth());
+}

@@ -19,4 +19,5 @@ public:
 	void SetEnabled(bool flag) { isEnabled = flag; }
 	void SetTarget(Entity* tar) { target = tar; targetTransform = &target->transform; }
 	Entity* GetTarget() { return target; }
+	void Delete() { delete this; }
 };

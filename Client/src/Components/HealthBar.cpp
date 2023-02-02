@@ -14,13 +14,13 @@ void HealthBar::Start() {
 	offset = Vector2(0, -50.0f); // Transform Offset
 
 	bg_renderer.shouldDrawCentered = true;
-	stats = source->GetComponent<Stats>();
+	healthComponent = source->GetComponent<Health>();
 }
 void HealthBar::Update() {
-	if (!source || !stats) return;
+	if (!source || !healthComponent) return;
 
 	int sliderMaxWidth = 15; // 15 is the MaxWidth we can achieve with the current configuration.
-	int hpRatio = stats->GetHealth() / stats->GetMaxHealth() * sliderMaxWidth;
+	float hpRatio = healthComponent->GetHealth() / healthComponent->GetMaxHealth() * sliderMaxWidth;
 	renderer.SetWidth(hpRatio);
 
 	transform.SetPosition(sourceTransform->position + offset);

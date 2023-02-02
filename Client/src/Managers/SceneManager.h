@@ -15,6 +15,9 @@ public:
 	void ChangeScene(const std::string& name);
 	Scene* GetCurrentScene();
 
+	// Events
+	void OnPlayerDeath();
+
 private:
 	SceneManager() {}
 	~SceneManager() {};

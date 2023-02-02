@@ -24,10 +24,14 @@ public:
         m_cellSize(cellSize),
         m_width(width),
         m_height(height),
-        m_numCellsX(static_cast<int>(width / cellSize)),
-        m_numCellsY(static_cast<int>(height / cellSize)),
         m_halfWidth(width/2),
         m_halfHeight(height/2),
+        m_quarterWidth(width/4),
+        m_quarterHeight(height/4),
+        m_threeQuartersWidth(m_quarterWidth*3),
+        m_threeQuartersHeight(m_quarterHeight*3),
+        m_numCellsX(static_cast<int>(width / cellSize)),
+        m_numCellsY(static_cast<int>(height / cellSize)),
         m_halfNumCellsX(m_numCellsX/2),
         m_halfNumCellsY(m_numCellsY/2),
         m_hash(m_numCellsX* m_numCellsY) {
@@ -84,16 +88,16 @@ public:
     std::vector<Entity*>& Query(int x, int y, int width, int height) {
         result.clear();
 
-        if (x <= -m_halfWidth) return result;
-        else if (x >= m_halfWidth) return result;
-        else if (y <= -m_halfHeight) return result;
-        else if (y >= m_halfHeight) return result;
+        if (x <= -m_quarterWidth) return result;
+        else if (x >= m_threeQuartersWidth) return result;
+        else if (y <= -m_quarterHeight) return result;
+        else if (y >= m_threeQuartersHeight) return result;
 
         // Calculate the indices of the cells in the region
         int minCellX = x / m_cellSize;
-        int maxCellX = (x + width - 1) / m_cellSize;
+        int maxCellX = (x + width) / m_cellSize;
         int minCellY = y / m_cellSize;
-        int maxCellY = (y + height - 1) / m_cellSize;
+        int maxCellY = (y + height) / m_cellSize;
 
         // Shift the cell indices by the number of cells in the negative direction
         // to ensure that they are always positive
@@ -103,8 +107,8 @@ public:
         maxCellY += m_halfNumCellsY;
 
         minCellX = std::max(0, minCellX);
-        maxCellX = std::min(m_numCellsX - 1, maxCellX);
         minCellY = std::max(0, minCellY);
+        maxCellX = std::min(m_numCellsX - 1, maxCellX);
         maxCellY = std::min(m_numCellsY - 1, maxCellY);
 
         // Iterate over the cells in the region
@@ -119,13 +123,13 @@ public:
     }
 
     // Query the hash for all entities within a certain distance of a point
-    std::vector<Entity*> QueryRange(int x, int y, float radius) {
+    std::vector<Entity*>& QueryRange(int x, int y, float radius) {
         result.clear();
 
-        if (x <= -m_width / 2) return result;
-        else if (x >= m_width / 2) return result;
-        else if (y <= -m_height / 2) return result;
-        else if (y >= m_height / 2) return result;
+        if (x <= -m_quarterWidth) return result;
+        else if (x >= m_threeQuartersWidth) return result;
+        else if (y <= -m_quarterHeight) return result;
+        else if (y >= m_threeQuartersHeight) return result;
 
         // Determine the min and max cell indices to search
         int minCellX = static_cast<int>((x - radius) / m_cellSize);
@@ -141,8 +145,8 @@ public:
         maxCellY += m_numCellsY / 2;
 
         minCellX = std::max(0, minCellX);
-        maxCellX = std::min(m_numCellsX - 1, maxCellX);
         minCellY = std::max(0, minCellY);
+        maxCellX = std::min(m_numCellsX - 1, maxCellX);
         maxCellY = std::min(m_numCellsY - 1, maxCellY);
 
         // Search the cells for entities within the range
@@ -155,7 +159,7 @@ public:
                     auto entityPos = entity->transform.GetScreenPosition();
                     float dx = std::abs(entityPos.x - x);
                     float dy = std::abs(entityPos.y - y);
-                    if (dy - dx <= radius) result.push_back(entity);
+                    if (dy - dx <= radius) result.insert(result.end(), entity); // I WAS DOING PUSH_BACK [GIGA BIG ISSUE]
                 }
             }
         }
@@ -182,11 +186,15 @@ private:
     // The number of cells in the x and y directions
     int m_width;
     int m_height;
-    int m_numCellsX;
-    int m_numCellsY;
-
     int m_halfWidth;
     int m_halfHeight;
+    int m_quarterWidth;
+    int m_quarterHeight;
+    int m_threeQuartersWidth;
+    int m_threeQuartersHeight;
+
+    int m_numCellsX;
+    int m_numCellsY;
     int m_halfNumCellsX;
     int m_halfNumCellsY;
 

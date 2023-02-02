@@ -9,8 +9,6 @@ class Stats: public Component {
 public:
     // General Stats
     unsigned int level = 1;
-    float health = 100.0f;
-    float maxHealth = 100.0f;
 
 	// Player-only --> will change the structure later
 	float xp = 0;
@@ -56,7 +54,6 @@ public:
 	bool hasCoinMagnet = false;
 	float coinMagnetArea = 0.0f;
 	int lastStandCount = 0;
-	float maxHealthMultiplier = 1.0f;
 	float projectileSpread = 0.20f;
 	float projectileSpreadMultiplier = 1.0f;
 	bool canCleave = false;
@@ -78,8 +75,6 @@ public:
 	float critDamageMultiplier = 1.0f;
 	float critChance = 10.0f;
 	float critMultiplier = 1.0f;
-	bool hasGuardianAngel = false;
-	Uint64 guardianAngelExpireTime = 0.0f;
 	float xpMultiplier = 1.0f;
 
 	// Power-up Modifier Functions
@@ -103,8 +98,6 @@ public:
 	float inline GetReplicaHHChance() const { return chanceToGainRandomModOnReplicaHH; }// To:Do
 	float inline GetHHChance() const { return chanceToGainRandomModOnHH; }// To:Do
 	float inline GetCritDamageMultiplier() const { return critDamageMultiplier; }// To:Do
-	bool inline HasGuardianAngel() const { return hasGuardianAngel; }// To:Do
-	Uint64 inline GetGuardianAngelExpireTime() const { return guardianAngelExpireTime; }// To:Do
 	float inline GetXPMultiplier() const { return xpMultiplier; }// To:Do
 
 	// Getters
@@ -121,11 +114,9 @@ public:
 	float inline GetVersatility() const { return versatility; }
 	float inline GetProjectileSpeed() const { return projectileSpeed; }
 	float inline GetProjectileSpread() const { return projectileSpread * projectileSpreadMultiplier; }
-	float inline GetHealth() const { return health; }
-	float inline GetMaxHealth() const { return maxHealth * maxHealthMultiplier; }
 	float inline GetAttackSpeed() const { return attackSpeed / attackSpeedMultiplier; }
 	float inline GetSizeMultiplier() const { return sizeMultiplier; }
-	float inline GetDamageAmount() const { return (GetAttackPower() + GetStrength()) * damageMultiplier; }
+	float inline GetDamageAmount() const { return (GetAttackPower() + GetStrength() / 24) * damageMultiplier; }
 	int inline GetPiercingAmount() const { return piercingAmount; }
 	bool inline GetAttackingState() const { return isAttacking; }
 
@@ -139,14 +130,68 @@ public:
 	void SetCritChance(float value) { critChance = value; }
 	void SetCritMultiplier(float value) { critMultiplier = value; }
 	void SetProjectileSpeed(float value) { projectileSpeed = value; }
-	void SetHealth(float value) { health = value; }
-	void SetMaxHealth(float value) { maxHealth = value; }
 	void SetAttackSpeed(float value) { attackSpeed = value; }
 	void SetAttackingState(bool value) { isAttacking = value; }
-	void SetSizeMultiplier(float value) { sizeMultiplier = value; }
+	void SetSizeMultiplier(float value) { sizeMultiplier = value; source->transform.SetScaleModifier(value); }
 	void SetNumberOfProjectiles(unsigned int value) { numberOfProjectiles = value; }
 	void SetPiercingAmount(int value) { piercingAmount = value; }
 
+	void ResetPowerUps() {
+		// To-Do Change all of the structure here.
+		// Stats that are associated with Powerups should be named with prefix P_
+		// Below code is temporary
+		SetSizeMultiplier(1.0f);
+		source->transform.SetScale(2.2f, 2.2f);
+		level = 1;
+		xp = 0;
+		maxXP = 2.4f;
+		strength = 24;
+		dexterity = 27;
+		intelligence = -6;
+		attackPower = 5;
+		haste = 0;
+		versatility = 0;
+		numberOfProjectiles = 1;
+		projectileSpeed = 80.00f;
+		moveSpeed = 25.0f;
+		totalKills = 0;
+		attackSpeed = 0.3f;
+
+		numberOfProjectileMultiplier = 1.0f;
+		leech = 0.0f;
+		strengthMultiplier = 1.0f;
+		moveSpeedMultiplier = 1.0f;
+		attackSpeedMultiplier = 1.0f;
+		luck = 1.0f;
+		chanceToGetDoubleLoot = 0.0f;
+		hasCoinMagnet = false;
+		coinMagnetArea = 0.0f;
+		lastStandCount = 0;
+		projectileSpread = 0.20f;
+		projectileSpreadMultiplier = 1.0f;
+		canCleave = false;
+		cleaveDamagePercentage = 0.0f;
+		hasExplodyChest = false;
+		explodyChestChance = 0.0f;
+		piercingAmount = 1;
+		sizeMultiplier = 1.0f;
+		damageReductionAllSources = 0.0f;
+		canCreateBlizzard = false;
+		blizzardCreationChanceOnCrit = 0.0f;
+		goldMultiplier = 1.0f;
+		damageMultiplier = 1.0f;
+		lootChanceMultiplier = 1.0f;
+		hasReplicaHeadhunter = false;
+		chanceToGainRandomModOnReplicaHH = 0.0f;
+		hasHeadhunter = true;
+		chanceToGainRandomModOnHH = 0.0f;
+		critDamageMultiplier = 1.0f;
+		critChance = 10.0f;
+		critMultiplier = 1.0f;
+		xpMultiplier = 1.0f;
+	}
+
 	// Enforced Method by Component Base Class
 	void Start() { }
+	void Delete() { delete this; }
 };

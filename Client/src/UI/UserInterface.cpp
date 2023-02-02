@@ -11,9 +11,9 @@ void UserInterface::Update() {
 	if (!player) { player = GAME.GetPlayer(); return; }
 
 	UpdateGold(player->goldAmount);
-	UpdateXP(player->stats->GetXP());
-	UpdateMaxXP(player->stats->GetMaxXP());
-	UpdateLevel(player->stats->GetLevel());
+	UpdateXP(player->CStats->GetXP());
+	UpdateMaxXP(player->CStats->GetMaxXP());
+	UpdateLevel(player->CStats->GetLevel());
 
 	if (tooltip->GetVisible()) tooltip->Render();
 	if (xpBar->GetVisible()) xpBar->Render();

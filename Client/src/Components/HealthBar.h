@@ -1,13 +1,13 @@
 #pragma once
 #include "../UI/UIElement.h"
 #include "../Entities/Entity.h"
-#include "Stats.h"
+#include "Health.h"
 #include "Component.h"
 
 class HealthBar : public Component, public UIElement {
 public:
 	Transform* sourceTransform = nullptr;
-	Stats* stats = nullptr;
+	Health* healthComponent = nullptr;
 
 	SpriteRenderer bg_renderer;
 	Vector2 offset;

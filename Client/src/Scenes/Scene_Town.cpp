@@ -2,7 +2,7 @@
 #include "../Managers/EnemySpawnManager.h"
 
 void Scene_Town::Start() {
-	background.SetProperties("assets/BarkTexture-01.png", 1920 * 64, 1080 * 64);
+	background.SetProperties("assets/bg1.png", 1920 * 64, 1080 * 64);
 
 	EnemySpawner.SetSpawnAmount(0);
 	EnemySpawner.SetMaxSpawnAmount(0);

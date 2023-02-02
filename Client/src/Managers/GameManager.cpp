@@ -107,8 +107,8 @@ void GameManager::Update() {
 				std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / Time::deltaTime) +
 					", MS: " + std::to_string(Time::deltaTime)) +
 					", Amount of Entities: " + std::to_string(EntityMgr.GetAll()->size()) +
-					", TotalKilledEnemies: " + std::to_string(GetPlayer()->stats->totalKills) +
-					", NumberOfProjectiles: " + std::to_string(GetPlayer()->stats->GetNumberOfProjectiles()) << std::endl;
+					", TotalKilledEnemies: " + std::to_string(GetPlayer()->CStats->totalKills) +
+					", NumberOfProjectiles: " + std::to_string(GetPlayer()->CStats->GetNumberOfProjectiles()) << std::endl;
 				std::cout << "<----------------------------------------------------->" << std::endl;
 
 				benchmark1.Log();
