@@ -5,6 +5,9 @@
 
 written in C++ with the intend of getting used to the language, using SDL2&amp;OpenGL
 
+<h2> Video Showcases </h2>
+
+
 <b>[January 26th 2023]</b> Performance Showcase, Projectiles Optimization, Powerups (videos are 30fps due to 10mb restriction on each video by Github)
 
 https://user-images.githubusercontent.com/36766122/214795075-49cbe76f-ec95-4718-8cb3-7868d43d7491.mp4
