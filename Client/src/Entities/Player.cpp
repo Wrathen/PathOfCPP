@@ -19,6 +19,8 @@ Player::~Player() {
 	CHealth = nullptr;
 	CHealthBar->Delete();
 	CHealthBar = nullptr;
+	CAnimator->Delete();
+	CAnimator = nullptr;
 }
 
 void Player::Start() {
@@ -43,6 +45,12 @@ void Player::Start() {
 	CHealthBar->transform.SetScale(3.5f, 3.0f);
 	CHealthBar->isToBeDeletedOnSceneChange = false;
 
+	// Animator Component
+	CAnimator = AddComponent<Animator>();
+	CAnimator->Add(Animation("Idle", 120, 64, 64, 0, 0, 9, 0, true));
+	CAnimator->Add(Animation("Move", 30, 64, 64, 0, 1, 3, 1, true));
+	CAnimator->Add(Animation("Attack", 10, 64, 64, 0, 2, 3, 2, false));
+
 	// Name Tag
 	nameTag.AssignTransform(&transform);
 	nameTag.SetText(name, SDL_Color{0, 0, 0});
@@ -51,10 +59,21 @@ void Player::Start() {
 	nameTag.shouldDrawCentered = true;
 }
 void Player::Update() {
-	transform.Move(transform.velocity.Normalize(), CStats->GetMoveSpeed());
+	CAnimator->Update();
+	Vector2 mousePos = Mouse::GetPosition();
+	Vector2 playerPos = transform.GetScreenPosition();
+	renderer.isFlipped = mousePos.x > playerPos.x;
+
+	Vector2 velocityNormalized = transform.velocity.Normalize();
+	if (velocityNormalized.Magnitude() > 0.01f) {
+		CAnimator->Play("Move");
+		transform.Move(velocityNormalized, CStats->GetMoveSpeed());
+	} else CAnimator->Play("Idle");
+	
 
 	if (CStats->GetAttackingState() && attackTimer.GetTimeMS() > (CStats->GetAttackSpeed() * 1000)) {
-		ShootArrow(Mouse::GetPosition());
+		CAnimator->Play("Attack", true);
+		ShootArrow(mousePos);
 		attackTimer.Reset();
 	}
 }
@@ -81,10 +100,10 @@ void Player::ShootArrow(const Vector2& targetPos) {
 	float spreadDistance = (3.1415f * CStats->GetProjectileSpread()) / numberOfProjectiles;
 	bool isEven = numberOfProjectiles % 2 == 0;
 
-	static float previousOffset = -999;
-	static float epsilon = 0.025f;
 	Projectile* lastInstantiatedProjectile = nullptr;
-	previousOffset = -999;
+	static const float epsilon = 0.025f;
+	float previousOffset = -999;
+
 	for (int i = 0; i < numberOfProjectiles; ++i) {
 		int multiplier = i - numberOfProjectiles/2;
 		if (isEven && multiplier >= 0) ++multiplier;

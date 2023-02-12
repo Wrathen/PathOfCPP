@@ -2,9 +2,26 @@
 #include <SDL_image.h>
 #include "Transform.h"
 
-class SpriteRenderer {
-	friend class Renderer;
+class SpriteRenderer { friend class Renderer;
 public:
+	Transform* transform = nullptr;
+	SDL_Texture* tex = nullptr;
+
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
+
+	Vector2 sourceOffset;
+	Vector2 offset;
+
+	unsigned int width = 32;
+	unsigned int height = 32;
+
+	bool isFlipped = false;
+	bool isVisible = true;
+	bool isAbsolutePositioned = false;
+	bool shouldDrawCentered = false;
+
+	// Main Functions
 	void AssignTexture(SDL_Texture* _tex);
 	void AssignTexture(std::string path);
 	void AssignTransform(Transform* _transform);
@@ -17,6 +34,8 @@ public:
 	void Render();
 
 	// Setters
+	void SetSourceOffset(int x, int y);
+	void SetSourceOffset(const Vector2& vec);
 	void SetOffset(int x, int y);
 	void SetOffset(const Vector2& vec);
 	void SetWidth(unsigned int _w);
@@ -29,14 +48,6 @@ public:
 	unsigned int GetHeight();
 	bool GetVisible();
 
-	Transform* transform = nullptr;
-	SDL_Texture* tex = nullptr;
-
-	Vector2 offset;
-	unsigned int width = 32;
-	unsigned int height = 32;
-
-	bool isVisible = true;
-	bool isAbsolutePositioned = false;
-	bool shouldDrawCentered = false;
+protected:
+	virtual void SetSourceAndDestinationRects();
 };

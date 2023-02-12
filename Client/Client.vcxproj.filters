@@ -142,6 +142,8 @@
     <ClInclude Include="src\Game\PowerUp\PowerUp.h" />
     <ClInclude Include="src\UI\PowerUpGroup.h" />
     <ClInclude Include="src\Components\Health.h" />
+    <ClInclude Include="src\Components\Animation.h" />
+    <ClInclude Include="src\Components\Animator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -190,6 +192,8 @@
     <ClCompile Include="src\Game\PowerUp\PowerUp.cpp" />
     <ClCompile Include="src\UI\PowerUpGroup.cpp" />
     <ClCompile Include="src\Components\Health.cpp" />
+    <ClCompile Include="src\Components\Animation.cpp" />
+    <ClCompile Include="src\Components\Animator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\ToDoList.txt" />

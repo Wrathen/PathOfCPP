@@ -160,6 +160,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Animator.h" />
+    <ClInclude Include="src\Components\Animation.h" />
     <ClInclude Include="src\Components\Health.h" />
     <ClInclude Include="src\Game\PowerUp\AllPowerUps.cpp" />
     <ClInclude Include="src\Game\PowerUp\PowerUp.h" />
@@ -303,6 +305,8 @@
     <ClInclude Include="src\UI\Tooltip.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Animator.cpp" />
+    <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Components\Health.cpp" />
     <ClCompile Include="src\Game\PowerUp\PowerUp.cpp" />
     <ClCompile Include="src\UI\PowerUpGroup.cpp" />

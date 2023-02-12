@@ -3,6 +3,7 @@
 #include "../Components/TextRenderer.h"
 #include "../Components/Stats.h"
 #include "../Components/HealthBar.h"
+#include "../Components/Animator.h"
 #include "../Miscellaneous/Timer.h"
 
 class Player : public Entity {
@@ -11,6 +12,7 @@ public:
     Stats* CStats;
     Health* CHealth;
     HealthBar* CHealthBar;
+    Animator* CAnimator;
 
     // Other Members
     TextRenderer nameTag;

@@ -2,6 +2,8 @@
 #include "../Managers/GameManager.h"
 
 PowerUpGroup::PowerUpGroup() : UIElement() {
+	SetVisible(false);
+	SetInteractable(false);
 	isAutomaticRenderingDisabled = true;
 	isToBeDeletedOnSceneChange = false;
 }
