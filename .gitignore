@@ -1,3 +1,4 @@
+/Client/.vs/
 /Client/build/
 /Client/Debug/
 /Client/Release/
@@ -9,6 +10,6 @@
 *.opendb
 *.db-shm
 *.db
-/.vs/
+.vs/
 .vs/PoC/v17/.suo
 .vs/PoC/v17/fileList.bin
