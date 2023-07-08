@@ -9,5 +9,6 @@
 *.opendb
 *.db-shm
 *.db
+/.vs/
 .vs/PoC/v17/.suo
 .vs/PoC/v17/fileList.bin
