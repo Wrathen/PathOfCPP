@@ -18,12 +18,12 @@ public:
         if (!item) return;
 
         static GUID guid;
-        item->AssignGUID(guid);
+        item->AssignGUID(++guid);
         itemList.insert(itemList.end(), item);
     }
 
     void Remove(T* item) {
-        if (!item) return;
+        if (!item || item->isToBeDeleted) return;
         item->isToBeDeleted = true;
         toBeDeletedList.push_back(item);
     }

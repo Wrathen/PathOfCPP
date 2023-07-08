@@ -12,18 +12,6 @@
 #include "../Miscellaneous/Timer.h"
 #include "../Game/PowerUp/PowerUp.h"
 
-// Utility functions, will move them out of here/class.
-void GameManager::DrawRect(int x, int y, int w, int h) {
-	SDL_Rect rect;
-	rect.x = x;
-	rect.y = y;
-	rect.w = w;
-	rect.h = h;
-	SDL_SetRenderDrawColor(MainRenderer.renderer, 0, 255, 0, 255);
-	SDL_RenderFillRect(MainRenderer.renderer, &rect);
-}
-void GameManager::DrawRect(Vector2 pos, int w, int h) { DrawRect(pos.x, pos.y, w, h); }
-
 // Base Functions
 void GameManager::Init() { 
 	MainRenderer.Init();
@@ -155,5 +143,16 @@ void GameManager::PollEvents() {
 void GameManager::Quit() { GAME.isGameRunning = false; }
 void GameManager::PauseGame(bool value) { isGamePaused = value; }
 
-// Main Functions
+// Utility Functions
 Player* GameManager::GetPlayer() const { return player; }
+int GameManager::GetFPS() const { return 1000.0f / Time::deltaTime; }
+void GameManager::DrawRect(int x, int y, int w, int h) {
+	SDL_Rect rect;
+	rect.x = x;
+	rect.y = y;
+	rect.w = w;
+	rect.h = h;
+	SDL_SetRenderDrawColor(MainRenderer.renderer, 0, 255, 0, 255);
+	SDL_RenderFillRect(MainRenderer.renderer, &rect);
+}
+void GameManager::DrawRect(Vector2 pos, int w, int h) { DrawRect(pos.x, pos.y, w, h); }

@@ -4,51 +4,62 @@
 
 <--- To-Do List: --->
 ---------------------
+Tools:
+	[ ] Zone Maker Tool (JavaScript)
+	[ ] Zone Serialization (will be done in JS)
+	[x] Zone Deserialization
+	[ ] Zone Structure Enhancements
+
+Tasks:
+	// @todo Zone deserializing done. ~~
+	// - Check the fullpath issue with Zone ReadFile main.cpp
+	// - need to make a Zone Tool (JS)
+	// - deserializing is done but we need to implement
+	//   methods in SceneManager and use the Zone Data.
+
 Managers:
 	[x] Font Manager
 
 Scene System:
 	[x] Town
 	[x] Changing Scenes
-	[-] Instance Portals
+	[ ] Instance Portals
 
 Instance System:
-	[-] Create new, enter existing one
-	[-] Loot Generation
-	[-] Instance Generation
-	[-] Enemy Generation
-	[-] Power ups
+	[ ] Create new, enter existing one
+	[ ] Loot Generation
+	[ ] Instance Generation
+	[ ] Enemy Generation
+	[ ] Power ups
 
 Gameplay Systems:  
 	[x] Basic UI
-	[-] Currency
-	[-] Inventory
-	[-] Equipment
-	[-] Talents
-	[-] Player Death, Damage (instead of oneshotting)
-	[-] Explosions, Particles
+	[x] Currency
+	[ ] Inventory
+	[ ] Equipment
+	[ ] Talents
+	[ ] Player Death, Damage (instead of oneshotting)
+	[ ] Explosions, Particles
 
 NPC:
-	[-] On Nearby Visuals
-	[-] On Nearby Interaction
+	[ ] On Nearby Visuals
+	[ ] On Nearby Interaction
 
 Gambler NPC:
-	[-] Character Model
-	[-] UI Panel
+	[ ] Character Model
+	[ ] UI Panel
 
 Merchant NPC:
-	[-] Character Model
-	[-] UI Panel
+	[ ] Character Model
+	[ ] UI Panel
 
 Blacksmith NPC:
-	[-] Character Model
-	[-] UI Panel
+	[ ] Character Model
+	[ ] UI Panel
 
 Miscellaneous:
-	[-] Save & Load System
-	[-] Animations
-	[-] Boss Enemies
-	[-] Cursor
-	[-] Sound, Music, Ambience
-
-
+	[ ] Save & Load System
+	[ ] Animations
+	[ ] Boss Enemies
+	[ ] Cursor
+	[ ] Sound, Music, Ambience

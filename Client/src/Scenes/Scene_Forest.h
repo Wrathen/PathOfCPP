@@ -6,6 +6,8 @@
 class Scene_Forest : public Scene {
 public:
 	Timer timer;
+	
+	Scene_Forest();
 
 	void Start() override;
 	void Update() override;

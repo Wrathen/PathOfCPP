@@ -3,6 +3,7 @@
 #include "../Entities/Player.h"
 #include "XPBar.h"
 #include "CurrencyBar.h"
+#include "FPSBar.h"
 #include "Tooltip.h"
 #include "PowerUpGroup.h"
 
@@ -12,6 +13,7 @@ public:
 	Player* player = nullptr;
 	XPBar* xpBar = nullptr;
 	CurrencyBar* currencyBar = nullptr;
+	FPSBar* fpsBar = nullptr;
 	Tooltip* tooltip = nullptr;
 	PowerUpGroup* powerUpGroup = nullptr;
 
@@ -22,6 +24,7 @@ public:
 	void UpdateXP(float value);
 	void UpdateMaxXP(float value);
 	void UpdateLevel(int value);
+	void UpdateFPS(int value);
 	void UpdateTooltip(Item* item);
 	void UpdateEquipment();
 	void UpdateInventory();

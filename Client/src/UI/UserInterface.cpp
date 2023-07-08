@@ -4,6 +4,7 @@
 void UserInterface::Init() {
 	xpBar = new XPBar();
 	currencyBar = new CurrencyBar();
+	fpsBar = new FPSBar();
 	tooltip = new Tooltip();
 	powerUpGroup = new PowerUpGroup();
 }
@@ -15,16 +16,24 @@ void UserInterface::Update() {
 	UpdateMaxXP(player->CStats->GetMaxXP());
 	UpdateLevel(player->CStats->GetLevel());
 
+	static Timer timer("FPSTimer");
+	if (timer.GetTimeMS() > 250) {
+		UpdateFPS(GAME.GetFPS());
+		timer.Reset();
+	}
+
 	if (tooltip->GetVisible()) tooltip->Render();
 	if (xpBar->GetVisible()) xpBar->Render();
 	if (currencyBar->GetVisible()) currencyBar->Render();
 	if (powerUpGroup->GetVisible()) powerUpGroup->Render();
+	if (fpsBar->GetVisible()) fpsBar->Render();
 }
 
 void UserInterface::UpdateGold(float value) { currencyBar->SetGold(value); }
 void UserInterface::UpdateXP(float value) { xpBar->SetXP(value); }
 void UserInterface::UpdateMaxXP(float value) { xpBar->SetMaxXP(value); }
 void UserInterface::UpdateLevel(int value) { xpBar->SetLevel(value); }
+void UserInterface::UpdateFPS(int value) { fpsBar->SetFPS(value); }
 void UserInterface::UpdateTooltip(Item* item) { tooltip->SetItem(item); }
 void UserInterface::UpdateEquipment() {}
 void UserInterface::UpdateInventory() {}

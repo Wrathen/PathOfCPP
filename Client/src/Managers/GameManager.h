@@ -6,7 +6,7 @@
 #include "../Entities/Player.h"
 
 #define GAME GameManager::GetInstance()
-class GameManager: public Singleton<GameManager> { friend class Singleton;
+class GameManager: public Singleton<GameManager> { friend Singleton;
 public:
 	Player* player = nullptr;
 	SDL_Event event {};
@@ -23,8 +23,9 @@ public:
 	void Quit();
 	void PauseGame(bool value);
 
-	// Main Functions
+	// Utility Functions
 	Player* GetPlayer() const;
+	int GetFPS() const;
 	void DrawRect(int x, int y, int w, int h);
 	void DrawRect(Vector2 pos, int w, int h);
 

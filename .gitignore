@@ -1,6 +1,7 @@
+/Client/build/
 /Client/Debug/
 /Client/Release/
-/Client/build/*.pdb
+/Client/x64/Debug/
 *.ipch
 *.vsidx
 *.lock

@@ -9,7 +9,7 @@ private:
 	unsigned int _size { 16 };
 
 public:
-	void SetText(std::string text, SDL_Color color);
+	void SetText(std::string text, SDL_Color color = { 0, 0, 0 });
 	void SetFontSize(unsigned int size);
 	void CollectGarbage();
 

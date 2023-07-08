@@ -32,8 +32,8 @@ public:
         m_threeQuartersHeight(m_quarterHeight*3),
         m_numCellsX(static_cast<int>(width / cellSize)),
         m_numCellsY(static_cast<int>(height / cellSize)),
-        m_halfNumCellsX(m_numCellsX/2),
-        m_halfNumCellsY(m_numCellsY/2),
+        m_quarterNumCellsX(m_numCellsX/4),
+        m_quarterNumCellsY(m_numCellsY/4),
         m_hash(m_numCellsX* m_numCellsY) {
         result.reserve(100);
     }
@@ -42,21 +42,26 @@ public:
     void Insert(Entity* entity) {
         auto entityPos = entity->transform.GetScreenPosition();
 
-        if (entityPos.x <= -m_halfWidth) return;
-        else if (entityPos.x >= m_halfWidth) return;
-        else if (entityPos.y <= -m_halfHeight) return;
-        else if (entityPos.y >= m_halfHeight) return;
+        // -960, -540                            2880, -540
+        //
+        //          0, 0             1920, 0
+        //       
+        //       
+        //       
+        //          0, 1080         1920, 1080
+        //
+        // -960, 1620                            2880, 1620
 
-        int cellX = entityPos.x / m_cellSize;
-        int cellY = entityPos.y / m_cellSize;
+        if (entityPos.x <= -m_quarterWidth) return;
+        else if (entityPos.x >= m_threeQuartersWidth) return;
+        else if (entityPos.y <= -m_quarterHeight) return;
+        else if (entityPos.y >= m_threeQuartersHeight) return;
 
-        // Shift the cell indices by the number of cells in the negative direction
-        // to ensure that they are always positive
-        cellX += m_halfNumCellsX;
-        cellY += m_halfNumCellsY;
+        int cellX = entityPos.x / m_cellSize + m_quarterNumCellsX;
+        int cellY = entityPos.y / m_cellSize + m_quarterNumCellsY;
 
         int cellIndex = cellY * m_numCellsX + cellX;
-        m_hash[cellIndex].push_back(entity);
+        m_hash[cellIndex].insert(m_hash[cellIndex].end(), entity);
 
         //Debug("Pushed " + std::to_string(cellX) + ", " + std::to_string(cellY) + " into the index: " + std::to_string(cellIndex));
     }
@@ -65,19 +70,16 @@ public:
     void Remove(Entity* entity) {
         auto entityPos = entity->transform.GetScreenPosition();
 
-        if (entityPos.x <= -m_width / 2) return;
-        else if (entityPos.x >= m_width / 2) return;
-        else if (entityPos.y <= -m_height / 2) return;
-        else if (entityPos.y >= m_height / 2) return;
+        if (entityPos.x <= -m_quarterWidth) return;
+        else if (entityPos.x >= m_threeQuartersWidth) return;
+        else if (entityPos.y <= -m_quarterHeight) return;
+        else if (entityPos.y >= m_threeQuartersHeight) return;
 
-        int cellX = static_cast<int>(entityPos.x / m_cellSize);
-        int cellY = static_cast<int>(entityPos.y / m_cellSize);
+        int cellX = entityPos.x / m_cellSize + m_quarterNumCellsX;
+        int cellY = entityPos.y / m_cellSize + m_quarterNumCellsY;
 
-        cellX += m_numCellsX / 2;
-        cellY += m_numCellsY / 2;
-
-        if (cellX < 0 || cellX >= m_numCellsX) return;
-        else if (cellY < 0 || cellY >= m_numCellsY) return;
+        //if (cellX < 0 || cellX >= m_numCellsX) return; these shouldnt happen 'cuz we already return
+        //else if (cellY < 0 || cellY >= m_numCellsY) return;
 
         int cellIndex = cellY * m_numCellsX + cellX;
         auto& cell = m_hash[cellIndex];
@@ -101,13 +103,13 @@ public:
 
         // Shift the cell indices by the number of cells in the negative direction
         // to ensure that they are always positive
-        minCellX += m_halfNumCellsX;
-        maxCellX += m_halfNumCellsX;
-        minCellY += m_halfNumCellsY;
-        maxCellY += m_halfNumCellsY;
+        minCellX += m_quarterNumCellsX;
+        maxCellX += m_quarterNumCellsX;
+        minCellY += m_quarterNumCellsY;
+        maxCellY += m_quarterNumCellsY;
 
-        minCellX = std::max(0, minCellX);
-        minCellY = std::max(0, minCellY);
+        //minCellX = std::max(0, minCellX); We shouldn't need these anymore since we already do checks
+        //minCellY = std::max(0, minCellY);
         maxCellX = std::min(m_numCellsX - 1, maxCellX);
         maxCellY = std::min(m_numCellsY - 1, maxCellY);
 
@@ -132,20 +134,18 @@ public:
         else if (y >= m_threeQuartersHeight) return result;
 
         // Determine the min and max cell indices to search
-        int minCellX = static_cast<int>((x - radius) / m_cellSize);
-        int maxCellX = static_cast<int>((x + radius) / m_cellSize);
-        int minCellY = static_cast<int>((y - radius) / m_cellSize);
-        int maxCellY = static_cast<int>((y + radius) / m_cellSize);
+        int minCellX = (x - radius) / m_cellSize;
+        int maxCellX = (x + radius) / m_cellSize;
+        int minCellY = (y - radius) / m_cellSize;
+        int maxCellY = (y + radius) / m_cellSize;
 
         // Shift the cell indices by the number of cells in the negative direction
         // to ensure that they are always positive
-        minCellX += m_numCellsX / 2;
-        maxCellX += m_numCellsX / 2;
-        minCellY += m_numCellsY / 2;
-        maxCellY += m_numCellsY / 2;
+        minCellX += m_quarterNumCellsX;
+        maxCellX += m_quarterNumCellsX;
+        minCellY += m_quarterNumCellsY;
+        maxCellY += m_quarterNumCellsY;
 
-        minCellX = std::max(0, minCellX);
-        minCellY = std::max(0, minCellY);
         maxCellX = std::min(m_numCellsX - 1, maxCellX);
         maxCellY = std::min(m_numCellsY - 1, maxCellY);
 
@@ -195,8 +195,8 @@ private:
 
     int m_numCellsX;
     int m_numCellsY;
-    int m_halfNumCellsX;
-    int m_halfNumCellsY;
+    int m_quarterNumCellsX;
+    int m_quarterNumCellsY;
 
     // The hash table, mapping cell indices to lists of entity pointers
     std::vector<std::vector<Entity*>> m_hash;

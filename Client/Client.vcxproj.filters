@@ -144,6 +144,9 @@
     <ClInclude Include="src\Components\Health.h" />
     <ClInclude Include="src\Components\Animation.h" />
     <ClInclude Include="src\Components\Animator.h" />
+    <ClInclude Include="src\UI\FPSBar.h" />
+    <ClInclude Include="src\UI\SceneTitleBar.h" />
+    <ClInclude Include="src\Game\Zone\Zone.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -194,6 +197,9 @@
     <ClCompile Include="src\Components\Health.cpp" />
     <ClCompile Include="src\Components\Animation.cpp" />
     <ClCompile Include="src\Components\Animator.cpp" />
+    <ClCompile Include="src\UI\FPSBar.cpp" />
+    <ClCompile Include="src\UI\SceneTitleBar.cpp" />
+    <ClCompile Include="src\Game\Zone\Zone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\ToDoList.txt" />

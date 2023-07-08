@@ -2,7 +2,11 @@
 #include "../Managers/EnemySpawnManager.h"
 #include "../UI/UserInterface.h"
 
+Scene_Forest::Scene_Forest() : Scene("Forest") {};
+
 void Scene_Forest::Start() {
+	Super::Start();
+
 	timer = Timer();
 	background.SetProperties("assets/bg3.jpg", 1920 * 64, 1080 * 64);
 	
@@ -13,6 +17,8 @@ void Scene_Forest::Start() {
 	EnemySpawner.Reset();
 }
 void Scene_Forest::Update() {
+	Super::Update();
+
 	EnemySpawner.Update();
 
 	if (timer.GetTimeMS() > 9000) {
@@ -20,9 +26,6 @@ void Scene_Forest::Update() {
 		EnemySpawner.SetSpawnAmount(EnemySpawner.GetSpawnAmount() + 1);
 		timer.Reset();
 	}
-
-	// Render
-	background.Render();
 }
 void Scene_Forest::LateUpdate() { }
 
