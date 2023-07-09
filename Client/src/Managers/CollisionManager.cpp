@@ -7,6 +7,8 @@ void CollisionManager::ResetSpatialHash() {
 		if (collider->source->isToBeDeleted) continue;
 		spatialHash.Insert(collider->source);
 	}
+
+	//spatialHash.RenderDebug();
 }
 
 void CollisionManager::Update() {

@@ -13,12 +13,25 @@ void InputManager::Update() {
 		OnMouseMove();
 	}
 }
+void InputManager::LateUpdate() {
+	for (auto key : pressedKeys)
+		keyStates[key] = KeyState::IsHeld;
 
-void InputManager::OnKeyDown(SDL_Keycode keyCode) {
+	for (auto key : releasedKeys)
+		keyStates[key] = KeyState::EMPTY;
+
+	pressedKeys.clear();
+	releasedKeys.clear();
+}
+
+void InputManager::OnKeyDown(SDL_Keycode keycode) {
+	keyStates[keycode] = KeyState::IsPressed;
+	pressedKeys.push_back(keycode);
+
 	Player* player = GAME.GetPlayer();
 	if (!player) return;
 
-	switch (keyCode) {
+	switch (keycode) {
 		case SDLK_ESCAPE:
 			GAME.Quit();
 			break;
@@ -42,11 +55,14 @@ void InputManager::OnKeyDown(SDL_Keycode keyCode) {
 			break;
 	}
 }
-void InputManager::OnKeyUp(SDL_Keycode keyCode) {
+void InputManager::OnKeyUp(SDL_Keycode keycode) {
+	keyStates[keycode] = KeyState::IsReleased;
+	releasedKeys.push_back(keycode);
+
 	Player* player = GAME.GetPlayer();
 	if (!player) return;
 
-	switch (keyCode) {
+	switch (keycode) {
 		case SDLK_w:
 			player->transform.velocity.y += 1;
 			break;
@@ -81,3 +97,13 @@ void InputManager::OnMouseUp() {
 	//if (raycast) return;
 }
 void InputManager::OnMouseMove() { UIMgr.OnMouseMove(); }
+
+bool InputManager::IsKeyPressed(SDL_Keycode keycode){
+	return keyStates[keycode] == KeyState::IsPressed;
+}
+bool InputManager::IsKeyHeld(SDL_Keycode keycode) {
+	return keyStates[keycode] == KeyState::IsHeld;
+}
+bool InputManager::IsKeyReleased(SDL_Keycode keycode) {
+	return keyStates[keycode] == KeyState::IsReleased;
+}

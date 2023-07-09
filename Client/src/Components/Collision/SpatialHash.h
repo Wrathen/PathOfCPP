@@ -38,6 +38,12 @@ public:
         result.reserve(100);
     }
 
+    void RenderDebug() {
+        for (int i = 0; i < m_numCellsX; ++i)
+            for (int j = 0; j < m_numCellsY; ++j)
+                GAME.DrawRect(i * m_cellSize, j * m_cellSize, m_width, m_height);
+    }
+
     // Insert an entity into the hash
     void Insert(Entity* entity) {
         auto entityPos = entity->transform.GetScreenPosition();

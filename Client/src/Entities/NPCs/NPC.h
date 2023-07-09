@@ -4,7 +4,9 @@
 
 class NPC : public Entity {
 public:
+    typedef NPC Super;
     TextRenderer nameTag;
+    bool isPlayerNearby = false;
 
     // Base Functions
     void Start() override;
@@ -12,6 +14,9 @@ public:
     void Render() override;
     void OnKill() override;
     void OnDeath() override;
+
+    virtual void OnPlayerNearby() {};
+    virtual void OnPlayerAway() {};
 
     // Utility Functions
     std::string ToString() override {

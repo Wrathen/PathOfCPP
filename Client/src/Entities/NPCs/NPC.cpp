@@ -1,4 +1,5 @@
 #include "NPC.h"
+#include "../../Managers/GameManager.h"
 
 NPC::NPC(std::string name) : Entity(name) { Start(); }
 NPC::NPC(std::string texturePath, std::string name) : Entity(texturePath, name) { Start(); }
@@ -15,7 +16,18 @@ void NPC::Start() {
 	nameTag.SetFontSize(10);
 	nameTag.shouldDrawCentered = true;
 }
-void NPC::Update() {}
+void NPC::Update() {
+	float distanceToPlayer = Vector2::DistanceBetween(GAME.GetPlayer()->transform.GetPosition(), transform.GetPosition());
+	if (!isPlayerNearby && distanceToPlayer < 60) {
+		//GAME.DrawRect(transform.GetScreenPosition() - Vector2(50, 50), 100, 100);
+		isPlayerNearby = true;
+		OnPlayerNearby();
+	}
+	else if (isPlayerNearby && distanceToPlayer > 60) {
+		isPlayerNearby = false;
+		OnPlayerAway();
+	}
+}
 void NPC::Render() {
 	renderer.Render();
 	nameTag.Render();

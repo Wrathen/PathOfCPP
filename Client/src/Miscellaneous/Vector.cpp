@@ -1,4 +1,5 @@
 #include "Vector.h"
+#include "Random.h"
 
 // Methods
 float Vector2::DistanceToFast(Vector2 other) const { return abs(x - other.x) + abs(y - other.y); }
@@ -13,3 +14,4 @@ float Vector2::DistanceBetween(Vector2 a, Vector2 b) { return a.DistanceTo(b); }
 float Vector2::DotBetween(Vector2 a, Vector2 b) { return a.Dot(b); }
 Vector2 Vector2::DirectionBetween(Vector2 a, Vector2 b) { return Vector2(b.x - a.x, b.y - a.y); }
 float Vector2::AngleBetween(Vector2 a, Vector2 b) { return atan2(b.y - a.y, b.x - a.x); }
+Vector2 Vector2::RandomVector(float min, float max) { return Vector2(RandomFloat(min, max), RandomFloat(min, max)); }

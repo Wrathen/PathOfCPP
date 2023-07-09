@@ -113,6 +113,9 @@ void GameManager::Update() {
 			debugTimer.Reset();
 		}
 
+		// Late-Update the Input Manager to handle input states.
+		InputMgr.LateUpdate();
+
 		// Late-Update the Scene
 		if (currentScene) currentScene->LateUpdate();
 		timer.Reset();
@@ -153,6 +156,6 @@ void GameManager::DrawRect(int x, int y, int w, int h) {
 	rect.w = w;
 	rect.h = h;
 	SDL_SetRenderDrawColor(MainRenderer.renderer, 0, 255, 0, 255);
-	SDL_RenderFillRect(MainRenderer.renderer, &rect);
+	SDL_RenderDrawRect(MainRenderer.renderer, &rect);
 }
 void GameManager::DrawRect(Vector2 pos, int w, int h) { DrawRect(pos.x, pos.y, w, h); }

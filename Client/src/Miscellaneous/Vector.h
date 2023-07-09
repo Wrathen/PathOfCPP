@@ -23,6 +23,7 @@ public:
     static Vector2 DirectionBetween(Vector2 a, Vector2 b);
     static float AngleBetween(Vector2 a, Vector2 b);
     static Vector2 FromAngle(float angle) { return Vector2(cos(angle), sin(angle)); }
+    static Vector2 RandomVector(float min = 0.0f, float max = 1.0f);
 
     // Utility Functions
     Point ToPoint() { return Point((int)x, (int)y); }
