@@ -1,6 +1,8 @@
 #include "Scene_Town.h"
 #include "../Managers/EnemySpawnManager.h"
 #include "../Game/Zone/Zone.h"
+#include "../Managers/InputManager.h"
+#include "../Managers/GameManager.h"
 
 Scene_Town::Scene_Town() : Scene("Town") {}
 
@@ -9,7 +11,7 @@ void Scene_Town::Start() {
 
 	Zone zone = Zone::FromSaveFile("C:\\Users\\frost\\Desktop\\CPP Journey\\PathOfCPP\\Client\\build\\ZoneTown.json");
 
-	background.SetProperties(zone.GetBackground().bgPath, 1920 * 64, 1080 * 64); // assets/bg1.png
+	background.SetProperties(zone.GetBackground().bgPath, 1920 * 1, 1080 * 1); // assets/bg1.png
 
 	EnemySpawner.SetSpawnAmount(0);
 	EnemySpawner.SetMaxSpawnAmount(0);
@@ -20,6 +22,9 @@ void Scene_Town::Start() {
 }
 void Scene_Town::Update() {
 	Super::Update();
+
+	if (InputMgr.IsKeyPressed(SDLK_c))
+		GAME.GetPlayer()->transform.SetPosition(0, 0);
 }
 void Scene_Town::LateUpdate() {}
 

@@ -52,13 +52,15 @@ class ZoneEntityData {
   }
 }
 
-// Data
+// Variables
 let allData = {
   "General": {"OutputName": "General", "Data": new ZoneGeneralData()},
   "Background": {"OutputName": "BGData", "Data": new ZoneBackgroundData()},
   "Colliders": {"OutputName": "ColliderData", "Data": [new ZoneColliderData(339.466, 145.222, 35, 40), new ZoneColliderData(4339.466, -645.222, 55, 140)]},
   "Entities": {"OutputName": "EntityData", "Data": [new ZoneEntityData(1, 4, -155.33, -3295.329), new ZoneEntityData(2, 1, 5145.33, 315.329)]}
 };
+let allTiles = [];
+
 
 // Main Functions
 function CreateUIElements() {
@@ -122,12 +124,32 @@ function setup(){
 function draw(){
   background(127, 30, 40, windowWidth, windowHeight);
   image(img, 0, 0, windowWidth, windowHeight);
-
+  
+  for (let i = 0; i < allTiles.length; ++i)
+    image(allTiles[i][2], allTiles[i][0], allTiles[i][1], 16, 16);
+    
   ShowMousePosition();
 }
 function windowResized() {
   resizeCanvas(windowWidth - 5, windowHeight - 5);
 }
+
+function mouseDragged() {
+  if (mouseButton === LEFT && currentSelectedTileImg)
+    allTiles.push([mouseX, mouseY, currentSelectedTileImg]);
+}
+function keyPressed() {
+  // alpha 1-9, switch between slots
+  if (keyCode > 48 && keyCode < 58) {
+    let index = keyCode - 49;
+    if (tileImgs.length > index) currentSelectedTileImg = tileImgs[index];
+  }
+
+  // alpha 0 random tile
+  if (keyCode == 48)
+    currentSelectedTileImg = tileImgs[(Math.random() * tileImgs.length) | 0];
+}
+
 
 // Prevents Right Click Menu
 window.addEventListener("contextmenu", function(e) {
@@ -136,6 +158,18 @@ window.addEventListener("contextmenu", function(e) {
 });
 
 let img;
+let tileImgs = [];
+let currentSelectedTileImg;
+let input;
 function preload() {
   loadImage('assets/bg.png', (data) => { img = data; });
+  input = createInput("Add Tiles");
+  input.elt.type = 'file';
+  input.elt.multiple = true;
+  input.elt.onchange = e => {
+    for (let i = 0; i < e.target.files.length; ++i) {
+      let element = e.target.files[i];
+      loadImage("assets/Tiles/" + element.name, (data) => { tileImgs.push(data); });
+    }
+  }
 }
