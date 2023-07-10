@@ -10,7 +10,10 @@ void SpriteRenderer::SetOffset(int x, int y) { offset.x = x; offset.y = y; }
 void SpriteRenderer::SetOffset(const Vector2& vec) { offset.x = vec.x; offset.y = vec.y; }
 void SpriteRenderer::SetWidth(unsigned int _w) { width = _w; }
 void SpriteRenderer::SetHeight(unsigned int _h) { height = _h; }
+void SpriteRenderer::SetScale(float x, float y) { localScale.x = x; localScale.y = y; }
+void SpriteRenderer::SetScale(const Vector2& vec) { localScale.x = vec.x; localScale.y = vec.y; }
 void SpriteRenderer::SetVisible(bool flag) { isVisible = flag; }
+
 
 Vector2& SpriteRenderer::GetOffset() { return offset; }
 unsigned int SpriteRenderer::GetWidth() { return width; }
@@ -49,7 +52,7 @@ void SpriteRenderer::SetColor(int r, int g, int b) {
 void SpriteRenderer::SetSourceAndDestinationRects() {
     // Update Renderer Position
     Vector2 pos = transform->GetScreenPosition();
-    Vector2 scale = transform->GetScale();
+    Vector2 transformScale = transform->GetScale();
 
     srcRect.x = sourceOffset.x; 
     srcRect.y = sourceOffset.y;
@@ -58,8 +61,8 @@ void SpriteRenderer::SetSourceAndDestinationRects() {
 
     destRect.x = pos.x + offset.x;
     destRect.y = pos.y + offset.y;
-    destRect.w = srcRect.w * scale.x;
-    destRect.h = srcRect.h * scale.y;
+    destRect.w = srcRect.w * transformScale.x * localScale.x;
+    destRect.h = srcRect.h * transformScale.y * localScale.y;
 }
 void SpriteRenderer::Render() {
     if (!isVisible || transform == nullptr || tex == nullptr) return;

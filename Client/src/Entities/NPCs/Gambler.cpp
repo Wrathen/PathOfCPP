@@ -5,7 +5,10 @@
 #include "../../Miscellaneous/Random.h"
 
 Gambler::Gambler(std::string name) :
-	NPC("assets/sprites/monsters/zombie/rare.png", "Gambler " + name) {}
+	NPC("assets/sprites/monsters/111.png", "Gambler " + name) 
+{
+	renderer.SetScale(0.05f, 0.05f);
+}
 
 void Gambler::Update() {
 	Super::Update();

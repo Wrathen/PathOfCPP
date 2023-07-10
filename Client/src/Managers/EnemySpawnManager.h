@@ -29,6 +29,7 @@ public:
 	void SetMaxSpawnAmount(int amount);
 	void SetMonsterLevel(int value);
 	void SpawnEnemy();
+	void SpawnNPC(int type, float x, float y);
 	void SpawnNPC(int type);
 
 	void Start();

@@ -12,6 +12,7 @@ public:
 
 	Vector2 sourceOffset;
 	Vector2 offset;
+	Vector2 localScale{ 1.0f, 1.0f };
 
 	unsigned int width = 32;
 	unsigned int height = 32;
@@ -40,6 +41,8 @@ public:
 	void SetOffset(const Vector2& vec);
 	void SetWidth(unsigned int _w);
 	void SetHeight(unsigned int _h);
+	void SetScale(float x, float y);
+	void SetScale(const Vector2& vec);
 	void SetVisible(bool flag);
 
 	// Getters

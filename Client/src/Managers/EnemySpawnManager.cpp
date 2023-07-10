@@ -35,20 +35,23 @@ void EnemySpawnManager::SpawnEnemy() {
 	// Do some statistics :^)
 	++totalNumberOfSpawnedEnemies;
 }
-void EnemySpawnManager::SpawnNPC(int type) {
+void EnemySpawnManager::SpawnNPC(int type, float x, float y) {
 	NPC* npc = nullptr;
 	switch (type) {
-		case 0:
-			npc = new Merchant("Bilbo");
-			break;
-		case 1:
-			npc = new Gambler("Zeus");
-			break;
-		default:
-			npc = new Blacksmith("Patrick");
-			break;
+	case 0:
+		npc = new Merchant("Bilbo");
+		break;
+	case 1:
+		npc = new Gambler("Zeus");
+		break;
+	default:
+		npc = new Blacksmith("Patrick");
+		break;
 	}
 
+	npc->transform.SetPosition(x, y);
+}
+void EnemySpawnManager::SpawnNPC(int type) {
 	// Set the created enemy's position randomly in a circular way.
 	float direction = RandomFloat(0.0f, 6.283f) * 25.0f;
 	float distance = RandomFloat(150.0f, 350.0f);
@@ -56,7 +59,7 @@ void EnemySpawnManager::SpawnNPC(int type) {
 
 	float x = cos(direction) * distance + offset.x;
 	float y = sin(direction) * distance + offset.y;
-	npc->transform.SetPosition(x, y);
+	SpawnNPC(type, x, y);
 }
 
 void EnemySpawnManager::SetMonsterLevel(int value) { monsterLevel = value; }
