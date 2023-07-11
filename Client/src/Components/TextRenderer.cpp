@@ -6,6 +6,8 @@ void TextRenderer::CollectGarbage() { if (tex != nullptr) SDL_DestroyTexture(tex
 TextRenderer::~TextRenderer() { CollectGarbage(); }
 
 void TextRenderer::SetText(std::string text, SDL_Color color) {
+	if (text == _text) return;
+	
 	CollectGarbage();
 
 	_text = text;
