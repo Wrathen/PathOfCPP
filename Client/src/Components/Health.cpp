@@ -25,8 +25,7 @@ bool Health::TakeDamage(float amount) {
 	if (hasGuardianAngel) {
 		if (SDL_GetTicks64() > guardianAngelExpireTime)
 			hasGuardianAngel = false;
-
-		return false;
+		else return false;
 	}
 
 	// Main Logic
