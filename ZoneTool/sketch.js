@@ -84,7 +84,7 @@ let zoneWidth = 4000;
 let zoneHeight = 4000;
 
 let cookingModeEnabled = false;
-let gridsEnabled = true;
+let gridsEnabled = false;
 let gridSizeX = 160;
 let gridSizeY = 160;
 
@@ -95,7 +95,9 @@ let currentSelectedEntity;
 
 let mouseStartPos = [-1, -1];
 
+let zoom = 1.0;
 let cameraOffset = [2000, 2000];
+let cameraOffsetScaled = [cameraOffset[0] * zoom, cameraOffset[1] * zoom];
 
 let currentAction = ActionType.Move; 
 
@@ -118,11 +120,13 @@ function setup(){
   createCanvas(4000, 4000);
 
   createUIElements();
+
+  disableScrollingInterval = setInterval(disableScrolling, 50);
 }
 function draw(){
   // Render BG color&image.
   background(17, 15, 20, zoneWidth, zoneHeight);
-  if (bgImg) image(bgImg, cameraOffset[0], cameraOffset[1], zoneWidth, zoneHeight);
+  if (bgImg) image(bgImg, -cameraOffsetScaled[0], -cameraOffsetScaled[1], zoneWidth * zoom, zoneHeight * zoom);
   
   // Render all drawn images.
   drawTiles();
@@ -151,22 +155,36 @@ function windowResized() {
   //resizeCanvas(windowWidth - 5, windowHeight - 5);
 }
 function mousePressed() {
-  mouseStartPos = [mouseX, mouseY];
+  mouseStartPos = [getMouseX(), getMouseY()];
 }
 function mouseDragged() {
   if (currentAction == ActionType.TileInsert) insertTile();
   else if (currentAction == ActionType.Move) {
-    cameraOffset[0] += movedX;
-    cameraOffset[1] += movedY;
+    cameraOffset[0] -= movedX;
+    cameraOffset[1] -= movedY;
+    cameraOffsetScaled = [cameraOffset[0] * zoom, cameraOffset[1] * zoom];
     
     for (let i = 0; i < UIElements.length; ++i)
-      UIElements[i].position(UIElements[i].position.x + cameraOffset[0], UIElements[i].position.y + cameraOffset[1]);
+      UIElements[i].position(UIElements[i].position.x + cameraOffsetScaled[0], UIElements[i].position.y + cameraOffsetScaled[1]);
   }
 }
 function mouseReleased() {
   if (currentAction == ActionType.ColliderInsert) insertCollider();
   else if (currentAction == ActionType.EntityInsert) insertEntity();
   mouseStartPos = [-1, -1];
+}
+function mouseWheel(event) {
+  let zoomDirection = event.deltaY < 0 ? 1 : -1;
+  let zoomDelta = zoomDirection * 0.25;
+  zoom += zoomDelta;
+  if (zoom < 0.25) zoom = 0.25;
+  
+  let mouseScreenPosX = windowWidth/2 - mouseX;
+  let mouseScreenPosY = windowHeight/2 - mouseY;
+
+  cameraOffset[0] = (cameraOffsetScaled[0] - (zoomDirection == 1 ? mouseScreenPosX: 0)) / zoom ;
+  cameraOffset[1] = (cameraOffsetScaled[1] - (zoomDirection == 1 ? mouseScreenPosY: 0)) / zoom;
+  cameraOffsetScaled = [cameraOffset[0] * zoom, cameraOffset[1] * zoom];
 }
 function keyPressed() {
   if (currentAction == ActionType.TileInsert) {
@@ -212,7 +230,7 @@ function keyPressed() {
 // Render Functions
 function drawTiles() {
   for (let i = 0; i < allTiles.length; ++i)
-    image(allTiles[i][2], allTiles[i][0] - cameraOffset[0], allTiles[i][1] - cameraOffset[1], 16, 16);
+    image(allTiles[i][2], allTiles[i][0] * zoom - cameraOffsetScaled[0], allTiles[i][1] * zoom - cameraOffsetScaled[1], 16 * zoom, 16 * zoom);
 }
 function drawColliders() {
   push();
@@ -220,7 +238,7 @@ function drawColliders() {
   stroke(255, 255, 255);
   strokeWeight(3);
   for (let i = 0; i < allColliders.length; ++i)
-    rect(allColliders[i][0], allColliders[i][1], allColliders[i][2], allColliders[i][3]);
+    rect(allColliders[i][0] * zoom - cameraOffsetScaled[0], allColliders[i][1] * zoom - cameraOffsetScaled[1], allColliders[i][2] * zoom, allColliders[i][3] * zoom);
   pop();
 }
 function drawPreviewCollider() {
@@ -228,29 +246,37 @@ function drawPreviewCollider() {
   if (mouseStartPos[0] == -1 && mouseStartPos[1] == -1) return;
 
   push();
-  rect(mouseStartPos[0], mouseStartPos[1], mouseX - mouseStartPos[0], mouseY - mouseStartPos[1])
+  text(parseInt(mouseStartPos[0]) + "," + parseInt(mouseStartPos[1]), 30, windowHeight - 120);
+  rect(mouseStartPos[0] * zoom - cameraOffsetScaled[0], mouseStartPos[1] * zoom - cameraOffsetScaled[1], getMouseX() - mouseStartPos[0], getMouseY() - mouseStartPos[1])
   pop();
 }
 function drawGrids() {
   push();
   noFill();
-  stroke(0, 0, 0, 60); // give some transparency for better visuality
+  stroke(255, 255, 255, 250); // give some transparency for better visuality
   for (let i = 0; i < zoneWidth/gridSizeX; ++i) {
     for (let j = 0; j < zoneHeight/gridSizeY; ++j) {
-      rect(i * gridSizeX + cameraOffset[0], j * gridSizeY + cameraOffset[1], gridSizeX, gridSizeY);
+      rect(i * gridSizeX * zoom - cameraOffsetScaled[0], j * gridSizeY * zoom - cameraOffsetScaled[1], gridSizeX * zoom, gridSizeY * zoom);
     }
   }
   pop();
 }
 function drawEntities() {
-  for (let i = 0; i < allEntities.length; ++i)
-    image(allEntities[i].Image, allEntities[i].X - 32 - cameraOffset[0], allEntities[i].Y - 32 - cameraOffset[1], 64, 64);
+  for (let i = 0; i < allEntities.length; ++i) {
+    let scaledWidth = 64 * zoom;
+    let scaledHeight = 64 * zoom;
+    image(allEntities[i].Image, allEntities[i].X * zoom - scaledWidth/2 - cameraOffsetScaled[0], allEntities[i].Y * zoom - scaledHeight/2 - cameraOffsetScaled[1], scaledWidth, scaledHeight);
+  }
 }
 function drawMousePosition() {
   push();
   textSize(32);
   fill(0, 188, 30);
-  text(parseInt(mouseX - cameraOffset[0]) + "," + parseInt(mouseY - cameraOffset[1]), 30, windowHeight - 30);
+  text("MousePosRaw: " + parseInt(mouseX + cameraOffset[0]) + "," + parseInt(mouseY + cameraOffset[1]), 30, windowHeight);
+  text("MousePos: " + parseInt(getMouseX()) + "," + parseInt(getMouseY()), 30, windowHeight - 30);
+  text("CamOffset: " + parseInt(cameraOffsetScaled[0]) + "," + parseInt(cameraOffsetScaled[1]), 30, windowHeight - 65);
+  text("MouseStartPos: " + parseInt(mouseStartPos[0]) + "," + parseInt(mouseStartPos[1]), 30, windowHeight - 100);
+  text("Zoom: " + parseFloat(zoom), 30, windowHeight - 135);
   pop();
 }
 function drawCurrentAction() {
@@ -265,6 +291,9 @@ function drawCurrentAction() {
   
   pop();
 }
+
+function getMouseX() { return mouseX + cameraOffsetScaled[0]; }
+function getMouseY() { return mouseY + cameraOffsetScaled[1]; }
 
 // Main Functions
 function createUIElements() {
@@ -288,7 +317,7 @@ function createUIElements() {
   createP("Background Path").position(30, 120).style('background-color', 'powderblue'),
   createInput("assets/sprites/nosprite.png").position(30, 155).input(() => {
     allData["Background"]["Data"].bgPath = UIElements[6].elt.value;
-    loadImage(UIElements[6].elt.value, (data) => { img = data; });
+    loadImage(UIElements[6].elt.value, (data) => { bgImg = data; });
   }),
   createInput("Add Tiles").position(30, 200),
   createButton("Cook Background").position(30, 240).mousePressed(cookBackground),
@@ -328,25 +357,26 @@ function insertTile() {
   if (!currentSelectedTileImg) return;
 
   if (gridsEnabled) {
-    let gridPos = getGrid(mouseX + cameraOffset[0], mouseY + cameraOffset[1]);
+    let gridPos = getGrid(getMouseX(), getMouseY());
     allTiles.push([gridPos[0] * gridSizeX, gridPos[1] * gridSizeY, currentSelectedTileImg.Data]);
   }
-  else allTiles.push([mouseX + cameraOffset[0], mouseY + cameraOffset[1], currentSelectedTileImg.Data]);
+  else allTiles.push([getMouseX(), getMouseY(), currentSelectedTileImg.Data]);
 }
 function insertEntity() {
   if (currentAction != ActionType.EntityInsert) return;
   if (!currentSelectedEntity) return;
 
   // Insert a new entity into the allEntities array.
-  allEntities.push({"X": mouseX + cameraOffset[0], "Y": mouseY + cameraOffset[1], "ID": currentSelectedEntity.ID, "Image": currentSelectedEntity.Image});
-  allData.Entities.Data.push(new ZoneEntityData(currentSelectedEntity.ID, currentSelectedEntity.Type, mouseX + cameraOffset[0], mouseY + cameraOffset[1]));
+  allEntities.push({"X": getMouseX(), "Y": getMouseY(), "ID": currentSelectedEntity.ID, "Image": currentSelectedEntity.Image});
+  allData.Entities.Data.push(new ZoneEntityData(currentSelectedEntity.ID, currentSelectedEntity.Type, getMouseX(), getMouseY()));
 }
 function insertCollider() {
-  allColliders.push([mouseStartPos[0] - cameraOffset[0], mouseStartPos[1] - cameraOffset[1], mouseX - mouseStartPos[0], mouseY - mouseStartPos[1]]);
-  allData.Colliders.Data.push(new ZoneColliderData(mouseStartPos[0], mouseStartPos[1], mouseX - mouseStartPos[0] + cameraOffset[0], mouseY - mouseStartPos[1] + cameraOffset[1]));
+  allColliders.push([mouseStartPos[0], mouseStartPos[1], getMouseX() - mouseStartPos[0], getMouseY() - mouseStartPos[1]]);
+  allData.Colliders.Data.push(new ZoneColliderData(mouseStartPos[0] - cameraOffsetScaled[0], mouseStartPos[1] - cameraOffsetScaled[1], getMouseX() - mouseStartPos[0] - cameraOffsetScaled[0], getMouseY() - mouseStartPos[1] - cameraOffsetScaled[1]));
 }
 function cookBackground() {
   cookingModeEnabled = true;
+  cameraOffsetScaled = [0, 0];
   setTimeout(() => { saveCanvas(`ZoneBG_${allData.General.OutputName}`, 'png'); cookingModeEnabled = false; }, 500);
 }
 
@@ -354,12 +384,18 @@ function cookBackground() {
 function getGrid(x, y) {
   return [(x/gridSizeX)|0, (y/gridSizeY)|0];
 }
+// Prevents mouse scroll, Press D and switch to Move action and move manually.
+function disableScrolling() {
+  if (!canvas) return;
+
+  canvas.addEventListener("mousewheel", function (e) {mouseWheel(e); e.preventDefault(); e.stopPropagation(); return false;}, false);
+  canvas.addEventListener("DOMMouseScroll", function (e) {mouseWheel(e); e.preventDefault(); e.stopPropagation(); return false;}, false);
+
+  clearInterval(disableScrollingInterval);
+}
 
 // Prevents Right Click Menu
 window.addEventListener("contextmenu", function(e) {
   e.preventDefault();
   return false;
 });
-
-// @todo: 
-// - need camera
