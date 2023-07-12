@@ -22,9 +22,9 @@ Zone::Zone(json data) {
 	}
 }
 
-Zone Zone::FromSaveFile(std::string jsonPath) {
+Zone Zone::FromSaveFile(std::string filePath) {
 	// Read json file and parse the raw data to JSON.
-	std::ifstream jsonRawData(jsonPath);
+	std::ifstream jsonRawData(filePath);
 	json data = json::parse(jsonRawData);
 
 	return Zone(data);

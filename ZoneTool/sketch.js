@@ -96,7 +96,7 @@ let currentSelectedEntity;
 let mouseStartPos = [-1, -1];
 
 let zoom = 1.0;
-let cameraOffset = [2000, 2000];
+let cameraOffset = [0, 0];
 let cameraOffsetScaled = [cameraOffset[0] * zoom, cameraOffset[1] * zoom];
 
 let currentAction = ActionType.Move; 
@@ -104,7 +104,7 @@ let currentAction = ActionType.Move;
 // Base Functions
 function preload() {
   // Load BG image.
-  //loadImage('assets/bg.png', (data) => { bgImg = data; });
+  loadImage('assets/bg1.png', (data) => { bgImg = data; });
   
   // Load a tile for quick-use.
   loadImage('assets/Tiles/Box_1_16x16.png', (data) => {
@@ -117,7 +117,7 @@ function preload() {
     loadImage(`assets/Entities/${EntityTypes[i].Name}.png`, (data) => { EntityTypes[i].Image = data; })
 }
 function setup(){
-  createCanvas(4000, 4000);
+  createCanvas(zoneWidth, zoneHeight);
 
   createUIElements();
 
@@ -151,13 +151,14 @@ function draw(){
     drawCurrentAction();
   }
 }
-function windowResized() {
-  //resizeCanvas(windowWidth - 5, windowHeight - 5);
-}
 function mousePressed() {
-  mouseStartPos = [getMouseX(), getMouseY()];
+  if (cookingModeEnabled) return;
+  
+  mouseStartPos = [getMouseWorldX(), getMouseWorldY()];
 }
 function mouseDragged() {
+  if (cookingModeEnabled) return;
+  
   if (currentAction == ActionType.TileInsert) insertTile();
   else if (currentAction == ActionType.Move) {
     cameraOffset[0] -= movedX;
@@ -169,24 +170,30 @@ function mouseDragged() {
   }
 }
 function mouseReleased() {
+  if (cookingModeEnabled) return;
+
   if (currentAction == ActionType.ColliderInsert) insertCollider();
   else if (currentAction == ActionType.EntityInsert) insertEntity();
   mouseStartPos = [-1, -1];
 }
 function mouseWheel(event) {
+  if (cookingModeEnabled) return;
+
   let zoomDirection = event.deltaY < 0 ? 1 : -1;
   let zoomDelta = zoomDirection * 0.25;
   zoom += zoomDelta;
   if (zoom < 0.25) zoom = 0.25;
   
-  let mouseScreenPosX = windowWidth/2 - mouseX;
-  let mouseScreenPosY = windowHeight/2 - mouseY;
+  //let mouseScreenPosX = windowWidth/2 - mouseX;
+  //let mouseScreenPosY = windowHeight/2 - mouseY;
 
-  cameraOffset[0] = (cameraOffsetScaled[0] - (zoomDirection == 1 ? mouseScreenPosX: 0)) / zoom ;
-  cameraOffset[1] = (cameraOffsetScaled[1] - (zoomDirection == 1 ? mouseScreenPosY: 0)) / zoom;
+  //cameraOffset[0] = (cameraOffsetScaled[0] - (zoomDirection == 1 ? mouseScreenPosX: 0)) / zoom ;
+  //cameraOffset[1] = (cameraOffsetScaled[1] - (zoomDirection == 1 ? mouseScreenPosY: 0)) / zoom;
   cameraOffsetScaled = [cameraOffset[0] * zoom, cameraOffset[1] * zoom];
 }
 function keyPressed() {
+  if (cookingModeEnabled) return;
+
   if (currentAction == ActionType.TileInsert) {
     // alpha 0, random tile selection
     if (keyCode == 48)
@@ -245,10 +252,7 @@ function drawPreviewCollider() {
   if (currentAction != ActionType.ColliderInsert) return;
   if (mouseStartPos[0] == -1 && mouseStartPos[1] == -1) return;
 
-  push();
-  text(parseInt(mouseStartPos[0]) + "," + parseInt(mouseStartPos[1]), 30, windowHeight - 120);
-  rect(mouseStartPos[0] * zoom - cameraOffsetScaled[0], mouseStartPos[1] * zoom - cameraOffsetScaled[1], getMouseX() - mouseStartPos[0], getMouseY() - mouseStartPos[1])
-  pop();
+  rect(mouseStartPos[0] * zoom - cameraOffsetScaled[0], mouseStartPos[1] * zoom - cameraOffsetScaled[1], (getMouseWorldX() - mouseStartPos[0]) * zoom, (getMouseWorldY() - mouseStartPos[1]) * zoom)
 }
 function drawGrids() {
   push();
@@ -272,8 +276,8 @@ function drawMousePosition() {
   push();
   textSize(32);
   fill(0, 188, 30);
-  text("MousePosRaw: " + parseInt(mouseX + cameraOffset[0]) + "," + parseInt(mouseY + cameraOffset[1]), 30, windowHeight);
-  text("MousePos: " + parseInt(getMouseX()) + "," + parseInt(getMouseY()), 30, windowHeight - 30);
+  text("MousePosUnscaled: " + parseInt(mouseX + cameraOffset[0]) + "," + parseInt(mouseY + cameraOffset[1]), 30, windowHeight);
+  text("MousePos: " + parseInt(getMouseWorldX()) + "," + parseInt(getMouseWorldY()), 30, windowHeight - 30);
   text("CamOffset: " + parseInt(cameraOffsetScaled[0]) + "," + parseInt(cameraOffsetScaled[1]), 30, windowHeight - 65);
   text("MouseStartPos: " + parseInt(mouseStartPos[0]) + "," + parseInt(mouseStartPos[1]), 30, windowHeight - 100);
   text("Zoom: " + parseFloat(zoom), 30, windowHeight - 135);
@@ -292,8 +296,12 @@ function drawCurrentAction() {
   pop();
 }
 
-function getMouseX() { return mouseX + cameraOffsetScaled[0]; }
-function getMouseY() { return mouseY + cameraOffsetScaled[1]; }
+function getMouseScreenX() { return mouseX; }
+function getMouseScreenY() { return mouseY; }
+function getMouseWorldX() { return (mouseX + cameraOffsetScaled[0]) / zoom; }
+function getMouseWorldY() { return (mouseY + cameraOffsetScaled[1]) / zoom; }
+function getZoneName() { return UIElements[4].value(); }
+//function screenToWorld(pos) { return [pos[0] + cameraOffsetScaled[0], pos[1] + cameraOffsetScaled[1]]; } 
 
 // Main Functions
 function createUIElements() {
@@ -349,35 +357,40 @@ function exportData() {
 
   let JSONConverted = JSON.stringify(data);
   var blob = new Blob([JSONConverted], { type: "text/plain;charset=utf-8" });
-  let zoneName = UIElements[4].elt.value;
-  saveAs(blob, `Zone_${zoneName}.PZD`);
+  saveAs(blob, `Zone_${getZoneName()}.PZD`);
 }
 function insertTile() {
   if (mouseButton !== LEFT) return;
   if (!currentSelectedTileImg) return;
 
   if (gridsEnabled) {
-    let gridPos = getGrid(getMouseX(), getMouseY());
+    let gridPos = getGrid(getMouseWorldX(), getMouseWorldY());
     allTiles.push([gridPos[0] * gridSizeX, gridPos[1] * gridSizeY, currentSelectedTileImg.Data]);
   }
-  else allTiles.push([getMouseX(), getMouseY(), currentSelectedTileImg.Data]);
+  else allTiles.push([getMouseWorldX(), getMouseWorldY(), currentSelectedTileImg.Data]);
 }
 function insertEntity() {
   if (currentAction != ActionType.EntityInsert) return;
   if (!currentSelectedEntity) return;
 
   // Insert a new entity into the allEntities array.
-  allEntities.push({"X": getMouseX(), "Y": getMouseY(), "ID": currentSelectedEntity.ID, "Image": currentSelectedEntity.Image});
-  allData.Entities.Data.push(new ZoneEntityData(currentSelectedEntity.ID, currentSelectedEntity.Type, getMouseX(), getMouseY()));
+  allEntities.push({"X": getMouseWorldX(), "Y": getMouseWorldY(), "ID": currentSelectedEntity.ID, "Image": currentSelectedEntity.Image});
+  allData.Entities.Data.push(new ZoneEntityData(currentSelectedEntity.ID, currentSelectedEntity.Type, getMouseWorldX(), getMouseWorldY()));
 }
 function insertCollider() {
-  allColliders.push([mouseStartPos[0], mouseStartPos[1], getMouseX() - mouseStartPos[0], getMouseY() - mouseStartPos[1]]);
-  allData.Colliders.Data.push(new ZoneColliderData(mouseStartPos[0] - cameraOffsetScaled[0], mouseStartPos[1] - cameraOffsetScaled[1], getMouseX() - mouseStartPos[0] - cameraOffsetScaled[0], getMouseY() - mouseStartPos[1] - cameraOffsetScaled[1]));
+  allColliders.push([mouseStartPos[0], mouseStartPos[1], getMouseWorldX() - mouseStartPos[0], getMouseWorldY() - mouseStartPos[1]]);
+  allData.Colliders.Data.push(new ZoneColliderData(mouseStartPos[0] - cameraOffsetScaled[0], mouseStartPos[1] - cameraOffsetScaled[1], getMouseWorldX() - mouseStartPos[0] - cameraOffsetScaled[0], getMouseWorldY() - mouseStartPos[1] - cameraOffsetScaled[1]));
 }
 function cookBackground() {
   cookingModeEnabled = true;
+  zoom = 1.0;
   cameraOffsetScaled = [0, 0];
-  setTimeout(() => { saveCanvas(`ZoneBG_${allData.General.OutputName}`, 'png'); cookingModeEnabled = false; }, 500);
+  setTimeout(() => { 
+    saveCanvas(`ZoneBG_${getZoneName()}`, 'png');
+    cookingModeEnabled = false;
+  
+    alert("Make sure to update Background Path field on Left Panel UI.");
+  }, 500);
 }
 
 // Utility Functions

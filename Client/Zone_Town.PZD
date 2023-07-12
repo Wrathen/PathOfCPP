@@ -1,0 +1,198 @@
+{
+    "General": {
+        "Name": "Town"
+    },
+    "BGData": {
+        "Path": "assets/ZoneBG_Town.png"
+    },
+    "ColliderData": [
+        {
+            "PosX": 517,
+            "PosY": 293,
+            "Width": 507,
+            "Height": 411
+        },
+        {
+            "PosX": 1932,
+            "PosY": 1104,
+            "Width": 896,
+            "Height": 908
+        },
+        {
+            "PosX": 2580,
+            "PosY": 488,
+            "Width": 1132,
+            "Height": 1160
+        },
+        {
+            "PosX": 2204,
+            "PosY": 2220,
+            "Width": 696,
+            "Height": 696
+        },
+        {
+            "PosX": 1092,
+            "PosY": 2200,
+            "Width": 640,
+            "Height": 604
+        },
+        {
+            "PosX": 296,
+            "PosY": 1464,
+            "Width": 720,
+            "Height": 644
+        },
+        {
+            "PosX": 1144,
+            "PosY": 720,
+            "Width": 358,
+            "Height": 444
+        },
+        {
+            "PosX": 1370,
+            "PosY": 488,
+            "Width": 428,
+            "Height": 434
+        },
+        {
+            "PosX": 653,
+            "PosY": 313,
+            "Width": 333,
+            "Height": 291
+        },
+        {
+            "PosX": 971,
+            "PosY": 253,
+            "Width": -517,
+            "Height": 75
+        },
+        {
+            "PosX": 951,
+            "PosY": 147,
+            "Width": -397,
+            "Height": 50
+        },
+        {
+            "PosX": 1036,
+            "PosY": 95,
+            "Width": -504,
+            "Height": -13
+        },
+        {
+            "PosX": -14395.97340425532,
+            "PosY": -29861.313829787236,
+            "Width": -15718.718085106382,
+            "Height": -32599.80319148936
+        },
+        {
+            "PosX": -14389.760638297872,
+            "PosY": -29867.186170212764,
+            "Width": -15733.696808510638,
+            "Height": -32606.10106382979
+        }
+    ],
+    "EntityData": [
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 2141,
+            "PosY": 539
+        },
+        {
+            "ID": 1,
+            "Type": 1,
+            "PosX": 2224,
+            "PosY": 466
+        },
+        {
+            "ID": 2,
+            "Type": 2,
+            "PosX": 2175,
+            "PosY": 388
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 3378,
+            "PosY": 1310
+        },
+        {
+            "ID": 1,
+            "Type": 1,
+            "PosX": 3546,
+            "PosY": 1110
+        },
+        {
+            "ID": 2,
+            "Type": 2,
+            "PosX": 3530,
+            "PosY": 842
+        },
+        {
+            "ID": 2,
+            "Type": 2,
+            "PosX": 3354,
+            "PosY": 818
+        },
+        {
+            "ID": 2,
+            "Type": 2,
+            "PosX": 3098,
+            "PosY": 710
+        },
+        {
+            "ID": 1,
+            "Type": 1,
+            "PosX": 2930,
+            "PosY": 690
+        },
+        {
+            "ID": 1,
+            "Type": 1,
+            "PosX": 2994,
+            "PosY": 1018
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 3170,
+            "PosY": 1250
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 3118,
+            "PosY": 1634
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 2974,
+            "PosY": 1886
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 2486,
+            "PosY": 2294
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 1522,
+            "PosY": 2342
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 1414,
+            "PosY": 2802
+        },
+        {
+            "ID": 0,
+            "Type": 0,
+            "PosX": 2454,
+            "PosY": 2874
+        }
+    ]
+}

@@ -46,5 +46,5 @@ public:
 	
 	// Static Methods
 	// Reads a JSON Zone save file.
-	static Zone FromSaveFile(std::string jsonPath);
+	static Zone FromSaveFile(std::string filePath);
 };
