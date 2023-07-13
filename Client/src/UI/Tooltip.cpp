@@ -69,12 +69,12 @@ void Tooltip::Update() {
 	transform.SetPosition(Mouse::GetPosition());
 
 	// Clamp render area of the tooltip to be inside of the game screen.
-	if (transform.position.x + renderer.width > GAME.gameWidth)
-		transform.position.x -= transform.position.x + renderer.width - GAME.gameWidth;
+	if (transform.position.x + renderer.width > GAME.screenWidth)
+		transform.position.x -= transform.position.x + renderer.width - GAME.screenWidth;
 	else if (transform.position.x < 0) transform.position.x = 0;
 
-	if (transform.position.y + renderer.height > GAME.gameHeight)
-		transform.position.y -= (transform.position.y + renderer.height) - GAME.gameHeight;
+	if (transform.position.y + renderer.height > GAME.screenHeight)
+		transform.position.y -= (transform.position.y + renderer.height) - GAME.screenHeight;
 	else if (transform.position.y < 0) transform.position.y = 0;
 }
 

@@ -1,32 +1,16 @@
 #include "Scene_Town.h"
-#include "../Managers/EnemySpawnManager.h"
-#include "../Game/Zone/Zone.h"
-#include "../Managers/InputManager.h"
 #include "../Managers/GameManager.h"
+#include "../Managers/InputManager.h"
 
-Scene_Town::Scene_Town() : Scene("Town") {}
+Scene_Town::Scene_Town() : Scene("Zone_Town.PZD") {}
 
-void Scene_Town::Start() {
-	Super::Start();
-
-	Zone zone = Zone::FromSaveFile("Zone_Town.PZD");
-
-	background.SetProperties(zone.GetBackground().bgPath, GAME.gameWidth, GAME.gameHeight); // assets/bg1.png
-	background.renderer.UpdateTextureDimensions();
-
-	EnemySpawner.SetSpawnAmount(0);
-	EnemySpawner.SetMaxSpawnAmount(0);
-	EnemySpawner.SetSpawnInterval(1000000);
-
-	for (const ZoneEntityData& entity : zone.GetEntities())
-		EnemySpawner.SpawnNPC(entity.ID, entity.position.x - 2000, entity.position.y - 2000);
-}
+void Scene_Town::Start() { Super::Start(); }
 void Scene_Town::Update() {
 	Super::Update();
 
+	// #TODO remove -- Cheat code - Press C to teleport to <0, 0>.
 	if (InputMgr.IsKeyPressed(SDLK_c))
 		GAME.GetPlayer()->transform.SetPosition(0, 0);
 }
 void Scene_Town::LateUpdate() {}
-
-void Scene_Town::Clear() { Scene::Clear(); }
+void Scene_Town::Clear() { Super::Clear(); }

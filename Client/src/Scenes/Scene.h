@@ -4,20 +4,26 @@
 #include "../Managers/GameManager.h"
 #include "../Managers/EntityManager.h"
 #include "../Managers/UIManager.h"
+#include "../Managers/EnemySpawnManager.h"
+#include "../Game/Zone/Zone.h"
 
 class Scene {
 public:
 	typedef Scene Super;
 
 	std::string name;
+	std::string zoneDataPath;
+
 	SceneTitleBar* sceneTitleBar = nullptr;
 	Timer sceneTitleVisibilityTimer;
 	Background background;
 
-	Scene() : Scene("Unnamed Scene") {};
-	Scene(std::string _name) : name(_name) {};
+	Scene() : Scene("Zone_Empty.PZD") {};
+	Scene(std::string _zoneDataPath) : name("Uninitialized Scene"), zoneDataPath(_zoneDataPath) {};
 
 	virtual void Start() {
+		LoadZone();
+
 		sceneTitleBar = new SceneTitleBar();
 		sceneTitleVisibilityTimer.Reset();
 		sceneTitleBar->SetTitle(name);
@@ -40,4 +46,29 @@ public:
 			if (element->isToBeDeletedOnSceneChange)
 				element->Delete();
 	};
+
+	void LoadZone() {
+		// Load and parse Zone data file.
+		Zone zone = Zone::FromSaveFile(zoneDataPath);
+		name = zone.GetGeneralData().name;
+
+		// Set Background
+		background.SetProperties(zone.GetBackground().bgPath, GAME.screenWidth, GAME.screenHeight); // assets/bg1.png
+		background.renderer.UpdateTextureDimensions();
+
+		// Set GameManager Variables
+		GAME.zoneWidth = background.renderer.GetWidth();
+		GAME.zoneHeight = background.renderer.GetHeight();
+
+		// Set EnemySpawner Variables
+		EnemySpawner.SetMonsterLevel(zone.GetGeneralData().monsterLevel);
+		//EnemySpawner.SetSpawnAmount(zone.GetGeneralData().GetSpawnAmount());
+		//EnemySpawner.SetMaxSpawnAmount(zone.GetGeneralData().GetMaxSpawnAmount());
+		//EnemySpawner.SetSpawnInterval(zone.GetGeneralData().GetSpawnInterval());
+		EnemySpawner.Reset();
+
+		// Spawn NPC's.
+		for (const ZoneEntityData& entity : zone.GetEntities())
+			EnemySpawner.SpawnNPC(entity.ID, entity.position.x - 2000, entity.position.y - 2000);
+	}
 };

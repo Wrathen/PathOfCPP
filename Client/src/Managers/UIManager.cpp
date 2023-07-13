@@ -25,14 +25,14 @@ void UIManager::OnMouseMove() {
 	// Get Mouse Position
 	Point mousePos = Mouse::GetPosition().ToPoint();
 
-	int gameWidth = GAME.gameWidth;
-	int gameHeight = GAME.gameHeight;
+	int screenWidth = GAME.screenWidth;
+	int screenHeight = GAME.screenHeight;
 
 	for (auto& element : *GetAll()) {
 		if (!element->isInteractable || element->isToBeDeleted) continue;
 		auto elementScreenPos = element->transform.GetScreenPosition();
-		if (elementScreenPos.x > gameWidth || elementScreenPos.x < 0 || 
-			elementScreenPos.y > gameHeight || elementScreenPos.y < 0) continue;
+		if (elementScreenPos.x > screenWidth || elementScreenPos.x < 0 || 
+			elementScreenPos.y > screenHeight || elementScreenPos.y < 0) continue;
 
 		auto target = element;
 		Vector2 targetPos = elementScreenPos;

@@ -11,8 +11,10 @@ public:
 	Player* player = nullptr;
 	SDL_Event event {};
 
-	int gameWidth = 1920;
-	int gameHeight = 1080;
+	int screenWidth = 1920;
+	int screenHeight = 1080;
+	int zoneWidth = 4000;
+	int zoneHeight = 4000;
 	bool isGameRunning = true;
 	bool isGamePaused = false;
 

@@ -1,0 +1,11 @@
+{
+    "General": {
+        "Name": "Empty Zone",
+        "MonsterLevel": 1
+    },
+    "BGData": {
+        "Path": "assets/sprites/nosprite.png"
+    },
+    "ColliderData": [],
+    "EntityData": []
+}

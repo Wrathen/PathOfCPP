@@ -10,6 +10,7 @@ using json = nlohmann::json;
 #pragma region Zone Structs
 	struct ZoneGeneralData {
 		std::string name;
+		int monsterLevel;
 	};
 	struct ZoneBackgroundData {
 		std::string bgPath;

@@ -45,8 +45,8 @@ void Projectile::Update() {
 
 bool Projectile::CheckIfTooFarAway() {
 	auto screenPos = transform.GetScreenPosition();
-	bool isFarAway = screenPos.x < -GAME.gameWidth/2 || screenPos.x > 3*GAME.gameWidth/2
-				  || screenPos.y < -GAME.gameHeight/2 || screenPos.y > 3*GAME.gameHeight/2;
+	bool isFarAway = screenPos.x < -GAME.screenWidth/2 || screenPos.x > 3*GAME.screenWidth/2
+				  || screenPos.y < -GAME.screenHeight/2 || screenPos.y > 3*GAME.screenHeight/2;
 	return isFarAway;
 }
 void Projectile::CheckLifetime() {

@@ -2,7 +2,7 @@
 #include "Zone.h"
 
 Zone::Zone(json data) {
-	generalData = { data["General"]["Name"] };
+	generalData = { data["General"]["Name"], data["General"]["MonsterLevel"] };
 	bgData = { data["BGData"]["Path"] };
 
 	auto colliderCount = data["ColliderData"].size();

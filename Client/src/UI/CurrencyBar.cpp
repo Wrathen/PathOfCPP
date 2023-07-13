@@ -17,7 +17,7 @@ void CurrencyBar::Start() {
 	goldText.SetOffset(renderer.width + 15, 0);
 
 	// Positioning
-	transform.SetPosition(15, GAME.gameHeight - renderer.height - 15);
+	transform.SetPosition(15, GAME.screenHeight - renderer.height - 15);
 
 	renderer.SetPositionAbsolute();
 }

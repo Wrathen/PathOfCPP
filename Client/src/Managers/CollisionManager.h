@@ -10,7 +10,7 @@
 #define CollisionMgr CollisionManager::GetInstance()
 class CollisionManager : public Collection<Collider>, public Singleton<CollisionManager> { friend class Singleton;
 public:
-	SpatialHash spatialHash{ GAME.gameWidth * 2, GAME.gameHeight * 2, 80 };
+	SpatialHash spatialHash{ GAME.screenWidth * 2, GAME.screenHeight * 2, 80 };
 
 	void ResetSpatialHash();
 	void Update();

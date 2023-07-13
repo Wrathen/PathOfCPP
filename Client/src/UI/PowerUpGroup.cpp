@@ -17,8 +17,8 @@ void PowerUpGroup::GeneratePowerUps() {
 
 	int w = PowerUp::width;
 	int h = PowerUp::height;
-	int screenCenterX = GAME.gameWidth / 2;
-	int screenCenterY = GAME.gameHeight / 2;
+	int screenCenterX = GAME.screenWidth / 2;
+	int screenCenterY = GAME.screenHeight / 2;
 
 	power1->transform.SetPosition(screenCenterX - w, screenCenterY);
 	power2->transform.SetPosition(screenCenterX, screenCenterY);
