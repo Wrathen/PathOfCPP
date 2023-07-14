@@ -7,7 +7,7 @@ written in C++ with the initial intend of getting used to the language, using SD
 
 <h2> Custom Tools </h2>
 
-<h3>Explore <a href="https://wrathen.github.io/PathOfCPP/ZoneTool/">custom made ZoneTool</a> and make your own Zones!</h3>
+<h3>Explore <a href="https://wrathen.github.io/PathOfCPP/ZoneTool/" target="_blank">custom made ZoneTool</a> and make your own Zones!</h3>
 
 <h2> Video Showcases </h2>
 
