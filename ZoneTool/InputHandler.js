@@ -7,11 +7,15 @@ function mousePressed() {
         return;
     }
 
+    if (currentAction == ActionType.Select)
+        trySelectAtMousePosition();
+    
     mouseStartPos = [getMouseWorldX(), getMouseWorldY()];
 }
 function mouseDragged() {
     if (cookingModeEnabled) return;
     if (initialClickCancelled) return;
+    if (hasValidSelection()) return;
 
     if (currentAction == ActionType.TileInsert) insertTile();
     else if (currentAction == ActionType.Move) {
@@ -25,6 +29,7 @@ function mouseDragged() {
 }
 function mouseReleased() {
     if (cookingModeEnabled) return;
+    if (hasValidSelection()) return;
 
     if (currentAction == ActionType.ZoneInsert) insertZone();
     else if (currentAction == ActionType.EntityInsert) insertEntity();
@@ -66,25 +71,41 @@ function keyPressed() {
 
     // ActionType-Independent KeyPresses
     switch (keyCode) {
+        // delete key, deletes current selection (can be entity, portalZones, colliders etc...).
+        case 46:
+            deleteSelection();
+            break;
+        // esc key, resets current selection.
+        case 27:
+            resetSelection();
+            break;
         // h key, toggle grids
         case 72:
             gridsEnabled = !gridsEnabled;
             break;
+        // s key, switch into Select action mode.
+        case 83:
+            currentAction = ActionType.Select;
+            break;
         // t key, switch into TileInsert action mode.
         case 84:
             currentAction = ActionType.TileInsert;
+            resetSelection();
             break;
         // z key, switch into ZoneInsert action mode.
         case 90:
             currentAction = ActionType.ZoneInsert;
+            resetSelection();
             break;
         // e key, switch into EntityInsert action mode.
         case 69:
             currentAction = ActionType.EntityInsert;
+            resetSelection();
             break;
         // d key, switch into Move action mode.
         case 68:
             currentAction = ActionType.Move;
+            resetSelection();
             break;
     }
 }

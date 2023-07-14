@@ -12,6 +12,7 @@ let allColliders = [];
 let allEntities = [];
 let allSpawnZones = [];
 let allPortals = [];
+let allObjectArrays = [allTiles, allColliders, allEntities, allSpawnZones, allPortals];
 
 let zoneWidth = 4000;
 let zoneHeight = 4000;
@@ -26,6 +27,7 @@ let bgImg;
 let tileImgs = [];
 let currentSelectedTileImg;
 let currentSelectedEntity;
+let currentSelection = { "Type": SelectionType.None, "Object": null };
 let currentZoneInsertType = ZoneInsertType.Collider;
 
 let mouseStartPos = [-1, -1];
@@ -81,12 +83,15 @@ function draw() {
 
     // Render all portals.
     drawPortals();
-    
+
     // Render all entities.
     drawEntities();
 
     // Render zone rectangle that we are currently inserting.
     drawPreviewZone();
+
+    // Render current selection object's bounds
+    drawSelectionBounds();
 
     // Render mouse position at bottom-left.
     drawMousePosition();
@@ -156,19 +161,26 @@ function insertTile() {
   if (mouseButton !== LEFT) return;
   if (!currentSelectedTileImg) return;
 
+  let mouseWorldPos = [getMouseWorldX(), getMouseWorldY()];
+  let pos = [...mouseWorldPos];
+
+  // If we are using grid mode, we should set our X and Y accordingly...
   if (gridsEnabled) {
-    let gridPos = getGrid(getMouseWorldX(), getMouseWorldY());
-    allTiles.push([gridPos[0] * gridSizeX, gridPos[1] * gridSizeY, currentSelectedTileImg.Data]);
+    let gridPos = getGrid(...mouseWorldPos);
+    pos[0] = gridPos[0] * gridSizeX + gridSizeX / 2;
+    pos[1] = gridPos[1] * gridSizeY + gridSizeY / 2;
   }
-  else allTiles.push([getMouseWorldX(), getMouseWorldY(), currentSelectedTileImg.Data]);
+
+  allTiles.push(new Tile(currentSelectedTileImg.Data, pos[0], pos[1]));
 }
 function insertEntity() {
   if (currentAction != ActionType.EntityInsert) return;
   if (!currentSelectedEntity) return;
 
   // Insert a new entity into the allEntities array.
-  allEntities.push({ "X": getMouseWorldX(), "Y": getMouseWorldY(), "ID": currentSelectedEntity.ID, "Image": currentSelectedEntity.Image });
-  allData.Entities.Data.push(new ZoneEntityData(currentSelectedEntity.ID, currentSelectedEntity.Type, getMouseWorldX(), getMouseWorldY()));
+  let entity = new Entity(currentSelectedEntity.ID, currentSelectedEntity.Type, currentSelectedEntity.Image, getMouseWorldX(), getMouseWorldY());
+  allEntities.push(entity);
+  allData.Entities.Data.push(new ZoneEntityData(entity.id, entity.type, entity.x, entity.y));
 }
 function insertZone() {
   // x, y, w, h
@@ -176,19 +188,76 @@ function insertZone() {
   if (zoneBounds[2] == 0 || zoneBounds[3] == 0) return;
 
   if (currentZoneInsertType == ZoneInsertType.Collider) {
-    allColliders.push(zoneBounds);
+    allColliders.push(new Collider(...zoneBounds));
     allData.Colliders.Data.push(new ZoneColliderData(...zoneBounds));
   }
   else if (currentZoneInsertType == ZoneInsertType.SpawnZone) {
-    allSpawnZones.push(zoneBounds);
+    allSpawnZones.push(new SpawnZone(...zoneBounds));
     allData.SpawnZones.Data.push(new ZoneSpawnZoneData(...zoneBounds));
   }
   else if (currentZoneInsertType == ZoneInsertType.Portal) {
-    allPortals.push(zoneBounds);
+    allPortals.push(new Portal(...zoneBounds));
     allData.Portals.Data.push(new ZonePortalData(...zoneBounds));
   }
 }
 
+function deleteTileData(object) { }
+function deleteEntityData(object) { deleteData(allData.Entities.Data, object); }
+function deleteColliderData(object) { deleteData(allData.Colliders.Data, object); }
+function deleteSpawnZoneData(object) { deleteData(allData.SpawnZones.Data, object); }
+function deletePortalData(object) { deleteData(allData.Portals.Data, object); }
+function deleteData(dataArray, object) {
+  for (let i = 0; i < dataArray.length; ++i) {
+    let data = dataArray[i];
+    if (data.id == object.id) {
+      dataArray.splice(i, 1);
+      delete object;
+      return;
+    }
+  }
+
+  alert("Error found while deleting EntityData!");
+}
+
+function deleteSelection() {
+  if (!hasValidSelection()) return;
+
+  for (let i = 0; i < allObjectArrays.length; ++i) {
+    let objectArray = allObjectArrays[i];
+    for (let j = 0; j < objectArray.length; ++j) {
+      let object = objectArray[j];
+      if (object.GUID == currentSelection.Object.GUID) {
+        objectArray.splice(j, 1);
+        object.deleteData();
+        delete currentSelection.Object;
+        return;
+      }
+    }
+  }
+}
+function resetSelection() {
+  currentSelection = { "Type": SelectionType.None, "Object": null };
+}
+function trySelectAtMousePosition() {
+  resetSelection();
+
+  let mousePos = new Point(getMouseWorldX(), getMouseWorldY());
+
+  for (let i = 0; i < allObjectArrays.length; ++i) {
+    let objectArray = allObjectArrays[i];
+    for (let j = 0; j < objectArray.length; ++j) {
+      let object = objectArray[j];
+      let objectRect = new Rect((object.getWorldX() + cameraOffsetScaled[0]) / zoom, (object.getWorldY() + cameraOffsetScaled[1]) / zoom, object.getRenderWidth() / zoom, object.getRenderHeight() / zoom);
+
+      if (mousePos.intersectsRect(objectRect)) {
+        currentSelection.Object = object;
+        currentSelection.Type = object.objectType;
+        return;
+      }
+    }
+  }
+  console.log("couldnt find any objects under mouse");
+}
 function cookBackground() {
   cookingModeEnabled = true;
   zoom = 1.0;
