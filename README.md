@@ -3,7 +3,7 @@
 - Path of Exile
 - Vampire Survivors
 
-written in C++ with the intend of getting used to the language, using SDL2&amp;OpenGL
+written in C++ with the initial intend of getting used to the language, using SDL2 for render calls (DirectX) and WinAPI.
 
 <h2> Video Showcases </h2>
 
