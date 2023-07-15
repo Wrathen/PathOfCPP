@@ -1,2 +1,3 @@
 #pragma once
-typedef unsigned int GUID;
+#include <cstdint>
+using GUID = std::uint32_t;

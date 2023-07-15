@@ -1,4 +1,5 @@
 // Render Functions
+let drawnTiles = 0;
 function draw() {
     // Render BG color&image.
     background(17, 15, 20, zoneWidth, zoneHeight);
@@ -49,9 +50,14 @@ function draw() {
     }
 }
 function drawTiles() {
+    drawnTiles = 0;
     for (let i = 0; i < allTiles.length; ++i) {
         let t = allTiles[i];
-        image(t.img, t.getScreenX(), t.getScreenY(), t.getRenderWidth(), t.getRenderHeight());
+
+        // Check if the tile is in view bounds, otherwise don't draw it. Optimization purposes...
+        if (cookingModeEnabled || isObjectInViewBounds(t))
+            ++drawnTiles,
+            image(t.img, t.getScreenX(), t.getScreenY(), t.getRenderWidth(), t.getRenderHeight());
     }
 }
 function drawColliders() {
@@ -166,10 +172,11 @@ function drawMousePosition() {
         fill(255, 255, 255);
         stroke(0, 0, 0);
         strokeWeight(2);
-        text("Keybinds", 10, windowHeight - 225);
+        text("Keybinds", 10, windowHeight - 245);
         pop();
-        text("0-9, D, H, S, Z, T, E, Del, Esc", 10, windowHeight - 205);
-        text("LMB, RMB, MouseWheel", 10, windowHeight - 185);
+        text("0-9, D, H, S, Z, T, E, Del, Esc", 10, windowHeight - 225);
+        text("LMB, RMB, MouseWheel", 10, windowHeight - 205);
+        text("Shift&Ctrl Hold with TileInsert", 10, windowHeight - 185);
     }
 
     // Debug Texts
@@ -268,6 +275,7 @@ function drawFPS() {
     stroke(255, 255, 255);
     strokeWeight(3);
     text(`FPS: ${parseInt(frameRate())}`, windowWidth - 30, 40);
+    text(`DrawnTiles: ${drawnTiles}`, windowWidth - 30, 90);
     pop();
 }
 

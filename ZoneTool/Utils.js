@@ -27,6 +27,16 @@ function getDistanceFast(x1, y1, x2, y2) { return Math.abs(x1 - x2) + Math.abs(y
 function getEntityByID(id) { for (let i = 0; i < EntityTypes.length; ++i) if (EntityTypes[i].ID == id) return EntityTypes[i]; return null; }
 function hasValidSelection() { return currentSelection; }
 
+// Check whether the object is in camera view bounds.
+function isObjectInViewBounds(object) {
+    // Check if the object is within window bounds.
+    let isInWindowBounds = (x, y, w, h) => { return x > 0 && x < windowWidth + w && y > 0 && y < windowHeight + h; }
+    let flag = isInWindowBounds(object.getScreenX() + object.getRenderWidth(), object.getScreenY() + object.getRenderHeight(),
+                                object.getRenderWidth(), object.getRenderHeight());
+
+    return flag;
+}
+
 // Utility UI Functions
 function getUIShowHideButton() { return UIElements[0]; }
 function isUIPanelHidden() { return getUIShowHideButton().elt.innerHTML == "Show"; }

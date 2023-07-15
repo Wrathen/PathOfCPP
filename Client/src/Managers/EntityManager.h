@@ -10,9 +10,15 @@ class EntityManager : public Collection<Entity>, public Singleton<EntityManager>
 public:
     void Update();
 
+	EntityManager() = delete;
+
+	// copy ctor
+	EntityManager(EntityManager const&) = delete;
+	// move ctor
+	EntityManager(EntityManager&&) = delete;
+	// assignment op overload
+	EntityManager& operator=(EntityManager const&) = delete;
+
 private:
 	EntityManager() : Collection<Entity>(100000) {}
-	~EntityManager() {}
-	EntityManager(EntityManager const&) = delete;
-	void operator=(EntityManager const&) = delete;
 };

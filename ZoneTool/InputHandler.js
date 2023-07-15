@@ -42,7 +42,26 @@ function mouseDragged() {
     }
 
     if (currentAction == ActionType.TileInsert) {
-        if (mouseButton == LEFT) insertTile();
+        if (mouseButton == LEFT) {
+            let tileImg = currentSelectedTileImg;
+            let targetPos = [getMouseWorldX(), getMouseWorldY()];
+
+            // If Left shift is pressed, we should use a trick most programs use that you draw in a straight line.
+            if (keyIsDown(16)) {
+                let xDiff = Math.abs(targetPos[0] - mouseStartPos[0]);
+                let yDiff = Math.abs(targetPos[1] - mouseStartPos[1]);
+
+                if (xDiff > yDiff) targetPos[1] = mouseStartPos[1];
+                else targetPos[0] = mouseStartPos[0];
+            }
+            // If Left CTRL is pressed, fill the entire empty space OR override each connected same tile with the new one.
+            else if (keyIsDown(17)) {
+                fillTile(targetPos, tileImg);
+                return;
+            }
+
+            insertTile(tileImg, targetPos);
+        }
         else deleteSelection(spatialMap.get(getMouseWorldX(), getMouseWorldY()));
     }
     else if (currentAction == ActionType.Move) {

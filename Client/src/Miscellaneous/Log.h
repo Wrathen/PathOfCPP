@@ -10,9 +10,8 @@ public:
 	static void Warn(T msg) { std::cout << "[WARNING] " << msg << std::endl; }
 	template <typename T>
 	static void Debug(T msg) { std::cout << "[DEBUG] " << msg << std::endl; }
-private:
+
 	Log() = delete;
-	~Log() = delete;
 };
 
 #define Print Log::Print

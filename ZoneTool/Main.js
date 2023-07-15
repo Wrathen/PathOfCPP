@@ -178,20 +178,8 @@ function exportData() {
 }
 
 // Main Functions
-function insertTile() {
-  if (!currentSelectedTileImg) return;
-
-  // Set the target position to Mouse World Position.
-  let targetPos = [getMouseWorldX(), getMouseWorldY()];
-
-  // If Left shift is pressed, we should use a trick most programs use that you draw in a straight line.
-  if (keyIsDown(16)) {
-    let xDiff = Math.abs(targetPos[0] - mouseStartPos[0]);
-    let yDiff = Math.abs(targetPos[1] - mouseStartPos[1]);
-
-    if (xDiff > yDiff) targetPos[1] = mouseStartPos[1];
-    else targetPos[0] = mouseStartPos[0];
-  }
+function insertTile(tileImg, targetPos) {
+  if (!tileImg) return;
 
   // Get Grid&World position
   let gridPos = getGrid(...targetPos);
@@ -241,6 +229,22 @@ function insertZone(_zoneType, _zoneBounds) {
     allSpawnZones.push(new SpawnZone(...zoneBounds));
   else if (zoneType == ZoneInsertType.Portal)
     allPortals.push(new Portal(...zoneBounds));
+}
+
+function fillTile(targetPos, tileImg) {
+  // If the target position is out of bounds, stop this iteration.
+  if (targetPos[0] < 0 || targetPos[0] > spatialMap.mapWidth ||
+      targetPos[1] < 0 || targetPos[1] > spatialMap.mapHeight) return;
+
+  // Get the object at targeted position.
+  let objectAtTargetPos = spatialMap.get(targetPos[0], targetPos[1]);
+  if (objectAtTargetPos || (objectAtTargetPos && !objectAtTargetPos.img)) return;
+
+  insertTile(tileImg, targetPos);
+  fillTile([targetPos[0] + spatialMap.cellWidth, targetPos[1]], tileImg); // right
+  fillTile([targetPos[0] - spatialMap.cellWidth, targetPos[1]], tileImg); // left
+  fillTile([targetPos[0], targetPos[1] - spatialMap.cellHeight], tileImg); // top
+  fillTile([targetPos[0], targetPos[1] + spatialMap.cellHeight], tileImg); // bottom
 }
 
 function deleteSelection(target = currentSelection) {

@@ -31,14 +31,14 @@ class SpatialMap {
     getCellIndex(x, y) {
         if (x < 0) x = 0;
         if (y < 0) y = 0;
+        if (x > this.mapWidth) x = this.mapWidth;
+        if (y > this.mapHeight) y = this.mapHeight;
 
         return { "x": (x / this.cellWidth) | 0, "y": (y / this.cellHeight) | 0 };
     }
     get(x, y) {
-        if (!this.cells) {
-            console.log("[ERROR] Spatial Map is not initialized!");
-            return null;
-        }
+        if (!this.cells) return null;
+        if (x < 0 || y < 0 || x > this.mapWidth || y > this.mapHeight) return null;
 
         let cellIndex = this.getCellIndex(x, y);
         return this.cells[cellIndex.x + cellIndex.y * this.cellAmountX];
