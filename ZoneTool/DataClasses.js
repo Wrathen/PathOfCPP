@@ -7,6 +7,10 @@ class ZoneGeneralData {
         this.monsterLevel = 1;
     }
 
+    import(data) {
+        this.name = data.Name;
+        this.monsterLevel = data.MonsterLevel;
+    }
     export() {
         return { "Name": this.name, "MonsterLevel": this.monsterLevel };
     }
@@ -16,6 +20,9 @@ class ZoneBackgroundData {
         this.bgPath = bgPath;
     }
 
+    import(data) {
+        this.bgPath = data.Path;
+    }
     export() {
         return { "Path": this.bgPath };
     }

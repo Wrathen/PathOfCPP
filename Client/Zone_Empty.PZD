@@ -7,5 +7,7 @@
         "Path": "assets/sprites/nosprite.png"
     },
     "ColliderData": [],
-    "EntityData": []
+    "EntityData": [],
+    "SpawnZoneData": [],
+    "PortalData": []
 }

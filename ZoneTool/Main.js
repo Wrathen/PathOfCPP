@@ -128,8 +128,8 @@ function createUIElements() {
 
 function importData(rawData) {
   let data = JSON.parse(rawData);
-  data_General = data.General;
-  data_Background = data.BGData;
+  data_General.import(data.General);
+  data_Background.import(data.BGData);
 
   getUIZoneName().elt.value = data_General.name;
   getUIBackgroundPath().elt.value = data_Background.bgPath;
@@ -155,8 +155,8 @@ function importData(rawData) {
 function exportData() {
   // Initialize export data.
   let data = {
-    "General": data_General,
-    "BGData": data_Background,
+    "General": data_General.export(),
+    "BGData": data_Background.export(),
     "ColliderData": [],
     "EntityData": [],
     "SpawnZoneData": [],

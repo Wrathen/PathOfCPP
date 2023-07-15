@@ -10,8 +10,6 @@ class EntityManager : public Collection<Entity>, public Singleton<EntityManager>
 public:
     void Update();
 
-	EntityManager() = delete;
-
 	// copy ctor
 	EntityManager(EntityManager const&) = delete;
 	// move ctor

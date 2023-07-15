@@ -2,9 +2,11 @@
 #include "Zone.h"
 
 Zone::Zone(json data) {
+	// Parse general information about the Zone from the JSON.
 	generalData = { data["General"]["Name"], data["General"]["MonsterLevel"] };
 	bgData = { data["BGData"]["Path"] };
 
+	// Parse each collider data from the JSON.
 	auto colliderCount = data["ColliderData"].size();
 	for (int i = 0; i < colliderCount; ++i) {
 		auto col = data["ColliderData"][i];
@@ -13,6 +15,7 @@ Zone::Zone(json data) {
 		colliderData.push_back({pos, col["Width"], col["Height"]});
 	}
 
+	// Parse each entity data from the JSON.
 	auto entityCount = data["EntityData"].size();
 	for (int i = 0; i < entityCount; ++i) {
 		auto ent = data["EntityData"][i];
@@ -22,6 +25,7 @@ Zone::Zone(json data) {
 	}
 }
 
+// Create a Zone from a Save File (.PSD).
 Zone Zone::FromSaveFile(std::string filePath) {
 	// Read json file and parse the raw data to JSON.
 	std::ifstream jsonRawData(filePath);
