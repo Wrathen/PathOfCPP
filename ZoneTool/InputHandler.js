@@ -3,8 +3,12 @@ let initialClickCancelled = false;
 function mousePressed() {
     if (cookingModeEnabled) return;
 
-    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
-    if (document.activeElement != document.body) return;
+    // If the current active element is selection menu bar, then we should cancel initial click for this frame.
+    // or If there is an active DOM element (it means focused, such as inputfields etc...) rather than then don't do anything.
+    if (document.activeElement.id == "selectionMenuBar" || document.activeElement != document.body) {
+        initialClickCancelled = true;
+        return;
+    }
 
     // Try to cancel click if it's near the UI Panel on left-side.
     if (!isUIPanelHidden() ? (mouseX < 250) : (mouseX < 100 && mouseY < 50)) {
@@ -31,9 +35,6 @@ function mouseDragged() {
     if (cookingModeEnabled) return;
     if (initialClickCancelled) return;
 
-    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
-    if (document.activeElement != document.body) return;
-
     if (hasValidSelection()) {
         tryMoveSelection();
         return;
@@ -52,9 +53,6 @@ function mouseDragged() {
 function mouseReleased() {
     if (cookingModeEnabled) return;
 
-    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
-    if (document.activeElement != document.body) return;
-
     if (!hasValidSelection()) {
         if (currentAction == ActionType.ZoneInsert) insertZone();
         else if (currentAction == ActionType.EntityInsert) insertEntity();
@@ -70,6 +68,10 @@ function mouseWheel(event) {
     // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
     if (document.activeElement != document.body) return;
 
+    // CLose selection menu bar if it's open.
+    resetSelectionMenuBar();
+
+    // Do Math :^)
     let zoomDirection = event.deltaY < 0 ? 1 : -1;
     let zoomDelta = zoomDirection * 0.25;
     zoom += zoomDelta;
@@ -107,6 +109,7 @@ function keyPressed() {
         // esc key, resets current selection.
         case 27:
             resetSelection();
+            resetSelectionMenuBar();
             break;
         // h key, toggle grids
         case 72:
@@ -120,21 +123,25 @@ function keyPressed() {
         case 84:
             currentAction = ActionType.TileInsert;
             resetSelection();
+            resetSelectionMenuBar();
             break;
         // z key, switch into ZoneInsert action mode.
         case 90:
             currentAction = ActionType.ZoneInsert;
             resetSelection();
+            resetSelectionMenuBar();
             break;
         // e key, switch into EntityInsert action mode.
         case 69:
             currentAction = ActionType.EntityInsert;
             resetSelection();
+            resetSelectionMenuBar();
             break;
         // d key, switch into Move action mode.
         case 68:
             currentAction = ActionType.Move;
             resetSelection();
+            resetSelectionMenuBar();
             break;
     }
 }

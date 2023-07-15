@@ -33,6 +33,28 @@ function drawPortals() {
         image(portalImg, p.getScreenX(), p.getScreenY(), p.getRenderWidth(), p.getRenderHeight());
     }
 }
+function drawPreviewTile() {
+    if (currentAction != ActionType.TileInsert) return;
+    if (!currentSelectedTileImg) return;
+
+    push();
+    let mouseWorldPos = [getMouseWorldX(), getMouseWorldY()];
+    let pos = [...mouseWorldPos];
+  
+    // If we are using grid mode, we should set our X and Y accordingly...
+    if (gridsEnabled) {
+      let gridPos = getGrid(...mouseWorldPos);
+      pos[0] = gridPos[0] * gridSizeX + gridSizeX / 2;
+      pos[1] = gridPos[1] * gridSizeY + gridSizeY / 2;
+    }
+    
+    // Apply Alpha.
+    tint(255, 100);
+
+    let t = new Tile(currentSelectedTileImg.Data, pos[0], pos[1]);
+    image(t.img, t.getScreenX(), t.getScreenY(), t.getRenderWidth(), t.getRenderHeight());
+    pop();
+}
 function drawPreviewZone() {
     if (currentAction != ActionType.ZoneInsert) return;
     if (mouseStartPos[0] == -1 && mouseStartPos[1] == -1) return;

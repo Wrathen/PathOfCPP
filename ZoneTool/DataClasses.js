@@ -27,8 +27,8 @@ class Tile {
         this.img = img;
         this.x = x;
         this.y = y;
-        this.w = w;
-        this.h = h;
+        this.w = gridsEnabled ? gridSizeX : w;
+        this.h = gridsEnabled ? gridSizeY : h;
 
         this.objectType = ObjectType.Tile;
     }

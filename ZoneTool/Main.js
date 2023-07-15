@@ -86,7 +86,10 @@ function draw() {
     // Render all entities.
     drawEntities();
 
-    // Render zone rectangle that we are currently inserting.
+    // Render preview of tile that we currently selected.
+    drawPreviewTile();
+
+    // Render preview of zone rectangle that we currently selected.
     drawPreviewZone();
 
     // Render current selection object's bounds
@@ -290,6 +293,9 @@ function trySelectAtMousePosition() {
       let objectRect = new Rect((object.getScreenX() + cameraOffsetScaled[0]) / zoom, (object.getScreenY() + cameraOffsetScaled[1]) / zoom, object.getRenderWidth() / zoom, object.getRenderHeight() / zoom);
 
       if (mousePos.intersectsRect(objectRect)) {
+        if (currentSelection != object)
+          resetSelectionMenuBar();
+
         currentSelection = object;
         currentSelectionStartPos = [mouseX, mouseY];
 
@@ -313,16 +319,30 @@ function tryMoveSelection() {
 function tryAddSelectionMenuBar() {
   resetSelectionMenuBar();
 
+  // If the current selection is a SpawnZone, then create an appropriate Menu Bar.
   if (currentSelection.objectType == ObjectType.SpawnZone) {
     currentSelectionMenuBar = [
       createP("Spawn Amount").position(currentSelection.getScreenX(), currentSelection.getScreenY()).style('background-color', 'powderblue'),
       createInput(String(currentSelection.amount))
+        .id("selectionMenuBar")
         .position(currentSelection.getScreenX(), currentSelection.getScreenY())
         .input(() => {
           const data = parseInt(currentSelectionMenuBar[1].elt.value);
           currentSelection.amount = isNaN(data) ? 0 : data;
         }),
       [[0, -15], [100, 0]] // offsets
+    ];
+  }
+  // If the current selection is a Portal, then create an appropriate Menu Bar.
+  else if (currentSelection.objectType == ObjectType.Portal) {
+    currentSelectionMenuBar = [
+      createP("Next Zone").position(currentSelection.getScreenX(), currentSelection.getScreenY()).style('background-color', 'powderblue'),
+      createInput(String(currentSelection.nextZone))
+        .id("selectionMenuBar")
+        .position(currentSelection.getScreenX(), currentSelection.getScreenY())
+        .size(currentSelection.getRenderWidth() < 60 ? 60 : currentSelection.getRenderWidth() - 20, 15)
+        .input(() => { currentSelection.nextZone = currentSelectionMenuBar[1].elt.value; }),
+      [[5, -10], [5, 30]] // offsets
     ];
   }
 
