@@ -22,18 +22,27 @@ class ZoneBackgroundData {
 }
 
 class Tile {
-    constructor(img, x, y, w = 16, h = 16) {
+    constructor(img, x, y, w = gridSizeX, h = gridSizeY) {
         this.GUID = ++gObjectCount;
         this.img = img;
         this.x = x;
         this.y = y;
-        this.w = gridsEnabled ? gridSizeX : w;
-        this.h = gridsEnabled ? gridSizeY : h;
+        this.w = w;
+        this.h = h;
 
         this.objectType = ObjectType.Tile;
     }
 
     // utils
+    move(pos) {
+        // update spatial map with our desired location.
+        spatialMap.move(this, pos.x, pos.y);
+
+        this.x = pos.x;
+        this.y = pos.y;
+    }
+    delete() { spatialMap.removeObject(this); delete this; }
+
     getScreenX() { return this.x * zoom - this.getRenderWidth() / 2 - cameraOffsetScaled[0]; }
     getScreenY() { return this.y * zoom - this.getRenderHeight() / 2 - cameraOffsetScaled[1]; }
     getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
@@ -56,6 +65,8 @@ class Entity {
     }
 
     // utils
+    move(pos) { this.x = pos.x; this.y = pos.y; }
+    delete() { delete this; }
     getScreenX() { return this.x * zoom - this.getRenderWidth() / 2 - cameraOffsetScaled[0]; }
     getScreenY() { return this.y * zoom - this.getRenderHeight() / 2 - cameraOffsetScaled[1]; }
     getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
@@ -78,6 +89,9 @@ class Collider {
         this.objectType = ObjectType.Collider;
     }
 
+    // utils
+    move(pos) { this.x = pos.x; this.y = pos.y; }
+    delete() { delete this; }
     getScreenX() { return this.x * zoom - cameraOffsetScaled[0]; }
     getScreenY() { return this.y * zoom - cameraOffsetScaled[1]; }
     getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
@@ -101,6 +115,9 @@ class SpawnZone {
         this.objectType = ObjectType.SpawnZone;
     }
 
+    // utils
+    move(pos) { this.x = pos.x; this.y = pos.y; }
+    delete() { delete this; }
     getScreenX() { return this.x * zoom - cameraOffsetScaled[0]; }
     getScreenY() { return this.y * zoom - cameraOffsetScaled[1]; }
     getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
@@ -124,6 +141,9 @@ class Portal {
         this.objectType = ObjectType.Portal;
     }
 
+    // utils
+    move(pos) { this.x = pos.x; this.y = pos.y; }
+    delete() { delete this; }
     getScreenX() { return this.x * zoom - cameraOffsetScaled[0]; }
     getScreenY() { return this.y * zoom - cameraOffsetScaled[1]; }
     getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }

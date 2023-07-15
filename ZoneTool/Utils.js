@@ -19,7 +19,7 @@ function getMouseWorldY() { return (mouseY + cameraOffsetScaled[1]) / zoom; }
 function screenToWorld(pos, offset = cameraOffsetScaled) { return new Point((pos.x + offset[0]) / zoom, (pos.y + offset[1]) / zoom); }
 function worldToScreen(pos, offset = cameraOffsetScaled) { return new Point((pos.x - offset[0]) * zoom, (pos.y - offset[1]) * zoom); }
 function getZoneName() { return UIElements[4].value(); }
-function getGrid(x, y) { return [(x / gridSizeX) | 0, (y / gridSizeY) | 0]; }
+function getGrid(x, y) { return [x < 0 ? 0 : (x / gridSizeX) | 0, y < 0 ? 0 : (y / gridSizeY) | 0]; }
 // @todo euler distance algorithm
 function getDistance(x1, y1, x2, y2) { return Math.abs(x1 - x2) + Math.abs(y1 - y2); }
 // Manhattan Distance algorithm

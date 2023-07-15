@@ -14,12 +14,16 @@ let zoneHeight = 4000;
 
 let cookingModeEnabled = false;
 let panelElementsHidden = false;
-let gridsEnabled = false;
-let gridSizeX = 160;
-let gridSizeY = 160;
+let gridsEnabled = true;
+let gridSizeX = 32;
+let gridSizeY = 32;
+
+// Spatial Mapping
+let spatialMap = new SpatialMap(zoneWidth, zoneHeight, gridSizeX, gridSizeY);
 
 let portalImg;
 let bgImg;
+let cookedGridImg;
 let tileImgs = [];
 let currentSelectedTileImg;
 let currentSelectedEntity;
@@ -56,57 +60,20 @@ function preload() {
     loadImage(`assets/Entities/${EntityTypes[i].Name}.png`, (data) => { EntityTypes[i].Image = data; })
 }
 function setup() {
+  // Create the canvas.
   createCanvas(zoneWidth, zoneHeight);
 
+  // Create the UI Elements that are shown on left-side panel.
   createUIElements();
 
+  // Disable Scrolling using Mouse. We have keybind for moving around in map (D).
   disableScrollingInterval = setInterval(disableScrolling, 50);
-}
-function draw() {
-  // Render BG color&image.
-  background(17, 15, 20, zoneWidth, zoneHeight);
-  if (bgImg) image(bgImg, -cameraOffsetScaled[0], -cameraOffsetScaled[1], zoneWidth * zoom, zoneHeight * zoom);
 
-  // Render all drawn images.
-  drawTiles();
+  // Init Spatial Map
+  spatialMap.init();
 
-  if (!cookingModeEnabled) {
-    // Render Preview Grids.
-    if (gridsEnabled) drawGrids();
-
-    // Render all colliders.
-    drawColliders();
-
-    // Render all spawn zones.
-    drawSpawnZones();
-
-    // Render all portals.
-    drawPortals();
-
-    // Render all entities.
-    drawEntities();
-
-    // Render preview of tile that we currently selected.
-    drawPreviewTile();
-
-    // Render preview of zone rectangle that we currently selected.
-    drawPreviewZone();
-
-    // Render current selection object's bounds
-    drawSelectionBounds();
-
-    // Render mouse position at bottom-left.
-    drawMousePosition();
-
-    // Render current action.
-    drawCurrentAction();
-
-    // Render UI Panel background
-    drawUIPanelBackground();
-
-    // Render Inventory
-    drawInventory();
-  }
+  // Cook Grid Img so we save ALOT of FPS when gridMode is enabled. HUGE Optimization here.
+  cookGridBackground();
 }
 
 // Main Functions
@@ -216,14 +183,17 @@ function insertTile() {
   let mouseWorldPos = [getMouseWorldX(), getMouseWorldY()];
   let pos = [...mouseWorldPos];
 
-  // If we are using grid mode, we should set our X and Y accordingly...
-  if (gridsEnabled) {
-    let gridPos = getGrid(...mouseWorldPos);
-    pos[0] = gridPos[0] * gridSizeX + gridSizeX / 2;
-    pos[1] = gridPos[1] * gridSizeY + gridSizeY / 2;
-  }
+  // Get Grid position
+  let gridPos = getGrid(...mouseWorldPos);
+  pos[0] = gridPos[0] * gridSizeX + gridSizeX / 2;
+  pos[1] = gridPos[1] * gridSizeY + gridSizeY / 2;
 
-  allTiles.push(new Tile(currentSelectedTileImg.Data, pos[0], pos[1]));
+  // if something exists on SpatialMap at that grid location, don't insert any more tiles on there.
+  if (spatialMap.get(pos[0], pos[1])) return;
+
+  let tile = new Tile(currentSelectedTileImg.Data, pos[0], pos[1]);
+  allTiles.push(tile);
+  spatialMap.add(tile, tile.x, tile.y);
 }
 function insertEntity(_entity, _pos) {
   if (currentAction != ActionType.EntityInsert) return;
@@ -273,6 +243,8 @@ function deleteSelection() {
       let object = objectArray[j];
       if (object.GUID == currentSelection.GUID) {
         objectArray.splice(j, 1);
+        object.delete();
+
         resetSelection();
         resetSelectionMenuBar();
         return;
@@ -310,10 +282,24 @@ function trySelectAtMousePosition() {
   selectionDistToOrigin = [-1, -1];
 }
 function tryMoveSelection() {
-  let worldPos = screenToWorld(new Point(mouseX + selectionDistToOrigin.x, mouseY + selectionDistToOrigin.y));
-  currentSelection.x = worldPos.x;
-  currentSelection.y = worldPos.y;
+  // When moving a tile, snap it into a grid position.
+  if (currentSelection.objectType == ObjectType.Tile) {
+    let gridIndex = getGrid(getMouseWorldX(), getMouseWorldY());
+    let mapPos = new Point(gridIndex[0] * spatialMap.cellWidth, gridIndex[1] * spatialMap.cellHeight);
+    let newPos = new Point(mapPos.x + currentSelection.w / 2, mapPos.y + currentSelection.h / 2);
 
+    // If the target pos is not occupied, move the current tile to there.
+    if (spatialMap.get(newPos.x, newPos.y) == null)
+      currentSelection.move(newPos);
+    return;
+  }
+
+  // Freely move objects around the map.
+  let objectClickPosition = new Point(mouseX + selectionDistToOrigin.x, mouseY + selectionDistToOrigin.y);
+  newPos = screenToWorld(objectClickPosition);
+  currentSelection.move(newPos);
+
+  // If there is an open selection menu bar, move it too.
   if (currentSelectionMenuBar) moveSelectionMenuBar();
 }
 function tryAddSelectionMenuBar() {
@@ -375,4 +361,19 @@ function cookBackground() {
 
     alert("Make sure to update Background Path field on Left Panel UI.");
   }, 500);
+}
+// Cook the grid background so we don't draw each individual grid on each frame.
+function cookGridBackground(refresh = false) {
+  // If we receive a refresh boolean to true, then we should re-cook the img. 
+  if (cookedGridImg && !refresh) return;
+
+  cookedGridImg = createImage(zoneWidth, zoneHeight);
+  cookedGridImg.loadPixels();
+
+  // Insert Grid Rectangles
+  for (let i = 0; i < spatialMap.cellAmountX; ++i)
+    for (let j = 0; j < spatialMap.cellAmountY; ++j)
+      drawRect(cookedGridImg, i * spatialMap.cellWidth, j * spatialMap.cellHeight, spatialMap.cellWidth, spatialMap.cellHeight);
+
+  cookedGridImg.updatePixels();
 }
