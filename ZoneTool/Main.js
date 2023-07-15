@@ -176,24 +176,33 @@ function exportData() {
   var blob = new Blob([JSONConverted], { type: "text/plain;charset=utf-8" });
   saveAs(blob, `Zone_${getZoneName()}.PZD`);
 }
+
+// Main Functions
 function insertTile() {
-  if (mouseButton !== LEFT) return;
   if (!currentSelectedTileImg) return;
 
-  let mouseWorldPos = [getMouseWorldX(), getMouseWorldY()];
-  let pos = [...mouseWorldPos];
+  // Set the target position to Mouse World Position.
+  let targetPos = [getMouseWorldX(), getMouseWorldY()];
 
-  // Get Grid position
-  let gridPos = getGrid(...mouseWorldPos);
-  pos[0] = gridPos[0] * gridSizeX + gridSizeX / 2;
-  pos[1] = gridPos[1] * gridSizeY + gridSizeY / 2;
+  // If Left shift is pressed, we should use a trick most programs use that you draw in a straight line.
+  if (keyIsDown(16)) {
+    let xDiff = Math.abs(targetPos[0] - mouseStartPos[0]);
+    let yDiff = Math.abs(targetPos[1] - mouseStartPos[1]);
 
-  // if something exists on SpatialMap at that grid location, don't insert any more tiles on there.
-  if (spatialMap.get(pos[0], pos[1])) return;
+    if (xDiff > yDiff) targetPos[1] = mouseStartPos[1];
+    else targetPos[0] = mouseStartPos[0];
+  }
 
-  let tile = new Tile(currentSelectedTileImg.Data, pos[0], pos[1]);
-  allTiles.push(tile);
-  spatialMap.add(tile, tile.x, tile.y);
+  // Get Grid&World position
+  let gridPos = getGrid(...targetPos);
+  let worldPos = [gridPos[0] * gridSizeX + gridSizeX / 2, gridPos[1] * gridSizeY + gridSizeY / 2];
+
+  // Create a tile only if a tile doesn't exist on the target position in the SpatialMap.
+  if (!spatialMap.get(worldPos[0], worldPos[1])) {
+    let tile = new Tile(currentSelectedTileImg.Data, worldPos[0], worldPos[1]);
+    allTiles.push(tile);
+    spatialMap.add(tile, tile.x, tile.y);
+  }
 }
 function insertEntity(_entity, _pos) {
   if (currentAction != ActionType.EntityInsert) return;
@@ -234,14 +243,14 @@ function insertZone(_zoneType, _zoneBounds) {
     allPortals.push(new Portal(...zoneBounds));
 }
 
-function deleteSelection() {
-  if (!hasValidSelection()) return;
+function deleteSelection(target = currentSelection) {
+  if (!target) return;
 
   for (let i = 0; i < allObjectArrays.length; ++i) {
     let objectArray = allObjectArrays[i];
     for (let j = 0; j < objectArray.length; ++j) {
       let object = objectArray[j];
-      if (object.GUID == currentSelection.GUID) {
+      if (object.GUID == target.GUID) {
         objectArray.splice(j, 1);
         object.delete();
 

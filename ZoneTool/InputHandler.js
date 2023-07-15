@@ -20,15 +20,16 @@ function mousePressed() {
     mouseStartPos = [getMouseWorldX(), getMouseWorldY()];
 
     // If the current action is Select, then try to select at mouse position.
-    if (currentAction == ActionType.Select)
+    if (currentAction == ActionType.Select) {
         trySelectAtMousePosition();
 
-    // Try to open menu bar if we currently have a selection and it's eligible for a menu.
-    if (mouseButton == RIGHT) {
-        if (!hasValidSelection()) return;
+        // Try to open menu bar if we currently have a selection and it's eligible for a menu.
+        if (mouseButton == RIGHT) {
+            if (!hasValidSelection()) return;
 
-        tryAddSelectionMenuBar();
-        initialClickCancelled = true;
+            tryAddSelectionMenuBar();
+            initialClickCancelled = true;
+        }
     }
 }
 function mouseDragged() {
@@ -40,7 +41,10 @@ function mouseDragged() {
         return;
     }
 
-    if (currentAction == ActionType.TileInsert) insertTile();
+    if (currentAction == ActionType.TileInsert) {
+        if (mouseButton == LEFT) insertTile();
+        else deleteSelection(spatialMap.get(getMouseWorldX(), getMouseWorldY()));
+    }
     else if (currentAction == ActionType.Move) {
         cameraOffset[0] -= movedX;
         cameraOffset[1] -= movedY;
@@ -93,7 +97,7 @@ function keyPressed() {
             shuffleArray(EntityTypes);
         }
 
-        currentSelectedInventoryIndex = keyCode != 48 ? keyCode - 49: currentSelectedInventoryIndex;
+        currentSelectedInventoryIndex = keyCode != 48 ? keyCode - 49 : currentSelectedInventoryIndex;
 
         currentSelectedTileImg = tileImgs[currentSelectedInventoryIndex];
         currentSelectedEntity = EntityTypes[keyCode - 49];
