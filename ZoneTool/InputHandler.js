@@ -31,6 +31,26 @@ function mousePressed() {
             initialClickCancelled = true;
         }
     }
+    else if (currentAction == ActionType.TileInsert) {
+        if (mouseButton == LEFT) {
+            // If Left CTRL is held, fill the entire empty space or override the target tiles with specified tile image.
+            if (keyIsDown(17)) {
+                fillTile(mouseStartPos, currentSelectedTileImg, spatialMap.get(...mouseStartPos));
+                return;
+            }
+
+            insertTile(currentSelectedTileImg, mouseStartPos);
+        }
+        else if (mouseButton == CENTER) pickTile(spatialMap.get(...mouseStartPos));
+        else {
+            // If Left CTRL is held, delete entire connected same-type of tiles.
+            if (keyIsDown(17)) {
+                fillTile(mouseStartPos, null, spatialMap.get(...mouseStartPos));
+                return;
+            }
+            deleteSelection(spatialMap.get(...mouseStartPos));
+        }
+    }
 }
 function mouseDragged() {
     if (cookingModeEnabled) return;
@@ -41,9 +61,9 @@ function mouseDragged() {
         return;
     }
 
+    // Insert Tiles on Mouse Drag.
     if (currentAction == ActionType.TileInsert) {
         if (mouseButton == LEFT) {
-            let tileImg = currentSelectedTileImg;
             let targetPos = [getMouseWorldX(), getMouseWorldY()];
 
             // If Left shift is pressed, we should use a trick most programs use that you draw in a straight line.
@@ -54,15 +74,10 @@ function mouseDragged() {
                 if (xDiff > yDiff) targetPos[1] = mouseStartPos[1];
                 else targetPos[0] = mouseStartPos[0];
             }
-            // If Left CTRL is pressed, fill the entire empty space OR override each connected same tile with the new one.
-            else if (keyIsDown(17)) {
-                fillTile(targetPos, tileImg);
-                return;
-            }
 
-            insertTile(tileImg, targetPos);
+            insertTile(currentSelectedTileImg, targetPos);
         }
-        else deleteSelection(spatialMap.get(getMouseWorldX(), getMouseWorldY()));
+        else if (mouseButton == RIGHT) deleteSelection(spatialMap.get(...getMouseWorld()));
     }
     else if (currentAction == ActionType.Move) {
         cameraOffset[0] -= movedX;

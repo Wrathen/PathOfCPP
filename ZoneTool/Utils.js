@@ -16,6 +16,8 @@ function getMouseScreenX() { return mouseX; }
 function getMouseScreenY() { return mouseY; }
 function getMouseWorldX() { return (mouseX + cameraOffsetScaled[0]) / zoom; }
 function getMouseWorldY() { return (mouseY + cameraOffsetScaled[1]) / zoom; }
+function getMouseScreen() { return [getMouseScreenX(), getMouseScreenY()]; }
+function getMouseWorld() { return [getMouseWorldX(), getMouseWorldY()]; }
 function screenToWorld(pos, offset = cameraOffsetScaled) { return new Point((pos.x + offset[0]) / zoom, (pos.y + offset[1]) / zoom); }
 function worldToScreen(pos, offset = cameraOffsetScaled) { return new Point((pos.x - offset[0]) * zoom, (pos.y - offset[1]) * zoom); }
 function getZoneName() { return UIElements[4].value(); }
@@ -32,7 +34,7 @@ function isObjectInViewBounds(object) {
     // Check if the object is within window bounds.
     let isInWindowBounds = (x, y, w, h) => { return x > 0 && x < windowWidth + w && y > 0 && y < windowHeight + h; }
     let flag = isInWindowBounds(object.getScreenX() + object.getRenderWidth(), object.getScreenY() + object.getRenderHeight(),
-                                object.getRenderWidth(), object.getRenderHeight());
+        object.getRenderWidth(), object.getRenderHeight());
 
     return flag;
 }
@@ -44,6 +46,7 @@ function getUIZoneName() { return UIElements[4]; }
 function getUIBackgroundPath() { return UIElements[6]; }
 
 // Global Utilities
+function findIndexByGUID(id, array) { for (let i = 0; i < array.length; ++i) if (array[i].GUID == id) return i; return -1; }
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; --i) {
         var j = Math.floor(Math.random() * (i + 1));

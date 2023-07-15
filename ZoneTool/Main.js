@@ -115,6 +115,8 @@ function createUIElements() {
       let element = e.target.files[i];
       loadImage("assets/Tiles/" + element.name, (data) => { tileImgs.push({ "Name": element.name, "Data": data }); });
     }
+
+    setTimeout(() => { shuffleArray(tileImgs); }, 500);
   }
   UIElements[9].elt.type = 'file';
   UIElements[9].elt.multiple = true;
@@ -231,20 +233,44 @@ function insertZone(_zoneType, _zoneBounds) {
     allPortals.push(new Portal(...zoneBounds));
 }
 
-function fillTile(targetPos, tileImg) {
+function fillTile(targetPos, tileImg, targetTileImg = null) {
   // If the target position is out of bounds, stop this iteration.
   if (targetPos[0] < 0 || targetPos[0] > spatialMap.mapWidth ||
-      targetPos[1] < 0 || targetPos[1] > spatialMap.mapHeight) return;
+    targetPos[1] < 0 || targetPos[1] > spatialMap.mapHeight) return;
 
   // Get the object at targeted position.
-  let objectAtTargetPos = spatialMap.get(targetPos[0], targetPos[1]);
-  if (objectAtTargetPos || (objectAtTargetPos && !objectAtTargetPos.img)) return;
+  let objectAtTargetPos = spatialMap.get(...targetPos);
+  // If there is an object at target pos
+  if (objectAtTargetPos) {
+    // If we don't target any specific img, return.
+    if (!targetTileImg) return;
+    // If the object's image doesn't equal to our target img, return.
+    if (objectAtTargetPos.img != targetTileImg.img) return;
+  }
+  // If we target a specific img, and there is no object at target pos, we shouldn't draw. 
+  else if (targetTileImg) return;
 
-  insertTile(tileImg, targetPos);
-  fillTile([targetPos[0] + spatialMap.cellWidth, targetPos[1]], tileImg); // right
-  fillTile([targetPos[0] - spatialMap.cellWidth, targetPos[1]], tileImg); // left
-  fillTile([targetPos[0], targetPos[1] - spatialMap.cellHeight], tileImg); // top
-  fillTile([targetPos[0], targetPos[1] + spatialMap.cellHeight], tileImg); // bottom
+  // Fill with tiles.
+  if (targetTileImg == null) insertTile(tileImg, targetPos);
+  // We have some target tile img, this means we should be replacing tiles only with that kind.
+  else {
+    deleteSelection(spatialMap.get(...targetPos));
+    insertTile(tileImg, targetPos);
+  }
+
+  // Recursive calls.
+  fillTile([targetPos[0] + spatialMap.cellWidth, targetPos[1]], tileImg, targetTileImg); // right
+  fillTile([targetPos[0] - spatialMap.cellWidth, targetPos[1]], tileImg, targetTileImg); // left
+  fillTile([targetPos[0], targetPos[1] - spatialMap.cellHeight], tileImg, targetTileImg); // top
+  fillTile([targetPos[0], targetPos[1] + spatialMap.cellHeight], tileImg, targetTileImg); // bottom
+}
+
+function pickTile(tile) {
+  if (!tile) return;
+
+  // Update current selected variables.
+  currentSelectedTileImg = { "Name": "PickedTile", "Data": tile.img };
+  currentSelectedInventoryIndex = -1;
 }
 
 function deleteSelection(target = currentSelection) {
