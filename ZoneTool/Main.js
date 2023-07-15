@@ -1,12 +1,4 @@
 // Variables
-let allData = {
-  "General": { "OutputName": "General", "Data": new ZoneGeneralData() },
-  "Background": { "OutputName": "BGData", "Data": new ZoneBackgroundData() },
-  "Colliders": { "OutputName": "ColliderData", "Data": [] },
-  "Entities": { "OutputName": "EntityData", "Data": [] },
-  "SpawnZones": { "OutputName": "SpawnZoneData", "Data": [] },
-  "Portals": { "OutputName": "PortalData", "Data": [] }
-};
 let allTiles = [];
 let allColliders = [];
 let allEntities = [];
@@ -14,10 +6,14 @@ let allSpawnZones = [];
 let allPortals = [];
 let allObjectArrays = [allTiles, allColliders, allEntities, allSpawnZones, allPortals];
 
+let data_General = new ZoneGeneralData();
+let data_Background = new ZoneBackgroundData();
+
 let zoneWidth = 4000;
 let zoneHeight = 4000;
 
 let cookingModeEnabled = false;
+let panelElementsHidden = false;
 let gridsEnabled = false;
 let gridSizeX = 160;
 let gridSizeY = 160;
@@ -27,10 +23,13 @@ let bgImg;
 let tileImgs = [];
 let currentSelectedTileImg;
 let currentSelectedEntity;
-let currentSelection = { "Type": SelectionType.None, "Object": null };
+let currentSelection = null;
+let currentSelectionMenuBar = null;
+let currentSelectedInventoryIndex = 0;
 let currentZoneInsertType = ZoneInsertType.Collider;
 
 let mouseStartPos = [-1, -1];
+let selectionDistToOrigin = [-1, -1];
 
 let zoom = 1.0;
 let cameraOffset = [0, 0];
@@ -98,6 +97,12 @@ function draw() {
 
     // Render current action.
     drawCurrentAction();
+
+    // Render UI Panel background
+    drawUIPanelBackground();
+
+    // Render Inventory
+    drawInventory();
   }
 }
 
@@ -106,53 +111,97 @@ function createUIElements() {
   UIElements = [];
   UIElements.push(
     createButton("Hide").position(30, 15).mousePressed(() => {
-      let areElementsHidden = UIElements[0].elt.innerHTML == "Hide";
-
       for (let i = 1; i < UIElements.length; ++i) {
-        if (areElementsHidden) UIElements[i].hide();
-        else UIElements[i].show();
+        if (panelElementsHidden) UIElements[i].show();
+        else UIElements[i].hide();
       }
-      UIElements[0].elt.innerHTML = areElementsHidden ? "Show" : "Hide";
+      UIElements[0].elt.innerHTML = panelElementsHidden ? "Hide" : "Show";
+      panelElementsHidden = !panelElementsHidden;
     }),
-    createButton("Import").position(30, 50).mousePressed(importData),
+    createButton("Import").position(30, 50),
     createButton("Export").position(90, 50).mousePressed(exportData),
 
     createP("Zone Name").position(30, 70).style('background-color', 'powderblue'),
-    createInput("Unnamed Zone").position(30, 105).input(() => { allData["General"]["Data"].name = UIElements[4].elt.value; }),
+    createInput("Unnamed Zone").position(30, 105).input(() => { data_General.name = UIElements[4].elt.value; }),
 
     createP("Background Path").position(30, 120).style('background-color', 'powderblue'),
     createInput("assets/sprites/nosprite.png").position(30, 155).input(() => {
-      allData["Background"]["Data"].bgPath = UIElements[6].elt.value;
+      data_Background.bgPath = UIElements[6].elt.value;
       loadImage(UIElements[6].elt.value, (data) => { bgImg = data; });
     }),
-    createInput("Add Tiles").position(30, 200),
+    createButton("Add Tiles").position(30, 200),
     createButton("Cook Background").position(30, 240).mousePressed(cookBackground),
+    createInput("_Hidden_IMPORT_Tiles").style("display", "none"),
+    createInput("_Hidden_IMPORT_Data").style("display", "none"),
   );
 
-  UIElements[7].elt.onchange = e => {
+  // Bind Buttons to Functions so we can call them by .click(), 'cuz p5.js don't allow us.
+  UIElements[1].elt.onclick = () => { UIElements[10].elt.click(); };
+  UIElements[7].elt.onclick = () => { UIElements[9].elt.click(); };
+
+  // Import Tiles
+  UIElements[9].elt.onchange = e => {
     for (let i = 0; i < e.target.files.length; ++i) {
       let element = e.target.files[i];
       loadImage("assets/Tiles/" + element.name, (data) => { tileImgs.push({ "Name": element.name, "Data": data }); });
     }
   }
-  UIElements[7].elt.type = 'file';
-  UIElements[7].elt.multiple = true;
-}
-function importData() {
+  UIElements[9].elt.type = 'file';
+  UIElements[9].elt.multiple = true;
 
+  // Import Data
+  UIElements[10].elt.onchange = e => { if (e.target.files[0]) e.target.files[0].text().then(importData); }
+  UIElements[10].elt.type = 'file';
+}
+
+function importData(rawData) {
+  let data = JSON.parse(rawData);
+  data_General = data.General;
+  data_Background = data.BGData;
+
+  getUIZoneName().elt.value = data_General.name;
+  getUIBackgroundPath().elt.value = data_Background.bgPath;
+
+  currentAction = ActionType.EntityInsert;
+  // Import all current objects into the output data.
+  for (let i = 0; i < data.EntityData.length; ++i)
+    insertEntity(getEntityByID(data.EntityData[i].ID), [data.EntityData[i].PosX, data.EntityData[i].PosY]);
+  for (let i = 0; i < data.ColliderData.length; ++i) {
+    let d = data.ColliderData[i];
+    insertZone(ZoneInsertType.Collider, [d.PosX, d.PosY, d.Width, d.Height]);
+  }
+  for (let i = 0; i < data.SpawnZoneData.length; ++i) {
+    let d = data.SpawnZoneData[i];
+    insertZone(ZoneInsertType.SpawnZone, [d.PosX, d.PosY, d.Width, d.Height]);
+  }
+  for (let i = 0; i < data.PortalData.length; ++i) {
+    let d = data.PortalData[i];
+    insertZone(ZoneInsertType.Portal, [d.PosX, d.PosY, d.Width, d.Height]);
+  }
+  currentAction = ActionType.Move;
 }
 function exportData() {
-  let data = {};
-  for (const [key, value] of Object.entries(allData)) {
-    if (Array.isArray(value["Data"])) {
-      data[value["OutputName"]] = [];
-      for (let i = 0; i < value["Data"].length; ++i)
-        data[value["OutputName"]].push(value["Data"][i].export());
-    }
-    else
-      data[value["OutputName"]] = value["Data"].export();
-  }
+  // Initialize export data.
+  let data = {
+    "General": data_General,
+    "BGData": data_Background,
+    "ColliderData": [],
+    "EntityData": [],
+    "SpawnZoneData": [],
+    "PortalData": []
+  };
 
+  // Export all current objects into the output data.
+  for (let i = 0; i < allColliders.length; ++i)
+    data["ColliderData"].push(allColliders[i].export());
+  for (let i = 0; i < allEntities.length; ++i)
+    data["EntityData"].push(allEntities[i].export());
+  for (let i = 0; i < allSpawnZones.length; ++i)
+    data["SpawnZoneData"].push(allSpawnZones[i].export());
+  for (let i = 0; i < allPortals.length; ++i)
+    data["PortalData"].push(allPortals[i].export());
+
+  // Convert to JSON and save it.
   let JSONConverted = JSON.stringify(data);
   var blob = new Blob([JSONConverted], { type: "text/plain;charset=utf-8" });
   saveAs(blob, `Zone_${getZoneName()}.PZD`);
@@ -173,50 +222,43 @@ function insertTile() {
 
   allTiles.push(new Tile(currentSelectedTileImg.Data, pos[0], pos[1]));
 }
-function insertEntity() {
+function insertEntity(_entity, _pos) {
   if (currentAction != ActionType.EntityInsert) return;
-  if (!currentSelectedEntity) return;
+
+  let entity = _entity ? _entity : currentSelectedEntity;
+  let pos = _pos ? _pos : [getMouseWorldX(), getMouseWorldY()];
+
+  if (!entity) return;
 
   // Insert a new entity into the allEntities array.
-  let entity = new Entity(currentSelectedEntity.ID, currentSelectedEntity.Type, currentSelectedEntity.Image, getMouseWorldX(), getMouseWorldY());
-  allEntities.push(entity);
-  allData.Entities.Data.push(new ZoneEntityData(entity.id, entity.type, entity.x, entity.y));
+  let spawnedEntity = new Entity(entity.ID, entity.Type, entity.Image, pos[0], pos[1]);
+  allEntities.push(spawnedEntity);
 }
-function insertZone() {
+function insertZone(_zoneType, _zoneBounds) {
   // x, y, w, h
-  let zoneBounds = [mouseStartPos[0], mouseStartPos[1], getMouseWorldX() - mouseStartPos[0], getMouseWorldY() - mouseStartPos[1]];
-  if (zoneBounds[2] == 0 || zoneBounds[3] == 0) return;
+  let zoneType = _zoneType ? _zoneType : currentZoneInsertType;
+  let zoneBounds = _zoneBounds ? _zoneBounds : [mouseStartPos[0], mouseStartPos[1], getMouseWorldX() - mouseStartPos[0], getMouseWorldY() - mouseStartPos[1]];
 
-  if (currentZoneInsertType == ZoneInsertType.Collider) {
+  // width and height can not be lower than 3 units.
+  if (Math.abs(zoneBounds[2]) < 3 || Math.abs(zoneBounds[3]) < 3) return;
+
+  // Check if width|height are negative, if so, convert them to positive and adjust x,y instead.
+  if (zoneBounds[2] < 0) {
+    zoneBounds[0] += zoneBounds[2];
+    zoneBounds[2] = -zoneBounds[2];
+  }
+  if (zoneBounds[3] < 0) {
+    zoneBounds[1] += zoneBounds[3];
+    zoneBounds[3] = -zoneBounds[3];
+  }
+
+  // Create the Zone and push it into their respective array.
+  if (zoneType == ZoneInsertType.Collider)
     allColliders.push(new Collider(...zoneBounds));
-    allData.Colliders.Data.push(new ZoneColliderData(...zoneBounds));
-  }
-  else if (currentZoneInsertType == ZoneInsertType.SpawnZone) {
+  else if (zoneType == ZoneInsertType.SpawnZone)
     allSpawnZones.push(new SpawnZone(...zoneBounds));
-    allData.SpawnZones.Data.push(new ZoneSpawnZoneData(...zoneBounds));
-  }
-  else if (currentZoneInsertType == ZoneInsertType.Portal) {
+  else if (zoneType == ZoneInsertType.Portal)
     allPortals.push(new Portal(...zoneBounds));
-    allData.Portals.Data.push(new ZonePortalData(...zoneBounds));
-  }
-}
-
-function deleteTileData(object) { }
-function deleteEntityData(object) { deleteData(allData.Entities.Data, object); }
-function deleteColliderData(object) { deleteData(allData.Colliders.Data, object); }
-function deleteSpawnZoneData(object) { deleteData(allData.SpawnZones.Data, object); }
-function deletePortalData(object) { deleteData(allData.Portals.Data, object); }
-function deleteData(dataArray, object) {
-  for (let i = 0; i < dataArray.length; ++i) {
-    let data = dataArray[i];
-    if (data.id == object.id) {
-      dataArray.splice(i, 1);
-      delete object;
-      return;
-    }
-  }
-
-  alert("Error found while deleting EntityData!");
 }
 
 function deleteSelection() {
@@ -226,37 +268,82 @@ function deleteSelection() {
     let objectArray = allObjectArrays[i];
     for (let j = 0; j < objectArray.length; ++j) {
       let object = objectArray[j];
-      if (object.GUID == currentSelection.Object.GUID) {
+      if (object.GUID == currentSelection.GUID) {
         objectArray.splice(j, 1);
-        object.deleteData();
-        delete currentSelection.Object;
+        resetSelection();
+        resetSelectionMenuBar();
         return;
       }
     }
   }
 }
 function resetSelection() {
-  currentSelection = { "Type": SelectionType.None, "Object": null };
+  currentSelection = null;
 }
 function trySelectAtMousePosition() {
-  resetSelection();
-
   let mousePos = new Point(getMouseWorldX(), getMouseWorldY());
 
   for (let i = 0; i < allObjectArrays.length; ++i) {
     let objectArray = allObjectArrays[i];
     for (let j = 0; j < objectArray.length; ++j) {
       let object = objectArray[j];
-      let objectRect = new Rect((object.getWorldX() + cameraOffsetScaled[0]) / zoom, (object.getWorldY() + cameraOffsetScaled[1]) / zoom, object.getRenderWidth() / zoom, object.getRenderHeight() / zoom);
+      let objectRect = new Rect((object.getScreenX() + cameraOffsetScaled[0]) / zoom, (object.getScreenY() + cameraOffsetScaled[1]) / zoom, object.getRenderWidth() / zoom, object.getRenderHeight() / zoom);
 
       if (mousePos.intersectsRect(objectRect)) {
-        currentSelection.Object = object;
-        currentSelection.Type = object.objectType;
+        currentSelection = object;
+        currentSelectionStartPos = [mouseX, mouseY];
+
+        selectionDistToOrigin = worldToScreen(object, mouseStartPos);
         return;
       }
     }
   }
-  console.log("couldnt find any objects under mouse");
+
+  resetSelection();
+  resetSelectionMenuBar();
+  selectionDistToOrigin = [-1, -1];
+}
+function tryMoveSelection() {
+  let worldPos = screenToWorld(new Point(mouseX + selectionDistToOrigin.x, mouseY + selectionDistToOrigin.y));
+  currentSelection.x = worldPos.x;
+  currentSelection.y = worldPos.y;
+
+  if (currentSelectionMenuBar) moveSelectionMenuBar();
+}
+function tryAddSelectionMenuBar() {
+  resetSelectionMenuBar();
+
+  if (currentSelection.objectType == ObjectType.SpawnZone) {
+    currentSelectionMenuBar = [
+      createP("Spawn Amount").position(currentSelection.getScreenX(), currentSelection.getScreenY()).style('background-color', 'powderblue'),
+      createInput(String(currentSelection.amount))
+        .position(currentSelection.getScreenX(), currentSelection.getScreenY())
+        .input(() => {
+          const data = parseInt(currentSelectionMenuBar[1].elt.value);
+          currentSelection.amount = isNaN(data) ? 0 : data;
+        }),
+      [[0, -15], [100, 0]] // offsets
+    ];
+  }
+
+  // Update positions.
+  if (currentSelectionMenuBar) moveSelectionMenuBar();
+}
+function resetSelectionMenuBar() {
+  if (!currentSelectionMenuBar) return;
+
+  for (let i = 0; i < currentSelectionMenuBar.length - 1; ++i)
+    currentSelectionMenuBar[i].remove();
+  currentSelectionMenuBar = null;
+}
+function moveSelectionMenuBar() {
+  let posX = currentSelection.getScreenX();
+  let posY = currentSelection.getScreenY();
+
+  for (let i = 0; i < currentSelectionMenuBar.length - 1; ++i) {
+    let offset = currentSelectionMenuBar[currentSelectionMenuBar.length - 1][i];
+    currentSelectionMenuBar[i].position(posX + offset[0], posY + offset[1]);
+  }
 }
 function cookBackground() {
   cookingModeEnabled = true;

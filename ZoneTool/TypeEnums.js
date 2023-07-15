@@ -25,22 +25,16 @@ const ActionType = {
     "ZoneInsert": 3,
     "EntityInsert": 4,
 }
-const SelectionType = {
-    "None": 0,
-    "Entity": 1,
-    "Collider": 2,
-    "SpawnZone": 3,
-    "Portal": 4
-}
 const ZoneInsertType = {
     "Collider": 0,
     "SpawnZone": 1,
     "Portal": 2
 }
 const ObjectType = {
-    "Tile": 0,
-    "Entity": 1,
-    "Collider": 2,
-    "SpawnZone": 3,
-    "Portal": 4
+    "None": 0,
+    "Tile": 1,
+    "Entity": 2,
+    "Collider": 3,
+    "SpawnZone": 4,
+    "Portal": 5
 }

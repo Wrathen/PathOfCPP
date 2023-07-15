@@ -20,56 +20,6 @@ class ZoneBackgroundData {
         return { "Path": this.bgPath };
     }
 }
-class ZoneColliderData {
-    constructor(posX = 0, posY = 0, w = 0, h = 0) {
-        this.posX = posX;
-        this.posY = posY;
-        this.w = w;
-        this.h = h;
-    }
-
-    export() {
-        return { "PosX": this.posX, "PosY": this.posY, "Width": this.w, "Height": this.h };
-    }
-}
-class ZoneSpawnZoneData {
-    constructor(posX = 0, posY = 0, w = 0, h = 0, amount = 0) {
-        this.posX = posX;
-        this.posY = posY;
-        this.w = w;
-        this.h = h;
-        this.amount = amount;
-    }
-
-    export() {
-        return { "PosX": this.posX, "PosY": this.posY, "Width": this.w, "Height": this.h, "Amount": this.amount };
-    }
-}
-class ZonePortalData {
-    constructor(posX = 0, posY = 0, w = 0, h = 0) {
-        this.posX = posX;
-        this.posY = posY;
-        this.w = w;
-        this.h = h;
-        this.nextZone = "Empty";
-    }
-
-    export() {
-        return { "PosX": this.posX, "PosY": this.posY, "Width": this.w, "Height": this.h, "NextZone": this.nextZone };
-    }
-}
-class ZoneEntityData {
-    constructor(id = 0, type = 0, posX = 0, posY = 0) {
-        this.id = id;
-        this.type = type;
-        this.posX = posX;
-        this.posY = posY;
-    }
-
-    export() {
-        return { "ID": this.id, "Type": this.type, "PosX": this.posX, "PosY": this.posY };
-    }
-}
 
 class Tile {
     constructor(img, x, y, w = 16, h = 16) {
@@ -83,12 +33,11 @@ class Tile {
         this.objectType = ObjectType.Tile;
     }
 
-    // main
-    deleteData() { deleteTileData(this); }
-
     // utils
-    getWorldX() { return this.x * zoom - this.getRenderWidth() / 2 - cameraOffsetScaled[0]; }
-    getWorldY() { return this.y * zoom - this.getRenderHeight() / 2 - cameraOffsetScaled[1]; }
+    getScreenX() { return this.x * zoom - this.getRenderWidth() / 2 - cameraOffsetScaled[0]; }
+    getScreenY() { return this.y * zoom - this.getRenderHeight() / 2 - cameraOffsetScaled[1]; }
+    getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
+    getWorldY() { return (this.y + cameraOffsetScaled[1]) / zoom; }
     getRenderWidth() { return this.w * zoom; }
     getRenderHeight() { return this.h * zoom; }
 }
@@ -105,14 +54,18 @@ class Entity {
 
         this.objectType = ObjectType.Entity;
     }
-    // main
-    deleteData() { deleteEntityData(this); }
 
     // utils
-    getWorldX() { return this.x * zoom - this.getRenderWidth() / 2 - cameraOffsetScaled[0]; }
-    getWorldY() { return this.y * zoom - this.getRenderHeight() / 2 - cameraOffsetScaled[1]; }
+    getScreenX() { return this.x * zoom - this.getRenderWidth() / 2 - cameraOffsetScaled[0]; }
+    getScreenY() { return this.y * zoom - this.getRenderHeight() / 2 - cameraOffsetScaled[1]; }
+    getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
+    getWorldY() { return (this.y + cameraOffsetScaled[1]) / zoom; }
     getRenderWidth() { return this.w * zoom; }
     getRenderHeight() { return this.h * zoom; }
+
+    export() {
+        return { "ID": this.id, "Type": this.type, "PosX": this.x, "PosY": this.y };
+    }
 }
 class Collider {
     constructor(x, y, w, h) {
@@ -125,11 +78,16 @@ class Collider {
         this.objectType = ObjectType.Collider;
     }
 
-    deleteData() { deleteColliderData(this); }
-    getWorldX() { return this.x * zoom - cameraOffsetScaled[0]; }
-    getWorldY() { return this.y * zoom - cameraOffsetScaled[1]; }
+    getScreenX() { return this.x * zoom - cameraOffsetScaled[0]; }
+    getScreenY() { return this.y * zoom - cameraOffsetScaled[1]; }
+    getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
+    getWorldY() { return (this.y + cameraOffsetScaled[1]) / zoom; }
     getRenderWidth() { return this.w * zoom; }
     getRenderHeight() { return this.h * zoom; }
+
+    export() {
+        return { "PosX": this.x, "PosY": this.y, "Width": this.w, "Height": this.h };
+    }
 }
 class SpawnZone {
     constructor(x, y, w, h) {
@@ -143,11 +101,16 @@ class SpawnZone {
         this.objectType = ObjectType.SpawnZone;
     }
 
-    deleteData() { deleteSpawnZoneData(this); }
-    getWorldX() { return this.x * zoom - cameraOffsetScaled[0]; }
-    getWorldY() { return this.y * zoom - cameraOffsetScaled[1]; }
+    getScreenX() { return this.x * zoom - cameraOffsetScaled[0]; }
+    getScreenY() { return this.y * zoom - cameraOffsetScaled[1]; }
+    getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
+    getWorldY() { return (this.y + cameraOffsetScaled[1]) / zoom; }
     getRenderWidth() { return this.w * zoom; }
     getRenderHeight() { return this.h * zoom; }
+
+    export() {
+        return { "PosX": this.x, "PosY": this.y, "Width": this.w, "Height": this.h, "Amount": this.amount };
+    }
 }
 class Portal {
     constructor(x, y, w, h) {
@@ -161,9 +124,14 @@ class Portal {
         this.objectType = ObjectType.Portal;
     }
 
-    deleteData() { deletePortalData(this); }
-    getWorldX() { return this.x * zoom - cameraOffsetScaled[0]; }
-    getWorldY() { return this.y * zoom - cameraOffsetScaled[1]; }
+    getScreenX() { return this.x * zoom - cameraOffsetScaled[0]; }
+    getScreenY() { return this.y * zoom - cameraOffsetScaled[1]; }
+    getWorldX() { return (this.x + cameraOffsetScaled[0]) / zoom; }
+    getWorldY() { return (this.y + cameraOffsetScaled[1]) / zoom; }
     getRenderWidth() { return this.w * zoom; }
     getRenderHeight() { return this.h * zoom; }
+
+    export() {
+        return { "PosX": this.x, "PosY": this.y, "Width": this.w, "Height": this.h, "NextZone": this.nextZone };
+    }
 }

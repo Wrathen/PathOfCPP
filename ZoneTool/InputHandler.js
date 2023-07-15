@@ -2,20 +2,42 @@ let initialClickCancelled = false;
 
 function mousePressed() {
     if (cookingModeEnabled) return;
-    if (!isUIPanelHidden() ? (mouseX < 250 && mouseY < 300) : (mouseX < 100 && mouseY < 50)) {
+
+    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
+    if (document.activeElement != document.body) return;
+
+    // Try to cancel click if it's near the UI Panel on left-side.
+    if (!isUIPanelHidden() ? (mouseX < 250) : (mouseX < 100 && mouseY < 50)) {
         initialClickCancelled = true;
         return;
     }
 
+    // Set-up mouse start position for this action.
+    mouseStartPos = [getMouseWorldX(), getMouseWorldY()];
+
+    // If the current action is Select, then try to select at mouse position.
     if (currentAction == ActionType.Select)
         trySelectAtMousePosition();
-    
-    mouseStartPos = [getMouseWorldX(), getMouseWorldY()];
+
+    // Try to open menu bar if we currently have a selection and it's eligible for a menu.
+    if (mouseButton == RIGHT) {
+        if (!hasValidSelection()) return;
+
+        tryAddSelectionMenuBar();
+        initialClickCancelled = true;
+    }
 }
 function mouseDragged() {
     if (cookingModeEnabled) return;
     if (initialClickCancelled) return;
-    if (hasValidSelection()) return;
+
+    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
+    if (document.activeElement != document.body) return;
+
+    if (hasValidSelection()) {
+        tryMoveSelection();
+        return;
+    }
 
     if (currentAction == ActionType.TileInsert) insertTile();
     else if (currentAction == ActionType.Move) {
@@ -29,16 +51,24 @@ function mouseDragged() {
 }
 function mouseReleased() {
     if (cookingModeEnabled) return;
-    if (hasValidSelection()) return;
 
-    if (currentAction == ActionType.ZoneInsert) insertZone();
-    else if (currentAction == ActionType.EntityInsert) insertEntity();
+    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
+    if (document.activeElement != document.body) return;
+
+    if (!hasValidSelection()) {
+        if (currentAction == ActionType.ZoneInsert) insertZone();
+        else if (currentAction == ActionType.EntityInsert) insertEntity();
+    }
 
     initialClickCancelled = false;
     mouseStartPos = [-1, -1];
+    selectionDistToOrigin = [-1, -1];
 }
 function mouseWheel(event) {
     if (cookingModeEnabled) return;
+
+    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
+    if (document.activeElement != document.body) return;
 
     let zoomDirection = event.deltaY < 0 ? 1 : -1;
     let zoomDelta = zoomDirection * 0.25;
@@ -50,23 +80,22 @@ function mouseWheel(event) {
 function keyPressed() {
     if (cookingModeEnabled) return;
 
-    if (currentAction == ActionType.TileInsert) {
-        // alpha 0, random tile selection
-        if (keyCode == 48)
-            currentSelectedTileImg = tileImgs[(Math.random() * tileImgs.length) | 0];
-        // alpha 1-9, switch between slots
-        else if (keyCode > 48 && keyCode < 58) {
-            let index = keyCode - 49;
-            if (tileImgs.length > index) currentSelectedTileImg = tileImgs[index];
+    // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
+    if (document.activeElement != document.body) return;
+
+    // Inventory Slot Index, alpha 1-9
+    if (keyCode >= 48 && keyCode < 58) {
+        // alpha 0, randomizes arrays
+        if (keyCode == 48) {
+            shuffleArray(tileImgs);
+            shuffleArray(EntityTypes);
         }
-    }
-    else if (currentAction == ActionType.EntityInsert) {
-        if (keyCode > 48 && keyCode < 52) // alpha 1-3
-            currentSelectedEntity = EntityTypes[keyCode - 49];
-    }
-    else if (currentAction == ActionType.ZoneInsert) {
-        if (keyCode > 48 && keyCode < 52)
-            currentZoneInsertType = keyCode - 49;
+
+        currentSelectedInventoryIndex = keyCode != 48 ? keyCode - 49: currentSelectedInventoryIndex;
+
+        currentSelectedTileImg = tileImgs[currentSelectedInventoryIndex];
+        currentSelectedEntity = EntityTypes[keyCode - 49];
+        currentZoneInsertType = keyCode - 49;
     }
 
     // ActionType-Independent KeyPresses
