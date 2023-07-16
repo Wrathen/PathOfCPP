@@ -1,4 +1,5 @@
 #include "Monster.h"
+#include "Explosions/Explosion.h"
 #include "../Managers/GameManager.h"
 #include "../Miscellaneous/Random.h"
 #include "../Game/Item/Item.h"
@@ -59,22 +60,30 @@ void Monster::Render() {
 }
 
 void Monster::OnDeath() {
-	auto playerStats = GAME.GetPlayer()->CStats;
-	auto playerLuck = playerStats->GetLuck();
-	auto playerChanceDoubleLoot = playerStats->GetChanceToDoubleLoot();
+	// Retrieve various stats and information.
+	Stats* playerStats = GAME.GetPlayer()->CStats;
+	float playerLuck = playerStats->GetLuck();
+	float playerChanceDoubleLoot = playerStats->GetChanceToDoubleLoot();
+	int monsterLevel = CStats->GetLevel();
 
-	auto monsterLevel = CStats->GetLevel();
+	// Manipulate Loot if EnhancedLoot stat boolean is enabled by powerups.
 	if (CStats->dropsEnhancedLoot) {
 		lootChance *= 1.30f;
 		monsterLevel = (int)(monsterLevel * 1.30f);
 	}
 
+	// Multiply Loot Chance with Player's luck.
 	lootChance *= playerLuck;
 
+	// Drop Items, poggies!
 	if (lootChance > RandomFloat(1.0f))
 		Item::DropItem(monsterLevel, transform.GetPosition() + RandomVector(3.0f));
 	if (playerChanceDoubleLoot > RandomFloat(1.0f))
 		Item::DropItem(monsterLevel, transform.GetPosition() + RandomVector(3.0f));
 	
+	// Create explosions! Woohoo!!!
+	(new Explosion())->transform.SetPosition(transform.GetPosition());
+
+	// Delete the entity.
 	Delete();
 }

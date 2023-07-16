@@ -11,10 +11,8 @@ Tools:
 	[x] Zone Structure Enhancements
 
 Tasks:
-	// @todo Zone deserializing done. ~~
-		- Implement Static Box Colliders
-		- Implement SpawnZones
-		- Fix Position issues with Entities.
+	- Explosions!!
+	- Fix Position issues with everything. maybe we could just offset all positions before exporting within zonetool.
 
 Managers:
 	[x] Font Manager

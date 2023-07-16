@@ -1,11 +1,13 @@
 #include "SceneManager.h"
 #include "../Scenes/Scene_Town.h"
 #include "../Scenes/Scene_Forest.h"
+#include "../Scenes/Scene_DefiledCathedral.h"
 #include "../Miscellaneous/Log.h"
 
 void SceneManager::Init() {
 	sceneList["Town"] = new Scene_Town();
 	sceneList["Forest"] = new Scene_Forest();
+	sceneList["DefiledCathedral"] = new Scene_DefiledCathedral();
 }
 void SceneManager::ChangeScene(const std::string& name) {
 	if (sceneList.count(name) == 0) {

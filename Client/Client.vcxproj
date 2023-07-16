@@ -160,6 +160,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\Explosions\Explosion.h" />
+    <ClInclude Include="src\Scenes\Scene_DefiledCathedral.h" />
     <ClInclude Include="src\Entities\NPCs\Portal.h" />
     <ClInclude Include="src\UI\SceneTitleBar.h" />
     <ClInclude Include="src\UI\FPSBar.h" />
@@ -309,6 +311,8 @@
     <ClInclude Include="src\Game\Zone\Zone.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\Explosions\Explosion.cpp" />
+    <ClCompile Include="src\Scenes\Scene_DefiledCathedral.cpp" />
     <ClCompile Include="src\Entities\NPCs\Portal.cpp" />
     <ClCompile Include="src\UI\SceneTitleBar.cpp" />
     <ClCompile Include="src\UI\FPSBar.cpp" />

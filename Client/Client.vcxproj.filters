@@ -148,6 +148,8 @@
     <ClInclude Include="src\UI\SceneTitleBar.h" />
     <ClInclude Include="src\Game\Zone\Zone.h" />
     <ClInclude Include="src\Entities\NPCs\Portal.h" />
+    <ClInclude Include="src\Scenes\Scene_DefiledCathedral.h" />
+    <ClInclude Include="src\Entities\Explosions\Explosion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -202,6 +204,8 @@
     <ClCompile Include="src\UI\SceneTitleBar.cpp" />
     <ClCompile Include="src\Game\Zone\Zone.cpp" />
     <ClCompile Include="src\Entities\NPCs\Portal.cpp" />
+    <ClCompile Include="src\Scenes\Scene_DefiledCathedral.cpp" />
+    <ClCompile Include="src\Entities\Explosions\Explosion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\ToDoList.txt" />

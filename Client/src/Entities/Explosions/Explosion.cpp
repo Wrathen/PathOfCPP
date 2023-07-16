@@ -1,0 +1,34 @@
+#include "Explosion.h"
+#include "../../Managers/GameManager.h"
+
+// Constructor & Deconstructor
+Explosion::Explosion(float _lifeTime): lifeTime(_lifeTime), Entity("assets/VFX/Explosion.png", "UnnamedExplosion") { Start(); }
+Explosion::~Explosion() {
+	CAnimator->Delete();
+	CAnimator = nullptr;
+}
+
+// Base Functions
+void Explosion::Start() {
+	// Reset timer
+	timer.Reset();
+
+	// Set render scale.
+	transform.SetScale(3.0f, 3.0f);
+	
+	// Animator Component
+	CAnimator = AddComponent<Animator>();
+	CAnimator->Add(Animation("Idle", 150, 46, 46, 0, 0, 7, 0, true));
+	
+	// @todo fix this, ~~150 ms per frame times the amount of frames. This shouldn't be like this.
+	lifeTime = 150.0f * 7.0f;
+}
+void Explosion::Update() {
+	// Update Animator
+	CAnimator->Update();
+
+	// If we have lived for enough time, it's time to pass into the Valhalla.
+	if (timer.GetTimeMS() > lifeTime)
+		Delete();
+}
+void Explosion::Render() { renderer.Render(); }
