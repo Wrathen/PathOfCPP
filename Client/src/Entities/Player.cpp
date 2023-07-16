@@ -7,8 +7,10 @@
 #include "../UI/UserInterface.h"
 #include "../Managers/GameManager.h"
 #include "../Managers/SceneManager.h"
+#include "../Managers/CollisionManager.h"
+#include "../Managers/CameraManager.h"
 
-Player::Player(std::string name) : Entity("assets/sprites/player.png", name) {
+Player::Player(std::string name): Entity("assets/sprites/player.png", name) {
 	isToBeDeletedOnSceneChange = false;
 	Start();
 }
@@ -21,13 +23,15 @@ Player::~Player() {
 	CHealthBar = nullptr;
 	CAnimator->Delete();
 	CAnimator = nullptr;
+	CCollider->Delete();
+	CCollider = nullptr;
 }
 
 void Player::Start() {
 	// General
 	collisionTag = EntityCollisionTag::Friendly;
 	transform.SetScale(2.2f, 2.2f);
-	
+
 	// Stats Component
 	CStats = AddComponent<Stats>();
 	CStats->SetMoveSpeed(25.0f);
@@ -51,31 +55,57 @@ void Player::Start() {
 	CAnimator->Add(Animation("Move", 30, 64, 64, 0, 1, 3, 1, true));
 	CAnimator->Add(Animation("Attack", 10, 64, 64, 0, 2, 3, 2, false));
 
+	// Collider Component
+	CCollider = AddComponent<BoxCollider>();
+	CCollider->SetWidth(16);
+	CCollider->SetHeight(16);
+
 	// Name Tag
 	nameTag.AssignTransform(&transform);
-	nameTag.SetText(name, SDL_Color{0, 0, 0});
+	nameTag.SetText(name, SDL_Color{ 0, 0, 0 });
 	nameTag.SetOffset(0, -75);
 	nameTag.SetFontSize(10);
 	nameTag.shouldDrawCentered = true;
 }
 void Player::Update() {
 	CAnimator->Update();
+
+	// Flip the character based on mouse position.
 	Vector2 mousePos = Mouse::GetPosition();
 	Vector2 playerPos = transform.GetScreenPosition();
 	renderer.isFlipped = mousePos.x > playerPos.x;
 
-	Vector2 velocityNormalized = transform.velocity.Normalize();
-	if (velocityNormalized.Magnitude() > 0.01f) {
-		CAnimator->Play("Move");
-		transform.Move(velocityNormalized, CStats->GetMoveSpeed());
-	} else CAnimator->Play("Idle");
+	// @TODO, debug only stuff, delete these
+	const auto& b = CCollider->GetBoundaries();
+	GAME.DrawRect(transform.GetPosition() - Camera.GetPosition() - Vector2(b.w / 2, b.h / 2), b.w, b.h);
 	
-
+	// Shoot
 	if (CStats->GetAttackingState() && attackTimer.GetTimeMS() > (CStats->GetAttackSpeed() * 1000)) {
 		CAnimator->Play("Attack", true);
 		ShootArrow(mousePos);
 		attackTimer.Reset();
 	}
+
+	// @todo delete this debug-only
+	//std::string posX = std::stof(transform.GetPosition().x);
+	std::string pos = std::to_string(transform.GetPosition().x) + ", " + std::to_string(transform.GetPosition().y);
+	nameTag.SetText(pos, { 255, 255, 255 });
+
+	// Move and Update Animator States.
+	Vector2 velocityNormalized = transform.velocity.Normalize();
+	if (velocityNormalized.Magnitude() > 0.01f) {
+		// Check if the target position is movable.
+		Vector2 nextFramePosition = transform.GetPositionNextFrame(velocityNormalized, CStats->GetMoveSpeed());
+		const auto& boundaries = CCollider->GetBoundaries();
+		if (!CollisionMgr.IsPositionMovable(Rect(nextFramePosition.x - boundaries.w / 2,
+												 nextFramePosition.y - boundaries.h / 2,
+												 boundaries.w, boundaries.h))) return;
+
+		// Set position and play move animation.
+		transform.SetPosition(nextFramePosition);
+		CAnimator->Play("Move");
+	}
+	else CAnimator->Play("Idle");
 }
 void Player::Render() {
 	renderer.Render();
@@ -105,7 +135,7 @@ void Player::ShootArrow(const Vector2& targetPos) {
 	float previousOffset = -999;
 
 	for (int i = 0; i < numberOfProjectiles; ++i) {
-		int multiplier = i - numberOfProjectiles/2;
+		int multiplier = i - numberOfProjectiles / 2;
 		if (isEven && multiplier >= 0) ++multiplier;
 
 		float offset = spreadDistance * multiplier;
@@ -116,7 +146,7 @@ void Player::ShootArrow(const Vector2& targetPos) {
 			if (lastInstantiatedProjectile)
 				++lastInstantiatedProjectile->overlappingProjectiles;
 			continue;
-		}	
+		}
 
 		previousOffset = offset;
 		lastInstantiatedProjectile = new Projectile(this, transform.GetPosition(), rotation, CStats->GetProjectileSpeed());
@@ -153,29 +183,29 @@ void Player::FUN_Headhunter() {
 
 	int rnd = RandomInt(6);
 	switch (rnd) {
-	case 0:
-		if (CStats->GetSizeMultiplier() > 4.0f) return;
-		CStats->SetSizeMultiplier(CStats->GetSizeMultiplier() * 1.05f);
-		break;
-	case 1:
-		if (CStats->GetMoveSpeed() > 100) return;
-		CStats->SetMoveSpeed(CStats->GetMoveSpeed() * 1.05f);
-		break;
-	case 2:
-		if (CStats->GetProjectileSpeed() > 300) return;
-		CStats->SetProjectileSpeed(CStats->GetProjectileSpeed() * 1.05f);
-		break;
-	case 3:
-		if (CStats->GetAttackSpeed() < 0.0001f) return;
-		CStats->SetAttackSpeed(CStats->GetAttackSpeed() * 0.95f);
-		break;
-	case 4:
-		CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() * 1.25f);
-		break;
-	case 5:
-		if (CStats->GetNumberOfProjectiles() > 10000) return;
-		CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
-		break;
+		case 0:
+			if (CStats->GetSizeMultiplier() > 4.0f) return;
+			CStats->SetSizeMultiplier(CStats->GetSizeMultiplier() * 1.05f);
+			break;
+		case 1:
+			if (CStats->GetMoveSpeed() > 100) return;
+			CStats->SetMoveSpeed(CStats->GetMoveSpeed() * 1.05f);
+			break;
+		case 2:
+			if (CStats->GetProjectileSpeed() > 300) return;
+			CStats->SetProjectileSpeed(CStats->GetProjectileSpeed() * 1.05f);
+			break;
+		case 3:
+			if (CStats->GetAttackSpeed() < 0.0001f) return;
+			CStats->SetAttackSpeed(CStats->GetAttackSpeed() * 0.95f);
+			break;
+		case 4:
+			CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() * 1.25f);
+			break;
+		case 5:
+			if (CStats->GetNumberOfProjectiles() > 10000) return;
+			CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
+			break;
 	}
 }
 

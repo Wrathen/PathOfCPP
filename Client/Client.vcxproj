@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\NPCs\Portal.h" />
     <ClInclude Include="src\UI\SceneTitleBar.h" />
     <ClInclude Include="src\UI\FPSBar.h" />
     <ClInclude Include="src\Components\Animator.h" />
@@ -308,6 +309,7 @@
     <ClInclude Include="src\Game\Zone\Zone.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\NPCs\Portal.cpp" />
     <ClCompile Include="src\UI\SceneTitleBar.cpp" />
     <ClCompile Include="src\UI\FPSBar.cpp" />
     <ClCompile Include="src\Components\Animator.cpp" />

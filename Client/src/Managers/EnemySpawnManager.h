@@ -4,39 +4,35 @@
 #include "../Miscellaneous/Timer.h"
 #include "../Entities/Monsters/Zombie.h"
 #include "../Entities/Monsters/Boar.h"
+#include "../Game/Zone/Zone.h"
 
 #define EnemySpawner EnemySpawnManager::GetInstance()
-class EnemySpawnManager: public Singleton<EnemySpawnManager> { friend class Singleton;
+class EnemySpawnManager: public Singleton<EnemySpawnManager> {
+	friend class Singleton;
 private:
-	Timer timer;
-	// Wave Spawn Interval in Milliseconds
-	float spawnInterval = 333;
-	// Number of enemies to spawn per wave
-	int spawnAmount = 2;
-	int maxSpawnAmount = 110000;
+	std::vector<ZoneEntityData> entities;
+	std::vector<ZoneSpawnZoneData> spawnZones;
 	int monsterLevel = 1;
 
 public:
-	int totalNumberOfSpawnedEnemies = 0;
-	int totalNumberOfSpawnedWaves = 0;
+	int totalNumberOfSpawnedNPCs = 0;
+	int totalNumberOfSpawnedMonsters = 0;
 
-	void Reset() { totalNumberOfSpawnedEnemies = 0; totalNumberOfSpawnedWaves = 0; }
-	float GetSpawnInterval() { return spawnInterval; }
-	int GetSpawnAmount() { return spawnAmount; }
-	int GetMonsterLevel() { return monsterLevel; }
-	void SetSpawnInterval(float interval);
-	void SetSpawnAmount(int amount);
-	void SetMaxSpawnAmount(int amount);
-	void SetMonsterLevel(int value);
-	void SpawnEnemy();
+	// Main Functions
 	void SpawnNPC(int type, float x, float y);
-	void SpawnNPC(int type);
+	void SpawnMonster(float x, float y);
+	void SpawnMonsterInZone(const ZoneSpawnZoneData& zone);
 
-	void Start();
-	void Update();
+	void AddNPCs(const std::vector<ZoneEntityData>& entityData);
+	void AddSpawnZones(const std::vector<ZoneSpawnZoneData>& spawnZoneData);
+	void Reset() { monsterLevel = 1; totalNumberOfSpawnedNPCs = 0; totalNumberOfSpawnedMonsters = 0; }
+
+	// Getters && Setters
+	int GetMonsterLevel() { return monsterLevel; }
+	void SetMonsterLevel(int value) { monsterLevel = value; }
 
 private:
-	EnemySpawnManager() { Start(); }
+	EnemySpawnManager() {}
 	~EnemySpawnManager() {}
 	EnemySpawnManager(EnemySpawnManager const&) = delete;
 	void operator=(EnemySpawnManager const&) = delete;

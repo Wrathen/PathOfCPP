@@ -2,7 +2,6 @@
 #include "GameManager.h"
 #include "EntityManager.h"
 #include "UIManager.h"
-#include "SceneManager.h"
 #include "../Miscellaneous/Mouse.h"
 
 void InputManager::Update() {
@@ -34,12 +33,6 @@ void InputManager::OnKeyDown(SDL_Keycode keycode) {
 	switch (keycode) {
 		case SDLK_ESCAPE:
 			GAME.Quit();
-			break;
-		case SDLK_1:
-			SceneMgr.ChangeScene("Town");
-			break;
-		case SDLK_2:
-			SceneMgr.ChangeScene("Forest");
 			break;
 		case SDLK_w:
 			player->transform.velocity.y -= 1;

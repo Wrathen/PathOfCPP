@@ -3,25 +3,45 @@
 
 Zone::Zone(json data) {
 	// Parse general information about the Zone from the JSON.
-	generalData = { data["General"]["Name"], data["General"]["MonsterLevel"] };
+	generalData = { data["General"]["Name"],
+			data["General"]["MonsterLevel"],
+			Vector2(data["General"]["PlayerSpawnPosition"]["x"], data["General"]["PlayerSpawnPosition"]["y"]) };
 	bgData = { data["BGData"]["Path"] };
 
-	// Parse each collider data from the JSON.
+	// Parse each Collider data from the JSON.
 	auto colliderCount = data["ColliderData"].size();
 	for (int i = 0; i < colliderCount; ++i) {
-		auto col = data["ColliderData"][i];
+		auto& col = data["ColliderData"][i];
 		Vector2 pos = Vector2{ col["PosX"], col["PosY"] };
 
-		colliderData.push_back({pos, col["Width"], col["Height"]});
+		colliderData.push_back({ pos, col["Width"], col["Height"] });
 	}
 
-	// Parse each entity data from the JSON.
+	// Parse each Entity data from the JSON.
 	auto entityCount = data["EntityData"].size();
 	for (int i = 0; i < entityCount; ++i) {
-		auto ent = data["EntityData"][i];
+		auto& ent = data["EntityData"][i];
 		Vector2 pos = Vector2{ ent["PosX"], ent["PosY"] };
 
-		entityData.push_back({ent["ID"], ent["Type"], pos});
+		entityData.push_back({ ent["ID"], ent["Type"], pos });
+	}
+
+	// Parse each Spawn Zone data from the JSON.
+	auto spawnZoneCount = data["SpawnZoneData"].size();
+	for (int i = 0; i < spawnZoneCount; ++i) {
+		auto& sz = data["SpawnZoneData"][i];
+		Vector2 pos = Vector2{ sz["PosX"], sz["PosY"] };
+
+		spawnZoneData.push_back({ pos, sz["Width"], sz["Height"], sz["Amount"] });
+	}
+
+	// Parse each Portal data from the JSON.
+	auto portalCount = data["PortalData"].size();
+	for (int i = 0; i < portalCount; ++i) {
+		auto& p = data["PortalData"][i];
+		Vector2 pos = Vector2{ p["PosX"], p["PosY"] };
+
+		portalData.push_back({ pos, p["Width"], p["Height"], p["NextZone"] });
 	}
 }
 

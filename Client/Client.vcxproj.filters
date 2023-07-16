@@ -147,6 +147,7 @@
     <ClInclude Include="src\UI\FPSBar.h" />
     <ClInclude Include="src\UI\SceneTitleBar.h" />
     <ClInclude Include="src\Game\Zone\Zone.h" />
+    <ClInclude Include="src\Entities\NPCs\Portal.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -200,6 +201,7 @@
     <ClCompile Include="src\UI\FPSBar.cpp" />
     <ClCompile Include="src\UI\SceneTitleBar.cpp" />
     <ClCompile Include="src\Game\Zone\Zone.cpp" />
+    <ClCompile Include="src\Entities\NPCs\Portal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\ToDoList.txt" />

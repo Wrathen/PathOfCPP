@@ -4,6 +4,7 @@
 #include "../Components/Stats.h"
 #include "../Components/HealthBar.h"
 #include "../Components/Animator.h"
+#include "../Components/Collision/BoxCollider.h"
 #include "../Miscellaneous/Timer.h"
 
 class Player : public Entity {
@@ -13,6 +14,7 @@ public:
     Health* CHealth;
     HealthBar* CHealthBar;
     Animator* CAnimator;
+    BoxCollider* CCollider;
 
     // Other Members
     TextRenderer nameTag;

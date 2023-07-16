@@ -1,7 +1,11 @@
 {
     "General": {
         "Name": "Empty Zone",
-        "MonsterLevel": 1
+        "MonsterLevel": 1,
+        "PlayerSpawnPosition": {
+            "x": 0,
+            "y": 0
+        }
     },
     "BGData": {
         "Path": "assets/sprites/nosprite.png"

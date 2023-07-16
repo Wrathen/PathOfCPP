@@ -11,19 +11,19 @@ void NPC::Start() {
 
 	// Name Tag
 	nameTag.AssignTransform(&transform);
-	nameTag.SetText(name, SDL_Color{ 0, 0, 0 });
+	nameTag.SetText(name, SDL_Color{ 255, 255, 255 });
 	nameTag.SetOffset(0, -75);
 	nameTag.SetFontSize(10);
 	nameTag.shouldDrawCentered = true;
 }
 void NPC::Update() {
 	float distanceToPlayer = Vector2::DistanceBetween(GAME.GetPlayer()->transform.GetPosition(), transform.GetPosition());
-	if (!isPlayerNearby && distanceToPlayer < 60) {
+	if (!isPlayerNearby && distanceToPlayer < nearbyThreshold) {
 		//GAME.DrawRect(transform.GetScreenPosition() - Vector2(50, 50), 100, 100);
 		isPlayerNearby = true;
 		OnPlayerNearby();
 	}
-	else if (isPlayerNearby && distanceToPlayer > 60) {
+	else if (isPlayerNearby && distanceToPlayer > nearbyThreshold) {
 		isPlayerNearby = false;
 		OnPlayerAway();
 	}

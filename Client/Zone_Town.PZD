@@ -1,7 +1,11 @@
 {
     "General": {
         "Name": "Town",
-        "MonsterLevel": 1
+        "MonsterLevel": 1,
+        "PlayerSpawnPosition": {
+            "x": 55,
+            "y": 55
+        }
     },
     "BGData": {
         "Path": "assets/ZoneBG_Town.png"

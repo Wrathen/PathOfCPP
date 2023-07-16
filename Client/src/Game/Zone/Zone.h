@@ -11,6 +11,7 @@ using json = nlohmann::json;
 	struct ZoneGeneralData {
 		std::string name;
 		int monsterLevel;
+		Vector2 playerSpawnPosition;
 	};
 	struct ZoneBackgroundData {
 		std::string bgPath;
@@ -24,6 +25,15 @@ using json = nlohmann::json;
 		uint32_t type;
 		Vector2 position;
 	};
+	struct ZoneSpawnZoneData {
+		Vector2 position;
+		uint32_t w, h, amount;
+	};
+	struct ZonePortalData {
+		Vector2 position;
+		uint32_t w, h;
+		std::string nextZone;
+	};
 #pragma endregion
 
 // Represents a Game Map.
@@ -33,6 +43,8 @@ protected:
 	ZoneBackgroundData bgData;
 	std::vector<ZoneColliderData> colliderData;
 	std::vector<ZoneEntityData> entityData;
+	std::vector<ZoneSpawnZoneData> spawnZoneData;
+	std::vector<ZonePortalData> portalData;
 	
 public:
 	// Constructor
@@ -44,6 +56,8 @@ public:
 	const ZoneBackgroundData& GetBackground() const { return bgData; };
 	const std::vector<ZoneColliderData>& GetColliders() const { return colliderData; };
 	const std::vector<ZoneEntityData>& GetEntities() const { return entityData; }
+	const std::vector<ZoneSpawnZoneData>& GetSpawnZones() const { return spawnZoneData; };
+	const std::vector<ZonePortalData>& GetPortals() const { return portalData; }
 	
 	// Static Methods
 	// Reads a JSON Zone save file.

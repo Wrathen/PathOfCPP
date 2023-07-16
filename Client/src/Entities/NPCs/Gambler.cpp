@@ -4,16 +4,14 @@
 #include "../../Game/Item/Item.h"
 #include "../../Miscellaneous/Random.h"
 
-Gambler::Gambler(std::string name) :
-	NPC("assets/sprites/monsters/111.png", "Gambler " + name) 
-{
+Gambler::Gambler(std::string name): NPC("assets/sprites/monsters/111.png", "Gambler " + name) {
 	renderer.SetScale(0.05f, 0.05f);
 }
 
 void Gambler::Update() {
 	Super::Update();
 
-	if (isPlayerNearby && InputMgr.IsKeyPressed(SDLK_e))
+	if (IsPlayerNearby() && InputMgr.IsKeyPressed(SDLK_e))
 		PurchaseRandomItem();
 }
 
@@ -23,7 +21,7 @@ void Gambler::OnPlayerAway() {}
 void Gambler::PurchaseRandomItem() {
 	auto player = GAME.GetPlayer();
 
-	if (player->goldAmount > 10) {
+	if (true/*player->goldAmount >= 0*/) {
 		Item::DropItem(RandomInt(300), player->transform.GetPosition() + Vector2::RandomVector(-150, 150));
 		player->goldAmount -= 10;
 	}

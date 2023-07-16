@@ -46,7 +46,7 @@ void Projectile::Update() {
 bool Projectile::CheckIfTooFarAway() {
 	auto screenPos = transform.GetScreenPosition();
 	bool isFarAway = screenPos.x < -GAME.screenWidth/2 || screenPos.x > 3*GAME.screenWidth/2
-				  || screenPos.y < -GAME.screenHeight/2 || screenPos.y > 3*GAME.screenHeight/2;
+				  || screenPos.y < -GAME.screenWidth/2 || screenPos.y > 3*GAME.screenHeight/2;
 	return isFarAway;
 }
 void Projectile::CheckLifetime() {
@@ -58,6 +58,8 @@ void Projectile::CheckCollisions() {
 	auto& allEntities = CollisionMgr.spatialHash.Query(myPos.x, myPos.y, 2, 2);
 
 	for (auto& entity : allEntities) {
+		// Dont hit instigator. :^)
+		if (entity == source) continue;
 		if (entity->isToBeDeleted) {
 			CollisionMgr.spatialHash.Remove(entity);
 			continue;

@@ -5,17 +5,16 @@
 <--- To-Do List: --->
 ---------------------
 Tools:
-	[ ] Zone Maker Tool (JavaScript)
-	[ ] Zone Serialization (will be done in JS)
+	[x] Zone Maker Tool (JavaScript)
+	[x] Zone Serialization (will be done in JS)
 	[x] Zone Deserialization
-	[ ] Zone Structure Enhancements
+	[x] Zone Structure Enhancements
 
 Tasks:
 	// @todo Zone deserializing done. ~~
-	// - Check the fullpath issue with Zone ReadFile main.cpp
-	// - need to make a Zone Tool (JS)
-	// - deserializing is done but we need to implement
-	//   methods in SceneManager and use the Zone Data.
+		- Implement Static Box Colliders
+		- Implement SpawnZones
+		- Fix Position issues with Entities.
 
 Managers:
 	[x] Font Manager
@@ -23,14 +22,14 @@ Managers:
 Scene System:
 	[x] Town
 	[x] Changing Scenes
-	[ ] Instance Portals
+	[x] Instance Portals
 
 Instance System:
 	[ ] Create new, enter existing one
 	[ ] Loot Generation
 	[ ] Instance Generation
-	[ ] Enemy Generation
-	[ ] Power ups
+	[x] Enemy Generation
+	[x] Power ups
 
 Gameplay Systems:  
 	[x] Basic UI
@@ -38,28 +37,34 @@ Gameplay Systems:
 	[ ] Inventory
 	[ ] Equipment
 	[ ] Talents
-	[ ] Player Death, Damage (instead of oneshotting)
+	[x] Player Death, Damage (instead of oneshotting)
 	[ ] Explosions, Particles
+	[ ] General Sound ~~ Ambience/BGMusic and SFX
 
 NPC:
 	[ ] On Nearby Visuals
-	[ ] On Nearby Interaction
+	[x] On Nearby Interaction
 
 Gambler NPC:
 	[ ] Character Model
 	[ ] UI Panel
+	[ ] On Nearby Visuals
+	[x] On Nearby Interaction
 
 Merchant NPC:
 	[ ] Character Model
 	[ ] UI Panel
+	[ ] On Nearby Visuals
+	[ ] On Nearby Interaction
 
 Blacksmith NPC:
 	[ ] Character Model
 	[ ] UI Panel
+	[ ] On Nearby Visuals
+	[ ] On Nearby Interaction
 
 Miscellaneous:
 	[ ] Save & Load System
-	[ ] Animations
+	[x] Animations
 	[ ] Boss Enemies
 	[ ] Cursor
-	[ ] Sound, Music, Ambience

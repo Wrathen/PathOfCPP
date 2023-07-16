@@ -5,6 +5,7 @@ class ZoneGeneralData {
     constructor(ZoneName = "Unnamed Zone") {
         this.name = ZoneName;
         this.monsterLevel = 1;
+        this.playerSpawnPosition = { "x": 0, "y": 0 };
     }
 
     import(data) {
@@ -12,7 +13,7 @@ class ZoneGeneralData {
         this.monsterLevel = data.MonsterLevel;
     }
     export() {
-        return { "Name": this.name, "MonsterLevel": this.monsterLevel };
+        return { "Name": this.name, "MonsterLevel": this.monsterLevel, "PlayerSpawnPosition": this.playerSpawnPosition };
     }
 }
 class ZoneBackgroundData {

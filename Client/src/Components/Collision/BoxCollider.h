@@ -3,13 +3,15 @@
 
 class BoxCollider: public Collider {
 public:
-	int w = 0;
-	int h = 0;
-	int xOffset = 0;
-	int yOffset = 0;
+	int w = 16;
+	int h = 16;
 
-	void SetProperties(int _w, int _h, int _xOffset = 0, int _yOffset = 0);
-
+	// Setters and Getters
+	void SetWidth(int _w);
+	void SetHeight(int _h);
+	Rect GetBoundaries();
+	
+	// Main Functions
 	bool Intersects(const BoxCollider& other) const;
 	void OnCollisionEnter(Collider* other) override;
 };

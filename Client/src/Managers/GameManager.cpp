@@ -149,13 +149,10 @@ void GameManager::PauseGame(bool value) { isGamePaused = value; }
 // Utility Functions
 Player* GameManager::GetPlayer() const { return player; }
 int GameManager::GetFPS() const { return 1000.0f / Time::deltaTime; }
-void GameManager::DrawRect(int x, int y, int w, int h) {
-	SDL_Rect rect;
-	rect.x = x;
-	rect.y = y;
-	rect.w = w;
-	rect.h = h;
-	SDL_SetRenderDrawColor(MainRenderer.renderer, 0, 255, 0, 255);
+void GameManager::DrawRect(int x, int y, int w, int h, SDL_Color color) {
+	SDL_Rect rect{ x, y, w, h };
+	SDL_SetRenderDrawColor(MainRenderer.renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderDrawRect(MainRenderer.renderer, &rect);
 }
-void GameManager::DrawRect(Vector2 pos, int w, int h) { DrawRect(pos.x, pos.y, w, h); }
+void GameManager::DrawRect(Vector2 pos, int w, int h, SDL_Color color) { DrawRect(pos.x, pos.y, w, h, color); }
+void GameManager::DrawRect(Rect rect, SDL_Color color) { DrawRect(rect.x, rect.y, rect.w, rect.h, color); }

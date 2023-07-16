@@ -6,10 +6,11 @@
 #include "../Entities/Player.h"
 
 #define GAME GameManager::GetInstance()
-class GameManager: public Singleton<GameManager> { friend Singleton;
+class GameManager: public Singleton<GameManager> {
+	friend Singleton;
 public:
 	Player* player = nullptr;
-	SDL_Event event {};
+	SDL_Event event{};
 
 	int screenWidth = 1920;
 	int screenHeight = 1080;
@@ -28,8 +29,9 @@ public:
 	// Utility Functions
 	Player* GetPlayer() const;
 	int GetFPS() const;
-	void DrawRect(int x, int y, int w, int h);
-	void DrawRect(Vector2 pos, int w, int h);
+	void DrawRect(int x, int y, int w, int h, SDL_Color color = { 0, 255, 0 });
+	void DrawRect(Vector2 pos, int w, int h, SDL_Color color = { 0, 255, 0 });
+	void DrawRect(Rect rect, SDL_Color color = { 0, 255, 0 });
 
 private:
 	GameManager() {}

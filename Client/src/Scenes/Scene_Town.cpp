@@ -2,7 +2,7 @@
 #include "../Managers/GameManager.h"
 #include "../Managers/InputManager.h"
 
-Scene_Town::Scene_Town() : Scene("Zone_Town.PZD") {}
+Scene_Town::Scene_Town(): Scene("Zone_Town.PZD") {}
 
 void Scene_Town::Start() { Super::Start(); }
 void Scene_Town::Update() {

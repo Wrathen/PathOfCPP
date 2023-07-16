@@ -108,8 +108,8 @@ std::string Equipment::GetName() { return name; }
 std::string Equipment::GetDescription() { return description; }
 std::string Equipment::GetModsText() {
 	std::string text;
-	auto prefixes = stats.GetPrefixes();
-	auto suffixes = stats.GetSuffixes();
+	auto& prefixes = stats.GetPrefixes();
+	auto& suffixes = stats.GetSuffixes();
 
 	for (auto& prefix: prefixes)
 		text += std::regex_replace(prefix.name, std::regex("#"), std::to_string((int)prefix.value)) + "\n";

@@ -391,6 +391,7 @@ function moveSelectionMenuBar() {
   }
 }
 function cookBackground() {
+  console.log(width + "," + height);
   cookingModeEnabled = true;
   zoom = 1.0;
   cameraOffsetScaled = [0, 0];
