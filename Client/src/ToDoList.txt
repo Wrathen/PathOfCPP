@@ -11,7 +11,7 @@ Tools:
 	[x] Zone Structure Enhancements
 
 Tasks:
-	- Explosions!!
+	- LEGENDARY ITEMS!! POGIES! vfx for legendary items.
 	- Fix Position issues with everything. maybe we could just offset all positions before exporting within zonetool.
 
 Managers:

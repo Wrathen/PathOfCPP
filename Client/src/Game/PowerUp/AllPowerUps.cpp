@@ -51,9 +51,9 @@ void PowerUp::InitAllPowerUps() {
 
 		new PowerUp{ "Healthy Diet",
 		"Increases Maximum Health by 27%",
-		[] { 
+		[] {
 			auto CHealth = GAME.GetPlayer()->CHealth;
-			CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() + 0.27f); 
+			CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() + 0.27f);
 		}},
 
 		new PowerUp{ "Hit two birds, with one stone",
@@ -86,12 +86,17 @@ void PowerUp::InitAllPowerUps() {
 			 auto player = GAME.GetPlayer();
 			 auto playerPos = player->transform.GetScreenPosition();
 			 auto& allNearbyEnemies = CollisionMgr.spatialHash.QueryRange(playerPos.x, playerPos.y, nearbyDistance);
-			 for (auto enemy: allNearbyEnemies) {
-				 // To-Do: Implement Entity Type and query based on type
+			 for (auto enemy : allNearbyEnemies) {
+				 // @todo: Implement Entity Type and query based on type
 				 // Below code is preventing projectiles getting destroyed.
 				 if (enemy->collisionTag == EntityCollisionTag::Friendly) continue;
 				 if (!enemy || enemy->isToBeDeleted) continue;
-				 enemy->GetComponent<Stats>()->dropsEnhancedLoot = true;
+				 
+				 // If the target entity has a Stats component, tag it's enhanced loot boolean to true.
+				 if (Stats* enemyStats = enemy->GetComponent<Stats>())
+					enemyStats->dropsEnhancedLoot = true;
+				 
+				 // Execute OnDeath events on enemy.
 				 enemy->OnDeath();
 			 }
 		}},

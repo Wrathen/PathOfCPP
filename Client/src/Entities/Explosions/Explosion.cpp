@@ -1,5 +1,4 @@
 #include "Explosion.h"
-#include "../../Managers/GameManager.h"
 
 // Constructor & Deconstructor
 Explosion::Explosion(float _lifeTime): lifeTime(_lifeTime), Entity("assets/VFX/Explosion.png", "UnnamedExplosion") { Start(); }
@@ -10,6 +9,9 @@ Explosion::~Explosion() {
 
 // Base Functions
 void Explosion::Start() {
+	// Set up collision tag to Friendly so we don't get destroyed with Powerups, LUL.
+	collisionTag = EntityCollisionTag::Friendly;
+
 	// Reset timer
 	timer.Reset();
 

@@ -192,7 +192,7 @@ void Player::FUN_Headhunter() {
 			CStats->SetMoveSpeed(CStats->GetMoveSpeed() * 1.05f);
 			break;
 		case 2:
-			if (CStats->GetProjectileSpeed() > 300) return;
+			if (CStats->GetProjectileSpeed() > 250) return;
 			CStats->SetProjectileSpeed(CStats->GetProjectileSpeed() * 1.05f);
 			break;
 		case 3:
@@ -200,6 +200,7 @@ void Player::FUN_Headhunter() {
 			CStats->SetAttackSpeed(CStats->GetAttackSpeed() * 0.95f);
 			break;
 		case 4:
+			if (CHealth->GetHealthMultiplier() > 100.0f) return;
 			CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() * 1.25f);
 			break;
 		case 5:

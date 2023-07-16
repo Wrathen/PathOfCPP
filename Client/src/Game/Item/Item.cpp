@@ -13,6 +13,5 @@ Item* Item::CreateRandomItem(int itemLevel) {
 	return nullptr;
 }
 void Item::DropItem(int itemLevel, Vector2 pos) {
-	LootableItem* loot = new LootableItem(CreateRandomItem(itemLevel));
-	loot->transform.SetPosition(pos);
+	LootableItem* loot = new LootableItem(CreateRandomItem(itemLevel), pos);
 }

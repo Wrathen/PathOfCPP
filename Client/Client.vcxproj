@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Entities\Beam\Beam.h" />
     <ClInclude Include="src\Entities\Explosions\Explosion.h" />
     <ClInclude Include="src\Scenes\Scene_DefiledCathedral.h" />
     <ClInclude Include="src\Entities\NPCs\Portal.h" />
@@ -311,6 +312,7 @@
     <ClInclude Include="src\Game\Zone\Zone.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Entities\Beam\Beam.cpp" />
     <ClCompile Include="src\Entities\Explosions\Explosion.cpp" />
     <ClCompile Include="src\Scenes\Scene_DefiledCathedral.cpp" />
     <ClCompile Include="src\Entities\NPCs\Portal.cpp" />
