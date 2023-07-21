@@ -3,13 +3,18 @@
 #include "../../Managers/GameManager.h"
 #include "../../Managers/CollisionManager.h"
 
-#define NUMBER_OF_POWERUPS 31
+#define NUMBER_OF_POWERUPS 32
 static PowerUp* allPowerUps[NUMBER_OF_POWERUPS];
 
 #define stats GAME.GetPlayer()->CStats
 // Static Function
 void PowerUp::InitAllPowerUps() {
-	PowerUp* tempArray[] = { new PowerUp{ "Double Shot",
+	PowerUp* tempArray[] = { 
+		new PowerUp { "Magic Finding", 
+		"Increases Item Quantity by 10%.\nIncreases Item Rarity by 15%.",
+		[] { stats->increasedItemQuantity += 0.1f; stats->increasedItemRarity += 0.15f; }},
+
+		new PowerUp{ "Double Shot",
 		"Doubles the amount of\n projectiles you fire.",
 		[] { stats->numberOfProjectileMultiplier *= 2.0f; } },
 

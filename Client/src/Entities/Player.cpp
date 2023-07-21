@@ -177,8 +177,8 @@ void Player::LevelUp() {
 // HH nerfs in this patch. Sadge
 // Let's have a headhunter in Path of CPP cuz I can't afford it in league LMAO
 void Player::FUN_Headhunter() {
-	int hhChance = 25;
-	bool shouldStealBuff = RandomInt(100) < hhChance;
+	float hhChance = CStats->GetHHChance() + CStats->GetReplicaHHChance();
+	bool shouldStealBuff = hhChance > RandomFloat(1.0f);
 	if (!shouldStealBuff) return;
 
 	int rnd = RandomInt(6);

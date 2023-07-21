@@ -25,7 +25,7 @@ public:
     // Other Members
     TextRenderer nameTag;
     MonsterRarity rarity = MonsterRarity::Common;
-    float lootChance = 0.12f;
+    float lootChance = 4.12f;
 
     // Base Functions
     void Start() override;

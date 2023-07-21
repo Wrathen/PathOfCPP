@@ -11,7 +11,7 @@ Gambler::Gambler(std::string name): NPC("assets/sprites/monsters/111.png", "Gamb
 void Gambler::Update() {
 	Super::Update();
 
-	if (IsPlayerNearby() && InputMgr.IsKeyPressed(SDLK_e))
+	if (IsPlayerNearby() && InputMgr.IsKeyHeld(SDLK_e))
 		PurchaseRandomItem();
 }
 

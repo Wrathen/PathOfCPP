@@ -44,6 +44,8 @@ public:
 	// Power-Up Modifiers
 	static float enemySpawnRateMultiplier;
 	static float nonBossEnemyDamageMultiplier;
+	float increasedItemQuantity = 1.0f;
+	float increasedItemRarity = 1.0f;
 	float numberOfProjectileMultiplier = 1.0f;
 	float leech = 0.0f;
 	float strengthMultiplier = 1.0f;
@@ -79,7 +81,8 @@ public:
 
 	// Power-up Modifier Functions
 	float inline GetLeech() const { return leech; }
-	float inline GetLuck() const { return luck; }
+	float inline GetIIQ() const { return increasedItemQuantity; }
+	float inline GetIIR() const { return increasedItemRarity; }
 	float inline GetChanceToDoubleLoot() const { return chanceToGetDoubleLoot; }
 	bool inline HasCoinMagnet() const { return hasCoinMagnet; } // To:Do
 	float inline GetCoinMagnetArea() const { return coinMagnetArea; } // To:Do

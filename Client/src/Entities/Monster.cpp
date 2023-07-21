@@ -62,7 +62,7 @@ void Monster::Render() {
 void Monster::OnDeath() {
 	// Retrieve various stats and information.
 	Stats* playerStats = GAME.GetPlayer()->CStats;
-	float playerLuck = playerStats->GetLuck();
+	float playerLuck = playerStats->GetIIR();
 	float playerChanceDoubleLoot = playerStats->GetChanceToDoubleLoot();
 	int monsterLevel = CStats->GetLevel();
 
@@ -74,12 +74,19 @@ void Monster::OnDeath() {
 
 	// Multiply Loot Chance with Player's luck.
 	lootChance *= playerLuck;
+	
+	// Calculate the number of items to drop.
+	int numberOfItemsToDrop = (int)(lootChance / 1.0f);// + (> RandomFloat(1.0f) ? 1: 0);
+	float remainingLootChance = lootChance - numberOfItemsToDrop;
+	numberOfItemsToDrop += remainingLootChance > RandomFloat(1.0f) ? 1: 0;
+
+	// If the player hit the jackpot, lets double their loot amount.
+	if (playerChanceDoubleLoot > RandomFloat(1.0f))
+		numberOfItemsToDrop *= 2.0f;
 
 	// Drop Items, poggies!
-	if (lootChance > RandomFloat(1.0f))
-		Item::DropItem(monsterLevel, transform.GetPosition() + RandomVector(3.0f));
-	if (playerChanceDoubleLoot > RandomFloat(1.0f))
-		Item::DropItem(monsterLevel, transform.GetPosition() + RandomVector(3.0f));
+	for (; numberOfItemsToDrop >= 0; --numberOfItemsToDrop)
+		Item::DropItem(monsterLevel, transform.GetPosition() + RandomVector(25.0f));
 	
 	// Create explosions! Woohoo!!!
 	(new Explosion())->transform.SetPosition(transform.GetPosition());

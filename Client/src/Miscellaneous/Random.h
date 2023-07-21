@@ -5,8 +5,6 @@
 #include "Singleton.h"
 #include "Vector.h"
 
-//#define Rand Random::GetInstance()
-
 class Random : public Singleton<Random> {
 private:
 	static std::mt19937 rng;
@@ -56,3 +54,48 @@ template <typename T>
 static T RandomEnum(T count) {
 	return static_cast<T>(RandomInt((int)count));
 }
+
+// <------------------------------------------------->
+// <--------------- Weighted Random ----------------->
+// <------------------------------------------------->
+template <typename T>
+class WeightedRandom {
+	std::vector<T> items;
+	std::vector<uint32_t> weights;
+	uint32_t maxWeight = 0;
+	uint32_t totalWeight = 0;
+
+public:
+	T& GetRandom() {
+		int randomWeight = RandomInt(totalWeight);
+		for (int i = 0; i < weights.size(); ++i) {
+			randomWeight -= weights[i];
+			if (randomWeight < 1)
+				return items[i];
+		}
+	}
+
+	// Object Based
+	void Add(T item, uint32_t weight) {
+		// Update Total & Max Weights
+		totalWeight += weight;
+		if (weight > maxWeight)
+			maxWeight = weight;
+
+		// Add the item and weight into the table.
+		items.push_back(item);
+		weights.push_back(weight);
+	}
+
+	// Reference based
+	void Add(T& item, uint32_t weight) {
+		// Update Total & Max Weights
+		totalWeight += weight;
+		if (weight > maxWeight)
+			maxWeight = weight;
+
+		// Add the item and weight into the table.
+		items.push_back(item);
+		weights.push_back(weight);
+	}
+};
