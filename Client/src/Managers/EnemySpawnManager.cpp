@@ -17,10 +17,10 @@ void EnemySpawnManager::AddNPCs(const std::vector<ZoneEntityData>& entityData) {
 void EnemySpawnManager::AddSpawnZones(const std::vector<ZoneSpawnZoneData>& spawnZoneData) {
 	spawnZones = spawnZoneData;
 	// @todo this should be a stat of zones. think like map multipliers.
-	int monsterMultiplier = 2;
+	uint32_t monsterMultiplier = 2;
 
 	for (const ZoneSpawnZoneData& spawnZone : spawnZones)
-		for (int i = 0; i < spawnZone.amount * monsterMultiplier; ++i)
+		for (uint32_t i = 0; i < spawnZone.amount * monsterMultiplier; ++i)
 			SpawnMonsterInZone(spawnZone);
 }
 

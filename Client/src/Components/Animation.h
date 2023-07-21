@@ -8,7 +8,7 @@ class Animation {
 public:
     std::string name = "Idle";
     int lengthMS = 333;
-    int speedMultiplier = 1.0f;
+    float speedMultiplier = 1.0f;
 
     int spriteWidth = 32;
     int spriteHeight = 32;

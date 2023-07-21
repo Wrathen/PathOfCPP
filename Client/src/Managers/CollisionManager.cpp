@@ -21,7 +21,7 @@ void CollisionManager::Update() {
 	Collection::Update();
 	ResetSpatialHash();
 
-	for (int i = 0; i < staticColliders.size(); ++i) {
+	for (size_t i = 0; i < staticColliders.size(); ++i) {
 		auto& col = staticColliders[i];
 		//GAME.DrawRect(col.position - Vector2{ 2000, 2000 } - Camera.GetPosition(), col.w, col.h, {0, 255, 0});
 	}
@@ -30,7 +30,7 @@ void CollisionManager::Update() {
 // @todo Will use SpatialHash soon instead of this bruteforce approach
 // @todo clear out all -2000's from the codebase.
 bool CollisionManager::IsPositionMovable(const Rect& rect) {
-	for (int i = 0; i < staticColliders.size(); ++i) {
+	for (size_t i = 0; i < staticColliders.size(); ++i) {
 		auto& col = staticColliders[i];
 		if (Rect::IntersectsRect(col.position.x - 2000, col.position.y - 2000, col.w, col.h, rect.x, rect.y, rect.w, rect.h)) {
 			//GAME.DrawRect(col.position - Vector2{2000, 2000}, col.w, col.h);

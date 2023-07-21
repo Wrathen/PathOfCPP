@@ -10,7 +10,7 @@ Zone::Zone(json data) {
 
 	// Parse each Collider data from the JSON.
 	auto colliderCount = data["ColliderData"].size();
-	for (int i = 0; i < colliderCount; ++i) {
+	for (size_t i = 0; i < colliderCount; ++i) {
 		auto& col = data["ColliderData"][i];
 		Vector2 pos = Vector2{ col["PosX"], col["PosY"] };
 
@@ -19,7 +19,7 @@ Zone::Zone(json data) {
 
 	// Parse each Entity data from the JSON.
 	auto entityCount = data["EntityData"].size();
-	for (int i = 0; i < entityCount; ++i) {
+	for (size_t i = 0; i < entityCount; ++i) {
 		auto& ent = data["EntityData"][i];
 		Vector2 pos = Vector2{ ent["PosX"], ent["PosY"] };
 
@@ -28,7 +28,7 @@ Zone::Zone(json data) {
 
 	// Parse each Spawn Zone data from the JSON.
 	auto spawnZoneCount = data["SpawnZoneData"].size();
-	for (int i = 0; i < spawnZoneCount; ++i) {
+	for (size_t i = 0; i < spawnZoneCount; ++i) {
 		auto& sz = data["SpawnZoneData"][i];
 		Vector2 pos = Vector2{ sz["PosX"], sz["PosY"] };
 
@@ -37,7 +37,7 @@ Zone::Zone(json data) {
 
 	// Parse each Portal data from the JSON.
 	auto portalCount = data["PortalData"].size();
-	for (int i = 0; i < portalCount; ++i) {
+	for (size_t i = 0; i < portalCount; ++i) {
 		auto& p = data["PortalData"][i];
 		Vector2 pos = Vector2{ p["PosX"], p["PosY"] };
 

@@ -2,6 +2,7 @@
 #include <random>
 #include <chrono>
 #include <ctime>
+#include <cassert>
 #include "Singleton.h"
 #include "Vector.h"
 
@@ -66,29 +67,30 @@ class WeightedRandom {
 	uint32_t totalWeight = 0;
 
 public:
-	T& GetRandom() {
+	WeightedRandom() = default;
+	WeightedRandom(std::vector<T> _items, std::vector<uint32_t> _weights) {
+		// Vector sizes have to match.
+		assert(_items.size() == _weights.size());
+		
+		// For each element in the parameter vector, add them into our lists.
+		for (size_t i = 0; i < _items.size(); ++i)
+			Add(_items[i], _weights[i]);
+	}
+
+	T GetRandom() {
 		int randomWeight = RandomInt(totalWeight);
-		for (int i = 0; i < weights.size(); ++i) {
+		for (size_t i = 0; i < weights.size(); ++i) {
 			randomWeight -= weights[i];
 			if (randomWeight < 1)
 				return items[i];
 		}
+
+		// This should never happen.
+		assert(1);
+		return items[0];
 	}
 
-	// Object Based
 	void Add(T item, uint32_t weight) {
-		// Update Total & Max Weights
-		totalWeight += weight;
-		if (weight > maxWeight)
-			maxWeight = weight;
-
-		// Add the item and weight into the table.
-		items.push_back(item);
-		weights.push_back(weight);
-	}
-
-	// Reference based
-	void Add(T& item, uint32_t weight) {
 		// Update Total & Max Weights
 		totalWeight += weight;
 		if (weight > maxWeight)

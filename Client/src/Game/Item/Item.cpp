@@ -7,9 +7,9 @@
 // Static Methods
 Item* Item::CreateRandomItem(int itemLevel) {
 	// Do some weighted random to choose an itemtype.
-	WeightedRandom<int> wr;
-	wr.Add(0, 100); // 0.99% chance for Equipments
-	wr.Add(1, 10000); // 99.01% chance for Currencies
+	WeightedRandom<int> wr ({0, 1}, {100, 10000});
+	//wr.Add(0, 100); // 0.99% chance for Equipments
+	//wr.Add(1, 10000); // 99.01% chance for Currencies
 	ItemType itemType = static_cast<ItemType>(wr.GetRandom());
 
 	// Create an item with the random type and return it.
