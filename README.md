@@ -11,6 +11,13 @@ written in C++ with the initial intend of getting used to the language, using SD
 
 <h2> Video Showcases </h2>
 
+<b>[July 23th 2023]</b> T16 Defiled Cathedral Any% Speedrun :^)
+
+https://youtu.be/PTja8cNuCZQ
+
+<h3>PS:</h3>
+
+```I will no longer be uploading preview videos to GitHub Readme, because they restrict to 10mb's and that heavily affects the quality and FPS of the videos I post. Instead, now on I'll start posting short youtube links (not game-dev diary kinda videos, just short gameplay footages) here.```
 
 <b>[January 26th 2023]</b> Performance Showcase, Projectiles Optimization, Powerups (videos are 30fps due to 10mb restriction on each video by Github)
 
