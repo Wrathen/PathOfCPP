@@ -31,8 +31,9 @@ public:
 	virtual std::string GetModsText() = 0;
 
 	// Static Methods
-	static Item* CreateRandomItem(int itemLevel);
-	static void DropItem(int itemLevel, Vector2 pos);
+	static Item* CreateRandomItem(int itemLevel, unsigned int seed = 0);
+	static void DropItem(Item* item, Vector2 pos);
+	static void DropItem(int itemLevel, Vector2 pos, unsigned int seed = 0);
 
 	// Events
 	// Called when the pointer gets deleted

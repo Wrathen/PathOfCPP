@@ -38,14 +38,14 @@ void Tooltip::Start() {
 	text_description.SetWidth(300);
 	text_description.SetHeight(40);
 	text_description.SetFontSize(18);
-	text_description.SetOffset(10, 230);
+	text_description.SetOffset(10, 270 - text_description.GetHeight());
 	text_description.SetPositionAbsolute();
 }
 void Tooltip::Update() {
 	if (!item) return;
-	static float r = RandomInt(255);
-	static float g = RandomInt(255);
-	static float b = RandomInt(255);
+	static float r = RandomInt(0, 255);
+	static float g = RandomInt(0, 255);
+	static float b = RandomInt(0, 255);
 	static bool rIncreasing = true;
 	static bool gIncreasing = true;
 	static bool bIncreasing = true;

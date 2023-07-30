@@ -1,5 +1,6 @@
 #include "UserInterface.h"
 #include "../Managers/GameManager.h"
+#include "../Managers/InputManager.h"
 
 void UserInterface::Init() {
 	xpBar = new XPBar();
@@ -44,7 +45,7 @@ void UserInterface::ShowInventory() {}
 void UserInterface::ShowEquipment() {}
 void UserInterface::ShowXPBar() { xpBar->SetVisible(true); }
 void UserInterface::ShowGold() { currencyBar->SetVisible(true); }
-void UserInterface::ShowPowerUps() { powerUpGroup->SetVisible(true); }
+void UserInterface::ShowPowerUps() { InputMgr.DisableMouse(0.5f); powerUpGroup->SetVisible(true); }
 
 void UserInterface::HideTooltip() { tooltip->SetVisible(false); }
 void UserInterface::HideInventory() {}

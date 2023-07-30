@@ -4,6 +4,8 @@
 
 class SpriteRenderer { friend class Renderer;
 public:
+	typedef SpriteRenderer Super;
+
 	Transform* transform = nullptr;
 	SDL_Texture* tex = nullptr;
 
@@ -32,7 +34,7 @@ public:
 	void SetPositionRelative();
 	void SetColor(int r, int g, int b);
 
-	void Render();
+	virtual void Render();
 
 	// Setters
 	void SetSourceOffset(int x, int y);

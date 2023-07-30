@@ -28,8 +28,8 @@ public:
 	void SetRotation(float x) { rotation = x; }
 
 	// Transform Move
-	Vector2 GetDeltaPosition(Vector2 dir, float spd) { return dir * (spd * (Time::deltaTime / 100.0)); }
+	Vector2 GetDeltaPosition(Vector2 dir, float spd) { return dir * (spd * Time::deltaTime); }
 	Vector2 GetPositionNextFrame(Vector2 dir, float spd) { return position + GetDeltaPosition(dir, spd); }
 	void Move(Vector2 dir, float spd) { position = GetPositionNextFrame(dir, spd); }
-	void Move() { position += velocity * (Time::deltaTime / 100.0); }
+	void Move() { position += velocity * Time::deltaTime; }
 };

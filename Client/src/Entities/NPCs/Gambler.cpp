@@ -22,7 +22,7 @@ void Gambler::PurchaseRandomItem() {
 	auto player = GAME.GetPlayer();
 
 	if (true/*player->goldAmount >= 0*/) {
-		Item::DropItem(RandomInt(300), player->transform.GetPosition() + Vector2::RandomVector(-150, 150));
-		player->goldAmount -= 10;
+		Item::DropItem(RandomInt(1, player->CStats->GetLevel()), player->transform.GetPosition() + RandomVector(150));
+		player->goldAmount -= 17;
 	}
 }

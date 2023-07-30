@@ -73,10 +73,10 @@ Equipment::Equipment(EquipmentType _equipmentType): Equipment() {
 				    equipmentType == EquipmentType::Ring ? GetRandomTexturePath_Ring() :
 				    equipmentType == EquipmentType::Amulet ? GetRandomTexturePath_Amulet(): "";
 
-	bool containsPrefix = RandomInt(100) > 80;
-	bool containsAffix = RandomInt(100) > 40;
-	name = (containsPrefix ? namePrefixes[RandomInt(19)] + " ": "") + 
-		   names[(int)equipmentType] + (containsAffix ? " " + nameAffixes[RandomInt(24)]: "");
+	bool containsPrefix = RandomInt(0, 100) > 80;
+	bool containsAffix = RandomInt(0, 100) > 40;
+	name = (containsPrefix ? namePrefixes[RandomInt(0, 19)] + " ": "") +
+		   names[(int)equipmentType] + (containsAffix ? " " + nameAffixes[RandomInt(0, 24)]: "");
 }
 
 // Static Functions
@@ -91,7 +91,8 @@ Equipment* Equipment::CreateRandomEquipment(int itemLevel) {
 							itemRarity == ItemRarity::Rare ? "Seeking more, MORE!":
 							itemRarity == ItemRarity::Legendary ? "Wow! This might be one of\n it's kind.":
 							itemRarity == ItemRarity::Artifact ? "Still sane exile?": "A worthy equipment for the filthy.";
-	equipment->stats.Randomize((float)itemLevel, (int)itemRarity + 1, (int)itemRarity, ((int)itemRarity * 0.67f) + 1.0f);
+
+	equipment->stats.Randomize((float)itemLevel, (int)itemRarity, (int)itemRarity, ((int)itemRarity * 0.67f) + 1.0f);
 
 	return equipment;
 }

@@ -9,6 +9,7 @@
 #include "../Managers/SceneManager.h"
 #include "../Managers/CollisionManager.h"
 #include "../Managers/CameraManager.h"
+#include "../Managers/InputManager.h"
 
 Player::Player(std::string name): Entity("assets/sprites/player.png", name) {
 	isToBeDeletedOnSceneChange = false;
@@ -34,8 +35,8 @@ void Player::Start() {
 
 	// Stats Component
 	CStats = AddComponent<Stats>();
-	CStats->SetMoveSpeed(25.0f);
-	CStats->SetProjectileSpeed(80);
+	CStats->SetMoveSpeed(300.0f);
+	CStats->SetProjectileSpeed(600.0f);
 	CStats->SetNumberOfProjectiles(1);
 	CStats->SetAttackSpeed(0.3f);
 
@@ -68,6 +69,7 @@ void Player::Start() {
 	nameTag.shouldDrawCentered = true;
 }
 void Player::Update() {
+	CHEAT_Codes();
 	CAnimator->Update();
 
 	// Flip the character based on mouse position.
@@ -75,21 +77,12 @@ void Player::Update() {
 	Vector2 playerPos = transform.GetScreenPosition();
 	renderer.isFlipped = mousePos.x > playerPos.x;
 
-	// @TODO, debug only stuff, delete these
-	const auto& b = CCollider->GetBoundaries();
-	GAME.DrawRect(transform.GetPosition() - Camera.GetPosition() - Vector2(b.w / 2, b.h / 2), b.w, b.h);
-	
 	// Shoot
 	if (CStats->GetAttackingState() && attackTimer.GetTimeMS() > (CStats->GetAttackSpeed() * 1000)) {
 		CAnimator->Play("Attack", true);
 		ShootArrow(mousePos);
 		attackTimer.Reset();
 	}
-
-	// @todo delete this debug-only
-	//std::string posX = std::stof(transform.GetPosition().x);
-	std::string pos = std::to_string(transform.GetPosition().x) + ", " + std::to_string(transform.GetPosition().y);
-	nameTag.SetText(pos, { 255, 255, 255 });
 
 	// Move and Update Animator States.
 	Vector2 velocityNormalized = transform.velocity.Normalize();
@@ -127,7 +120,7 @@ void Player::ShootArrow(const Vector2& targetPos) {
 	float mainRotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
 
 	// used to be 1.30895833f or PI/2.4 = ~75 degrees spread.
-	float spreadDistance = (3.1415f * CStats->GetProjectileSpread()) / numberOfProjectiles;
+	float spreadDistance = (3.1415f * 2 * CStats->GetProjectileSpread()) / numberOfProjectiles;
 	bool isEven = numberOfProjectiles % 2 == 0;
 
 	Projectile* lastInstantiatedProjectile = nullptr;
@@ -155,7 +148,7 @@ void Player::ShootArrow(const Vector2& targetPos) {
 void Player::GainXP(float value) {
 	float xp = CStats->GetXP();
 	float maxXP = CStats->GetMaxXP();
-	xp += RandomFloat(value) * CStats->GetXPMultiplier();
+	xp += RandomFloat(0, value) * CStats->GetXPMultiplier();
 
 	while (xp >= maxXP) {
 		xp -= maxXP;
@@ -178,21 +171,21 @@ void Player::LevelUp() {
 // Let's have a headhunter in Path of CPP cuz I can't afford it in league LMAO
 void Player::FUN_Headhunter() {
 	float hhChance = CStats->GetHHChance() + CStats->GetReplicaHHChance();
-	bool shouldStealBuff = hhChance > RandomFloat(1.0f);
+	bool shouldStealBuff = hhChance > RandomFloat(0, 1.0f);
 	if (!shouldStealBuff) return;
 
-	int rnd = RandomInt(6);
+	int rnd = RandomInt(0, 6);
 	switch (rnd) {
 		case 0:
 			if (CStats->GetSizeMultiplier() > 4.0f) return;
 			CStats->SetSizeMultiplier(CStats->GetSizeMultiplier() * 1.05f);
 			break;
 		case 1:
-			if (CStats->GetMoveSpeed() > 100) return;
+			if (CStats->GetMoveSpeed() > 1500) return;
 			CStats->SetMoveSpeed(CStats->GetMoveSpeed() * 1.05f);
 			break;
 		case 2:
-			if (CStats->GetProjectileSpeed() > 250) return;
+			if (CStats->GetProjectileSpeed() > 2000) return;
 			CStats->SetProjectileSpeed(CStats->GetProjectileSpeed() * 1.05f);
 			break;
 		case 3:
@@ -204,10 +197,18 @@ void Player::FUN_Headhunter() {
 			CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() * 1.25f);
 			break;
 		case 5:
-			if (CStats->GetNumberOfProjectiles() > 10000) return;
+			if (CStats->GetNumberOfProjectiles() > 1000) return;
 			CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
 			break;
 	}
+}
+
+void Player::CHEAT_Codes() {
+	// Cheat Stuff, hehe
+	if (InputMgr.IsKeyHeld(SDLK_f))
+		CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
+	else if (InputMgr.IsKeyHeld(SDLK_g))
+		CStats->projectileSpreadMultiplier *= 1.001f;
 }
 
 // Events

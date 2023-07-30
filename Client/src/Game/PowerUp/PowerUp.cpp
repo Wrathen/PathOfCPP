@@ -12,6 +12,7 @@ PowerUp::PowerUp(std::string _text, std::string _description, FuncOnPowerUp func
 	isAutomaticRenderingDisabled = true;
 	isToBeDeletedOnSceneChange = false;
 	isBlockingRaycasts = true;
+	isInteractable = true;
 	Start();
 }
 
@@ -74,5 +75,5 @@ bool PowerUp::OnClick() {
 // Static Function
 PowerUp* PowerUp::GetRandom() {
 	constexpr auto size = std::size(allPowerUps);
-	return allPowerUps[RandomInt(size)];
+	return allPowerUps[RandomInt(0, size)];
 }

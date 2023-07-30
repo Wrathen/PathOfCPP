@@ -21,16 +21,16 @@ Monster::~Monster() {
 void Monster::Start() {
 	// General
 	collisionTag = EntityCollisionTag::Hostile;
-	rarity = ((MonsterRarity)RandomInt(4));
+	rarity = RandomEnum(MonsterRarity::Count);
 	transform.SetScale((int)(rarity) * 0.40f + 2, (int)(rarity) * 0.40f + 2);
 
 	// Stats Component
 	CStats = AddComponent<Stats>();
-	CStats->SetMoveSpeed(11.0f - ((int)rarity * 1.67f));
+	CStats->SetMoveSpeed(200.0f - ((int)rarity * 15.67f));
 
 	// Health Component
 	CHealth = AddComponent<Health>();
-	CHealth->SetMaxHealth(10 + RandomInt(((int)rarity * 17.45f)));
+	CHealth->SetMaxHealth(10 + RandomInt(0, ((int)rarity * 17.45f)));
 	CHealth->SetHealth(CHealth->GetMaxHealth());
 
 	// Healthbar Component
@@ -78,10 +78,10 @@ void Monster::OnDeath() {
 	// Calculate the number of items to drop.
 	int numberOfItemsToDrop = (int)(lootChance / 1.0f);// + (> RandomFloat(1.0f) ? 1: 0);
 	float remainingLootChance = lootChance - numberOfItemsToDrop;
-	numberOfItemsToDrop += remainingLootChance > RandomFloat(1.0f) ? 1: 0;
+	numberOfItemsToDrop += remainingLootChance > RandomFloat(0, 1.0f) ? 1: 0;
 
 	// If the player hit the jackpot, lets double their loot amount.
-	if (playerChanceDoubleLoot > RandomFloat(1.0f))
+	if (playerChanceDoubleLoot > RandomFloat(0, 1.0f))
 		numberOfItemsToDrop *= 2.0f;
 
 	// Drop Items, poggies!

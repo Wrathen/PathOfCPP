@@ -136,20 +136,20 @@ const static std::string texturePaths_Ring[] = {
 };
 
 const inline std::string& GetRandomTexturePath_Chest() {
-	return texturePaths_Chest[RandomInt(64)];
+	return texturePaths_Chest[RandomInt(0, 64)];
 }
 const inline std::string& GetRandomTexturePath_Helm() {
-	return texturePaths_Helm[RandomInt(16)];
+	return texturePaths_Helm[RandomInt(0, 16)];
 }
 const inline std::string& GetRandomTexturePath_Cloak() {
-	return texturePaths_Cloak[RandomInt(8)];
+	return texturePaths_Cloak[RandomInt(0, 8)];
 }
 const inline std::string& GetRandomTexturePath_Amulet() {
-	return texturePaths_Amulet[RandomInt(8)];
+	return texturePaths_Amulet[RandomInt(0, 8)];
 }
 const inline std::string& GetRandomTexturePath_Feet() {
-	return texturePaths_Feet[RandomInt(8)];
+	return texturePaths_Feet[RandomInt(0, 8)];
 }
 const inline std::string& GetRandomTexturePath_Ring() {
-	return texturePaths_Ring[RandomInt(8)];
+	return texturePaths_Ring[RandomInt(0, 8)];
 }

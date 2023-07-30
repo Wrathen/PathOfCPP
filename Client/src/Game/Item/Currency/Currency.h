@@ -8,7 +8,7 @@ enum class CurrencyType {
 
 class Currency: public Item {
 public:
-	CurrencyType currencyType;
+	CurrencyType currencyType = CurrencyType::Gold;
 	int amount = 0;
 
 	// Constructors & Deconstructors
@@ -26,5 +26,5 @@ public:
 	virtual void OnUse() override;
 
 	// Static Functions
-	static Currency* CreateRandomCurrency(int itemLevel);
+	static Currency* CreateRandomCurrency(int itemLevel, unsigned int seed = 0);
 };

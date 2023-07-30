@@ -7,9 +7,18 @@
 void InputManager::Update() {
 	Vector2 mousePos = Mouse::GetPosition();
 
+	// If the mouse has moved in the last frame, call the OnMouseMove event.
 	if (lastMousePos.x != mousePos.x || lastMousePos.y != mousePos.y) {
 		lastMousePos = mousePos;
 		OnMouseMove();
+	}
+
+	// Handle disabling mouse events for duration.
+	if (isMouseEventsDisabled) {
+		if (mouseEventsDisableCountdown > 0.0f) 
+			mouseEventsDisableCountdown -= Time::deltaTime;
+		if (mouseEventsDisableCountdown < 0.0f)
+			isMouseEventsDisabled = false;
 	}
 }
 void InputManager::LateUpdate() {
@@ -21,6 +30,11 @@ void InputManager::LateUpdate() {
 
 	pressedKeys.clear();
 	releasedKeys.clear();
+}
+
+void InputManager::DisableMouse(float duration) {
+	mouseEventsDisableCountdown = duration;
+	isMouseEventsDisabled = true;
 }
 
 void InputManager::OnKeyDown(SDL_Keycode keycode) {
@@ -72,6 +86,8 @@ void InputManager::OnKeyUp(SDL_Keycode keycode) {
 }
 
 void InputManager::OnMouseDown() {
+	if (isMouseEventsDisabled) return;
+
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
 	if (player) player->CStats->SetAttackingState(true);
@@ -81,6 +97,8 @@ void InputManager::OnMouseDown() {
 	if (raycast) return;
 }
 void InputManager::OnMouseUp() {
+	if (isMouseEventsDisabled) return;
+
 	// Player Attack State
 	Player* player = GAME.GetPlayer();
 	if (player) player->CStats->SetAttackingState(false);

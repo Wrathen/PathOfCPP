@@ -5,6 +5,7 @@
 // Constructors & Deconstructors
 Currency::Currency() {
 	type = ItemType::Currency;
+	currencyType = CurrencyType::Gold;
 }
 Currency::Currency(CurrencyType _currencyType) : Currency() {
 	// Will notify me that I need to change here when I add more types.
@@ -16,7 +17,7 @@ Currency::Currency(CurrencyType _currencyType) : Currency() {
 	name = _currencyType == CurrencyType::Gold ? "Gold" : "Unnamed Coin";
 }
 
-Currency* Currency::CreateRandomCurrency(int itemLevel) {
+Currency* Currency::CreateRandomCurrency(int itemLevel, unsigned int seed) {
 	CurrencyType currencyType = RandomEnum(CurrencyType::Count);
 	Currency* currency = new Currency(currencyType);
 	currency->amount = itemLevel;

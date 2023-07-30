@@ -42,7 +42,7 @@ public:
 
 	void Randomize(float itemLevel, int prefixCount, int suffixCount, float multiplier) {
 		for (int i = 0; i < prefixCount; ++i) {
-			ItemModifier stat = all_prefixes[RandomInt(4)];
+			ItemModifier stat = all_prefixes[RandomInt(0, 4)];
 			float randomMultiplier = RandomFloat(1.0f, multiplier);
 			bool statAlreadyExists = false;
 
@@ -60,7 +60,7 @@ public:
 			}
 		}
 		for (int i = 0; i < suffixCount; ++i) {
-			ItemModifier stat = all_suffixes[RandomInt(4)];
+			ItemModifier stat = all_suffixes[RandomInt(0, 4)];
 			float randomMultiplier = RandomFloat(1.0f, multiplier);
 			bool statAlreadyExists = false;
 

@@ -59,8 +59,7 @@ void EnemySpawnManager::SpawnMonster(float x, float y) {
 	++totalNumberOfSpawnedMonsters;
 }
 void EnemySpawnManager::SpawnMonsterInZone(const ZoneSpawnZoneData& zone) {
-	int randomOffsetX = RandomFloat(zone.w);
-	int randomOffsetY = RandomFloat(zone.h);
-	SpawnMonster(zone.position.x + randomOffsetX - 2000,
-				 zone.position.y + randomOffsetY - 2000);
+	auto randomOffset = RandomVector(zone.w, zone.h);
+	SpawnMonster(zone.position.x + randomOffset.x - 2000,
+				 zone.position.y + randomOffset.y - 2000);
 }

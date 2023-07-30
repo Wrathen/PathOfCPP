@@ -33,6 +33,7 @@ void Animator::SetSpeed(float multiplier) {
     speedMultiplier = multiplier;
     currentAnimation->speedMultiplier = multiplier;
 }
+
 void Animator::Update() { if (currentAnimation) currentAnimation->Update(); }
 
 // Events
@@ -58,4 +59,13 @@ void Animator::OnAnimationEnded() {
     // Assuming all animators have an 'Idle' animation 
     // attached and it's a looped animation.
     //Play("Idle"); 
+}
+
+
+// Utility Functions
+unsigned int Animator::GetFullCycleLengthInMilliseconds() {
+    int length = currentAnimation->lengthMS;
+    int cellCount = currentAnimation->maxCellX - currentAnimation->minCellX + 
+                    currentAnimation->maxCellY - currentAnimation->minCellY;
+    return length * cellCount;
 }

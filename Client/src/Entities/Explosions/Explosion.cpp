@@ -16,14 +16,12 @@ void Explosion::Start() {
 	timer.Reset();
 
 	// Set render scale.
-	transform.SetScale(3.0f, 3.0f);
+	transform.SetScale(5.0f, 5.0f);
 	
 	// Animator Component
 	CAnimator = AddComponent<Animator>();
 	CAnimator->Add(Animation("Idle", 150, 46, 46, 0, 0, 7, 0, true));
-	
-	// @todo fix this, ~~150 ms per frame times the amount of frames. This shouldn't be like this.
-	lifeTime = 150.0f * 7.0f;
+	lifeTime = CAnimator->GetFullCycleLengthInMilliseconds();
 }
 void Explosion::Update() {
 	// Update Animator

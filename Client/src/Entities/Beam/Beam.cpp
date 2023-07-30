@@ -16,10 +16,7 @@ void Beam::Start() {
 	transform.SetScale(1.0f, 3.0f);
 
 	// Set offset so it looks cooler :^)
-	renderer.SetOffset(0, -((int)renderer.GetHeight()*2));
-
-	// Set centering to false so we end-up getting placed on the lootable item.
-	renderer.shouldDrawCentered = false;
+	renderer.SetOffset(0, -((int)renderer.GetHeight()*1.75f));
 
 	// Animator Component
 	CAnimator = AddComponent<Animator>();

@@ -10,7 +10,8 @@ enum class MonsterRarity {
     Common = 0,
     Magic = 1,
     Rare = 2,
-    Unique = 3
+    Unique = 3,
+    Count = 4
 };
 
 class Monster: public Entity {

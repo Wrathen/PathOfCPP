@@ -5,6 +5,8 @@
 
 class UIElement {
 public:
+	typedef UIElement Super;
+
 	UIElement(std::string texturePath = "assets/sprites/nosprite.png");
 	virtual ~UIElement() {}
 
@@ -12,7 +14,7 @@ public:
 	Transform transform;
 	SpriteRenderer renderer;
 
-	bool isInteractable = true;
+	bool isInteractable = false;
 	bool isToBeDeleted = false;
 	bool isBlockingRaycasts = true;
 	bool isToBeDeletedOnSceneChange = true;

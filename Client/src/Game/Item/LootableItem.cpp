@@ -1,12 +1,17 @@
 #include "LootableItem.h"
 #include "../../UI/UserInterface.h"
 #include "../../Managers/UIManager.h"
+#include "../../Managers/GameManager.h"
 
 // Constructor
 LootableItem::LootableItem(Item* _item, Vector2 pos): item(_item) {
+	// Set interactability to true. So we can hover over & click on dropped items.
+	isInteractable = true;
+
 	// Set Renderer Variables
 	renderer.SetPositionRelative();
 	renderer.AssignTexture(item->texturePath);
+	renderer.shouldDrawCentered = true;
 
 	// Set Transform Position
 	transform.SetPosition(pos);
@@ -19,7 +24,23 @@ LootableItem::LootableItem(Item* _item, Vector2 pos): item(_item) {
 }
 
 // Base Functions
-void LootableItem::Render() { UIElement::Render(); }
+void LootableItem::Update() { 
+	Super::Update();
+	static bool isPlayerNearby = false;
+
+	if (item && item->type == ItemType::Currency) {
+		float distanceToPlayer = Vector2::DistanceBetween(GAME.GetPlayer()->transform.GetPosition(), transform.GetPosition());
+		if (!isPlayerNearby && distanceToPlayer < 60) {
+			isPlayerNearby = true;
+			OnPlayerNearby();
+		}
+		else if (isPlayerNearby && distanceToPlayer > 60) {
+			isPlayerNearby = false;
+			OnPlayerAway();
+		}
+	}
+}
+void LootableItem::Render() { Super::Render(); }
 
 // Main Functions
 void LootableItem::Loot() {
@@ -28,6 +49,8 @@ void LootableItem::Loot() {
 }
 
 // Events
+void LootableItem::OnPlayerNearby() { Loot(); }
+void LootableItem::OnPlayerAway() { }
 bool LootableItem::OnClick() {
 	Loot();
 	return isBlockingRaycasts;

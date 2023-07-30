@@ -86,14 +86,15 @@ void GameManager::Update() {
 			frameTime = timer.GetTimeMS();
 		}
 
-		Time::deltaTime = frameTime;
+		Time::deltaTime = 1 / (1000.0f / frameTime);
 
 		// Debug Stuff
 		if (debugTimer.GetTimeMS() > 1500) {
 			if (debugProfilerMsgEnabled) {
 				std::cout << "<----------------------------------------------------->" << std::endl;
-				std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / Time::deltaTime) +
-					", MS: " + std::to_string(Time::deltaTime)) +
+				std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / frameTime) +
+					", FrameTime: " + std::to_string(frameTime)) +
+					", DeltaTime: " + std::to_string(Time::deltaTime) +
 					", Amount of Entities: " + std::to_string(EntityMgr.GetAll()->size()) +
 					", TotalKilledEnemies: " + std::to_string(GetPlayer()->CStats->totalKills) +
 					", NumberOfProjectiles: " + std::to_string(GetPlayer()->CStats->GetNumberOfProjectiles()) << std::endl;
@@ -148,7 +149,7 @@ void GameManager::PauseGame(bool value) { isGamePaused = value; }
 
 // Utility Functions
 Player* GameManager::GetPlayer() const { return player; }
-int GameManager::GetFPS() const { return 1000.0f / Time::deltaTime; }
+int GameManager::GetFPS() const { return 1.0f / Time::deltaTime; }
 void GameManager::DrawRect(int x, int y, int w, int h, SDL_Color color) {
 	SDL_Rect rect{ x, y, w, h };
 	SDL_SetRenderDrawColor(MainRenderer.renderer, color.r, color.g, color.b, color.a);

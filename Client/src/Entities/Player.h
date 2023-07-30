@@ -36,6 +36,7 @@ public:
     void GainXP(float value);
     void LevelUp();
     void FUN_Headhunter();
+    void CHEAT_Codes();
 
     // Events
     void OnLevelUp();

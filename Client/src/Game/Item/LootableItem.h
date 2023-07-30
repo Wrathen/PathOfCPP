@@ -15,12 +15,15 @@ public:
 	LootableItem(Item* _item, Vector2 pos);
 	
 	// Base Functions
+	void Update() override;
 	void Render() override;
 
 	// Main Functions
 	void Loot();
 
 	// Events
+	void OnPlayerNearby();
+	void OnPlayerAway();
 	bool OnClick() override;
 	void OnDelete() override;
 	void OnMouseEnter() override;

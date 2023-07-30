@@ -21,9 +21,11 @@ public:
     void SetSpeed(float multiplier);
     void Update();
 
+    // Utility Functions
+    unsigned int GetFullCycleLengthInMilliseconds();
+
     // Events
     void OnSpriteChanged();
     void OnAnimationChanged();
     void OnAnimationEnded();
 };
-
