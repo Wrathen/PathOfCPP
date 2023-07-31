@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_gpu.h>
 #include <unordered_map>
 #include "../Miscellaneous/Singleton.h"
 #include "../Miscellaneous/GUID.h"
