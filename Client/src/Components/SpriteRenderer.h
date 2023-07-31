@@ -12,6 +12,9 @@ public:
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 
+	SDL_Color color = {255, 255, 255};
+	SDL_Color shadowColor = {0, 0, 0};
+
 	Vector2 sourceOffset;
 	Vector2 offset;
 	Vector2 localScale{ 1.0f, 1.0f };
@@ -32,7 +35,8 @@ public:
 
 	void SetPositionAbsolute();
 	void SetPositionRelative();
-	void SetColor(int r, int g, int b);
+	void SetColor(SDL_Color _color);
+	void SetShadow(unsigned int _size, SDL_Color _shadowColor);
 
 	virtual void Render();
 
@@ -54,5 +58,9 @@ public:
 	bool GetVisible();
 
 protected:
+	// Shadows, currently used only by TextRenderer.
+	bool isShadowEnabled = false;
+	unsigned int shadowSize = 0;
+
 	virtual void SetSourceAndDestinationRects();
 };

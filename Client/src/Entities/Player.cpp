@@ -63,7 +63,7 @@ void Player::Start() {
 
 	// Name Tag
 	nameTag.AssignTransform(&transform);
-	nameTag.SetText(name, SDL_Color{ 0, 0, 0 });
+	nameTag.SetText(name, SDL_Color{ 255, 255, 255 });
 	nameTag.SetOffset(0, -75);
 	nameTag.SetFontSize(10);
 	nameTag.shouldDrawCentered = true;

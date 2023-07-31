@@ -36,7 +36,7 @@ void SpriteRenderer::AssignTexture(std::string texturePath) {
     UpdateTextureDimensions();
 }
 
-void SpriteRenderer::SetPositionAbsolute() { 
+void SpriteRenderer::SetPositionAbsolute() {
     if (transform) transform->isAbsolutePositioned = true; 
     isAbsolutePositioned = true; 
 }
@@ -44,9 +44,11 @@ void SpriteRenderer::SetPositionRelative() {
     if (transform) transform->isAbsolutePositioned = false;
     isAbsolutePositioned = false; 
 }
-void SpriteRenderer::SetColor(int r, int g, int b) { 
-    if (!tex) return; 
-    SDL_SetTextureColorMod(tex, r, g, b);
+void SpriteRenderer::SetColor(SDL_Color _color) { color = _color; }
+void SpriteRenderer::SetShadow(unsigned int _size, SDL_Color _shadowColor) {
+	isShadowEnabled = true;
+	shadowSize = _size;
+	shadowColor = _shadowColor;
 }
 
 void SpriteRenderer::SetSourceAndDestinationRects() {
@@ -63,6 +65,12 @@ void SpriteRenderer::SetSourceAndDestinationRects() {
     destRect.y = pos.y + offset.y;
     destRect.w = srcRect.w * transformScale.x * localScale.x;
     destRect.h = srcRect.h * transformScale.y * localScale.y;
+	
+	// If set as to be centered, offset the width&height with x&y.
+    if (shouldDrawCentered) {
+        destRect.x -= destRect.w / 2;
+        destRect.y -= destRect.h / 2;
+    }
 }
 void SpriteRenderer::Render() {
     if (!isVisible || transform == nullptr || tex == nullptr) return;
@@ -70,14 +78,26 @@ void SpriteRenderer::Render() {
     // Set Source and Destination Rects
     SetSourceAndDestinationRects();
 
-    // If set as to be centered, offset the width&height with x&y.
-    if (shouldDrawCentered) {
-        destRect.x -= destRect.w / 2;
-        destRect.y -= destRect.h / 2;
-    }
+	// Calculate the Rotation in Degrees.
+	float rotationDegrees = transform->rotation * 57.2957795; // radians to degrees formula
 
-    // Draw
-    float rotationDegrees = transform->rotation * 57.2957795; // radians to degrees formula
+	// Render Shadows.
+	if (isShadowEnabled && shadowSize > 0) {
+		SDL_Rect shadowDestRect = destRect;
+		shadowDestRect.x -= 2;
+		shadowDestRect.y -= 2;
+		shadowDestRect.w += 2;
+		shadowDestRect.h += 2;
+		
+		SDL_SetTextureColorMod(tex, shadowColor.r, shadowColor.g, shadowColor.b);
+		SDL_SetTextureAlphaMod(tex, 100);
+		SDL_RenderCopyEx(MainRenderer.renderer, tex, &srcRect, &shadowDestRect, 
+			rotationDegrees, NULL, isFlipped ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
+	}
+
+    // Render Sprite.
+	SDL_SetTextureColorMod(tex, color.r, color.g, color.b);
+	SDL_SetTextureAlphaMod(tex, 255);
     SDL_RenderCopyEx(MainRenderer.renderer, tex, &srcRect, &destRect, 
         rotationDegrees, NULL, isFlipped ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }

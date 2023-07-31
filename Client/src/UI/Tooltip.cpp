@@ -50,19 +50,16 @@ void Tooltip::Update() {
 	static bool gIncreasing = true;
 	static bool bIncreasing = true;
 
-	// Set color to White
-	renderer.SetColor(255, 255, 255);
-
 	// Rainbow effect for Artifact Rarity Items
 	if (item->rarity == ItemRarity::Artifact) {
-		r += rIncreasing ? 0.35f : -0.35f;
-		g += gIncreasing ? 0.35f : -0.35f;
-		b += bIncreasing ? 0.35f : -0.35f;
+		r += (rIncreasing ? 3.5f : -3.5f) * Time::deltaTime;
+		g += (gIncreasing ? 3.5f : -3.5f) * Time::deltaTime;
+		b += (bIncreasing ? 3.5f : -3.5f) * Time::deltaTime;
 		rIncreasing = r > 254 ? false : r < 0.5f ? true : rIncreasing;
 		gIncreasing = g > 254 ? false : g < 0.5f ? true : gIncreasing;
 		bIncreasing = b > 254 ? false : b < 0.5f ? true : bIncreasing;
 
-		renderer.SetColor((int)r, (int)g, (int)b);
+		renderer.SetColor({(Uint8)r, (Uint8)g, (Uint8)b});
 	}
 
 	// Set position of the tooltip to the Mouse Position
