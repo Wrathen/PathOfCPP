@@ -52,9 +52,9 @@ void Tooltip::Update() {
 
 	// Rainbow effect for Artifact Rarity Items
 	if (item->rarity == ItemRarity::Artifact) {
-		r += (rIncreasing ? 3.5f : -3.5f) * Time::deltaTime;
-		g += (gIncreasing ? 3.5f : -3.5f) * Time::deltaTime;
-		b += (bIncreasing ? 3.5f : -3.5f) * Time::deltaTime;
+		r += (rIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
+		g += (gIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
+		b += (bIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
 		rIncreasing = r > 254 ? false : r < 0.5f ? true : rIncreasing;
 		gIncreasing = g > 254 ? false : g < 0.5f ? true : gIncreasing;
 		bIncreasing = b > 254 ? false : b < 0.5f ? true : bIncreasing;
