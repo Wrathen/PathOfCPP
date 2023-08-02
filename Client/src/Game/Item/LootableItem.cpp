@@ -29,12 +29,12 @@ void LootableItem::Update() {
 	static bool isPlayerNearby = false;
 
 	if (item && item->type == ItemType::Currency) {
-		float distanceToPlayer = Vector2::DistanceBetween(GAME.GetPlayer()->transform.GetPosition(), transform.GetPosition());
-		if (!isPlayerNearby && distanceToPlayer < 60) {
+		float distanceToPlayer = Vector2::DistanceBetweenFast(GAME.GetPlayer()->transform.GetPosition(), transform.GetPosition());
+		if (!isPlayerNearby && distanceToPlayer < 80) {
 			isPlayerNearby = true;
 			OnPlayerNearby();
 		}
-		else if (isPlayerNearby && distanceToPlayer > 60) {
+		else if (isPlayerNearby && distanceToPlayer > 80) {
 			isPlayerNearby = false;
 			OnPlayerAway();
 		}

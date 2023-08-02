@@ -4,7 +4,7 @@
 #include "../../Managers/GameManager.h"
 
 // Constructor
-UIItem::UIItem(Item* _item): item(_item) {
+UIItem::UIItem(Item* _item): item(_item) { 
 	// Disable automatic rendering that renders all the UIElements on tick.
 	isAutomaticRenderingDisabled = true;
 

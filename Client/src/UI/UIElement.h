@@ -20,6 +20,10 @@ public:
 	bool isToBeDeletedOnSceneChange = true;
 	bool isAutomaticRenderingDisabled = false;
 
+	// Z-Index is used for sorting algorithm for who to draw in front of the other UIElements.
+	// Bigger means that it has more priority.
+	int zIndex = 0;
+
 	// Base Functions
 	virtual void Start();
 	virtual void Update();

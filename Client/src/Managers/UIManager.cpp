@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "UIManager.h"
 #include "GameManager.h"
 #include "../Miscellaneous/Mouse.h"
@@ -7,7 +8,16 @@
 void UIManager::Update() {
 	Collection::Update();
 
-	for (auto& element : *GetAll()) {
+	// If the Collection is dirty, which means the list has either some new element added or removed.
+	// So we should sort the array to reflect on Z-Indexing.
+	auto allElements = *GetAll();
+	if (isDirty) {
+		std::sort(allElements.begin(), allElements.end(), [](UIElement* a, UIElement* b) { return a->zIndex > b->zIndex; });
+		isDirty = false;
+	}
+
+	// For each element in the collection, update and render them.
+	for (auto& element : allElements) {
 		element->Update();
 		if (!element->isAutomaticRenderingDisabled)
 			element->Render();
@@ -31,7 +41,7 @@ void UIManager::OnMouseMove() {
 	for (auto& element : *GetAll()) {
 		if (!element->isInteractable || element->isToBeDeleted) continue;
 		auto elementScreenPos = element->transform.GetScreenPosition();
-		if (elementScreenPos.x > screenWidth || elementScreenPos.x < 0 || 
+		if (elementScreenPos.x > screenWidth || elementScreenPos.x < 0 ||
 			elementScreenPos.y > screenHeight || elementScreenPos.y < 0) continue;
 
 		auto target = element;
@@ -48,7 +58,7 @@ void UIManager::OnMouseMove() {
 
 		if (mousePos.Intersects(targetCollider)) {
 			if (currentHoveredElement && !currentHoveredElement->isToBeDeleted) {
-				if (element != currentHoveredElement){
+				if (element != currentHoveredElement) {
 					currentHoveredElement->OnMouseLeave();
 
 					currentHoveredElement = element;
@@ -80,7 +90,7 @@ bool UIManager::OnMouseDown() {
 	Point mousePos = Mouse::GetPosition().ToPoint();
 
 	// Get The List of Elements we are going to check
-	auto elementVector = 
+	auto elementVector =
 		powerUpsAreShown ? UI.powerUpGroup->GetCurrentShownPowerUps() : *GetAll();
 
 	// Iterate over all viable elements and send them the OnClick event.
@@ -91,8 +101,8 @@ bool UIManager::OnMouseDown() {
 		Vector2 targetPos = target->transform.GetScreenPosition();
 		auto targetWidth = target->renderer.width;
 		auto targetHeight = target->renderer.height;
-		Rect targetCollider{ (int)targetPos.x, (int)targetPos.y, (int)targetWidth, (int)targetHeight};
-		
+		Rect targetCollider{ (int)targetPos.x, (int)targetPos.y, (int)targetWidth, (int)targetHeight };
+
 		// If it gets offsetted by getting drawn centered, we should offset back.
 		if (target->renderer.shouldDrawCentered) {
 			targetCollider.x -= targetWidth / 2;

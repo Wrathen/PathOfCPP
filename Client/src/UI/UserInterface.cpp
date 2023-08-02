@@ -25,12 +25,12 @@ void UserInterface::Update() {
 		timer.Reset();
 	}
 
-	if (tooltip->GetVisible()) tooltip->Render();
 	if (xpBar->GetVisible()) xpBar->Render();
 	if (currencyBar->GetVisible()) currencyBar->Render();
 	if (powerUpGroup->GetVisible()) powerUpGroup->Render();
 	if (fpsBar->GetVisible()) fpsBar->Render();
 	if (inventory->GetVisible()) inventory->Render();
+	if (tooltip->GetVisible()) tooltip->Render();
 
 	if (InputMgr.IsKeyPressed(SDLK_g))
 		for (int i = 0; i < 8; ++i)

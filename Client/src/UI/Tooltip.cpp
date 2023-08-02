@@ -11,6 +11,9 @@ Tooltip::Tooltip() : UIElement("assets/sprites/Item/LootableItem.png") {
 void Tooltip::Start() {
 	SetInteractable(false);
 
+	// Set the Z-Index to higher so it draws in front of everything else.
+	zIndex = 100;
+
 	// Renderer background
 	renderer.SetWidth(320);
 	renderer.SetHeight(300);
