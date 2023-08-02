@@ -45,8 +45,8 @@ void Projectile::Update() {
 
 bool Projectile::CheckIfTooFarAway() {
 	auto screenPos = transform.GetScreenPosition();
-	bool isFarAway = screenPos.x < -GAME.screenWidth/2 || screenPos.x > 3*GAME.screenWidth/2
-				  || screenPos.y < -GAME.screenWidth/2 || screenPos.y > 3*GAME.screenHeight/2;
+	bool isFarAway = (screenPos.x < -GAME.screenWidth / 2 || screenPos.x > 3 * GAME.screenWidth / 2 ||
+					  screenPos.y < -GAME.screenHeight / 2 || screenPos.y > 3 * GAME.screenHeight / 2);
 	return isFarAway;
 }
 void Projectile::CheckLifetime() {
@@ -66,8 +66,8 @@ void Projectile::CheckCollisions() {
 		}
 
 		Vector2 pos = entity->transform.GetScreenPosition();
-		bool hit = myPos.x > pos.x - enemyBoxCollider.x/2 && myPos.x < pos.x + enemyBoxCollider.x/2 &&
-				   myPos.y > pos.y - enemyBoxCollider.y/2 && myPos.y < pos.y + enemyBoxCollider.y/2;
+		bool hit = myPos.x > pos.x - enemyBoxCollider.x / 2 && myPos.x < pos.x + enemyBoxCollider.x / 2 &&
+			myPos.y > pos.y - enemyBoxCollider.y / 2 && myPos.y < pos.y + enemyBoxCollider.y / 2;
 
 		if (hit) {
 			bool enemyDied = entity->GetComponent<Health>()->TakeDamage(damageAmount);

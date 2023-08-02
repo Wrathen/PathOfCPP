@@ -4,7 +4,7 @@
 #include "../../Managers/GameManager.h"
 
 // Constructor
-LootableItem::LootableItem(Item* _item, Vector2 pos): item(_item) {
+LootableItem::LootableItem(Item* _item, Vector2 pos) : item(_item) {
 	// Set interactability to true. So we can hover over & click on dropped items.
 	isInteractable = true;
 
@@ -24,7 +24,7 @@ LootableItem::LootableItem(Item* _item, Vector2 pos): item(_item) {
 }
 
 // Base Functions
-void LootableItem::Update() { 
+void LootableItem::Update() {
 	Super::Update();
 	static bool isPlayerNearby = false;
 
@@ -44,26 +44,29 @@ void LootableItem::Render() { Super::Render(); }
 
 // Main Functions
 void LootableItem::Loot() {
-	// Call the OnLoot event on the item.
-	item->OnLoot();
+	// Check if the item is a valid object
+	if (item) {
+		// Call the OnLoot event on the item.
+		item->OnLoot();
 
-	// We add only the equipment items into our inventory.
-	if (item->type == ItemType::Equipment) {
-		// Put the item into Inventory.
-		UIItem* inventoryItem = new UIItem(item);
-		bool success = UI.inventory->Add(inventoryItem);
+		// We add only the equipment items into our inventory.
+		if (item->type == ItemType::Equipment) {
+			// Put the item into Inventory.
+			UIItem* inventoryItem = new UIItem(item);
+			bool success = UI.inventory->Add(inventoryItem);
 
-		// If there was an error, i.e. no space available in inventory, delete the UIItem.
-		if (!success) {
-			inventoryItem->Delete();
-			return;
+			// If there was an error, i.e. no space available in inventory, delete the UIItem.
+			if (!success) {
+				inventoryItem->Delete();
+				return;
+			}
+
+			// We set the item pointer to null because
+			// in the OnDelete() function, we also delete the item.
+			// But, if we successfully put the item into our inventory,
+			// we shouldn't delete the item, right? So this is a cheesy way! ^^
+			item = nullptr;
 		}
-
-		// We set the item pointer to null because
-		// in the OnDelete() function, we also delete the item.
-		// But, if we successfully put the item into our inventory,
-		// we shouldn't delete the item, right? So this is a cheesy way! ^^
-		item = nullptr;
 	}
 
 	// We just want to delete this LootableItem object.
