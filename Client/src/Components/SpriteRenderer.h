@@ -2,7 +2,8 @@
 #include <SDL_image.h>
 #include "Transform.h"
 
-class SpriteRenderer { friend class Renderer;
+class SpriteRenderer {
+	friend class Renderer;
 public:
 	typedef SpriteRenderer Super;
 
@@ -12,8 +13,8 @@ public:
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 
-	SDL_Color color = {255, 255, 255};
-	SDL_Color shadowColor = {0, 0, 0};
+	SDL_Color color = { 255, 255, 255, 255 };
+	SDL_Color shadowColor = { 0, 0, 0, 255 };
 
 	Vector2 sourceOffset;
 	Vector2 offset;

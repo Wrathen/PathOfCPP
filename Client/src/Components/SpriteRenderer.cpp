@@ -44,7 +44,7 @@ void SpriteRenderer::SetPositionRelative() {
     if (transform) transform->isAbsolutePositioned = false;
     isAbsolutePositioned = false; 
 }
-void SpriteRenderer::SetColor(SDL_Color _color) { color = _color; }
+void SpriteRenderer::SetColor(SDL_Color _color) { color = _color; if (!color.a) color.a = 255; }
 void SpriteRenderer::SetShadow(unsigned int _size, SDL_Color _shadowColor) {
 	isShadowEnabled = true;
 	shadowSize = _size;
@@ -97,7 +97,7 @@ void SpriteRenderer::Render() {
 
     // Render Sprite.
 	SDL_SetTextureColorMod(tex, color.r, color.g, color.b);
-	SDL_SetTextureAlphaMod(tex, 255);
+	SDL_SetTextureAlphaMod(tex, color.a);
     SDL_RenderCopyEx(MainRenderer.renderer, tex, &srcRect, &destRect, 
         rotationDegrees, NULL, isFlipped ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }

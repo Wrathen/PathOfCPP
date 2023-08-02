@@ -143,6 +143,7 @@ public:
 		// To-Do Change all of the structure here.
 		// Stats that are associated with Powerups should be named with prefix P_
 		// Below code is temporary
+
 		SetSizeMultiplier(1.0f);
 		source->transform.SetScale(2.2f, 2.2f);
 		level = 1;
@@ -155,8 +156,8 @@ public:
 		haste = 0;
 		versatility = 0;
 		numberOfProjectiles = 1;
-		projectileSpeed = 80.00f;
-		moveSpeed = 25.0f;
+		projectileSpeed = 600.00f;
+		moveSpeed = 300.0f;
 		totalKills = 0;
 		attackSpeed = 0.3f;
 

@@ -11,7 +11,7 @@
 #include "../Managers/CameraManager.h"
 #include "../Managers/InputManager.h"
 
-Player::Player(std::string name): Entity("assets/sprites/player.png", name) {
+Player::Player(std::string name) : Entity("assets/sprites/player.png", name) {
 	isToBeDeletedOnSceneChange = false;
 	Start();
 }
@@ -35,10 +35,7 @@ void Player::Start() {
 
 	// Stats Component
 	CStats = AddComponent<Stats>();
-	CStats->SetMoveSpeed(300.0f);
-	CStats->SetProjectileSpeed(600.0f);
-	CStats->SetNumberOfProjectiles(1);
-	CStats->SetAttackSpeed(0.3f);
+	CStats->ResetPowerUps();
 
 	// Health Component
 	CHealth = AddComponent<Health>();
@@ -176,30 +173,30 @@ void Player::FUN_Headhunter() {
 
 	int rnd = RandomInt(0, 6);
 	switch (rnd) {
-		case 0:
-			if (CStats->GetSizeMultiplier() > 4.0f) return;
-			CStats->SetSizeMultiplier(CStats->GetSizeMultiplier() * 1.05f);
-			break;
-		case 1:
-			if (CStats->GetMoveSpeed() > 1500) return;
-			CStats->SetMoveSpeed(CStats->GetMoveSpeed() * 1.05f);
-			break;
-		case 2:
-			if (CStats->GetProjectileSpeed() > 2000) return;
-			CStats->SetProjectileSpeed(CStats->GetProjectileSpeed() * 1.05f);
-			break;
-		case 3:
-			if (CStats->GetAttackSpeed() < 0.0001f) return;
-			CStats->SetAttackSpeed(CStats->GetAttackSpeed() * 0.95f);
-			break;
-		case 4:
-			if (CHealth->GetHealthMultiplier() > 100.0f) return;
-			CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() * 1.25f);
-			break;
-		case 5:
-			if (CStats->GetNumberOfProjectiles() > 1000) return;
-			CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
-			break;
+	case 0:
+		if (CStats->GetSizeMultiplier() > 4.0f) return;
+		CStats->SetSizeMultiplier(CStats->GetSizeMultiplier() * 1.05f);
+		break;
+	case 1:
+		if (CStats->GetMoveSpeed() > 1500) return;
+		CStats->SetMoveSpeed(CStats->GetMoveSpeed() * 1.05f);
+		break;
+	case 2:
+		if (CStats->GetProjectileSpeed() > 2000) return;
+		CStats->SetProjectileSpeed(CStats->GetProjectileSpeed() * 1.05f);
+		break;
+	case 3:
+		if (CStats->GetAttackSpeed() < 0.0001f) return;
+		CStats->SetAttackSpeed(CStats->GetAttackSpeed() * 0.95f);
+		break;
+	case 4:
+		if (CHealth->GetHealthMultiplier() > 100.0f) return;
+		CHealth->SetHealthMultiplier(CHealth->GetHealthMultiplier() * 1.25f);
+		break;
+	case 5:
+		if (CStats->GetNumberOfProjectiles() > 1000) return;
+		CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
+		break;
 	}
 }
 

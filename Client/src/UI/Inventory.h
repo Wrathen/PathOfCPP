@@ -19,6 +19,7 @@ public:
 	bool Add(UIItem* item);
 	void Drop(UIItem* item);
 	void Drop(uint32_t x, uint32_t y);
+	void SetVisible(bool flag) override;
 
 	// Events
 	void Render() override;

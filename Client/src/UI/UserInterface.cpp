@@ -33,7 +33,8 @@ void UserInterface::Update() {
 	if (inventory->GetVisible()) inventory->Render();
 
 	if (InputMgr.IsKeyPressed(SDLK_g))
-		inventory->Add(new UIItem(Equipment::CreateRandomEquipment(47)));
+		for (int i = 0; i < 8; ++i)
+			inventory->Add(new UIItem(Equipment::CreateRandomEquipment(RandomInt(30, 300))));
 	if (InputMgr.IsKeyPressed(SDLK_b))
 		(inventory->GetVisible() ? HideInventory(): ShowInventory());		
 }
