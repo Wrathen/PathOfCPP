@@ -11,6 +11,10 @@ written in C++ with the initial intend of getting used to the language, using SD
 
 <h2> Video Showcases </h2>
 
+<b>[August 2th 2023]</b> MASSIVE Amounts of Projectiles, Inventory&Loot System Showcases
+
+https://youtu.be/UBePR-KNDfQ
+
 <b>[July 23th 2023]</b> T16 Defiled Cathedral Any% Speedrun :^)
 
 https://youtu.be/PTja8cNuCZQ
