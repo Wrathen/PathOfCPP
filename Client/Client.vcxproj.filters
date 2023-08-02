@@ -151,6 +151,8 @@
     <ClInclude Include="src\Scenes\Scene_DefiledCathedral.h" />
     <ClInclude Include="src\Entities\Explosions\Explosion.h" />
     <ClInclude Include="src\Entities\Beam\Beam.h" />
+    <ClInclude Include="src\Game\Item\UIItem.h" />
+    <ClInclude Include="src\UI\Inventory.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\SpriteRenderer.cpp" />
@@ -208,6 +210,8 @@
     <ClCompile Include="src\Scenes\Scene_DefiledCathedral.cpp" />
     <ClCompile Include="src\Entities\Explosions\Explosion.cpp" />
     <ClCompile Include="src\Entities\Beam\Beam.cpp" />
+    <ClCompile Include="src\Game\Item\UIItem.cpp" />
+    <ClCompile Include="src\UI\Inventory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\ToDoList.txt" />

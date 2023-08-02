@@ -1,6 +1,7 @@
 #include "UserInterface.h"
 #include "../Managers/GameManager.h"
 #include "../Managers/InputManager.h"
+#include "../Game/Item/Equipment/Equipment.h"
 
 void UserInterface::Init() {
 	xpBar = new XPBar();
@@ -8,6 +9,7 @@ void UserInterface::Init() {
 	fpsBar = new FPSBar();
 	tooltip = new Tooltip();
 	powerUpGroup = new PowerUpGroup();
+	inventory = new Inventory();
 }
 void UserInterface::Update() {
 	if (!player) { player = GAME.GetPlayer(); return; }
@@ -28,6 +30,12 @@ void UserInterface::Update() {
 	if (currencyBar->GetVisible()) currencyBar->Render();
 	if (powerUpGroup->GetVisible()) powerUpGroup->Render();
 	if (fpsBar->GetVisible()) fpsBar->Render();
+	if (inventory->GetVisible()) inventory->Render();
+
+	if (InputMgr.IsKeyPressed(SDLK_g))
+		inventory->Add(new UIItem(Equipment::CreateRandomEquipment(47)));
+	if (InputMgr.IsKeyPressed(SDLK_b))
+		(inventory->GetVisible() ? HideInventory(): ShowInventory());		
 }
 
 void UserInterface::UpdateGold(float value) { currencyBar->SetGold(value); }
@@ -41,14 +49,14 @@ void UserInterface::UpdateInventory() {}
 void UserInterface::UpdatePowerUps() { powerUpGroup->GeneratePowerUps(); }
 
 void UserInterface::ShowTooltip() { tooltip->SetVisible(true); }
-void UserInterface::ShowInventory() {}
+void UserInterface::ShowInventory() { inventory->SetVisible(true); }
 void UserInterface::ShowEquipment() {}
 void UserInterface::ShowXPBar() { xpBar->SetVisible(true); }
 void UserInterface::ShowGold() { currencyBar->SetVisible(true); }
 void UserInterface::ShowPowerUps() { InputMgr.DisableMouse(0.5f); powerUpGroup->SetVisible(true); }
 
 void UserInterface::HideTooltip() { tooltip->SetVisible(false); }
-void UserInterface::HideInventory() {}
+void UserInterface::HideInventory() { inventory->SetVisible(false); }
 void UserInterface::HideEquipment() {}
 void UserInterface::HideXPBar() { xpBar->SetVisible(false); }
 void UserInterface::HideGold() { currencyBar->SetVisible(false); }

@@ -6,6 +6,7 @@
 #include "FPSBar.h"
 #include "Tooltip.h"
 #include "PowerUpGroup.h"
+#include "Inventory.h"
 
 #define UI UserInterface::GetInstance()
 class UserInterface : public Singleton<UserInterface> { friend class Singleton;
@@ -16,6 +17,7 @@ public:
 	FPSBar* fpsBar = nullptr;
 	Tooltip* tooltip = nullptr;
 	PowerUpGroup* powerUpGroup = nullptr;
+	Inventory* inventory = nullptr;
 
 	void Init();
 	void Update();
