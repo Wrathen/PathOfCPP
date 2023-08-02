@@ -11,7 +11,7 @@ void Renderer::Init() {
 	window = SDL_CreateWindow("Path of CPP", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	
-	GPU_InitRenderer(GPU_RENDERER_OPENGL_4, 800, 600, GPU_DEFAULT_INIT_FLAGS);
+	//GPU_InitRenderer(GPU_RENDERER_OPENGL_4, 800, 600, GPU_DEFAULT_INIT_FLAGS);
 
 	Start();
 }
@@ -34,7 +34,7 @@ Renderer::~Renderer() {
 
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-	for (auto fontPair: fontMap)
+	for (auto& fontPair: fontMap)
 		TTF_CloseFont(fontPair.second);
 
 	SDL_Quit();

@@ -10,8 +10,8 @@ public:
 	Transform* transform = nullptr;
 	SDL_Texture* tex = nullptr;
 
-	SDL_Rect srcRect;
-	SDL_Rect destRect;
+	SDL_Rect srcRect = { 0, 0, 0, 0 };
+	SDL_Rect destRect = { 0, 0, 0, 0 };
 
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Color shadowColor = { 0, 0, 0, 255 };

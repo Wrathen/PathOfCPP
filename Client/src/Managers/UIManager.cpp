@@ -10,7 +10,7 @@ void UIManager::Update() {
 
 	// If the Collection is dirty, which means the list has either some new element added or removed.
 	// So we should sort the array to reflect on Z-Indexing.
-	auto allElements = *GetAll();
+	auto& allElements = *GetAll();
 	if (isDirty) {
 		std::sort(allElements.begin(), allElements.end(), [](UIElement* a, UIElement* b) { return a->zIndex > b->zIndex; });
 		isDirty = false;

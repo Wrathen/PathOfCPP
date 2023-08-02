@@ -15,6 +15,8 @@
  * file docs/README.md.                                                     *
 \****************************************************************************/
 
+#pragma warning( disable : 26800 26819 )
+
 #ifndef INCLUDE_NLOHMANN_JSON_HPP_
 #define INCLUDE_NLOHMANN_JSON_HPP_
 
