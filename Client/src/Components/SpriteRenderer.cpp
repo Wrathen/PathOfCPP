@@ -93,7 +93,9 @@ void SpriteRenderer::Render() {
 
 	// Update Shader variables
 	static uint32_t cached_GlobalTimeLocation = shader.GetVariableLocation("globalTime");
+	static uint32_t cached_DeltaTimeLocation = shader.GetVariableLocation("deltaTime");
 	GPU_SetUniformf(cached_GlobalTimeLocation, SDL_GetTicks());
+	GPU_SetUniformf(cached_DeltaTimeLocation, Time::deltaTime);
 
 	// Render Shadows.
 	if (false && isShadowEnabled && shadowSize > 0) {

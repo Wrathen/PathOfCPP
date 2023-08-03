@@ -42,6 +42,7 @@ Shader::Shader(const std::string& shaderID, const std::string& vertexShaderPath,
 	AddVariable("tex0");
 	AddVariable("tex1");
 	AddVariable("globalTime");
+	AddVariable("deltaTime");
 	AddVariable("resolution");
 }
 
