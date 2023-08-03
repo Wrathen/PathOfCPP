@@ -5,13 +5,15 @@
 // Main Functions
 void TextRenderer::SetText(std::string text, SDL_Color color, bool forceSet) {
 	if (!forceSet && text == _text) return;
+	if (text.empty()) return;
+
 	CollectGarbage();
 
 	_text = text;
 
 	// Create a surface from the text and size, create a texture from it and assign it into the SpriteRenderer.
 	SDL_Surface* surface = TTF_RenderText_Solid_Wrapped(MainRenderer.GetFont(_size), _text.c_str(), {255, 255, 255}, 0);
-	Super::AssignTexture(SDL_CreateTextureFromSurface(MainRenderer.renderer, surface));
+	Super::AssignTexture(GPU_CopyImageFromSurface(surface));
 
 	// Convert the color into grayscale and then invert it so we can colorize shadows according to the base color.
 	float colorGrayscale = (color.r + color.g + color.b) / 255.0f / 3.0f;
@@ -36,5 +38,5 @@ void TextRenderer::SetFontSize(unsigned int size) {
 }
 
 // Cleanup Textures.
-void TextRenderer::CollectGarbage() { if (tex) SDL_DestroyTexture(tex); }
+void TextRenderer::CollectGarbage() { if (img) GPU_FreeImage(img); }
 TextRenderer::~TextRenderer() { CollectGarbage(); }

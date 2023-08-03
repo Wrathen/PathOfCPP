@@ -128,7 +128,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)sdk\sdl2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;SDL2_gpu.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Shaders\Shader.h" />
     <ClInclude Include="src\UI\Inventory.h" />
     <ClInclude Include="src\Entities\Beam\Beam.h" />
     <ClInclude Include="src\Entities\Explosions\Explosion.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="src\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Shaders\Shader.cpp" />
     <ClCompile Include="src\UI\Inventory.cpp" />
     <ClCompile Include="src\Entities\Beam\Beam.cpp" />
     <ClCompile Include="src\Entities\Explosions\Explosion.cpp" />

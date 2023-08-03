@@ -582,11 +582,6 @@ extern DECLSPEC int SDLCALL SDL_vsnprintf(SDL_OUT_Z_CAP(maxlen) char *text, size
 extern DECLSPEC int SDLCALL SDL_asprintf(char **strp, SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(2);
 extern DECLSPEC int SDLCALL SDL_vasprintf(char **strp, const char *fmt, va_list ap);
 
-#ifndef HAVE_M_PI
-#ifndef M_PI
-#define M_PI    3.14159265358979323846264338327950288   /**< pi */
-#endif
-#endif
 
 /**
  * Use this function to compute arc cosine of `x`.

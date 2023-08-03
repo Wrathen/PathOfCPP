@@ -1,18 +1,18 @@
 #pragma once
 #include <unordered_map>
-#include <SDL_image.h>
+#include <SDL_gpu.h>
 #include <string>
 #include "../Miscellaneous/Singleton.h"
 
 #define TextureMgr TextureManager::GetInstance()
 class TextureManager : public Singleton<TextureManager> { friend class Singleton;
 public:
-	static SDL_Point GetDimensions(SDL_Texture* tex);
-	void LoadTexture(std::string path, SDL_Texture** output);
+	static SDL_Point GetDimensions(GPU_Image* tex);
+	void LoadTexture(std::string path, GPU_Image** output);
 
 private:
-	std::unordered_map<std::string, SDL_Texture*> textureCache;
-	SDL_Texture* LoadTextureFromCache(std::string path);
+	std::unordered_map<std::string, GPU_Image*> textureCache;
+	GPU_Image* LoadTextureFromCache(std::string path);
 
 private:
 	TextureManager() {}

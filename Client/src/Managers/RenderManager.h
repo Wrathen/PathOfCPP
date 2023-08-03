@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_gpu.h>
 #include <unordered_map>
@@ -10,8 +9,7 @@
 #define MainRenderer Renderer::GetInstance()
 class Renderer : public Singleton<Renderer> { friend class Singleton;
 public:
-    SDL_Window* window = nullptr;
-    SDL_Renderer* renderer = nullptr;
+	GPU_Target* target = nullptr;
     std::unordered_map<int, TTF_Font*> fontMap;
     const char* fontPath = "assets/fonts/Friz Quadrata Regular.ttf"; // CHERL___
 

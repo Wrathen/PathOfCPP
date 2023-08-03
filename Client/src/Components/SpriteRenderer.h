@@ -1,6 +1,7 @@
 #pragma once
-#include <SDL_image.h>
+#include <SDL_gpu.h>
 #include "Transform.h"
+#include "../Shaders/Shader.h"
 
 class SpriteRenderer {
 	friend class Renderer;
@@ -8,11 +9,12 @@ public:
 	typedef SpriteRenderer Super;
 
 	Transform* transform = nullptr;
-	SDL_Texture* tex = nullptr;
+	GPU_Image* img = nullptr;
+	Shader shader;
 
-	SDL_Rect srcRect = { 0, 0, 0, 0 };
-	SDL_Rect destRect = { 0, 0, 0, 0 };
-
+	GPU_Rect srcRect { 0, 0, 0, 0 };
+	GPU_Rect destRect { 0, 0, 0, 0 };
+	
 	SDL_Color color = { 255, 255, 255, 255 };
 	SDL_Color shadowColor = { 0, 0, 0, 255 };
 
@@ -28,8 +30,11 @@ public:
 	bool isAbsolutePositioned = false;
 	bool shouldDrawCentered = false;
 
+	// Constructor
+	SpriteRenderer();
+
 	// Main Functions
-	void AssignTexture(SDL_Texture* _tex);
+	void AssignTexture(GPU_Image* _tex);
 	void AssignTexture(std::string path);
 	void AssignTransform(Transform* _transform);
 	void UpdateTextureDimensions();
