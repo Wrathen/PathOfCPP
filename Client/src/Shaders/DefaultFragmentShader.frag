@@ -6,9 +6,9 @@ uniform sampler2D tex0;
 uniform sampler2D tex1;
 uniform float globalTime;
 
-/*void main() {
+void main() {
 	vec2 q = texCoord;
-    vec3 col = texture2D(tex0, q).xyz;
+    vec4 col = texture2D(tex0, q);
 	
 	q = gl_FragCoord.xy/resolution.xy;
 	float dis = 1.;
@@ -20,23 +20,14 @@ uniform float globalTime;
 		f = (texture2D(tex1, st * .5, -99.0).x + texture2D(tex1, st*.284, -99.0).y);
 		f = clamp(pow(abs(f)*.5, 29.0) * 140.0, 0.00, q.y*.4+.05);
 
-		vec3 bri = vec3(.25);
+		vec4 bri = vec4(.25);
 		col += bri*f;
 		dis += 3.5;
 	}
 	col = clamp(col, 0.0, 1.0);
 			
-	//	col = mix(texture2D(tex0, vec2(q.x, 1.0-q.y)).xyz, col, smoothstep(2.25, 4.0, iGlobalTime));
-	col = pow(col, vec3(1.1));
+	//col = mix(texture2D(tex0, vec2(q.x, 1.0-q.y)), col, smoothstep(2.25, 4.0, globalTime));
+	col = pow(col, vec4(1.1));
 	
-	gl_FragColor = vec4(col, 1.0);
-}*/
-
-void main() {
-	vec2 q = texCoord;
-    vec4 col = texture2D(tex0, q);
-
-	col += globalTime * 0.0001;
-
 	gl_FragColor = col;
 }
