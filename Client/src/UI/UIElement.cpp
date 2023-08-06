@@ -15,6 +15,7 @@ void UIElement::Render() { renderer.Render(); }
 void UIElement::Delete() { OnDelete(); UIMgr.Remove(this); }
 
 bool UIElement::OnClick() { return isBlockingRaycasts; }
+bool UIElement::OnApplyItem(UIItem* item) { return canItemsBeApplied; }
 
 void UIElement::SetVisible(bool value) { renderer.SetVisible(value); }
 bool UIElement::GetVisible() { return renderer.GetVisible(); }

@@ -46,27 +46,29 @@ bool Inventory::Add(UIItem* item) {
 	return true;
 }
 
+void Inventory::Drop(uint32_t x, uint32_t y) { Drop(x + y * cellCols); }
+void Inventory::Drop(UIItem* item) { for (size_t i = 0; i < cellCapacity; ++i) if (allItems[i] == item) Drop(i); return; }
 void Inventory::Drop(uint32_t slotIndex) {
 	// Get the item by slotIndex.
 	UIItem* item = allItems[slotIndex];
 	if (!item) return;
 
+	// Delete from the array and free the memory.
+	allItems[slotIndex] = nullptr;
+
 	// Drop the item
 	Item::DropItem(item->item, GAME.GetPlayer()->transform.GetPosition());
+	item->Delete();
+}
+void Inventory::Remove(uint32_t x, uint32_t y) { Remove(x + y * cellCols); }
+void Inventory::Remove(UIItem* item) { for (size_t i = 0; i < cellCapacity; ++i) if (allItems[i] == item) Remove(i); return; }
+void Inventory::Remove(uint32_t slotIndex) {
+	// Get the item by slotIndex.
+	UIItem* item = allItems[slotIndex];
+	if (!item) return;
 
 	// Delete from the array and free the memory.
 	allItems[slotIndex] = nullptr;
-	item->Delete();
-}
-void Inventory::Drop(uint32_t x, uint32_t y) { Drop(x + y * cellCols); }
-void Inventory::Drop(UIItem* item) {
-	// Find the item within the array
-	for (size_t i = 0; i < cellCapacity; ++i) {
-		if (allItems[i] == item) {
-			Drop(i);
-			return;
-		}
-	}
 }
 
 void Inventory::Render() {

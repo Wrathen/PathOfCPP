@@ -34,8 +34,8 @@ void UIItem::Render() {
 }
 
 // Events
-bool UIItem::OnClick() { 
-	UI.inventory->Drop(this);
+bool UIItem::OnClick() {
+	UIMgr.PickItemToHand(this);
 	return isBlockingRaycasts;
 }
 void UIItem::OnDelete() {

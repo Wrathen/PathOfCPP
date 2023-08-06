@@ -16,10 +16,16 @@ public:
 	Inventory();
 
 	// Main functions
+	// Adds an item into the Inventory.
 	bool Add(UIItem* item);
-	void Drop(uint32_t slotIndex);
+	// Drops an item into the ground directly.
 	void Drop(UIItem* item);
 	void Drop(uint32_t x, uint32_t y);
+	void Drop(uint32_t slotIndex);
+	// Removes an item from the Inventory. Does NOT delete the UIItem, only removes it from the vector.
+	void Remove(UIItem* item);
+	void Remove(uint32_t x, uint32_t y);
+	void Remove(uint32_t slotIndex);
 	void SetVisible(bool flag) override;
 
 	// Events
