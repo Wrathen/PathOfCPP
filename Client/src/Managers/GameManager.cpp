@@ -151,7 +151,9 @@ void GameManager::PauseGame(bool value) { isGamePaused = value; }
 Player* GameManager::GetPlayer() const { return player; }
 int GameManager::GetFPS() const { return 1.0f / Time::deltaTime; }
 void GameManager::DrawRect(int x, int y, int w, int h, SDL_Color color) {
-	GPU_Rectangle(MainRenderer.target, x, y, x + w, y + h, color);
+	SDL_Rect rect{ x, y, w, h };
+	SDL_SetRenderDrawColor(MainRenderer.renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderDrawRect(MainRenderer.renderer, &rect);
 }
 void GameManager::DrawRect(Vector2 pos, int w, int h, SDL_Color color) { DrawRect(pos.x, pos.y, w, h, color); }
 void GameManager::DrawRect(Rect rect, SDL_Color color) { DrawRect(rect.x, rect.y, rect.w, rect.h, color); }

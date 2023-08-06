@@ -4,9 +4,6 @@
 #include "../Managers/CameraManager.h"
 #include "../Miscellaneous/Log.h"
 
-// Constructor
-SpriteRenderer::SpriteRenderer() : shader{} { shader.Activate(); }
-
 void SpriteRenderer::SetSourceOffset(int x, int y) { sourceOffset.x = x; sourceOffset.y = y; }
 void SpriteRenderer::SetSourceOffset(const Vector2& vec) { sourceOffset.x = vec.x; sourceOffset.y = vec.y; }
 void SpriteRenderer::SetOffset(int x, int y) { offset.x = x; offset.y = y; }
@@ -24,25 +21,18 @@ unsigned int SpriteRenderer::GetHeight() { return height; }
 bool SpriteRenderer::GetVisible() { return isVisible; }
 
 void SpriteRenderer::UpdateTextureDimensions() {
-    auto textureDimensions = TextureManager::GetDimensions(img);
+    auto textureDimensions = TextureManager::GetDimensions(tex);
     width = textureDimensions.x;
     height = textureDimensions.y;
-
-	// Set the shader variable resolution.
-	float resolution[2] = { (float)width, (float)height };
-	GPU_SetUniformfv(shader.GetVariableLocation("resolution"), 2, 1, resolution);
-
-	// Set the shader image
-	shader.SetImage(img);
 }
 
 void SpriteRenderer::AssignTransform(Transform* _transform) { 
     transform = _transform;
     transform->isAbsolutePositioned = isAbsolutePositioned;
 }
-void SpriteRenderer::AssignTexture(GPU_Image* _img) { img = _img; UpdateTextureDimensions(); }
+void SpriteRenderer::AssignTexture(SDL_Texture* _tex) { tex = _tex; UpdateTextureDimensions(); }
 void SpriteRenderer::AssignTexture(std::string texturePath) { 
-    TextureMgr.LoadTexture(texturePath, &img); 
+    TextureMgr.LoadTexture(texturePath, &tex); 
     UpdateTextureDimensions();
 }
 
@@ -73,9 +63,9 @@ void SpriteRenderer::SetSourceAndDestinationRects() {
 
     destRect.x = pos.x + offset.x;
     destRect.y = pos.y + offset.y;
-    destRect.w = transformScale.x * localScale.x;
-    destRect.h = transformScale.y * localScale.y;
-
+    destRect.w = srcRect.w * transformScale.x * localScale.x;
+    destRect.h = srcRect.h * transformScale.y * localScale.y;
+	
 	// If set as to be centered, offset the width&height with x&y.
     if (shouldDrawCentered) {
         destRect.x -= destRect.w / 2;
@@ -83,31 +73,31 @@ void SpriteRenderer::SetSourceAndDestinationRects() {
     }
 }
 void SpriteRenderer::Render() {
-    if (!isVisible || transform == nullptr || img == nullptr) return;
+    if (!isVisible || transform == nullptr || tex == nullptr) return;
 
     // Set Source and Destination Rects
     SetSourceAndDestinationRects();
 
 	// Calculate the Rotation in Degrees.
-	float rotationDegrees = transform->rotation * 57.2957795f; // radians to degrees formula
-
-	// Update Shader variables
-	static uint32_t cached_GlobalTimeLocation = shader.GetVariableLocation("globalTime");
-	GPU_SetUniformf(cached_GlobalTimeLocation, SDL_GetTicks());
+	float rotationDegrees = transform->rotation * 57.2957795; // radians to degrees formula
 
 	// Render Shadows.
-	if (false && isShadowEnabled && shadowSize > 0) {
-		GPU_Rect shadowDestRect = destRect;
+	if (isShadowEnabled && shadowSize > 0) {
+		SDL_Rect shadowDestRect = destRect;
 		shadowDestRect.x -= 2;
 		shadowDestRect.y -= 2;
 		shadowDestRect.w += 2;
 		shadowDestRect.h += 2;
 		
-		GPU_SetRGBA(img, shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a);
-		GPU_BlitTransform(img, &srcRect, MainRenderer.target, shadowDestRect.x, shadowDestRect.y, rotationDegrees, shadowDestRect.w, shadowDestRect.h);
+		SDL_SetTextureColorMod(tex, shadowColor.r, shadowColor.g, shadowColor.b);
+		SDL_SetTextureAlphaMod(tex, 100);
+		SDL_RenderCopyEx(MainRenderer.renderer, tex, &srcRect, &shadowDestRect, 
+			rotationDegrees, NULL, isFlipped ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 	}
 
     // Render Sprite.
-	GPU_SetRGBA(img, color.r, color.g, color.b, color.a);
-	GPU_BlitTransform(img, &srcRect, MainRenderer.target, destRect.x, destRect.y, rotationDegrees, destRect.w, destRect.h);
+	SDL_SetTextureColorMod(tex, color.r, color.g, color.b);
+	SDL_SetTextureAlphaMod(tex, color.a);
+    SDL_RenderCopyEx(MainRenderer.renderer, tex, &srcRect, &destRect, 
+        rotationDegrees, NULL, isFlipped ? SDL_FLIP_HORIZONTAL: SDL_FLIP_NONE);
 }
