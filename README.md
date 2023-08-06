@@ -5,6 +5,14 @@
 
 written in C++ with the initial intend of getting used to the language, using SDL2 for render calls (DirectX) and WinAPI.
 
+<h2> Get Started </h2>
+
+- Clone the project.
+- Open with Visual Studio.
+- Build & Play. (works perfectly fine with Win10/11 MSVC C++17 compiler.)
+
+Feel free to create issues & pull requests.
+
 <h2> Custom Tools </h2>
 
 <h3>Explore <a href="https://wrathen.github.io/PathOfCPP/ZoneTool/" target="_blank">custom made ZoneTool</a> and make your own Zones!</h3>
