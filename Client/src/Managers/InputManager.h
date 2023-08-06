@@ -30,7 +30,6 @@ public:
     bool IsKeyPressed(SDL_Keycode keycode);
     bool IsKeyHeld(SDL_Keycode keycode);
     bool IsKeyReleased(SDL_Keycode keycode);
-
 private:
     // Pressed&released keys this tick.
     std::vector<SDL_Keycode> pressedKeys;

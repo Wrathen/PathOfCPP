@@ -1,5 +1,7 @@
 #include "FPSBar.h"
 #include "../Managers/GameManager.h"
+#include "../Managers/InputManager.h"
+#include "../Miscellaneous/Mouse.h"
 
 FPSBar::FPSBar() : UIElement() {
 	isAutomaticRenderingDisabled = true;
@@ -23,4 +25,11 @@ void FPSBar::Start() {
 void FPSBar::Update() {}
 void FPSBar::Render() { fpsText.Render(); }
 
-void FPSBar::SetFPS(int FPS) { fpsText.SetText("FPS: " + std::to_string(FPS)); }
+void FPSBar::SetFPS(int FPS) {
+	if (InputMgr.IsKeyHeld(SDLK_4)) {
+		auto mousePos = Mouse::GetPosition();
+		fpsText.SetText("MousePosition: " + std::to_string(mousePos.x) + ", " + std::to_string(mousePos.y));
+	}
+	else
+		fpsText.SetText("FPS: " + std::to_string(FPS));
+}

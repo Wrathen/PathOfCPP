@@ -17,13 +17,21 @@ UIItem::UIItem(Item* _item): item(_item) {
 	// Set Renderer Variables
 	renderer.SetPositionAbsolute();
 	renderer.AssignTexture(item->texturePath);
+	renderer.SetWidth(54);
+	renderer.SetHeight(54);
 	renderer.shouldDrawCentered = true;
 }
 
 // Base Functions
 void UIItem::Start() { Super::Start(); }
 void UIItem::Update() { Super::Update(); }
-void UIItem::Render() { Super::Render(); }
+void UIItem::Render() { 
+	Super::Render();
+	GAME.DrawRect(transform.GetScreenPosition().x - renderer.GetWidth()/2,
+				  transform.GetScreenPosition().y - renderer.GetHeight()/2,
+				  renderer.GetWidth(),
+				  renderer.GetHeight(), {127, 127, 127, 127});
+}
 
 // Events
 bool UIItem::OnClick() { 

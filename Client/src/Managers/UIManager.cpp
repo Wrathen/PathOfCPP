@@ -95,7 +95,7 @@ bool UIManager::OnMouseDown() {
 
 	// Iterate over all viable elements and send them the OnClick event.
 	for (auto& element : elementVector) {
-		if (!element || !element->isInteractable) continue;
+		if (!element || !element->isInteractable || element->isToBeDeleted) continue;
 		auto target = element;
 
 		Vector2 targetPos = target->transform.GetScreenPosition();
