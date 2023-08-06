@@ -3,7 +3,7 @@
 - Path of Exile
 - Vampire Survivors
 
-written in C++ with the initial intend of getting used to the language, using SDL2 library for WinAPI and SDL_GPU library for Rendering (OpenGL).
+written in C++ with the initial intend of getting used to the language, using SDL2 library for WinAPI and SDL2_GPU library for Rendering (OpenGL).
 
 <h2> Custom Tools </h2>
 
