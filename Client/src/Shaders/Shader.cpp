@@ -12,21 +12,9 @@ Shader::Shader(const std::string& shaderID, const std::string& vertexShaderPath,
 	link = GPU_LinkShaders(vertexShader, fragmentShader);
 
 	// Error Handling
-	if (!vertexShader) {
-		Error("Failed to load vertex shader!");
-		Error(GPU_GetShaderMessage());
-		return;
-	}
-	if (!fragmentShader) {
-		Error("Failed to load fragment shader!");
-		Error(GPU_GetShaderMessage());
-		return;
-	}
-	if (!link) {
-		Error("Failed to link vertex and fragment shaders!");
-		Error(GPU_GetShaderMessage());
-		return;
-	}
+	if (!vertexShader) Error("Failed to load vertex shader!");
+	if (!fragmentShader) Error("Failed to load fragment shader!");
+	if (!link) Error("Failed to link vertex and fragment shaders!");
 
 	// Attach shaders to the shader program.
 	GPU_AttachShader(program, vertexShader);
