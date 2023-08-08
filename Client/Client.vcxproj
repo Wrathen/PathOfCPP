@@ -98,12 +98,12 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)sdk\sdl2\include;$(SolutionDir)sdk\sqlite\include\;$(SolutionDir)sdk\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)sdk\sdl2\lib;$(SolutionDir)sdk\sqlite\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\sdl2\lib;$(SolutionDir)3rdParty\sqlite\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ProjectReference>
@@ -119,7 +119,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)sdk\sdl2\include;$(SolutionDir)sdk\sqlite\include\;$(SolutionDir)sdk\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -127,7 +127,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)sdk\sdl2\lib;$(SolutionDir)sdk\sqlite\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\sdl2\lib;$(SolutionDir)3rdParty\sqlite\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -160,56 +160,56 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Managers\DatabaseManager.h" />
-    <ClInclude Include="src\UI\Inventory.h" />
-    <ClInclude Include="src\Entities\Beam\Beam.h" />
-    <ClInclude Include="src\Entities\Explosions\Explosion.h" />
-    <ClInclude Include="src\Scenes\Scene_DefiledCathedral.h" />
-    <ClInclude Include="src\Entities\NPCs\Portal.h" />
-    <ClInclude Include="src\UI\SceneTitleBar.h" />
-    <ClInclude Include="src\UI\FPSBar.h" />
-    <ClInclude Include="src\Components\Animator.h" />
-    <ClInclude Include="src\Components\Animation.h" />
-    <ClInclude Include="src\Components\Health.h" />
-    <ClInclude Include="src\Game\PowerUp\AllPowerUps.cpp" />
-    <ClInclude Include="src\Game\PowerUp\PowerUp.h" />
-    <ClInclude Include="src\UI\PowerUpGroup.h" />
-    <ClInclude Include="src\Miscellaneous\Point.h" />
-    <ClInclude Include="src\UI\CurrencyBar.h" />
-    <ClInclude Include="src\Game\Item\Currency\Currency.h" />
-    <ClInclude Include="src\Game\Item\Equipment\Equipment.h" />
-    <ClInclude Include="src\Game\Item\Equipment\EquipmentStats.h" />
-    <ClInclude Include="src\Game\Item\Equipment\EquipmentTexturePaths.h" />
-    <ClInclude Include="src\Scenes\Scene_Forest.h" />
-    <ClInclude Include="src\Managers\SceneManager.h" />
-    <ClInclude Include="src\Scenes\Scene_Town.h" />
-    <ClInclude Include="src\Scenes\Scene.h" />
-    <ClInclude Include="src\Entities\NPCs\Blacksmith.h" />
-    <ClInclude Include="src\Entities\NPCs\Merchant.h" />
-    <ClInclude Include="src\Entities\NPCs\Gambler.h" />
-    <ClInclude Include="src\Entities\NPCs\NPC.h" />
-    <ClInclude Include="src\Miscellaneous\Mouse.h" />
-    <ClInclude Include="src\Game\Item\LootableItem.h" />
-    <ClInclude Include="src\Game\Item\Item.h" />
-    <ClInclude Include="src\UI\Background.h" />
-    <ClInclude Include="src\Components\Component.h" />
-    <ClInclude Include="src\Managers\EnemySpawnManager.h" />
-    <ClInclude Include="src\Components\Collision\QuadTree.h" />
-    <ClInclude Include="src\Components\Collision\SpatialHash.h" />
-    <ClInclude Include="src\Miscellaneous\Singleton.h" />
-    <ClInclude Include="src\Miscellaneous\Collection.h" />
-    <ClInclude Include="src\Components\Collision\Collider.h" />
-    <ClInclude Include="src\Managers\CollisionManager.h" />
-    <ClInclude Include="src\Components\Collision\BoxCollider.h" />
-    <ClInclude Include="src\Components\HealthBar.h" />
-    <ClInclude Include="src\Entities\Monsters\Boar.h" />
-    <ClInclude Include="src\Entities\Projectile.h" />
-    <ClInclude Include="src\Miscellaneous\Log.h" />
-    <ClInclude Include="src\Miscellaneous\Random.h" />
-    <ClInclude Include="src\Behaviour\AI\MoveTowardsTarget.h" />
-    <ClInclude Include="src\Entities\Entity.h" />
-    <ClInclude Include="src\Managers\CameraManager.h" />
-    <ClInclude Include="src\Entities\Player.h" />
+    <ClInclude Include="Source\Managers\DatabaseManager.h" />
+    <ClInclude Include="Source\UI\Inventory.h" />
+    <ClInclude Include="Source\Entities\Beam\Beam.h" />
+    <ClInclude Include="Source\Entities\Explosions\Explosion.h" />
+    <ClInclude Include="Source\Scenes\Scene_DefiledCathedral.h" />
+    <ClInclude Include="Source\Entities\NPCs\Portal.h" />
+    <ClInclude Include="Source\UI\SceneTitleBar.h" />
+    <ClInclude Include="Source\UI\FPSBar.h" />
+    <ClInclude Include="Source\Components\Animator.h" />
+    <ClInclude Include="Source\Components\Animation.h" />
+    <ClInclude Include="Source\Components\Health.h" />
+    <ClInclude Include="Source\Game\PowerUp\AllPowerUps.cpp" />
+    <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
+    <ClInclude Include="Source\UI\PowerUpGroup.h" />
+    <ClInclude Include="Source\Miscellaneous\Point.h" />
+    <ClInclude Include="Source\UI\CurrencyBar.h" />
+    <ClInclude Include="Source\Game\Item\Currency\Currency.h" />
+    <ClInclude Include="Source\Game\Item\Equipment\Equipment.h" />
+    <ClInclude Include="Source\Game\Item\Equipment\EquipmentStats.h" />
+    <ClInclude Include="Source\Game\Item\Equipment\EquipmentTexturePaths.h" />
+    <ClInclude Include="Source\Scenes\Scene_Forest.h" />
+    <ClInclude Include="Source\Managers\SceneManager.h" />
+    <ClInclude Include="Source\Scenes\Scene_Town.h" />
+    <ClInclude Include="Source\Scenes\Scene.h" />
+    <ClInclude Include="Source\Entities\NPCs\Blacksmith.h" />
+    <ClInclude Include="Source\Entities\NPCs\Merchant.h" />
+    <ClInclude Include="Source\Entities\NPCs\Gambler.h" />
+    <ClInclude Include="Source\Entities\NPCs\NPC.h" />
+    <ClInclude Include="Source\Miscellaneous\Mouse.h" />
+    <ClInclude Include="Source\Game\Item\LootableItem.h" />
+    <ClInclude Include="Source\Game\Item\Item.h" />
+    <ClInclude Include="Source\UI\Background.h" />
+    <ClInclude Include="Source\Components\Component.h" />
+    <ClInclude Include="Source\Managers\EnemySpawnManager.h" />
+    <ClInclude Include="Source\Components\Collision\QuadTree.h" />
+    <ClInclude Include="Source\Components\Collision\SpatialHash.h" />
+    <ClInclude Include="Source\Miscellaneous\Singleton.h" />
+    <ClInclude Include="Source\Miscellaneous\Collection.h" />
+    <ClInclude Include="Source\Components\Collision\Collider.h" />
+    <ClInclude Include="Source\Managers\CollisionManager.h" />
+    <ClInclude Include="Source\Components\Collision\BoxCollider.h" />
+    <ClInclude Include="Source\Components\HealthBar.h" />
+    <ClInclude Include="Source\Entities\Monsters\Boar.h" />
+    <ClInclude Include="Source\Entities\Projectile.h" />
+    <ClInclude Include="Source\Miscellaneous\Log.h" />
+    <ClInclude Include="Source\Miscellaneous\Random.h" />
+    <ClInclude Include="Source\Behaviour\AI\MoveTowardsTarget.h" />
+    <ClInclude Include="Source\Entities\Entity.h" />
+    <ClInclude Include="Source\Managers\CameraManager.h" />
+    <ClInclude Include="Source\Entities\Player.h" />
     <ClInclude Include="sdk\sdl2\include\begin_code.h" />
     <ClInclude Include="sdk\sdl2\include\close_code.h" />
     <ClInclude Include="sdk\sdl2\include\SDL.h" />
@@ -290,92 +290,92 @@
     <ClInclude Include="sdk\sdl2\include\SDL_version.h" />
     <ClInclude Include="sdk\sdl2\include\SDL_video.h" />
     <ClInclude Include="sdk\sdl2\include\SDL_vulkan.h" />
-    <ClInclude Include="src\Components\SpriteRenderer.h" />
-    <ClInclude Include="src\Components\Stats.h" />
-    <ClInclude Include="src\Components\Transform.h" />
-    <ClInclude Include="src\Entities\Monster.h" />
-    <ClInclude Include="src\Managers\EntityManager.h" />
-    <ClInclude Include="src\Managers\GameManager.h" />
-    <ClInclude Include="src\Managers\InputManager.h" />
-    <ClInclude Include="src\Managers\RenderManager.h" />
-    <ClInclude Include="src\Miscellaneous\GUID.h" />
-    <ClInclude Include="src\Miscellaneous\Timer.h" />
-    <ClInclude Include="src\Miscellaneous\Vector.h" />
-    <ClInclude Include="src\Managers\TextureManager.h" />
-    <ClInclude Include="src\Miscellaneous\Time.h" />
-    <ClInclude Include="src\Entities\Monsters\Zombie.h" />
-    <ClInclude Include="src\Managers\UIManager.h" />
-    <ClInclude Include="src\Miscellaneous\Rect.h" />
-    <ClInclude Include="src\UI\UIElement.h" />
-    <ClInclude Include="src\Components\TextRenderer.h" />
-    <ClInclude Include="src\UI\XPBar.h" />
-    <ClInclude Include="src\UI\UserInterface.h" />
-    <ClInclude Include="src\UI\Tooltip.h" />
-    <ClInclude Include="src\Game\Zone\Zone.h" />
-    <ClInclude Include="src\Game\Item\UIItem.h" />
+    <ClInclude Include="Source\Components\SpriteRenderer.h" />
+    <ClInclude Include="Source\Components\Stats.h" />
+    <ClInclude Include="Source\Components\Transform.h" />
+    <ClInclude Include="Source\Entities\Monster.h" />
+    <ClInclude Include="Source\Managers\EntityManager.h" />
+    <ClInclude Include="Source\Managers\GameManager.h" />
+    <ClInclude Include="Source\Managers\InputManager.h" />
+    <ClInclude Include="Source\Managers\RenderManager.h" />
+    <ClInclude Include="Source\Miscellaneous\GUID.h" />
+    <ClInclude Include="Source\Miscellaneous\Timer.h" />
+    <ClInclude Include="Source\Miscellaneous\Vector.h" />
+    <ClInclude Include="Source\Managers\TextureManager.h" />
+    <ClInclude Include="Source\Miscellaneous\Time.h" />
+    <ClInclude Include="Source\Entities\Monsters\Zombie.h" />
+    <ClInclude Include="Source\Managers\UIManager.h" />
+    <ClInclude Include="Source\Miscellaneous\Rect.h" />
+    <ClInclude Include="Source\UI\UIElement.h" />
+    <ClInclude Include="Source\Components\TextRenderer.h" />
+    <ClInclude Include="Source\UI\XPBar.h" />
+    <ClInclude Include="Source\UI\UserInterface.h" />
+    <ClInclude Include="Source\UI\Tooltip.h" />
+    <ClInclude Include="Source\Game\Zone\Zone.h" />
+    <ClInclude Include="Source\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Managers\DatabaseManager.cpp" />
-    <ClCompile Include="src\UI\Inventory.cpp" />
-    <ClCompile Include="src\Entities\Beam\Beam.cpp" />
-    <ClCompile Include="src\Entities\Explosions\Explosion.cpp" />
-    <ClCompile Include="src\Scenes\Scene_DefiledCathedral.cpp" />
-    <ClCompile Include="src\Entities\NPCs\Portal.cpp" />
-    <ClCompile Include="src\UI\SceneTitleBar.cpp" />
-    <ClCompile Include="src\UI\FPSBar.cpp" />
-    <ClCompile Include="src\Components\Animator.cpp" />
-    <ClCompile Include="src\Components\Animation.cpp" />
-    <ClCompile Include="src\Components\Health.cpp" />
-    <ClCompile Include="src\Game\PowerUp\PowerUp.cpp" />
-    <ClCompile Include="src\UI\PowerUpGroup.cpp" />
-    <ClCompile Include="src\Miscellaneous\Point.cpp" />
-    <ClCompile Include="src\Miscellaneous\Rect.cpp" />
-    <ClCompile Include="src\UI\CurrencyBar.cpp" />
-    <ClCompile Include="src\Game\Item\Currency\Currency.cpp" />
-    <ClCompile Include="src\Game\Item\Equipment\Equipment.cpp" />
-    <ClCompile Include="src\Scenes\Scene_Forest.cpp" />
-    <ClCompile Include="src\Managers\SceneManager.cpp" />
-    <ClCompile Include="src\Components\HealthBar.cpp" />
-    <ClCompile Include="src\Scenes\Scene_Town.cpp" />
-    <ClCompile Include="src\Entities\NPCs\Blacksmith.cpp" />
-    <ClCompile Include="src\Entities\NPCs\Merchant.cpp" />
-    <ClCompile Include="src\Entities\NPCs\Gambler.cpp" />
-    <ClCompile Include="src\Entities\NPCs\NPC.cpp" />
-    <ClCompile Include="src\Game\Item\LootableItem.cpp" />
-    <ClCompile Include="src\Game\Item\Item.cpp" />
-    <ClCompile Include="src\Managers\EnemySpawnManager.cpp" />
-    <ClCompile Include="src\Components\Collision\Collider.cpp" />
-    <ClCompile Include="src\Managers\CollisionManager.cpp" />
-    <ClCompile Include="src\Components\Collision\BoxCollider.cpp" />
-    <ClCompile Include="src\Entities\Monsters\Boar.cpp" />
-    <ClCompile Include="src\Components\Transform.cpp" />
-    <ClCompile Include="src\Entities\Projectile.cpp" />
-    <ClCompile Include="src\Behaviour\AI\MoveTowardsTarget.cpp" />
-    <ClCompile Include="src\Managers\CameraManager.cpp" />
-    <ClCompile Include="src\Entities\Player.cpp" />
-    <ClCompile Include="src\Components\SpriteRenderer.cpp" />
-    <ClCompile Include="src\Entities\Entity.cpp" />
-    <ClCompile Include="src\Entities\Monster.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Managers\EntityManager.cpp" />
-    <ClCompile Include="src\Managers\GameManager.cpp" />
-    <ClCompile Include="src\Managers\InputManager.cpp" />
-    <ClCompile Include="src\Managers\RenderManager.cpp" />
-    <ClCompile Include="src\Miscellaneous\Vector.cpp" />
-    <ClCompile Include="src\Managers\TextureManager.cpp" />
-    <ClCompile Include="src\Miscellaneous\Time.cpp" />
-    <ClCompile Include="src\Entities\Monsters\Zombie.cpp" />
-    <ClCompile Include="src\Managers\UIManager.cpp" />
-    <ClCompile Include="src\UI\UIElement.cpp" />
-    <ClCompile Include="src\Components\TextRenderer.cpp" />
-    <ClCompile Include="src\UI\XPBar.cpp" />
-    <ClCompile Include="src\UI\UserInterface.cpp" />
-    <ClCompile Include="src\UI\Tooltip.cpp" />
-    <ClCompile Include="src\Game\Zone\Zone.cpp" />
-    <ClCompile Include="src\Game\Item\UIItem.cpp" />
+    <ClCompile Include="Source\Managers\DatabaseManager.cpp" />
+    <ClCompile Include="Source\UI\Inventory.cpp" />
+    <ClCompile Include="Source\Entities\Beam\Beam.cpp" />
+    <ClCompile Include="Source\Entities\Explosions\Explosion.cpp" />
+    <ClCompile Include="Source\Scenes\Scene_DefiledCathedral.cpp" />
+    <ClCompile Include="Source\Entities\NPCs\Portal.cpp" />
+    <ClCompile Include="Source\UI\SceneTitleBar.cpp" />
+    <ClCompile Include="Source\UI\FPSBar.cpp" />
+    <ClCompile Include="Source\Components\Animator.cpp" />
+    <ClCompile Include="Source\Components\Animation.cpp" />
+    <ClCompile Include="Source\Components\Health.cpp" />
+    <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
+    <ClCompile Include="Source\UI\PowerUpGroup.cpp" />
+    <ClCompile Include="Source\Miscellaneous\Point.cpp" />
+    <ClCompile Include="Source\Miscellaneous\Rect.cpp" />
+    <ClCompile Include="Source\UI\CurrencyBar.cpp" />
+    <ClCompile Include="Source\Game\Item\Currency\Currency.cpp" />
+    <ClCompile Include="Source\Game\Item\Equipment\Equipment.cpp" />
+    <ClCompile Include="Source\Scenes\Scene_Forest.cpp" />
+    <ClCompile Include="Source\Managers\SceneManager.cpp" />
+    <ClCompile Include="Source\Components\HealthBar.cpp" />
+    <ClCompile Include="Source\Scenes\Scene_Town.cpp" />
+    <ClCompile Include="Source\Entities\NPCs\Blacksmith.cpp" />
+    <ClCompile Include="Source\Entities\NPCs\Merchant.cpp" />
+    <ClCompile Include="Source\Entities\NPCs\Gambler.cpp" />
+    <ClCompile Include="Source\Entities\NPCs\NPC.cpp" />
+    <ClCompile Include="Source\Game\Item\LootableItem.cpp" />
+    <ClCompile Include="Source\Game\Item\Item.cpp" />
+    <ClCompile Include="Source\Managers\EnemySpawnManager.cpp" />
+    <ClCompile Include="Source\Components\Collision\Collider.cpp" />
+    <ClCompile Include="Source\Managers\CollisionManager.cpp" />
+    <ClCompile Include="Source\Components\Collision\BoxCollider.cpp" />
+    <ClCompile Include="Source\Entities\Monsters\Boar.cpp" />
+    <ClCompile Include="Source\Components\Transform.cpp" />
+    <ClCompile Include="Source\Entities\Projectile.cpp" />
+    <ClCompile Include="Source\Behaviour\AI\MoveTowardsTarget.cpp" />
+    <ClCompile Include="Source\Managers\CameraManager.cpp" />
+    <ClCompile Include="Source\Entities\Player.cpp" />
+    <ClCompile Include="Source\Components\SpriteRenderer.cpp" />
+    <ClCompile Include="Source\Entities\Entity.cpp" />
+    <ClCompile Include="Source\Entities\Monster.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Managers\EntityManager.cpp" />
+    <ClCompile Include="Source\Managers\GameManager.cpp" />
+    <ClCompile Include="Source\Managers\InputManager.cpp" />
+    <ClCompile Include="Source\Managers\RenderManager.cpp" />
+    <ClCompile Include="Source\Miscellaneous\Vector.cpp" />
+    <ClCompile Include="Source\Managers\TextureManager.cpp" />
+    <ClCompile Include="Source\Miscellaneous\Time.cpp" />
+    <ClCompile Include="Source\Entities\Monsters\Zombie.cpp" />
+    <ClCompile Include="Source\Managers\UIManager.cpp" />
+    <ClCompile Include="Source\UI\UIElement.cpp" />
+    <ClCompile Include="Source\Components\TextRenderer.cpp" />
+    <ClCompile Include="Source\UI\XPBar.cpp" />
+    <ClCompile Include="Source\UI\UserInterface.cpp" />
+    <ClCompile Include="Source\UI\Tooltip.cpp" />
+    <ClCompile Include="Source\Game\Zone\Zone.cpp" />
+    <ClCompile Include="Source\Game\Item\UIItem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="src\ToDoList.txt" />
+    <Text Include="Source\ToDoList.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
