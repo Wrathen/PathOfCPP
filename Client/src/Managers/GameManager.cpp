@@ -5,6 +5,7 @@
 #include "EntityManager.h"
 #include "CameraManager.h"
 #include "CollisionManager.h"
+#include "DatabaseManager.h"
 #include "SceneManager.h"
 #include "UIManager.h"
 #include "../UI/UserInterface.h"
@@ -13,13 +14,18 @@
 #include "../Game/PowerUp/PowerUp.h"
 
 // Base Functions
-void GameManager::Init() { 
+void GameManager::Init() {
+	DB.Init();
 	MainRenderer.Init();
 	SceneMgr.Init();
 	PowerUp::InitAllPowerUps();
 
-	player = new Player("Wrathen");
-	SceneMgr.ChangeScene("Town");
+	// These stuff are temporary.
+	{
+		player = new Player("Wrathen");
+		SceneMgr.ChangeScene("Town");
+		DB.PrintTable("BaseItemTypes");
+	}
 
 	UI.Init();
 	Update();
@@ -89,7 +95,7 @@ void GameManager::Update() {
 		Time::deltaTime = 1 / (1000.0f / frameTime);
 
 		// Debug Stuff
-		if (debugTimer.GetTimeMS() > 1500) {
+		if (debugTimer.GetTimeMS() > 10000) {
 			if (debugProfilerMsgEnabled) {
 				std::cout << "<----------------------------------------------------->" << std::endl;
 				std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / frameTime) +

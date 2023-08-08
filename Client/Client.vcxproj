@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Managers\DatabaseManager.h" />
     <ClInclude Include="src\UI\Inventory.h" />
     <ClInclude Include="src\Entities\Beam\Beam.h" />
     <ClInclude Include="src\Entities\Explosions\Explosion.h" />
@@ -314,6 +315,7 @@
     <ClInclude Include="src\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Managers\DatabaseManager.cpp" />
     <ClCompile Include="src\UI\Inventory.cpp" />
     <ClCompile Include="src\Entities\Beam\Beam.cpp" />
     <ClCompile Include="src\Entities\Explosions\Explosion.cpp" />

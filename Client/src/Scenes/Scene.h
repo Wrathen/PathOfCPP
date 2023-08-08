@@ -54,7 +54,7 @@ public:
 
 	void LoadZone() {
 		// Load and parse Zone data file.
-		Zone zone = Zone::FromSaveFile(zoneDataPath);
+		Zone zone = Zone::FromSaveFile("assets/Zones/" + zoneDataPath);
 		name = zone.GetGeneralData().name;
 
 		// Set position of the player to origin.
