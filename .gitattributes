@@ -1,3 +1,4 @@
+*.js linguist-detectable=false
 3rdParty/* linguist-vendored
 ZoneTool/* linguist-vendored
 Client/Assets/* linguist-vendored
