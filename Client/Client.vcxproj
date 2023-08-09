@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Miscellaneous\ErrorHandler.h" />
     <ClInclude Include="Source\Managers\DatabaseManager.h" />
     <ClInclude Include="Source\UI\Inventory.h" />
     <ClInclude Include="Source\Entities\Beam\Beam.h" />

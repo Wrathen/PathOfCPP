@@ -1,9 +1,12 @@
 #include "DatabaseManager.h"
-#include <cassert>
+#include "../Miscellaneous/ErrorHandler.h"
 #include <string>
 
 // Ctor & Dtor ~~ Handle opening&closing of the Database Connection.
-void DatabaseManager::Init() { assert(sqlite3_open("Assets/Databases/PoC.db", &db) == SQLITE_OK); }
+void DatabaseManager::Init() { 
+	if (sqlite3_open("Assets/Databases/PoC.db", &db) != SQLITE_OK)
+		Abort("Couldn't connect to the Database.\n\nDatabase file might be corrupt.", "Runtime Error");
+}
 DatabaseManager::~DatabaseManager() { if (db) sqlite3_close(db); }
 
 // Main Functions
