@@ -3,7 +3,7 @@
 - Path of Exile
 - Vampire Survivors
 
-written in C++ with the initial intend of getting used to the language, using SDL2 for render calls (DirectX) and WinAPI.
+written in C++ with the initial intend of getting used to the language.
 
 <h2> Get Started </h2>
 
@@ -12,6 +12,13 @@ written in C++ with the initial intend of getting used to the language, using SD
 - Build & Play. (works perfectly fine with Win10/11 MSVC C++17 compiler.)
 
 Feel free to create issues & pull requests.
+
+<h2> Tech Stack </h2>
+
+- C++ Custom Engine
+- Custom <a href="https://wrathen.github.io/PathOfCPP/ZoneTool/" target="_blank">Zone Maker Tool</a> made in JS.
+- <a href="https://github.com/libsdl-org/SDL">SDL2</a> Library for WinAPI & Rendering (DirectX).
+- <a href="https://github.com/sqlite/sqlite">SQLite3</a> Library for Database.
 
 <h2> Custom Tools </h2>
 
