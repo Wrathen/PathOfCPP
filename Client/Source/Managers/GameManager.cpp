@@ -24,7 +24,6 @@ void GameManager::Init() {
 	{
 		player = new Player("Wrathen");
 		SceneMgr.ChangeScene("Town");
-		DB.PrintTable("BaseItemTypes");
 	}
 
 	UI.Init();

@@ -50,8 +50,6 @@ public:
 	auto GetAll() { return &itemList; }
 
 	Collection<T>(int reserveSize) {
-		Debug("Hey, a new collection have arrived! " + std::string(typeid(T).name()));
-
 		itemList = std::vector<T*>();
 		itemList.reserve(reserveSize);
 	}
