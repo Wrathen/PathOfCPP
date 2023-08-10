@@ -2,19 +2,25 @@
 #include <sstream>
 #include "../../Miscellaneous/ErrorHandler.h"
 #include "../../Miscellaneous/Random.h"
-#include "../../Managers/DatabaseManager.h"
 
 namespace Database {
-	std::vector<ItemModifier> GetAllItemModifiers(ItemModPoolTypes modPoolType, uint32_t itemLevel) {
+	std::vector<ItemModifier> GetAllItemModifiers(ItemModPoolTypes modPoolType, uint32_t itemLevel, int optionalFlag) {
 		// Do SQL query to retrieve all eligible DB_ItemModifiers for this ModPoolType and item level range.
 		std::ostringstream query;
-		query << "SELECT BaseItemModifiers.ID, Name, Tier, CoefMinValue1, CoefMaxValue1, CoefMinValue2, CoefMaxValue2," <<
+		query << "SELECT BaseItemModifiers.ID, BaseItemModifiers.Name, TypeID, Tier, CoefMinValue1, CoefMaxValue1, CoefMinValue2, CoefMaxValue2," <<
 			" CoefMinValue3, CoefMaxValue3, Weight, MinLevel, MaxLevel, Format" <<
 			" FROM BaseItemModifiers" <<
 			" INNER JOIN BaseItemModPool" <<
 			" ON BaseItemModPool.ModPoolTypeID = " << (int)modPoolType <<
 			" AND BaseItemModifiers.TypeID = BaseItemModPool.ModifierTypeID" <<
 			" AND BaseItemModifiers.MinLevel <= " << itemLevel;
+
+		// If there is Flag Filtering enabled. (i.e. filtering for Prefixes only, or Suffixes!)
+		if (optionalFlag != -1) {
+			query << " INNER JOIN BaseItemModifierTypes" <<
+					 " ON BaseItemModifiers.TypeID = BaseItemModifierTypes.ID" <<
+					 " AND BaseItemModifierTypes.Flags = " << optionalFlag;
+		}
 
 		// Create a temp vector to hold all item modifiers.
 		std::vector<ItemModifier> eligibleItemModifiers{};
@@ -23,24 +29,25 @@ namespace Database {
 		DB.ExecuteQuery(query.str().c_str(), [](void* data, int argc, char** argv, char** azColName)
 		{
 			// Error Handling
-			if (argc != 13)
-				Abort("Provided argument count wasn't 13. This is against the design of BaseItemModifier Database Structure.", "Fatal Error");
+			if (argc != 14)
+				Abort("Provided argument count wasn't 14. This is against the design of BaseItemModifier Database Structure.", "Fatal Error");
 
 			// Parse the Data and Create the ItemModifier
 			ItemModifier modifier(
-				std::atoi(argv[0]),			// ID              --  integer
+				std::atoi(argv[0]),			// ID              --  int
 				argv[1],					// Name            --  string
-				std::atoi(argv[2]),			// Tier            --  integer
-				(float)std::atof(argv[3]),  // CoefMinValue1   --  float
-				(float)std::atof(argv[4]),  // CoefMaxValue1   --  float
-				(float)std::atof(argv[5]),  // CoefMinValue2   --  float
-				(float)std::atof(argv[6]),  // CoefMaxValue2   --  float
-				(float)std::atof(argv[7]),  // CoefMinValue3   --  float
-				(float)std::atof(argv[8]),  // CoefMaxValue3   --  float
-				std::atoi(argv[9]),			// Weight          --  int
-				std::atoi(argv[10]),		// MinLevel        --  int 
-				std::atoi(argv[11]),		// MaxLevel        --  int
-				argv[12]					// Format          --  string
+				std::atoi(argv[2]),			// TypeID          --  int
+				std::atoi(argv[3]),			// Tier            --  int
+				(float)std::atof(argv[4]),  // CoefMinValue1   --  float
+				(float)std::atof(argv[5]),  // CoefMaxValue1   --  float
+				(float)std::atof(argv[6]),  // CoefMinValue2   --  float
+				(float)std::atof(argv[7]),  // CoefMaxValue2   --  float
+				(float)std::atof(argv[8]),  // CoefMinValue3   --  float
+				(float)std::atof(argv[9]),  // CoefMaxValue3   --  float
+				std::atoi(argv[10]),		// Weight          --  int
+				std::atoi(argv[11]),		// MinLevel        --  int 
+				std::atoi(argv[12]),		// MaxLevel        --  int
+				argv[13]					// Format          --  string
 			);
 
 			// Place the ItemModifier into the eligibleItemModifiers vector.
@@ -60,13 +67,46 @@ namespace Database {
 		for (size_t i = 0; i < allModifiers.size(); ++i)
 			wr.Add(i, allModifiers[i].Weight);
 
-		// Pick a random one.
-		// [@todo] for loop 10k times isn't necessary, just doing it to see that its really weighted random, and it works.
-		for (int i = 0; i < 10000; ++i) {
-			ItemModifier randomItemModifier = allModifiers[wr.GetRandom()];
-			randomItemModifier.PrintToConsole();
+		return allModifiers[wr.GetRandom()];
+	}
+	ItemModifier GetRandomItemModifier(std::vector<ItemModifier>& itemModifiers) {
+		WeightedRandom<int> wr;
+
+		// Put all eligible modifiers into the WeightedRandom vector.
+		for (size_t i = 0; i < itemModifiers.size(); ++i)
+			wr.Add(i, itemModifiers[i].Weight);
+
+		return itemModifiers[wr.GetRandom()];
+	}
+	std::vector<ItemModifier> GetRandomItemModifiers(std::vector<ItemModifier>& itemModifiers, uint32_t count) {
+		if (itemModifiers.size() <= count)
+			Abort("GetRandomItemModifiers function called with TOO MANY COUNTS!", "Runtime Error!");
+
+		std::vector<ItemModifier> randomItemModifiers{};
+		WeightedRandom<int> wr;
+
+		// Put all eligible modifiers into the WeightedRandom vector.
+		for (size_t i = 0; i < itemModifiers.size(); ++i)
+			wr.Add(i, itemModifiers[i].Weight);
+
+		// Fill the vector with random item modifiers.
+		while (randomItemModifiers.size() != count) {
+			Database::ItemModifier& randomMod = itemModifiers[wr.GetRandom()];
+
+			// Check whether we already have this type of modifier.
+			bool similarModExists = false;
+			for (size_t j = 0; j < randomItemModifiers.size(); ++j) {
+				if (randomItemModifiers[j].TypeID == randomMod.TypeID) {
+					similarModExists = true;
+					break;
+				}
+			}
+
+			// If we passed the check, this randomly picked mod is fine and we can emplace it.
+			if (!similarModExists)
+				randomItemModifiers.push_back(randomMod);
 		}
 
-		return allModifiers[wr.GetRandom()];
+		return randomItemModifiers;
 	}
 }

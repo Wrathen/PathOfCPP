@@ -35,6 +35,8 @@ namespace Database {
 	struct ItemModifier;
 	enum class ItemModPoolTypes;
 
-	std::vector<ItemModifier> GetAllItemModifiers(ItemModPoolTypes modPoolType, uint32_t itemLevel);
+	std::vector<ItemModifier> GetAllItemModifiers(ItemModPoolTypes modPoolType, uint32_t itemLevel, int optionalFlag = -1);
+	std::vector<ItemModifier> GetRandomItemModifiers(std::vector<ItemModifier>& itemModifiers, uint32_t count);
+	ItemModifier GetRandomItemModifier(std::vector<ItemModifier>& itemModifiers);
 	ItemModifier GetRandomItemModifier(ItemModPoolTypes modPoolType, uint32_t itemLevel);
 }

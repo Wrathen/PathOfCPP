@@ -1,4 +1,5 @@
 #pragma once
+#include "../../Managers/DatabaseManager.h"
 #include <string>
 
 // Namespace Global Typedefs
@@ -75,6 +76,7 @@ namespace Database {
 	struct ItemModifier {
 		int ID;
 		std::string Name;
+		int TypeID;
 		int Tier;
 		float CoefMinValue1;
 		float CoefMaxValue1;
@@ -88,10 +90,11 @@ namespace Database {
 		std::string Format;
 
 		// Constructor
-		ItemModifier(int _ID, std::string _Name, int _Tier,
+		ItemModifier() = default;
+		ItemModifier(int _ID, std::string _Name, int _TypeID, int _Tier,
 						float _CoefMinValue1, float _CoefMaxValue1, float _CoefMinValue2, float _CoefMaxValue2,
 						float _CoefMinValue3, float _CoefMaxValue3, int _Weight, int _MinLevel, int _MaxLevel, std::string _Format) :
-			ID(_ID), Name(_Name), Tier(_Tier), CoefMinValue1(_CoefMinValue1), CoefMaxValue1(_CoefMaxValue1),
+			ID(_ID), Name(_Name), Tier(_Tier), TypeID(_TypeID), CoefMinValue1(_CoefMinValue1), CoefMaxValue1(_CoefMaxValue1),
 			CoefMinValue2(_CoefMinValue2), CoefMaxValue2(_CoefMaxValue2), CoefMinValue3(_CoefMinValue3), CoefMaxValue3(_CoefMaxValue3),
 			Weight(_Weight), MinLevel(_MinLevel), MaxLevel(_MaxLevel), Format(_Format) {}
 		

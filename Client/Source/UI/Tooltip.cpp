@@ -15,25 +15,25 @@ void Tooltip::Start() {
 	zIndex = 100;
 
 	// Renderer background
-	renderer.SetWidth(320);
-	renderer.SetHeight(300);
+	renderer.SetWidth(460);
+	renderer.SetHeight(400);
 	renderer.SetPositionAbsolute();
 
 	// Name Text
 	text_name.AssignTransform(&transform);
-	text_name.SetWidth(300);
+	text_name.SetWidth(renderer.GetWidth() - 20);
 	text_name.SetHeight(40);
 	text_name.SetFontSize(24);
-	text_name.SetOffset(160, 26);
+	text_name.SetOffset(renderer.GetWidth()/2, 34);
 	text_name.SetPositionAbsolute();
 	text_name.shouldDrawCentered = true;
 
 	// Mods Text
 	text_mods.AssignTransform(&transform);
-	text_mods.SetWidth(300);
+	text_mods.SetWidth(380);
 	text_mods.SetHeight(40);
-	text_mods.SetFontSize(24);
-	text_mods.SetOffset(15, 65);
+	text_mods.SetFontSize(20);
+	text_mods.SetOffset(15, 80);
 	text_mods.SetPositionAbsolute();
 
 	// Description Text
@@ -41,7 +41,7 @@ void Tooltip::Start() {
 	text_description.SetWidth(300);
 	text_description.SetHeight(40);
 	text_description.SetFontSize(18);
-	text_description.SetOffset(10, 270 - text_description.GetHeight());
+	text_description.SetOffset(10, renderer.GetHeight() - text_description.GetHeight());
 	text_description.SetPositionAbsolute();
 }
 void Tooltip::Update() {
@@ -66,7 +66,7 @@ void Tooltip::Update() {
 	}
 
 	// Set position of the tooltip to the Mouse Position
-	transform.SetPosition(Mouse::GetPosition());
+	transform.SetPosition(Mouse::GetPosition() - Vector2(renderer.GetWidth()/2, renderer.GetHeight()));
 
 	// Clamp render area of the tooltip to be inside of the game screen.
 	if (transform.position.x + renderer.width > GAME.screenWidth)

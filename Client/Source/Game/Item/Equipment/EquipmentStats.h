@@ -2,34 +2,65 @@
 #include <vector>
 #include "../../../Miscellaneous/Random.h"
 #include "EquipmentTexturePaths.h"
+#include "../../../Database/Item/ItemModifier.h"
 
 enum class ItemModifierType {
-	Strength,
-	Agility,
-	Intellect,
-	MaxHP,
-	Crit,
-	Haste,
-	Mastery,
-	Versatility,
+	IncArmour = 1,
+	IncArmour_IncSBR,
+	FlatArmour,
+	FlatArmour_FlatMaxLife,
+	FlatMaxLife,
+	PhysReflectToMeleeAttackers,
+	AdditionalPhysReduction,
+	IncSBR,
+	ReducedAttributeRequirements,
+	FlatStrength,
+	FlatFireResistance,
+	FlatLightningResistance,
+	FlatColdResistance,
+	FlatChaosResistance,
+	FlatLifeRegen,
+	IncEvasion,
+	IncEvasion_IncSBR,
+	FlatEvasion,
+	FlatEvasion_FlatMaxLife,
+	FlatDexterity,
+	FlatChanceToSuppressSpellDamage,
+	IncEnergyShield,
+	IncEnergyShield_IncSBR,
+	FlatMaxEnergyShield,
+	FlatMaxEnergyShield_FlatMaxLife,
+	FlatMaxEnergyShield_FlatMaxMana,
+	FlatMaxMana,
+	FlatFasterStartOfEnergyShieldRecharge,
+	FlatIntelligence,
+	IncArmourEvasion,
+	IncArmourEvasion_IncSBR,
+	FlatArmour_FlatEvasion,
+	IncArmourEnergyShield,
+	IncArmourEnergyShield_IncSBR,
+	FlatArmour_FlatMaxEnergyShield,
+	IncEvasionEnergyShield,
+	IncEvasionEnergyShield_IncSBR,
+	FlatEvasion_FlatMaxEnergyShield,
+	IncArmourEvasionEnergyShield,
+	IncArmourEvasionEnergyShield_IncSBR,
 	Count
 };
 struct ItemModifier {
-	ItemModifierType type;
-	std::string name;
-	float value;
-};
-static ItemModifier all_prefixes[] = {
-	ItemModifier{ItemModifierType::Strength, "+# to Strength", 0.0f},
-	ItemModifier{ItemModifierType::Agility, "+# to Agility", 0.0f},
-	ItemModifier{ItemModifierType::Intellect, "+# to Intellect", 0.0f},
-	ItemModifier{ItemModifierType::MaxHP, "+# to Maximum Life", 0.0f}
-};
-static ItemModifier all_suffixes[] = {
-	ItemModifier{ItemModifierType::Crit, "+#% Increased Crit Chance", 0.0f},
-	ItemModifier{ItemModifierType::Haste, "+#% Haste", 0.0f},
-	ItemModifier{ItemModifierType::Mastery, "+#% Mastery", 0.0f},
-	ItemModifier{ItemModifierType::Versatility, "+#% Versatility", 0.0f}
+	Database::ItemModifier db;
+	float coefValue1 = 0;
+	float coefValue2 = 0;
+	float coefValue3 = 0;
+
+	ItemModifier(Database::ItemModifier dbItemMod) {
+		db = dbItemMod;
+		coefValue1 = RandomFloat(dbItemMod.CoefMinValue1, dbItemMod.CoefMaxValue1);
+		if (dbItemMod.CoefMinValue2 != 0 && dbItemMod.CoefMaxValue2 != 0)
+			coefValue2 = RandomFloat(dbItemMod.CoefMinValue2, dbItemMod.CoefMaxValue2);
+		if (dbItemMod.CoefMinValue3 != 0 && dbItemMod.CoefMaxValue3 != 0)
+			coefValue3 = RandomFloat(dbItemMod.CoefMinValue3, dbItemMod.CoefMaxValue3);
+	}
 };
 
 class EquipmentStats {
@@ -41,42 +72,16 @@ public:
 	EquipmentStats() {}
 
 	void Randomize(float itemLevel, int prefixCount, int suffixCount, float multiplier) {
-		for (int i = 0; i < prefixCount; ++i) {
-			ItemModifier stat = all_prefixes[RandomInt(0, 4)];
-			float randomMultiplier = RandomFloat(1.0f, multiplier);
-			bool statAlreadyExists = false;
+		std::vector<Database::ItemModifier> allPrefixes = Database::GetAllItemModifiers(Database::ItemModPoolTypes::BodyArmourSTR, (uint32_t)itemLevel, 2);
+		std::vector<Database::ItemModifier> allSuffixes = Database::GetAllItemModifiers(Database::ItemModPoolTypes::BodyArmourSTR, (uint32_t)itemLevel, 0);
 
-			for (size_t j = 0; j < prefixes.size(); ++j) {
-				if (prefixes[j].type == stat.type) {
-					statAlreadyExists = true;
-					prefixes[j].value += itemLevel * randomMultiplier;
-					break;
-				}
-			}
-
-			if (!statAlreadyExists) {
-				stat.value += itemLevel * randomMultiplier;
-				prefixes.insert(prefixes.end(), stat);
-			}
-		}
-		for (int i = 0; i < suffixCount; ++i) {
-			ItemModifier stat = all_suffixes[RandomInt(0, 4)];
-			float randomMultiplier = RandomFloat(1.0f, multiplier);
-			bool statAlreadyExists = false;
-
-			for (size_t j = 0; j < suffixes.size(); ++j) {
-				if (suffixes[j].type == stat.type) {
-					statAlreadyExists = true;
-					suffixes[j].value += itemLevel * randomMultiplier;
-					return;
-				}
-			}
-
-			if (!statAlreadyExists) {
-				stat.value += itemLevel * randomMultiplier;
-				suffixes.insert(suffixes.end(), stat);
-			}
-		}
+		auto randomPrefixes = Database::GetRandomItemModifiers(allPrefixes, prefixCount);
+		auto randomSuffixes = Database::GetRandomItemModifiers(allSuffixes, suffixCount);
+		
+		for (int i = 0; i < randomPrefixes.size(); ++i)
+			prefixes.emplace_back(ItemModifier(randomPrefixes[i]));
+		for (int i = 0; i < randomSuffixes.size(); ++i)
+			suffixes.emplace_back(ItemModifier(randomSuffixes[i]));
 	}
 	
 	int GetPrefixAmount() const { return prefixes.size(); }
