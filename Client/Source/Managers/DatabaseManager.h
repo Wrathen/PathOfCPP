@@ -5,7 +5,7 @@
 #include <string>
 
 // Should move these out of here. [@todo] move these.
-enum class ItemModPoolTypes {
+enum class DB_ItemModPoolTypes {
 	BodyArmourSTR = 1,
 	BodyArmourDEX,
 	BodyArmourINT,
@@ -32,7 +32,7 @@ enum class ItemModPoolTypes {
 	WeaponQuiver,
 	WeaponShield
 };
-enum class ItemModifierTypes {
+enum class DB_ItemModifierTypes {
 	IncArmour = 1,
 	IncArmour_IncSBR,
 	FlatArmour,
@@ -74,7 +74,7 @@ enum class ItemModifierTypes {
 	IncArmourEvasionEnergyShield,
 	IncArmourEvasionEnergyShield_IncSBR
 };
-struct ItemModifier {
+struct DB_ItemModifier {
 	int ID;
 	std::string Name;
 	int Tier;
@@ -90,7 +90,7 @@ struct ItemModifier {
 	std::string Format;
 	
 	// Constructor
-	ItemModifier(int _ID, std::string _Name, int _Tier, 
+	DB_ItemModifier(int _ID, std::string _Name, int _Tier, 
 				float _CoefMinValue1, float _CoefMaxValue1, float _CoefMinValue2, float _CoefMaxValue2, 
 				float _CoefMinValue3, float _CoefMaxValue3, int _Weight, int _MinLevel, int _MaxLevel, std::string _Format) :
 				ID(_ID), Name(_Name), Tier(_Tier), CoefMinValue1(_CoefMinValue1), CoefMaxValue1(_CoefMaxValue1), 
@@ -109,8 +109,8 @@ class DatabaseManager : public Singleton<DatabaseManager> {
 public:
 	// Main Functions
 	void PrintTable(const char* tableName);
-	std::vector<ItemModifier*> GetAllItemModifiers(ItemModPoolTypes modPoolType, uint32_t itemLevel);
-	ItemModifier* GetRandomItemModifier(ItemModPoolTypes modPoolType, uint32_t itemLevel);
+	std::vector<DB_ItemModifier> GetAllItemModifiers(DB_ItemModPoolTypes modPoolType, uint32_t itemLevel);
+	DB_ItemModifier GetRandomItemModifier(DB_ItemModPoolTypes modPoolType, uint32_t itemLevel);
 
 protected:
 	void Init();
