@@ -20,10 +20,6 @@ Feel free to create issues & pull requests.
 - <a href="https://github.com/libsdl-org/SDL">SDL2</a> Library for WinAPI & Rendering (DirectX).
 - <a href="https://github.com/sqlite/sqlite">SQLite3</a> Library for Database.
 
-<h2> Custom Tools </h2>
-
-<h3>Explore <a href="https://wrathen.github.io/PathOfCPP/ZoneTool/" target="_blank">custom made ZoneTool</a> and make your own Zones!</h3>
-
 <h2> Video Showcases </h2>
 
 <b>[August 2th 2023]</b> MASSIVE Amounts of Projectiles, Inventory&Loot System Showcases
