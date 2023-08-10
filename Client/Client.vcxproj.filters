@@ -155,6 +155,7 @@
     <ClInclude Include="Source\UI\Inventory.h" />
     <ClInclude Include="Source\Managers\DatabaseManager.h" />
     <ClInclude Include="Source\Miscellaneous\ErrorHandler.h" />
+    <ClInclude Include="Source\Database\Item\ItemModifier.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\SpriteRenderer.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Source\Game\Item\UIItem.cpp" />
     <ClCompile Include="Source\UI\Inventory.cpp" />
     <ClCompile Include="Source\Managers\DatabaseManager.cpp" />
+    <ClCompile Include="Source\Database\Item\ItemModifier.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Source\ToDoList.txt" />

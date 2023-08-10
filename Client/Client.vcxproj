@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Database\Item\ItemModifier.h" />
     <ClInclude Include="Source\Miscellaneous\ErrorHandler.h" />
     <ClInclude Include="Source\Managers\DatabaseManager.h" />
     <ClInclude Include="Source\UI\Inventory.h" />
@@ -316,6 +317,7 @@
     <ClInclude Include="Source\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Database\Item\ItemModifier.cpp" />
     <ClCompile Include="Source\Managers\DatabaseManager.cpp" />
     <ClCompile Include="Source\UI\Inventory.cpp" />
     <ClCompile Include="Source\Entities\Beam\Beam.cpp" />

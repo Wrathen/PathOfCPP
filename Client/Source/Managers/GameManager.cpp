@@ -12,6 +12,7 @@
 #include "../Miscellaneous/Log.h"
 #include "../Miscellaneous/Timer.h"
 #include "../Game/PowerUp/PowerUp.h"
+#include "../Database/Item/ItemModifier.h"
 
 // Base Functions
 void GameManager::Init() {
@@ -25,6 +26,9 @@ void GameManager::Init() {
 		player = new Player("Wrathen");
 		SceneMgr.ChangeScene("Town");
 	}
+
+	// Testing stuff
+	Database::GetRandomItemModifier(Database::ItemModPoolTypes::BodyArmourSTR, 100);
 
 	UI.Init();
 	Update();
