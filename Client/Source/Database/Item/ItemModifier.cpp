@@ -7,19 +7,20 @@ namespace Database {
 	std::vector<ItemModifier> GetAllItemModifiers(ItemModPoolTypes modPoolType, uint32_t itemLevel, int optionalFlag) {
 		// Do SQL query to retrieve all eligible DB_ItemModifiers for this ModPoolType and item level range.
 		std::ostringstream query;
-		query << "SELECT BaseItemModifiers.ID, BaseItemModifiers.Name, TypeID, Tier, CoefMinValue1, CoefMaxValue1, CoefMinValue2, CoefMaxValue2," <<
-			" CoefMinValue3, CoefMaxValue3, Weight, MinLevel, MaxLevel, Format" <<
+		query << "SELECT BaseItemModifiers.ID, BaseItemModifiers.Name, Tier, TypeID, BaseItemModifiers.Flags," <<
+			" CoefMinValue1, CoefMaxValue1, CoefMinValue2, CoefMaxValue2," <<
+			" CoefMinValue3, CoefMaxValue3, Weight, ItemLevel, Format" <<
 			" FROM BaseItemModifiers" <<
 			" INNER JOIN BaseItemModPool" <<
 			" ON BaseItemModPool.ModPoolTypeID = " << (int)modPoolType <<
 			" AND BaseItemModifiers.TypeID = BaseItemModPool.ModifierTypeID" <<
-			" AND BaseItemModifiers.MinLevel <= " << itemLevel;
+			" AND BaseItemModifiers.ItemLevel <= " << itemLevel;
 
 		// If there is Flag Filtering enabled. (i.e. filtering for Prefixes only, or Suffixes!)
 		if (optionalFlag != -1) {
 			query << " INNER JOIN BaseItemModifierTypes" <<
 					 " ON BaseItemModifiers.TypeID = BaseItemModifierTypes.ID" <<
-					 " AND BaseItemModifierTypes.Flags = " << optionalFlag;
+					 " AND BaseItemModifiers.Flags = " << optionalFlag;
 		}
 
 		// Create a temp vector to hold all item modifiers.
@@ -36,17 +37,17 @@ namespace Database {
 			ItemModifier modifier(
 				std::atoi(argv[0]),			// ID              --  int
 				argv[1],					// Name            --  string
-				std::atoi(argv[2]),			// TypeID          --  int
-				std::atoi(argv[3]),			// Tier            --  int
-				(float)std::atof(argv[4]),  // CoefMinValue1   --  float
-				(float)std::atof(argv[5]),  // CoefMaxValue1   --  float
-				(float)std::atof(argv[6]),  // CoefMinValue2   --  float
-				(float)std::atof(argv[7]),  // CoefMaxValue2   --  float
-				(float)std::atof(argv[8]),  // CoefMinValue3   --  float
-				(float)std::atof(argv[9]),  // CoefMaxValue3   --  float
-				std::atoi(argv[10]),		// Weight          --  int
-				std::atoi(argv[11]),		// MinLevel        --  int 
-				std::atoi(argv[12]),		// MaxLevel        --  int
+				std::atoi(argv[2]),			// Tier            --  int
+				std::atoi(argv[3]),			// TypeID          --  int
+				std::atoi(argv[4]),			// Flags           --  int
+				(float)std::atof(argv[5]),  // CoefMinValue1   --  float
+				(float)std::atof(argv[6]),  // CoefMaxValue1   --  float
+				(float)std::atof(argv[7]),  // CoefMinValue2   --  float
+				(float)std::atof(argv[8]),  // CoefMaxValue2   --  float
+				(float)std::atof(argv[9]),  // CoefMinValue3   --  float
+				(float)std::atof(argv[10]), // CoefMaxValue3   --  float
+				std::atoi(argv[11]),		// Weight          --  int
+				std::atoi(argv[12]),		// ItemLevel       --  int 
 				argv[13]					// Format          --  string
 			);
 

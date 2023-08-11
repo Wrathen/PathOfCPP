@@ -78,9 +78,9 @@ public:
 		auto randomPrefixes = Database::GetRandomItemModifiers(allPrefixes, prefixCount);
 		auto randomSuffixes = Database::GetRandomItemModifiers(allSuffixes, suffixCount);
 		
-		for (int i = 0; i < randomPrefixes.size(); ++i)
+		for (size_t i = 0; i < randomPrefixes.size(); ++i)
 			prefixes.emplace_back(ItemModifier(randomPrefixes[i]));
-		for (int i = 0; i < randomSuffixes.size(); ++i)
+		for (size_t i = 0; i < randomSuffixes.size(); ++i)
 			suffixes.emplace_back(ItemModifier(randomSuffixes[i]));
 	}
 	

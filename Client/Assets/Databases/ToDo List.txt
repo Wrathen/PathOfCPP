@@ -1,0 +1,5 @@
+~~ Database
+	- BaseItemModifierTypes is still incomplete from the Vanilla PoE (Prefixes & Suffixes from Shields & AllWeapons).
+	- BaseItemModifiers after more types are added.
+	- Still no Implicits made yet.
+	- There is an issue with hard-coding Tiers. I saw that T1 flat life regen for an amulet or a ring (cant recall) is like (46.1-x) while my defined T1 flat Life regen is at like 100's because of I made it initially from body armour.
