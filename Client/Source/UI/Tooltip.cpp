@@ -46,27 +46,32 @@ void Tooltip::Start() {
 }
 void Tooltip::Update() {
 	if (!item) return;
-	static float r = RandomInt(0, 255);
-	static float g = RandomInt(0, 255);
-	static float b = RandomInt(0, 255);
-	static bool rIncreasing = true;
-	static bool gIncreasing = true;
-	static bool bIncreasing = true;
+	
+	// Coloring
+	{
+		static float r = RandomInt(0, 255);
+		static float g = RandomInt(0, 255);
+		static float b = RandomInt(0, 255);
+		static bool rIncreasing = true;
+		static bool gIncreasing = true;
+		static bool bIncreasing = true;
 
-	// Rainbow effect for Artifact Rarity Items
-	if (item->rarity == ItemRarity::Artifact) {
-		r += (rIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
-		g += (gIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
-		b += (bIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
-		rIncreasing = r > 254 ? false : r < 0.5f ? true : rIncreasing;
-		gIncreasing = g > 254 ? false : g < 0.5f ? true : gIncreasing;
-		bIncreasing = b > 254 ? false : b < 0.5f ? true : bIncreasing;
+		// Rainbow effect for Artifact Rarity Items
+		if (item->rarity == ItemRarity::Artifact) {
+			r += (rIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
+			g += (gIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
+			b += (bIncreasing ? 255.0f : -255.0f) * Time::deltaTime;
+			rIncreasing = r > 254 ? false : r < 0.5f ? true : rIncreasing;
+			gIncreasing = g > 254 ? false : g < 0.5f ? true : gIncreasing;
+			bIncreasing = b > 254 ? false : b < 0.5f ? true : bIncreasing;
 
-		renderer.SetColor({(Uint8)r, (Uint8)g, (Uint8)b});
+			renderer.SetColor({(Uint8)r, (Uint8)g, (Uint8)b});
+		} else renderer.SetColor({ 255, 255, 255 });
 	}
 
 	// Set position of the tooltip to the Mouse Position
-	transform.SetPosition(Mouse::GetPosition() - Vector2(renderer.GetWidth()/2, renderer.GetHeight()));
+	if (targetUIElement)
+		transform.SetPosition(targetUIElement->transform.GetScreenPosition() - Vector2(renderer.GetWidth()/2, renderer.GetHeight()));
 
 	// Clamp render area of the tooltip to be inside of the game screen.
 	if (transform.position.x + renderer.width > GAME.screenWidth)
@@ -87,10 +92,13 @@ void Tooltip::Render() {
 	text_description.Render();
 }
 
-void Tooltip::SetItem(Item* _item) { 
+void Tooltip::SetItem(UIElement* target, Item* _item) {
+	// Update the Target UI Element
+	targetUIElement = target;
+
 	if (item == _item) return;
 	item = _item;
-	if (!item) return;
+	if (!_item) return;
 
 	std::string name = item->GetName();
 	if (name.size() > 23) text_name.SetFontSize(16);

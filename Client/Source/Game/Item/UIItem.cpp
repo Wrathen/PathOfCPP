@@ -42,9 +42,9 @@ void UIItem::OnDelete() {
 	// Update the UI Tooltip if we were being hovered on.
 	if (UIMgr.currentHoveredElement == this) {
 		UIMgr.currentHoveredElement = nullptr;
-		UI.UpdateTooltip(nullptr);
+		UI.UpdateTooltip(nullptr, nullptr);
 	}
 }
-void UIItem::OnMouseEnter() { UI.UpdateTooltip(item); }
+void UIItem::OnMouseEnter() { UI.UpdateTooltip(this, item); }
 void UIItem::OnMouseOver() {}
-void UIItem::OnMouseLeave() { UI.UpdateTooltip(nullptr); }
+void UIItem::OnMouseLeave() { UI.UpdateTooltip(nullptr, nullptr); }

@@ -27,7 +27,7 @@ public:
 	void UpdateMaxXP(float value);
 	void UpdateLevel(int value);
 	void UpdateFPS(int value);
-	void UpdateTooltip(Item* item);
+	void UpdateTooltip(UIElement* target, Item* item);
 	void UpdateEquipment();
 	void UpdateInventory();
 	void UpdatePowerUps();

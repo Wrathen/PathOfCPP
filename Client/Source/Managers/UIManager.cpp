@@ -175,6 +175,6 @@ void UIManager::PickItemToHand(UIItem* item) {
 	currentHeldItem = item;
 	if (currentHoveredElement == item) {
 		currentHoveredElement = nullptr;
-		UI.UpdateTooltip(nullptr);
+		UI.UpdateTooltip(nullptr, nullptr);
 	}
 }
