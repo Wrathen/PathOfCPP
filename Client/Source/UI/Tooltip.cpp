@@ -90,9 +90,9 @@ void Tooltip::SetItem(UIElement* target, Item* _item, TooltipPositionType _posit
 	text_description.SetText(item->GetDescription(), { 77, 77, 77 });
 
 	// Dynamically calculate Width&Height of this tooltip box.
-	uint32_t tooltipWidth = Max(text_name.GetWidth(), text_mods.GetWidth(), text_description.GetWidth());
+	uint32_t tooltipWidth = Max(text_name.GetWidth() + 30, text_mods.GetWidth(), text_description.GetWidth());
 	uint32_t tooltipHeight = title.GetHeight() + text_name.GetHeight() + text_mods.GetHeight() + text_description.GetHeight();
-	ChangeSize(tooltipWidth + 10, tooltipHeight);
+	ChangeSize(tooltipWidth + 10, tooltipHeight + 10);
 }
 
 void Tooltip::UpdatePosition() {
@@ -158,6 +158,6 @@ void Tooltip::ChangeSize(uint32_t newWidth, uint32_t newHeight) {
 	title.SetWidth(newWidth);
 
 	text_name.SetOffset(newWidth / 2, title.GetHeight() / 2);
-	text_mods.SetOffset(newWidth / 2, title.GetHeight() + text_mods.GetHeight() / 2);
+	text_mods.SetOffset(newWidth / 2, title.GetHeight() + text_mods.GetHeight() / 2 + 10);
 	text_description.SetOffset(10, renderer.GetHeight() - text_description.GetHeight());
 }
