@@ -13,6 +13,12 @@ void TextRenderer::SetText(std::string text, SDL_Color color, bool forceSet) {
 	SDL_Surface* surface = TTF_RenderText_Solid_Wrapped(MainRenderer.GetFont(_size), _text.c_str(), {255, 255, 255}, 0);
 	Super::AssignTexture(SDL_CreateTextureFromSurface(MainRenderer.renderer, surface));
 
+	// If text is empty, the width and height comes back in billions. Set them back to 0.
+	if (text.empty()) {
+		SetWidth(0);
+		SetHeight(0);
+	}
+
 	// Convert the color into grayscale and then invert it so we can colorize shadows according to the base color.
 	float colorGrayscale = (color.r + color.g + color.b) / 255.0f / 3.0f;
 	Uint8 colorGrayscaleInverted = (1.0f - colorGrayscale) * 255.0f;

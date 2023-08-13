@@ -24,6 +24,7 @@ public:
 	std::string description;
 	std::string texturePath;
 	float itemLevel = 1;
+	bool isEquipped = false;
 
 	// Main Methods
 	virtual std::string GetName() = 0;

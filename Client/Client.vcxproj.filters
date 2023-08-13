@@ -156,6 +156,7 @@
     <ClInclude Include="Source\Managers\DatabaseManager.h" />
     <ClInclude Include="Source\Miscellaneous\ErrorHandler.h" />
     <ClInclude Include="Source\Database\Item\ItemModifier.h" />
+    <ClInclude Include="Source\Miscellaneous\Math.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\SpriteRenderer.cpp" />

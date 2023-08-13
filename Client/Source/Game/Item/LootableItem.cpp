@@ -84,7 +84,7 @@ void LootableItem::OnDelete() {
 	// Update the UI Tooltip if we were being hovered on.
 	if (UIMgr.currentHoveredElement == this) {
 		UIMgr.currentHoveredElement = nullptr;
-		UI.UpdateTooltip(nullptr, nullptr);
+		UI.UpdateTooltip(nullptr, nullptr, TooltipPositionType::NONE);
 	}
 
 	// If there's a beam associated with this lootable item, delete it.
@@ -95,6 +95,6 @@ void LootableItem::OnDelete() {
 	item->OnDelete();
 	delete item;
 }
-void LootableItem::OnMouseEnter() { UI.UpdateTooltip(this, item); }
+void LootableItem::OnMouseEnter() { UI.UpdateTooltip(this, item, TooltipPositionType::LootableItem); }
 void LootableItem::OnMouseOver() {}
-void LootableItem::OnMouseLeave() { UI.UpdateTooltip(nullptr, nullptr); }
+void LootableItem::OnMouseLeave() { UI.UpdateTooltip(nullptr, nullptr, TooltipPositionType::NONE); }

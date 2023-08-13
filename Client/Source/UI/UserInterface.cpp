@@ -44,7 +44,7 @@ void UserInterface::UpdateXP(float value) { xpBar->SetXP(value); }
 void UserInterface::UpdateMaxXP(float value) { xpBar->SetMaxXP(value); }
 void UserInterface::UpdateLevel(int value) { xpBar->SetLevel(value); }
 void UserInterface::UpdateFPS(int value) { fpsBar->SetFPS(value); }
-void UserInterface::UpdateTooltip(UIElement* target, Item* item) { tooltip->SetItem(target, item); }
+void UserInterface::UpdateTooltip(UIElement* target, Item* item, TooltipPositionType positionType) { tooltip->SetItem(target, item, positionType); }
 void UserInterface::UpdateEquipment() {}
 void UserInterface::UpdateInventory() {}
 void UserInterface::UpdatePowerUps() { powerUpGroup->GeneratePowerUps(); }

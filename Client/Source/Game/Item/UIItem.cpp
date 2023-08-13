@@ -42,9 +42,11 @@ void UIItem::OnDelete() {
 	// Update the UI Tooltip if we were being hovered on.
 	if (UIMgr.currentHoveredElement == this) {
 		UIMgr.currentHoveredElement = nullptr;
-		UI.UpdateTooltip(nullptr, nullptr);
+		UI.UpdateTooltip(nullptr, nullptr, TooltipPositionType::NONE);
 	}
 }
-void UIItem::OnMouseEnter() { UI.UpdateTooltip(this, item); }
+void UIItem::OnMouseEnter() { 
+	UI.UpdateTooltip(this, item, (item->isEquipped) ? TooltipPositionType::EquipmentItem: TooltipPositionType::InventoryItem); 
+}
 void UIItem::OnMouseOver() {}
-void UIItem::OnMouseLeave() { UI.UpdateTooltip(nullptr, nullptr); }
+void UIItem::OnMouseLeave() { UI.UpdateTooltip(nullptr, nullptr, TooltipPositionType::NONE); }

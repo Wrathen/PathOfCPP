@@ -169,8 +169,8 @@ std::string Equipment::GetModsText() { // @todo fix below garbage code.
 }
 
 // Events
-void Equipment::OnEquip() {}
-void Equipment::OnUnequip() {}
+void Equipment::OnEquip() { isEquipped = true; }
+void Equipment::OnUnequip() { isEquipped = false; }
 void Equipment::OnDelete() {}
 void Equipment::OnLoot() {}
 void Equipment::OnUse() {}
