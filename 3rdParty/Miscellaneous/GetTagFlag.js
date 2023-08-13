@@ -4,7 +4,7 @@
 // Just do GetTagFlag(["Elemental", "Lightning", "Physical"]) to retrieve the integer flag number and input that into the Database.
 
 function GetTagFlag(tags) {
-    const _tags = ["Life", "Mana", "Damage", "Defences", "Physical", "Elemental", "Fire", "Cold", "Lightning", "Chaos", "Gem", "Attribute", "LifeRegen", "Resistance", "Critical", "Attack", "Curse", "Caster", "Aura", "Ailment", "Minion", "Speed", "Bleed", "Influence"];
+    const _tags = ["Life", "Mana", "Damage", "Defences", "Physical", "Elemental", "Fire", "Cold", "Lightning", "Chaos", "Gem", "Attribute", "LifeRegen", "Resistance", "Critical", "Attack", "Curse", "Caster", "Aura", "Ailment", "Minion", "Speed", "Bleed", "Influence", "Poison"];
 
     let result = 0;
     
