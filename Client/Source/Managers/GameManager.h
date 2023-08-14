@@ -4,6 +4,7 @@
 #include "../Miscellaneous/Singleton.h"
 #include "../Miscellaneous/Time.h"
 #include "../Entities/Player.h"
+#include "../Game/League/Breach/BreachLeague.h"
 
 #define GAME GameManager::GetInstance()
 class GameManager: public Singleton<GameManager> {
@@ -11,6 +12,7 @@ class GameManager: public Singleton<GameManager> {
 public:
 	Player* player = nullptr;
 	SDL_Event event{};
+	BreachLeague breachLeague;
 
 	int screenWidth = 1920;
 	int screenHeight = 1080;

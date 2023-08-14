@@ -157,6 +157,8 @@
     <ClInclude Include="Source\Miscellaneous\ErrorHandler.h" />
     <ClInclude Include="Source\Database\Item\ItemModifier.h" />
     <ClInclude Include="Source\Miscellaneous\Math.h" />
+    <ClInclude Include="Source\Game\League\Breach\BreachLeague.h" />
+    <ClInclude Include="Source\Game\League\Breach\BreachLeagueEncounter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\SpriteRenderer.cpp" />
@@ -218,6 +220,8 @@
     <ClCompile Include="Source\UI\Inventory.cpp" />
     <ClCompile Include="Source\Managers\DatabaseManager.cpp" />
     <ClCompile Include="Source\Database\Item\ItemModifier.cpp" />
+    <ClCompile Include="Source\Game\League\Breach\BreachLeague.cpp" />
+    <ClCompile Include="Source\Game\League\Breach\BreachLeagueEncounter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Source\ToDoList.txt" />

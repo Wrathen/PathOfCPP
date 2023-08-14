@@ -31,6 +31,8 @@ void GameManager::Init() {
 	Database::GetRandomItemModifier(Database::ItemModPoolTypes::BodyArmourSTR, 100);
 
 	UI.Init();
+	// @todo temp
+	breachLeague.Init();
 	Update();
 }
 void GameManager::Update() {
@@ -86,6 +88,8 @@ void GameManager::Update() {
 		Timer benchmark10("MainRenderer.Draw");
 		MainRenderer.Draw();
 		benchmark10.Pause();
+
+		breachLeague.Update();
 
 		// Frame Timers, Delays
 		bool limitFramerate = false;

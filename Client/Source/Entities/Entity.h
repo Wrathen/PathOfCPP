@@ -23,6 +23,7 @@ public:
 
 	bool isToBeDeleted = false;
 	bool isToBeDeletedOnSceneChange = true;
+	bool isAutoUpdateEnabled = true;
 
 	// Constructors & Deconstructors
 	Entity();
