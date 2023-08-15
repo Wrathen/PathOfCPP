@@ -160,6 +160,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Entities\Monsters\BreachMonster.h" />
     <ClInclude Include="Source\Game\League\Breach\BreachLeagueEncounter.h" />
     <ClInclude Include="Source\Game\League\Breach\BreachLeague.h" />
     <ClInclude Include="Source\Miscellaneous\Math.h" />
@@ -320,6 +321,7 @@
     <ClInclude Include="Source\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Entities\Monsters\BreachMonster.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeagueEncounter.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeague.cpp" />
     <ClCompile Include="Source\Database\Item\ItemModifier.cpp" />

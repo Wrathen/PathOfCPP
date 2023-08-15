@@ -84,12 +84,12 @@ void GameManager::Update() {
 		Timer benchmark9("UserInterface.Update");
 		UI.Update(); // This also renders!
 		benchmark9.Pause();
+		
+		breachLeague.Update();
 
 		Timer benchmark10("MainRenderer.Draw");
 		MainRenderer.Draw();
 		benchmark10.Pause();
-
-		breachLeague.Update();
 
 		// Frame Timers, Delays
 		bool limitFramerate = false;

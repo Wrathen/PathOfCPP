@@ -1,4 +1,5 @@
-#include "Boar.h"
+#include "BreachMonster.h"
+
 #include "../../Miscellaneous/Random.h"
 
 // [To-Do] 
@@ -9,7 +10,8 @@ static const std::string rareRarity_TexturePath = "Assets/Sprites/Monsters/Boar/
 static const std::string uniqueRarity_TexturePath = "Assets/Sprites/Monsters/Boar/unique.png";
 static const std::string all_TexturePaths[4] = { commonRarity_TexturePath, magicRarity_TexturePath, rareRarity_TexturePath, uniqueRarity_TexturePath };
 
-Boar::Boar() : Boar("Boar") {};
-Boar::Boar(std::string name) : Monster(name) {
+BreachMonster::BreachMonster() : BreachMonster("Unnamed") {}
+BreachMonster::BreachMonster(std::string name) : Monster(name) {
+	CMoveTowardsTarget->SetEnabled(false);
 	renderer.AssignTexture(all_TexturePaths[(int)rarity]);
-};
+}
