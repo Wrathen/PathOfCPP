@@ -92,12 +92,10 @@ void BreachLeagueEncounter::Shrink() {
 
 		// Calculate the distance to the most outer ring.
 		const Vector2& pos = transform.GetPosition();
-		float ringWidth = renderer.GetWidth() * renderer.localScale.x;
 		float ringHeight = renderer.GetHeight() * renderer.localScale.y;
-		float ringRadius = () / 2; 
+		float ringRadius = ringHeight / 2; // let's assume the ring is a perfect circle so width = height.
 
 		// Delete the monsters that are out of the outer ring
-		Warn(spawnedMonsters.size());
 		for (int i = 0; i < spawnedMonsters.size(); ++i) {
 			if (!spawnedMonsters[i] || spawnedMonsters[i]->isToBeDeleted) continue;
 

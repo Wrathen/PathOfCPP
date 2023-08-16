@@ -31,8 +31,6 @@ void GameManager::Init() {
 	Database::GetRandomItemModifier(Database::ItemModPoolTypes::BodyArmourSTR, 100);
 
 	UI.Init();
-	// @todo temp
-	breachLeague.Init();
 	Update();
 }
 void GameManager::Update() {
@@ -84,8 +82,6 @@ void GameManager::Update() {
 		Timer benchmark9("UserInterface.Update");
 		UI.Update(); // This also renders!
 		benchmark9.Pause();
-		
-		breachLeague.Update();
 
 		Timer benchmark10("MainRenderer.Draw");
 		MainRenderer.Draw();

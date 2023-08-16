@@ -8,6 +8,7 @@
 #include "../Managers/EnemySpawnManager.h"
 #include "../Game/Zone/Zone.h"
 #include "../Entities/NPCs/Portal.h"
+#include "../Game/League/Breach/BreachLeague.h"
 
 class Scene {
 public:
@@ -20,6 +21,9 @@ public:
 	Timer sceneTitleVisibilityTimer;
 	Background background;
 
+	// Leagues can be placed in here later on, probably, idk.
+	BreachLeague breachLeague;
+
 	Scene(): Scene("Zone_Empty.PZD") {};
 	Scene(std::string _zoneDataPath): name("Uninitialized Scene"), zoneDataPath(_zoneDataPath) {};
 
@@ -31,12 +35,17 @@ public:
 		sceneTitleBar = new SceneTitleBar();
 		sceneTitleVisibilityTimer.Reset();
 		sceneTitleBar->SetTitle(name);
+
+		// @todo temp
+		breachLeague.Init();
 	};
 	virtual void Update() {
 		background.Render();
 
 		if (sceneTitleVisibilityTimer.GetTimeMS() < 3000)
 			sceneTitleBar->Render();
+		
+		breachLeague.Update();
 	};
 	virtual void LateUpdate() {};
 	virtual void Clear() {
