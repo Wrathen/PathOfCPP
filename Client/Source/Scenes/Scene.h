@@ -45,7 +45,8 @@ public:
 		if (sceneTitleVisibilityTimer.GetTimeMS() < 3000)
 			sceneTitleBar->Render();
 		
-		breachLeague.Update();
+		if (!GAME.isGamePaused)
+			breachLeague.Update();
 	};
 	virtual void LateUpdate() {};
 	virtual void Clear() {
@@ -59,6 +60,9 @@ public:
 		for (auto& element : allUIElements)
 			if (element->isToBeDeletedOnSceneChange)
 				element->Delete();
+
+		breachLeague.encounter->EndEncounter();
+		breachLeague.encounter = nullptr;
 	};
 
 	void LoadZone() {

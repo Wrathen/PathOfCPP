@@ -88,6 +88,8 @@ public:
 		//else if (cellY < 0 || cellY >= m_numCellsY) return;
 
 		int cellIndex = cellY * m_numCellsX + cellX;
+		if (cellIndex >= m_hash.size()) return;
+		
 		auto& cell = m_hash[cellIndex];
 		cell.erase(std::remove(cell.begin(), cell.end(), entity), cell.end());
 	}

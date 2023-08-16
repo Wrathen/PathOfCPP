@@ -59,11 +59,7 @@ void Projectile::CheckCollisions() {
 
 	for (auto& entity : allEntities) {
 		// Dont hit instigator. :^)
-		if (entity == source) continue;
-		if (entity->isToBeDeleted) {
-			CollisionMgr.spatialHash.Remove(entity);
-			continue;
-		}
+		if (!entity || entity == source || entity->isToBeDeleted) continue;
 
 		Vector2 pos = entity->transform.GetScreenPosition();
 		bool hit = myPos.x > pos.x - enemyBoxCollider.x / 2 && myPos.x < pos.x + enemyBoxCollider.x / 2 &&

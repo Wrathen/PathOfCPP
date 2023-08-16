@@ -97,7 +97,11 @@ void BreachLeagueEncounter::Shrink() {
 
 		// Delete the monsters that are out of the outer ring
 		for (int i = 0; i < spawnedMonsters.size(); ++i) {
-			if (!spawnedMonsters[i] || spawnedMonsters[i]->isToBeDeleted) continue;
+			if (!spawnedMonsters[i]) continue;
+			if (spawnedMonsters[i]->isToBeDeleted) {
+				spawnedMonsters[i] = nullptr;
+				continue;
+			}
 
 			float distanceToOuterRing = pos.DistanceToFast(spawnedMonsters[i]->transform.GetPosition());
 			if (distanceToOuterRing > ringRadius) {

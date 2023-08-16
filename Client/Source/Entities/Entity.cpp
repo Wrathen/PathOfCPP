@@ -1,6 +1,7 @@
 #include "Entity.h"
 #include "../Managers/EntityManager.h"
 #include "../Managers/GameManager.h"
+#include "../Managers/CollisionManager.h"
 
 Entity::Entity(): Entity("Unnamed") {}
 Entity::Entity(std::string _name) : Entity("Assets/Sprites/nosprite.png", _name) {}
@@ -18,7 +19,10 @@ void Entity::Render() {
 }
 
 // Main functions
-void Entity::Delete() { EntityMgr.Remove(this); }
+void Entity::Delete() {
+	CollisionMgr.spatialHash.Remove(this);
+	EntityMgr.Remove(this);
+}
 
 // Utility Functions
 std::string Entity::ToString() {
