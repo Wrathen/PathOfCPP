@@ -15,6 +15,7 @@ public:
 	UIItem* currentHeldItem = nullptr;
 	
 	void Update();
+	void UpdateCollection();
     bool OnMouseDown();
 	void OnMouseMove();
 

@@ -28,9 +28,6 @@ void GameManager::Init() {
 		SceneMgr.ChangeScene("Town");
 	}
 
-	// Testing stuff
-	Database::GetRandomItemModifier(Database::ItemModPoolTypes::BodyArmourSTR, 100);
-
 	UI.Init();
 	Update();
 }
@@ -38,23 +35,26 @@ void GameManager::Update() {
 	// Count frames
 	static Timer debugTimer{};
 	static bool debugProfilerMsgEnabled = true;
+	static bool limitFramerate = false;
 	Timer frameTimer;
 	float frameTime;
-	
+
+	Benchmark benchmark;
+	benchmark.Add("PollEvents", [&] { PollEvents(); });
+	benchmark.Add("MainRenderer.Clear", [] { MainRenderer.Clear(); });
+	benchmark.Add("CollisionMgr.Update", [] { CollisionMgr.Update(); });
+	benchmark.Add("Scene.Update", [] { if (Scene* currentScene = SceneMgr.GetCurrentScene()) currentScene->Update(); });
+	benchmark.Add("InputManager.Update", [] { InputMgr.Update(); });
+	benchmark.Add("Camera.Update", [] { Camera.Update(); });
+	benchmark.Add("UserInterface.Update", [] { UI.Update(); }); // This also renders!
+	benchmark.Add("MainRenderer.Draw", [] { MainRenderer.Draw(); });
+
 	// Main Engine Loop
 	while (GAME.isGameRunning) {
-		Benchmark benchmark;
-		benchmark.Execute("PollEvents", [&]{ PollEvents(); });
-		benchmark.Execute("MainRenderer.Clear", []{ MainRenderer.Clear(); });
-		benchmark.Execute("CollisionMgr.Update", []{ CollisionMgr.Update(); });
-		benchmark.Execute("Scene.Update", []{ if (Scene* currentScene = SceneMgr.GetCurrentScene()) currentScene->Update(); });
-		benchmark.Execute("InputManager.Update", []{ InputMgr.Update(); });
-		benchmark.Execute("Camera.Update", []{ Camera.Update(); });
-		benchmark.Execute("UserInterface.Update", []{ UI.Update(); }); // This also renders!
-		benchmark.Execute("MainRenderer.Draw", []{ MainRenderer.Draw(); });
+		// Execute all the main loop functions and benchmark them individually.
+		benchmark.ExecuteAll();
 
 		// Frame Timers, Delays
-		bool limitFramerate = false;
 		frameTime = frameTimer.GetTimeMS();
 		if (limitFramerate && Time::FRAME_DELAY > frameTime) {
 			SDL_Delay(Time::FRAME_DELAY - frameTime);
@@ -66,8 +66,8 @@ void GameManager::Update() {
 		Time::deltaTime = 1 / (1000.0f / frameTime);
 
 		// Output Benchmarks
-		if (debugTimer.GetTimeMS() > 2000) {
-			if (debugProfilerMsgEnabled) benchmark.Log();
+		if (debugProfilerMsgEnabled && debugTimer.GetTimeMS() > 2000) {
+			benchmark.Log();
 			debugTimer.Reset();
 		}
 
@@ -75,7 +75,8 @@ void GameManager::Update() {
 		InputMgr.LateUpdate();
 
 		// Late-Update the Scene
-		if (Scene* currentScene = SceneMgr.GetCurrentScene()) currentScene->LateUpdate();
+		if (Scene* currentScene = SceneMgr.GetCurrentScene()) 
+			currentScene->LateUpdate();
 
 		// Reset the Frame Timer.
 		frameTimer.Reset();

@@ -323,7 +323,6 @@
     <ClInclude Include="Source\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Miscellaneous\Benchmark.cpp" />
     <ClCompile Include="Source\Entities\Monsters\BreachMonster.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeagueEncounter.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeague.cpp" />

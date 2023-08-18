@@ -226,7 +226,6 @@
     <ClCompile Include="Source\Game\League\Breach\BreachLeague.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeagueEncounter.cpp" />
     <ClCompile Include="Source\Entities\Monsters\BreachMonster.cpp" />
-    <ClCompile Include="Source\Miscellaneous\Benchmark.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Source\ToDoList.txt" />

@@ -3,12 +3,10 @@
 #include "GameManager.h"
 #include "../Miscellaneous/Mouse.h"
 #include "../Miscellaneous/Point.h"
+#include "../Miscellaneous/ErrorHandler.h"
 #include "../UI/UserInterface.h"
-#include <cassert>
 
 void UIManager::Update() {
-	Collection::Update();
-
 	// If the Collection is dirty, which means the list has either some new element added or removed.
 	// So we should sort the array to reflect on Z-Indexing.
 	auto& allElements = *GetAll();
@@ -30,6 +28,7 @@ void UIManager::Update() {
 		currentHeldItem->Render();
 	}
 }
+void UIManager::UpdateCollection() { Collection::Update(); }
 
 void UIManager::OnMouseMove() {
 	// If Power Ups are shown, we shouldn't do any mouseover checks.
@@ -169,7 +168,8 @@ bool UIManager::OnMouseDown() {
 }
 void UIManager::PickItemToHand(UIItem* item) {
 	// Enforce that we are currently not holding an item.
-	assert(currentHeldItem == nullptr);
+	if (currentHeldItem)
+		Abort("Picked an item into hand whilst having another one. This exception is not handled.", "Runtime Error");
 
 	// Set the current held item variable to the item and if we were hovering over that item, we shouldn't.
 	currentHeldItem = item;
