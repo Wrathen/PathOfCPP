@@ -18,6 +18,8 @@ void CollisionManager::ResetSpatialHash() {
 }
 
 void CollisionManager::Update() {
+	if (GAME.isGamePaused) return;
+
 	Collection::Update();
 	ResetSpatialHash();
 
