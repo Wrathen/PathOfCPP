@@ -22,6 +22,9 @@ Feel free to create issues & pull requests.
 
 <h2> Video Showcases </h2>
 
+<b>[August 18th 2023]</b> FIRST LEAGUE! Breach League introduced, Database, Better Item Generation&Tooltips.
+https://www.youtube.com/watch?v=Ezgcd3N1lTI
+
 <b>[August 2th 2023]</b> MASSIVE Amounts of Projectiles, Inventory&Loot System Showcases
 
 https://youtu.be/UBePR-KNDfQ
