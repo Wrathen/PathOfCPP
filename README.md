@@ -24,7 +24,7 @@ Feel free to create issues & pull requests.
 
 <b>[August 18th 2023]</b> FIRST LEAGUE! Breach League introduced, Database, Better Item Generation&Tooltips.
 
-https://www.youtube.com/watch?v=Ezgcd3N1lTI
+https://youtu.be/Ezgcd3N1lTI
 
 <b>[August 2th 2023]</b> MASSIVE Amounts of Projectiles, Inventory&Loot System Showcases
 
