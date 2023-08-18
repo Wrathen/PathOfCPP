@@ -18,8 +18,6 @@ public:
 	// to react to Z-Index.
 	bool isDirty = false;
 
-
-
 	// Main Functions
 	void Add(T* item) {
 		if (!item) return;
@@ -64,6 +62,16 @@ public:
 	}
 
 	void Update() { if (!toBeDeletedList.empty()) DeleteAllQueued(); }
+
+	void DeleteAllQueued() {
+		for (auto it = toBeDeletedList.rbegin(); it != toBeDeletedList.rend(); ++it) Delete(*it);
+		toBeDeletedList.clear();
+
+		// Set the isDirty Flag to true so if the collection holder want to react, they can.
+		isDirty = true;
+	}
+
+private:
 	void Delete(T* item) {
 		if (!item) return;
 
@@ -77,12 +85,5 @@ public:
 		//Debug("Deleting " + item->ToString());
 		itemList.erase(position);
 		delete item;
-	}
-	void DeleteAllQueued() {
-		for (auto it = toBeDeletedList.rbegin(); it != toBeDeletedList.rend(); ++it) Delete(*it);
-		toBeDeletedList.clear();
-
-		// Set the isDirty Flag to true so if the collection holder want to react, they can.
-		isDirty = true;
 	}
 };

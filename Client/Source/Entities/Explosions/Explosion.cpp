@@ -9,9 +9,6 @@ Explosion::~Explosion() {
 
 // Base Functions
 void Explosion::Start() {
-	// Set up collision tag to Friendly so we don't get destroyed with Powerups, LUL.
-	collisionTag = EntityCollisionTag::Friendly;
-
 	// Reset timer
 	timer.Reset();
 

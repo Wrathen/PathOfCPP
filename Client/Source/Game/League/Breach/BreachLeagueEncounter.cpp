@@ -1,12 +1,12 @@
 #include "BreachLeagueEncounter.h"
 #include "../../../Managers/GameManager.h"
+#include "../../../Managers/EntityManager.h"
 #include "../../../Miscellaneous/Random.h"
 
 BreachLeagueEncounter::BreachLeagueEncounter() : Entity("Assets/Sprites/Monsters/38.png", "BreachEncounter") {
 	isAutoUpdateEnabled = false;
 	totalNumberOfSpawns = RandomFloat(100, 5000);
 	eachWaveSpawnCount = totalNumberOfSpawns / (int)maxExpandRadius;
-	spawnedMonsters.reserve(totalNumberOfSpawns);
 }
 
 void BreachLeagueEncounter::Update() {
@@ -30,6 +30,7 @@ void BreachLeagueEncounter::Update() {
 		GAME.DrawRect(pos.x - w / 2, pos.y - h / 2, w, h, { 255, 0, 0 });
 	}
 }
+
 void BreachLeagueEncounter::StartEncounter() {
 	currentState = Expanding;
 }
@@ -61,14 +62,12 @@ void BreachLeagueEncounter::Expand() {
 		const Vector2& pos = transform.GetPosition();
 		int w = (renderer.GetWidth() * renderer.localScale.x) / 2;
 		int h = (renderer.GetHeight() * renderer.localScale.y) / 2;
-		for (size_t i = 0; i < eachWaveSpawnCount; ++i) {
+		for (int i = 0; i < eachWaveSpawnCount; ++i) {
 			BreachMonster* newMonster = new BreachMonster();
 			float randomAngle = RandomFloat(-3.1415f, 3.1415f);
 			float randomX = cos(randomAngle) * w;
 			float randomY = sin(randomAngle) * h;
 			newMonster->transform.SetPosition(pos.x + randomX, pos.y + randomY);
-
-			spawnedMonsters.push_back(newMonster);
 		}
 	}
 }
@@ -96,27 +95,15 @@ void BreachLeagueEncounter::Shrink() {
 		float ringRadius = ringHeight / 2; // let's assume the ring is a perfect circle so width = height.
 
 		// Delete the monsters that are out of the outer ring
-		for (int i = 0; i < spawnedMonsters.size(); ++i) {
-			if (!spawnedMonsters[i]) continue;
-			if (spawnedMonsters[i]->isToBeDeleted) {
-				spawnedMonsters[i] = nullptr;
-				continue;
-			}
-
-			float distanceToOuterRing = pos.DistanceToFast(spawnedMonsters[i]->transform.GetPosition());
-			if (distanceToOuterRing > ringRadius) {
-				spawnedMonsters[i]->Delete();
-				spawnedMonsters[i] = nullptr;
-			}
-		}
+		for (auto& monster : EntityMgr.FindAll(EntityFlags::IsBreachLeagueSpecific))
+			if (pos.DistanceToFast(monster->transform.GetPosition()) > ringRadius)
+				monster->Delete();
 	}
 }
 
 // Clear&Delete all the remaining spawned monsters.
 void BreachLeagueEncounter::ClearAllSpawnedMonsters() {
-	for (size_t i = 0; i < spawnedMonsters.size(); ++i)
-		if (spawnedMonsters[i] && !spawnedMonsters[i]->isToBeDeleted)
-			spawnedMonsters[i]->Delete();
-
-	spawnedMonsters.clear();
+	auto allBreachMonsters = EntityMgr.FindAll(EntityFlags::IsBreachLeagueSpecific);
+	for (auto& monster : allBreachMonsters)
+		monster->Delete();
 }

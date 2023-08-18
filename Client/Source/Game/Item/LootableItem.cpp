@@ -94,6 +94,7 @@ void LootableItem::OnDelete() {
 	if (!item) return;
 	item->OnDelete();
 	delete item;
+	item = nullptr;
 }
 void LootableItem::OnMouseEnter() { UI.UpdateTooltip(this, item, TooltipPositionType::LootableItem); }
 void LootableItem::OnMouseOver() {}

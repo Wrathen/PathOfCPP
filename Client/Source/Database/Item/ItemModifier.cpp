@@ -80,9 +80,11 @@ namespace Database {
 		return itemModifiers[wr.GetRandom()];
 	}
 	std::vector<ItemModifier> GetRandomItemModifiers(std::vector<ItemModifier>& itemModifiers, uint32_t count) {
-		if (itemModifiers.size() <= count)
-			Abort("GetRandomItemModifiers function called with TOO MANY COUNTS!", "Runtime Error!");
-
+		if (itemModifiers.size() <= count) {
+			// [@Todo] enable below back.
+			//Abort("GetRandomItemModifiers function called with TOO MANY COUNTS!", "Runtime Error!");
+			count = itemModifiers.size() - 1;
+		}
 		std::vector<ItemModifier> randomItemModifiers{};
 		WeightedRandom<int> wr;
 

@@ -5,12 +5,18 @@
 #include <string>
 #include "../Miscellaneous/GUID.h"
 #include "../Components/SpriteRenderer.h"
+#include "../Miscellaneous/UtilityMacros.h"
 
-// Temporary -- Delete Later
-enum class EntityCollisionTag {
-	Hostile,
-	Friendly
+enum class EntityFlags {
+	NONE = 0,
+	IsPlayer = 1,
+	IsMonster = 2,
+	IsNPC = 4,
+	IsHittable = 8,
+	IsBreachLeagueSpecific = 16,
+	IsHostile = 32
 };
+DEFINE_FLAG_OPERATORS(EntityFlags)
 
 class Entity {
 public:
@@ -19,7 +25,7 @@ public:
 
 	Transform transform;
 	SpriteRenderer renderer;
-	EntityCollisionTag collisionTag;
+	EntityFlags flags = EntityFlags::NONE;
 
 	bool isToBeDeleted = false;
 	bool isToBeDeletedOnSceneChange = true;

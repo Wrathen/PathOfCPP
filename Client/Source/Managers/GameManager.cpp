@@ -44,14 +44,12 @@ void GameManager::Update() {
 	// Main Engine Loop
 	while (GAME.isGameRunning) {
 		Benchmark benchmark;
-		benchmark.Execute("PollEvents", []{ GAME.PollEvents(); });
+		benchmark.Execute("PollEvents", [&]{ PollEvents(); });
 		benchmark.Execute("MainRenderer.Clear", []{ MainRenderer.Clear(); });
-		benchmark.Execute("Scene.Update", []{ if (Scene* currentScene = SceneMgr.GetCurrentScene()) currentScene->Update(); });
-		benchmark.Execute("EntityMgr.Update", []{ EntityMgr.Update(); }); // This also renders!
 		benchmark.Execute("CollisionMgr.Update", []{ CollisionMgr.Update(); });
-		benchmark.Execute("Camera.Update", []{ Camera.Update(); });
+		benchmark.Execute("Scene.Update", []{ if (Scene* currentScene = SceneMgr.GetCurrentScene()) currentScene->Update(); });
 		benchmark.Execute("InputManager.Update", []{ InputMgr.Update(); });
-		benchmark.Execute("UIMgr.Update", []{ UIMgr.Update(); }); // This also renders!
+		benchmark.Execute("Camera.Update", []{ Camera.Update(); });
 		benchmark.Execute("UserInterface.Update", []{ UI.Update(); }); // This also renders!
 		benchmark.Execute("MainRenderer.Draw", []{ MainRenderer.Draw(); });
 
@@ -68,7 +66,7 @@ void GameManager::Update() {
 		Time::deltaTime = 1 / (1000.0f / frameTime);
 
 		// Output Benchmarks
-		if (debugTimer.GetTimeMS() > 10000) {
+		if (debugTimer.GetTimeMS() > 2000) {
 			if (debugProfilerMsgEnabled) benchmark.Log();
 			debugTimer.Reset();
 		}

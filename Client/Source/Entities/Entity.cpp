@@ -20,6 +20,7 @@ void Entity::Render() {
 
 // Main functions
 void Entity::Delete() {
+	if (isToBeDeleted) return;
 	CollisionMgr.spatialHash.Remove(this);
 	EntityMgr.Remove(this);
 }

@@ -12,6 +12,8 @@
 #include "../Managers/InputManager.h"
 
 Player::Player(std::string name) : Entity("Assets/Sprites/player.png", name) {
+	flags = EntityFlags::IsPlayer | EntityFlags::IsHittable;
+	
 	isToBeDeletedOnSceneChange = false;
 	Start();
 }
@@ -30,7 +32,7 @@ Player::~Player() {
 
 void Player::Start() {
 	// General
-	collisionTag = EntityCollisionTag::Friendly;
+	flags = EntityFlags::IsPlayer | EntityFlags::IsHittable;
 	transform.SetScale(2.2f, 2.2f);
 
 	// Stats Component

@@ -17,17 +17,8 @@ void CollisionManager::ResetSpatialHash() {
 	//spatialHash.RenderDebug();
 }
 
-void CollisionManager::Update() {
-	if (GAME.isGamePaused) return;
-
-	Collection::Update();
-	ResetSpatialHash();
-
-	for (size_t i = 0; i < staticColliders.size(); ++i) {
-		auto& col = staticColliders[i];
-		//GAME.DrawRect(col.position - Vector2{ 2000, 2000 } - Camera.GetPosition(), col.w, col.h, {0, 255, 0});
-	}
-}
+void CollisionManager::Update() { ResetSpatialHash(); }
+void CollisionManager::UpdateCollection() { Collection::Update(); }
 
 // @todo Will use SpatialHash soon instead of this bruteforce approach
 // @todo clear out all -2000's from the codebase.

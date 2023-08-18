@@ -12,6 +12,7 @@ static const std::string all_TexturePaths[4] = { commonRarity_TexturePath, magic
 
 BreachMonster::BreachMonster() : BreachMonster("Unnamed") {}
 BreachMonster::BreachMonster(std::string name) : Monster(name) {
-	CMoveTowardsTarget->SetEnabled(false);
+	flags = flags | EntityFlags::IsBreachLeagueSpecific;
+	//CMoveTowardsTarget->SetEnabled(false);
 	renderer.AssignTexture(all_TexturePaths[(int)rarity]);
 }

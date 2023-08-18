@@ -9,9 +9,6 @@ Beam::~Beam() {
 
 // Base Functions
 void Beam::Start() {
-	// Set up collision tag to Friendly so we don't get destroyed with Powerups, LUL.
-	collisionTag = EntityCollisionTag::Friendly;
-
 	// Set Scale to a bit bigger.
 	transform.SetScale(1.0f, 3.0f);
 

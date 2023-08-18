@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-#include "../../../Entities/Entity.h"
 #include "../../../Entities/Monsters/BreachMonster.h"
 
 class BreachLeagueEncounter: Entity { 
@@ -13,7 +11,6 @@ public:
 	float currentRadius = 1.0f;
 
 	// Spawn Behaviour
-	std::vector<BreachMonster*> spawnedMonsters;
 	uint32_t totalNumberOfSpawns = -1;
 	int eachWaveSpawnCount = -1;
 

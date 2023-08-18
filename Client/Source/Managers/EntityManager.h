@@ -9,6 +9,8 @@
 class EntityManager : public Collection<Entity>, public Singleton<EntityManager> { friend class Singleton;
 public:
     void Update();
+	void UpdateCollection();
+	std::vector<Entity*> FindAll(EntityFlags flags);
 
 	// copy ctor
 	EntityManager(EntityManager const&) = delete;

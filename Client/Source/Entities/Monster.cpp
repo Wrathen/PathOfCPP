@@ -20,7 +20,8 @@ Monster::~Monster() {
 }
 void Monster::Start() {
 	// General
-	collisionTag = EntityCollisionTag::Hostile;
+	flags = EntityFlags::IsMonster | EntityFlags::IsHittable | EntityFlags::IsHostile;
+
 	rarity = RandomEnum(MonsterRarity::Count);
 	transform.SetScale((int)(rarity) * 0.40f + 2, (int)(rarity) * 0.40f + 2);
 

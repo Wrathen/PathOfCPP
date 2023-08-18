@@ -168,6 +168,7 @@
     <ClInclude Include="Source\Database\Item\ItemModifier.h" />
     <ClInclude Include="Source\Miscellaneous\ErrorHandler.h" />
     <ClInclude Include="Source\Managers\DatabaseManager.h" />
+    <ClInclude Include="Source\Miscellaneous\UtilityMacros.h" />
     <ClInclude Include="Source\UI\Inventory.h" />
     <ClInclude Include="Source\Entities\Beam\Beam.h" />
     <ClInclude Include="Source\Entities\Explosions\Explosion.h" />

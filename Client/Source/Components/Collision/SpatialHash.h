@@ -87,7 +87,7 @@ public:
 		//if (cellX < 0 || cellX >= m_numCellsX) return; these shouldnt happen 'cuz we already return
 		//else if (cellY < 0 || cellY >= m_numCellsY) return;
 
-		int cellIndex = cellY * m_numCellsX + cellX;
+		size_t cellIndex = cellY * m_numCellsX + cellX;
 		if (cellIndex >= m_hash.size()) return;
 		
 		auto& cell = m_hash[cellIndex];

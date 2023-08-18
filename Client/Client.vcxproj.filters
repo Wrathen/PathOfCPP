@@ -161,6 +161,7 @@
     <ClInclude Include="Source\Game\League\Breach\BreachLeagueEncounter.h" />
     <ClInclude Include="Source\Entities\Monsters\BreachMonster.h" />
     <ClInclude Include="Source\Miscellaneous\Benchmark.h" />
+    <ClInclude Include="Source\Miscellaneous\UtilityMacros.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\SpriteRenderer.cpp" />

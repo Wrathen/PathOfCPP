@@ -86,7 +86,7 @@ void PowerUp::InitAllPowerUps() {
 		[] { stats->canCreateBlizzard = true; stats->blizzardCreationChanceOnCrit += 0.02f; } },
 
 		new PowerUp{ "BLOODBORNE!",
-		"Instantly kill nearby enemies.\nAll the loot is enhanced.",
+		"Instantly kill nearby monsters.\nAll the loot is enhanced.",
 		[] { float nearbyDistance = 800;
 			 auto player = GAME.GetPlayer();
 			 auto playerPos = player->transform.GetScreenPosition();
@@ -94,7 +94,7 @@ void PowerUp::InitAllPowerUps() {
 			 for (auto enemy : allNearbyEnemies) {
 				 // @todo: Implement Entity Type and query based on type
 				 // Below code is preventing projectiles getting destroyed.
-				 if (enemy->collisionTag == EntityCollisionTag::Friendly) continue;
+				 if (!(enemy->flags & EntityFlags::IsMonster)) continue;
 				 if (!enemy || enemy->isToBeDeleted) continue;
 				 
 				 // If the target entity has a Stats component, tag it's enhanced loot boolean to true.

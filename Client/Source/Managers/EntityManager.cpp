@@ -3,10 +3,19 @@
 #include "../Miscellaneous/Log.h"
 
 void EntityManager::Update() {
-	Collection::Update();
-	
 	for (auto& entity : *GetAll()) {
 		if (!GAME.isGamePaused && entity->isAutoUpdateEnabled) entity->Update();
 		entity->Render();
 	}
+}
+void EntityManager::UpdateCollection() { Collection::Update(); }
+
+std::vector<Entity*> EntityManager::FindAll(EntityFlags flags) {
+	std::vector<Entity*> foundEntities;
+
+	for (auto& entity: *GetAll())
+		if (!entity->isToBeDeleted && entity->flags & flags)
+			foundEntities.emplace_back(entity);
+
+	return foundEntities;
 }

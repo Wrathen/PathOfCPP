@@ -17,6 +17,7 @@ public:
 	void AddStaticColliders(const std::vector<ZoneColliderData>& colliders);
 	void ResetSpatialHash();
 	void Update();
+	void UpdateCollection();
 
 	bool IsPositionMovable(const Rect& rect);
 

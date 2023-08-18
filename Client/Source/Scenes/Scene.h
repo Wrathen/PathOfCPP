@@ -9,6 +9,7 @@
 #include "../Game/Zone/Zone.h"
 #include "../Entities/NPCs/Portal.h"
 #include "../Game/League/Breach/BreachLeague.h"
+#include "../Miscellaneous/Benchmark.h"
 
 class Scene {
 public:
@@ -47,8 +48,15 @@ public:
 		
 		if (!GAME.isGamePaused)
 			breachLeague.Update();
+
+		Benchmark benchmark;
+		benchmark.Execute("EntityMgr.Update", []{ EntityMgr.Update(); }); // This also renders!
+		benchmark.Execute("UIMgr.Update", []{ UIMgr.Update(); }); // This also renders!
 	};
-	virtual void LateUpdate() {};
+	virtual void LateUpdate() {
+		Benchmark benchmark;
+		benchmark.Execute("Frame Cleanup", []{ EntityMgr.UpdateCollection(); CollisionMgr.UpdateCollection(); });
+	};
 	virtual void Clear() {
 		// Clear all the entities and UIElements that should be deleted on scene changed.
 		auto& allEntities = *EntityMgr.GetAll();

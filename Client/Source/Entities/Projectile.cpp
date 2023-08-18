@@ -17,8 +17,7 @@ Projectile::Projectile(Entity* src, Vector2 position, float rotation, float spee
 	transform.SetRotation(rotation);
 
 	lifetime = SDL_GetTicks64() + static_cast<int>(duration * 1000);
-	collisionTag = EntityCollisionTag::Friendly;
-
+	
 	Start();
 }
 
