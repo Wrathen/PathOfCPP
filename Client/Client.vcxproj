@@ -98,7 +98,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +119,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -137,6 +137,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Source\;$(SolutionDir)3rdParty\sdl2\include;$(SolutionDir)3rdParty\sqlite\include\;$(SolutionDir)3rdParty\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +162,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Ability\Dash.h" />
+    <ClInclude Include="Source\Game\Ability\Fireball.h" />
+    <ClInclude Include="Source\Game\Ability\ShootArrow.h" />
+    <ClInclude Include="Source\Game\Ability\Ability.h" />
     <ClInclude Include="Source\Miscellaneous\Benchmark.h" />
     <ClInclude Include="Source\Entities\Monsters\BreachMonster.h" />
     <ClInclude Include="Source\Game\League\Breach\BreachLeagueEncounter.h" />
@@ -323,6 +329,10 @@
     <ClInclude Include="Source\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\Ability\Ability.cpp" />
+    <ClCompile Include="Source\Game\Ability\Dash.cpp" />
+    <ClCompile Include="Source\Game\Ability\Fireball.cpp" />
+    <ClCompile Include="Source\Game\Ability\ShootArrow.cpp" />
     <ClCompile Include="Source\Entities\Monsters\BreachMonster.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeagueEncounter.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeague.cpp" />

@@ -162,6 +162,10 @@
     <ClInclude Include="Source\Entities\Monsters\BreachMonster.h" />
     <ClInclude Include="Source\Miscellaneous\Benchmark.h" />
     <ClInclude Include="Source\Miscellaneous\UtilityMacros.h" />
+    <ClInclude Include="Source\Game\Ability\Ability.h" />
+    <ClInclude Include="Source\Game\Ability\ShootArrow.h" />
+    <ClInclude Include="Source\Game\Ability\Fireball.h" />
+    <ClInclude Include="Source\Game\Ability\Dash.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\SpriteRenderer.cpp" />
@@ -226,6 +230,10 @@
     <ClCompile Include="Source\Game\League\Breach\BreachLeague.cpp" />
     <ClCompile Include="Source\Game\League\Breach\BreachLeagueEncounter.cpp" />
     <ClCompile Include="Source\Entities\Monsters\BreachMonster.cpp" />
+    <ClCompile Include="Source\Game\Ability\ShootArrow.cpp" />
+    <ClCompile Include="Source\Game\Ability\Fireball.cpp" />
+    <ClCompile Include="Source\Game\Ability\Dash.cpp" />
+    <ClCompile Include="Source\Game\Ability\Ability.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Source\ToDoList.txt" />
