@@ -218,6 +218,7 @@ void Player::OnLevelUp() {
 	UI.ShowPowerUps();
 }
 void Player::OnDeath() {
+	// Check whether we have any "Last Stand" buffs which prevents death.
 	int lastStandCount = CStats->GetLastStandCount();
 	if (lastStandCount > 0) {
 		CHealth->SetGuardianAngel(3);
@@ -225,6 +226,14 @@ void Player::OnDeath() {
 		return;
 	}
 
+	// Cancels all active abilities.
+	CancelAllActiveAbilities();
+
+	// Resets power ups and sets the health to maximum.
+	CStats->ResetPowerUps();
+	CHealth->SetHealth(CHealth->GetBaseMaxHealth());
+
+	// Notify Scene Manager about Player Death event.
 	SceneMgr.OnPlayerDeath();
 }
 void Player::OnKill() {

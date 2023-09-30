@@ -148,5 +148,8 @@ protected:
 public:
 		// Cancels an active ability by pointer to the ability instance. This also removes and deletes the ability. (ref IAbility::Delete)
 		void CancelActiveAbility(IAbility* abilityInstance);
+
+		// Cancels all active abilities.
+		void CancelAllActiveAbilities();
 #pragma endregion
 };

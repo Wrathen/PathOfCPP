@@ -1,10 +1,10 @@
 #pragma once
 #include "Entity.h"
-#include "../Components/TextRenderer.h"
-#include "../Components/Health.h"
-#include "../Components/HealthBar.h"
-#include "../Components/Collision/BoxCollider.h"
-#include "../Behaviour/AI/MoveTowardsTarget.h"
+#include "Components/TextRenderer.h"
+#include "Components/Health.h"
+#include "Components/HealthBar.h"
+#include "Components/Collision/BoxCollider.h"
+#include "Behaviour/AI/MoveTowardsTarget.h"
 
 enum class MonsterRarity {
     Common = 0,

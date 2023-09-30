@@ -55,6 +55,8 @@ void Projectile::CheckLifetime() {
 	if (ticks > lifetime) Delete();
 }
 void Projectile::CheckCollisions() {
+	if (!source || source->isToBeDeleted) return;
+
 	Vector2 myPos = transform.GetScreenPosition() - boxCollider / 2;
 	auto& allEntities = CollisionMgr.spatialHash.Query(myPos.x, myPos.y, 2, 2);
 

@@ -27,8 +27,16 @@ void Entity::Render() {
 	//GAME.DrawRect(transform.GetScreenPosition(), 15, 15);
 }
 void Entity::Delete() {
+	// If this is already marked for deletion, return.
 	if (isToBeDeleted) return;
+
+	// Clear out all the active abilities.
+	CancelAllActiveAbilities();
+
+	// Remove this entity from the collision manager.
 	CollisionMgr.spatialHash.Remove(this);
+
+	// This marks for deletion and removes entirely at the later stages of this frame.
 	EntityMgr.Remove(this);
 }
 
@@ -173,5 +181,11 @@ std::string Entity::ToString() {
 		}
 
 		Warn("Tried to cancel an ability instance that was not active!");
+	}
+	void Entity::CancelAllActiveAbilities() {
+		for (auto* ability : activeAbilities)
+			ability->Delete();
+
+		activeAbilities.clear();
 	}
 #pragma endregion

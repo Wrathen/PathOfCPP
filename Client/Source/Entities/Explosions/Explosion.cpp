@@ -13,7 +13,7 @@ void Explosion::Start() {
 	timer.Reset();
 
 	// Set render scale.
-	transform.SetScale(5.0f, 5.0f);
+	transform.SetScale(8.0f, 8.0f);
 	
 	// Animator Component
 	CAnimator = AddComponent<Animator>();

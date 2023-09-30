@@ -19,6 +19,7 @@ void Dash::Update() {
 }
 void Dash::Delete() {
 	caster->transform.LockVelocity(false);
+	caster->transform.SetVelocity(0, 0);
 	casterStats->AddMoveSpeedMultiplier(-3.0f); 
 	delete this; 
 }

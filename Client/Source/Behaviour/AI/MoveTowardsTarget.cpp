@@ -1,7 +1,7 @@
 #include "MoveTowardsTarget.h"
-#include "../../Managers/GameManager.h"
-#include "../../Entities/Monster.h"
-#include "../../Miscellaneous/Time.h"
+#include "Managers/GameManager.h"
+#include "Entities/Monster.h"
+#include "Miscellaneous/Time.h"
 
 void MoveTowardsTarget::Start() {
 	sourceStats = source->GetComponent<Stats>();
@@ -19,7 +19,14 @@ void MoveTowardsTarget::Update() {
 
 	// Calculate the direction and move towards the target.
 	float angle = Vector2::AngleBetween(sourceTransform->GetPosition(), targetTransform->GetPosition());
-	Vector2 dir = Vector2::FromAngle(angle);
+	sourceTransform->SetVelocity(Vector2::FromAngle(angle) * sourceStats->GetMoveSpeed());
 
-	sourceTransform->Move(dir, sourceStats->GetMoveSpeed());
+	Vector2 velocityNormalized = sourceTransform->GetVelocity();
+	velocityNormalized = velocityNormalized.Normalize();
+
+	// Check if the target position is movable.
+	Vector2 nextFramePosition = sourceTransform->GetPositionNextFrame(velocityNormalized, sourceStats->GetMoveSpeed());
+
+	// Set new position.
+	sourceTransform->SetPosition(nextFramePosition);
 }
