@@ -104,6 +104,10 @@ std::string Entity::ToString() {
 		return IsAbilityActive(abilityName);
 	}
 	void Entity::CastAbility(const std::string& abilityName) {
+		// If the ability is already active, return.
+		if (IsAbilityActive(abilityName)) return;
+
+		// If we were able to cast the ability, then push it into our vector and start the ability.
 		if (IAbility* ability = IAbility::CastAbility(this, abilityName)) {
 			activeAbilities.push_back(ability);
 			ability->Start();

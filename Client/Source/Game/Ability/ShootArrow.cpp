@@ -5,10 +5,7 @@
 #include "Entities/Projectile.h"
 
 void ShootArrow::Start() {
-	std::cout << "Hey, I am shooting arrows! " << caster->ToString() << "\n";
-
 	Shoot(Mouse::GetPosition());
-
 	caster->CancelActiveAbility(this);
 }
 void ShootArrow::Update() {}

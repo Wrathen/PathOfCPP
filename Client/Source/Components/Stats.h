@@ -127,6 +127,7 @@ public:
 	void SetLevel(unsigned int value) { level = value; }
 	void SetXP(float value) { xp = value; }
 	void SetMaxXP(float value) { maxXP = value; }
+	void AddMoveSpeedMultiplier(float value) { moveSpeedMultiplier += value; }
 	void SetMoveSpeed(float value) { moveSpeed = value; }
 	void SetAttackPower(float value) { attackPower = value; }
 	void SetHaste(float value) { haste = value; }

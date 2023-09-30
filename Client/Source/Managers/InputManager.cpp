@@ -41,48 +41,12 @@ void InputManager::OnKeyDown(SDL_Keycode keycode) {
 	keyStates[keycode] = KeyState::IsPressed;
 	pressedKeys.push_back(keycode);
 
-	Player* player = GAME.GetPlayer();
-	if (!player) return;
-
-	switch (keycode) {
-		case SDLK_ESCAPE:
-			GAME.Quit();
-			break;
-		case SDLK_w:
-			player->transform.velocity.y -= 1;
-			break;
-		case SDLK_s:
-			player->transform.velocity.y += 1;
-			break;
-		case SDLK_a:
-			player->transform.velocity.x -= 1;
-			break;
-		case SDLK_d:
-			player->transform.velocity.x += 1;
-			break;
-	}
+	if (keycode == SDLK_ESCAPE)
+		GAME.Quit();
 }
 void InputManager::OnKeyUp(SDL_Keycode keycode) {
 	keyStates[keycode] = KeyState::IsReleased;
 	releasedKeys.push_back(keycode);
-
-	Player* player = GAME.GetPlayer();
-	if (!player) return;
-
-	switch (keycode) {
-		case SDLK_w:
-			player->transform.velocity.y += 1;
-			break;
-		case SDLK_s:
-			player->transform.velocity.y -= 1;
-			break;
-		case SDLK_a:
-			player->transform.velocity.x += 1;
-			break;
-		case SDLK_d:
-			player->transform.velocity.x -= 1;
-			break;
-	}
 }
 
 bool InputManager::IsKeyPressed(SDL_Keycode keycode) {

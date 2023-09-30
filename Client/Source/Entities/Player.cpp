@@ -71,13 +71,16 @@ void Player::Start() {
 	{
 		// Add ShootArrow ability
 		AddAbility("ShootArrow");
-		AssignAbilityToInputSlot("ShootArrow", 0);
+		AssignAbilityToInputSlot("ShootArrow", 0); // LMB keybind
+		
+		AddAbility("Dash");
+		AssignAbilityToInputSlot("Dash", 4); // E keybind
 	}
 }
 void Player::Update() {
 	Entity::Update();
 
-	CHEAT_Codes();
+	HandleInput();
 	CAnimator->Update();
 
 	// Flip the character based on mouse position.
@@ -92,8 +95,14 @@ void Player::Update() {
 		attackTimer.Reset();
 	}
 
+	// Cast ability on input slot "E".
+	if (InputMgr.IsKeyHeld(SDLK_e)) 
+		CastAbility(4);
+
 	// Move and Update Animator States.
-	Vector2 velocityNormalized = transform.velocity.Normalize();
+	Vector2 velocityNormalized = transform.GetVelocity();
+	velocityNormalized = velocityNormalized.Normalize();
+
 	if (velocityNormalized.Magnitude() > 0.01f) {
 		// Check if the target position is movable.
 		Vector2 nextFramePosition = transform.GetPositionNextFrame(velocityNormalized, CStats->GetMoveSpeed());
@@ -111,6 +120,19 @@ void Player::Update() {
 void Player::Render() {
 	renderer.Render();
 	nameTag.Render();
+}
+
+void Player::HandleInput() {
+	// Cheat Stuff, hehe
+	{
+		if (InputMgr.IsKeyHeld(SDLK_f))
+			CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
+		else if (InputMgr.IsKeyHeld(SDLK_g))
+			CStats->projectileSpreadMultiplier *= 1.001f;
+	}
+
+	transform.SetVelocity(InputMgr.IsKeyHeld(SDLK_d) - InputMgr.IsKeyHeld(SDLK_a), 
+						  InputMgr.IsKeyHeld(SDLK_s) - InputMgr.IsKeyHeld(SDLK_w));
 }
 
 void Player::Leech(float damageAmount) {
@@ -179,14 +201,6 @@ void Player::FUN_Headhunter() {
 		CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
 		break;
 	}
-}
-
-void Player::CHEAT_Codes() {
-	// Cheat Stuff, hehe
-	if (InputMgr.IsKeyHeld(SDLK_f))
-		CStats->SetNumberOfProjectiles(CStats->GetNumberOfProjectiles() + 1);
-	else if (InputMgr.IsKeyHeld(SDLK_g))
-		CStats->projectileSpreadMultiplier *= 1.001f;
 }
 
 // Events

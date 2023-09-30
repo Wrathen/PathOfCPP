@@ -23,7 +23,7 @@ void HealthBar::Update() {
 	float hpRatio = healthComponent->GetHealth() / healthComponent->GetMaxHealth() * sliderMaxWidth;
 	renderer.SetWidth(hpRatio);
 
-	transform.SetPosition(sourceTransform->position + offset);
+	transform.SetPosition(sourceTransform->GetPosition() + offset);
 }
 void HealthBar::Render() {
 	bg_renderer.Render();

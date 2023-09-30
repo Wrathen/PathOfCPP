@@ -13,7 +13,7 @@ public:
 
 	// Main Functions
 	void SetTarget(Entity* t) { target = t; }
-	const Vector2& GetPosition() const { return transform.position; }
+	const Vector2& GetPosition() const { return transform.GetPosition(); }
 
 private:
 	CameraManager() {}

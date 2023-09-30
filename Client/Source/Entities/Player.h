@@ -31,11 +31,11 @@ public:
     void Render() override;
 
     // Main Functions
+    void HandleInput();
     void Leech(float damageAmount);
     void GainXP(float value);
     void LevelUp();
     void FUN_Headhunter();
-    void CHEAT_Codes();
 
     // Events
     void OnMouseDown();

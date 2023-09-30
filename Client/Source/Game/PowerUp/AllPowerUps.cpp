@@ -28,7 +28,7 @@ void PowerUp::InitAllPowerUps() {
 
 		new PowerUp{ "Hasty",
 		"Increases Move Speed by 8%\nIncreases Attack Speed by 12%",
-		[] { stats->moveSpeedMultiplier += 0.08f; stats->attackSpeedMultiplier += 0.12f; } },
+		[] { stats->AddMoveSpeedMultiplier(0.08f); stats->attackSpeedMultiplier += 0.12f; }},
 
 		new PowerUp{ "Lucky",
 		"Increases Luck by 4%.",
