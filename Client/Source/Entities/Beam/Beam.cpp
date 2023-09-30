@@ -20,5 +20,5 @@ void Beam::Start() {
 	CAnimator->Add(Animation("Idle", 60, 64, 64, 0, 0, 13, 0, true));
 }
 
-void Beam::Update() { CAnimator->Update(); }
+void Beam::Update() { Entity::Update(); CAnimator->Update(); }
 void Beam::Render() { renderer.Render(); }

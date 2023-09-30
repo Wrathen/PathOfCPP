@@ -21,6 +21,8 @@ void Explosion::Start() {
 	lifeTime = CAnimator->GetFullCycleLengthInMilliseconds();
 }
 void Explosion::Update() {
+	Entity::Update();
+
 	// Update Animator
 	CAnimator->Update();
 

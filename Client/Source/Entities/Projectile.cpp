@@ -32,6 +32,8 @@ void Projectile::Start() {
 	damageAmount = stats->GetDamageAmount();
 }
 void Projectile::Update() {
+	Entity::Update();
+
 	transform.Move();
 
 	if (CheckIfTooFarAway()) {

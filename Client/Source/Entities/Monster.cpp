@@ -54,7 +54,10 @@ void Monster::Start() {
 	CMoveTowardsTarget->SetTarget(GAME.GetPlayer());
 }
 
-void Monster::Update() { CMoveTowardsTarget->Update(); }
+void Monster::Update() {
+	Entity::Update();
+	CMoveTowardsTarget->Update();
+}
 void Monster::Render() {
 	renderer.Render();
 	nameTag.Render();

@@ -66,8 +66,17 @@ void Player::Start() {
 	nameTag.SetOffset(0, -75);
 	nameTag.SetFontSize(10);
 	nameTag.shouldDrawCentered = true;
+
+	// @TODO delete this later TEST - TEMP
+	{
+		// Add ShootArrow ability
+		AddAbility("ShootArrow");
+		AssignAbilityToInputSlot("ShootArrow", 0);
+	}
 }
 void Player::Update() {
+	Entity::Update();
+
 	CHEAT_Codes();
 	CAnimator->Update();
 
@@ -79,7 +88,7 @@ void Player::Update() {
 	// Shoot
 	if (CStats->GetAttackingState() && attackTimer.GetTimeMS() > (CStats->GetAttackSpeed() * 1000)) {
 		CAnimator->Play("Attack", true);
-		ShootArrow(mousePos);
+		CastAbility(0); // 0 means Left mouse button (LMB for short). Check Entity.h for more explanation.
 		attackTimer.Reset();
 	}
 
@@ -113,36 +122,6 @@ void Player::Leech(float damageAmount) {
 	if (hp > maxHP) hp = maxHP;
 
 	CHealth->SetHealth(hp);
-}
-void Player::ShootArrow(const Vector2& targetPos) {
-	int numberOfProjectiles = CStats->GetNumberOfProjectiles();
-	float mainRotation = Vector2::AngleBetween(transform.GetScreenPosition(), targetPos);
-
-	// used to be 1.30895833f or PI/2.4 = ~75 degrees spread.
-	float spreadDistance = (3.1415f * 2 * CStats->GetProjectileSpread()) / numberOfProjectiles;
-	bool isEven = numberOfProjectiles % 2 == 0;
-
-	Projectile* lastInstantiatedProjectile = nullptr;
-	static const float epsilon = 0.025f;
-	float previousOffset = -999;
-
-	for (int i = 0; i < numberOfProjectiles; ++i) {
-		int multiplier = i - numberOfProjectiles / 2;
-		if (isEven && multiplier >= 0) ++multiplier;
-
-		float offset = spreadDistance * multiplier;
-		float rotation = mainRotation + offset;
-
-		// Do not instantiate close projectiles, instead give the previous one piercing.
-		if (offset - epsilon < previousOffset && previousOffset < offset + epsilon) {
-			if (lastInstantiatedProjectile)
-				++lastInstantiatedProjectile->overlappingProjectiles;
-			continue;
-		}
-
-		previousOffset = offset;
-		lastInstantiatedProjectile = new Projectile(this, transform.GetPosition(), rotation, CStats->GetProjectileSpeed());
-	}
 }
 void Player::GainXP(float value) {
 	float xp = CStats->GetXP();
@@ -211,6 +190,12 @@ void Player::CHEAT_Codes() {
 }
 
 // Events
+void Player::OnMouseDown() {
+	CStats->SetAttackingState(true);
+}
+void Player::OnMouseUp() {
+	CStats->SetAttackingState(false);
+}
 void Player::OnLevelUp() {
 	// Show Power-up Options
 	GAME.PauseGame(true);

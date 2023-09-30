@@ -5,9 +5,12 @@
 // This is the base Interface Ability class that each ability should derive from.
 class IAbility {
 public:
-	// Enforced member variable Caster and Constructor
+	// Member Variables
 	class Entity* caster = nullptr;
-	IAbility(Entity* _caster) : caster(_caster) {}
+	std::string typeName = "Unnamed Ability";
+
+	// Constructor
+	IAbility(Entity* _caster, const std::string& _typeName) : caster(_caster), typeName(_typeName) {}
 
 	// Base Interface Functions that has to be overridden by derived classes.
 	virtual void Start() = 0;
@@ -18,6 +21,6 @@ public:
 	static std::unordered_map<std::string, uint32_t> AbilityList;
 
 	// Static functions
-	static void CastAbility(Entity* caster, const std::string& abilityName);
-	static void CastAbility(Entity* caster, uint32_t abilityID);
+	static IAbility* CastAbility(Entity* caster, const std::string& abilityName);
+	static IAbility* CastAbility(Entity* caster, uint32_t abilityID);
 };

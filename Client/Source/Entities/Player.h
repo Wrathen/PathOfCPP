@@ -32,13 +32,14 @@ public:
 
     // Main Functions
     void Leech(float damageAmount);
-    void ShootArrow(const Vector2& targetPos);
     void GainXP(float value);
     void LevelUp();
     void FUN_Headhunter();
     void CHEAT_Codes();
 
     // Events
+    void OnMouseDown();
+    void OnMouseUp();
     void OnLevelUp();
     void OnKill() override;
     void OnDeath() override;

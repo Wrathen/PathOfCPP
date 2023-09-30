@@ -10,6 +10,8 @@ BreachLeagueEncounter::BreachLeagueEncounter() : Entity("Assets/Sprites/Monsters
 }
 
 void BreachLeagueEncounter::Update() {
+	Entity::Update();
+
 	if (currentState == Idle) {
 		auto player = GAME.GetPlayer();
 		float distanceToPlayer = player->transform.GetPosition().DistanceToFast(transform.GetPosition());

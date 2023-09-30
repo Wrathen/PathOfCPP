@@ -17,6 +17,8 @@ void NPC::Start() {
 	nameTag.shouldDrawCentered = true;
 }
 void NPC::Update() {
+	Entity::Update();
+
 	float distanceToPlayer = Vector2::DistanceBetween(GAME.GetPlayer()->transform.GetPosition(), transform.GetPosition());
 	if (!isPlayerNearby && distanceToPlayer < nearbyThreshold) {
 		//GAME.DrawRect(transform.GetScreenPosition() - Vector2(50, 50), 100, 100);

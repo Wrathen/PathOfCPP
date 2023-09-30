@@ -3,7 +3,7 @@
 
 class Dash : public IAbility {
 public:
-	Dash(Entity* _caster) : IAbility(_caster) {}
+	Dash(Entity* _caster) : IAbility(_caster, "Dash") {}
 
 	virtual void Start() {}
 	virtual void Update() {}
