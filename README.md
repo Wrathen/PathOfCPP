@@ -22,6 +22,10 @@ Feel free to create issues & pull requests.
 
 <h2> Video Showcases </h2>
 
+<b>[October 1th 2023]</b> Ability System implemented! Shoot Arrow and Dash Ability, Dark Matter Pull Force/Zone (for fun)
+
+https://youtu.be/acvF-BhTmtk
+
 <b>[August 18th 2023]</b> FIRST LEAGUE! Breach League introduced, Database, Better Item Generation&Tooltips.
 
 https://youtu.be/Ezgcd3N1lTI
