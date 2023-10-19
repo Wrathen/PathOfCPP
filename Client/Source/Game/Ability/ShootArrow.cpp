@@ -39,7 +39,7 @@ void ShootArrow::Shoot(const Vector2& targetPos) {
 		// Do not instantiate close projectiles, instead give the previous one piercing.
 		if (offset - epsilon < previousOffset && previousOffset < offset + epsilon) {
 			if (lastInstantiatedProjectile)
-				++lastInstantiatedProjectile->overlappingProjectiles;
+				++lastInstantiatedProjectile->piercingAmount;
 			continue;
 		}
 

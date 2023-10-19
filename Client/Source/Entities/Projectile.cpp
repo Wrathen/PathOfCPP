@@ -28,7 +28,7 @@ void Projectile::Start() {
 		return;
 	}
 
-	piercingAmount = stats->GetPiercingAmount() + overlappingProjectiles;
+	piercingAmount = stats->GetPiercingAmount();
 	damageAmount = stats->GetDamageAmount();
 }
 void Projectile::Update() {
