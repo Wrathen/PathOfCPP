@@ -9,7 +9,7 @@ void CollisionManager::AddStaticColliders(const std::vector<ZoneColliderData>& c
 void CollisionManager::ResetSpatialHash() {
 	spatialHash.Clear();
 
-	for (auto& collider : *GetAll()) {
+	for (auto& collider : GetAll()) {
 		if (collider->source->isToBeDeleted) continue;
 		spatialHash.Insert(collider->source);
 	}

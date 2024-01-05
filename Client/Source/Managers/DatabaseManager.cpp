@@ -12,7 +12,7 @@ namespace Database {
 
 	// Main Functions
 	bool DatabaseManager::ExecuteQuery(const char* query, int (*callback)(void*, int, char**, char**), void* data) {
-		printf("Executing Query: '%s'\n", query);
+		//printf("Executing Query: '%s'\n", query);
 
 		// Execute the Query.
 		char* errorMsg;

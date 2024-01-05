@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Behaviour\Leagues\Breach\BreachMonsterAI.h" />
     <ClInclude Include="Source\Game\Ability\Dash.h" />
     <ClInclude Include="Source\Game\Ability\Fireball.h" />
     <ClInclude Include="Source\Game\Ability\ShootArrow.h" />
@@ -329,6 +330,7 @@
     <ClInclude Include="Source\Game\Item\UIItem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Behaviour\Leagues\Breach\BreachMonsterAI.cpp" />
     <ClCompile Include="Source\Game\Ability\Ability.cpp" />
     <ClCompile Include="Source\Game\Ability\Dash.cpp" />
     <ClCompile Include="Source\Game\Ability\Fireball.cpp" />

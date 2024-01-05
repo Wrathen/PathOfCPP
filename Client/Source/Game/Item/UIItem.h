@@ -6,6 +6,7 @@ class UIItem : public UIElement {
 public:
 	// Dropped item.
 	Item* item = nullptr;
+	size_t inventorySlotIndex = -1;
 	
 	// Constructor
 	UIItem(Item* _item);

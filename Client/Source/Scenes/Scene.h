@@ -63,12 +63,12 @@ public:
 	};
 	virtual void Clear() {
 		// Clear all the entities and UIElements that should be deleted on scene changed.
-		auto& allEntities = *EntityMgr.GetAll();
+		auto& allEntities = EntityMgr.GetAll();
 		for (auto& entity : allEntities)
 			if (entity->isToBeDeletedOnSceneChange)
 				entity->Delete();
 
-		auto& allUIElements = *UIMgr.GetAll();
+		auto& allUIElements = UIMgr.GetAll();
 		for (auto& element : allUIElements)
 			if (element->isToBeDeletedOnSceneChange)
 				element->Delete();

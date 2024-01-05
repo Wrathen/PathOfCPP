@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../Entities/Monsters/BreachMonster.h"
 
-class BreachLeagueEncounter: Entity { 
+class BreachLeagueEncounter: public Entity { 
 public:
 	friend class BreachLeague;
 	enum EncounterState { Idle, Expanding, Shrinking, Ended };
@@ -11,6 +11,7 @@ public:
 	float currentRadius = 1.0f;
 
 	// Spawn Behaviour
+	std::vector<std::shared_ptr<BreachMonster>> allMonsters;
 	uint32_t totalNumberOfSpawns = -1;
 	int eachWaveSpawnCount = -1;
 
@@ -19,6 +20,16 @@ public:
 	void ClearAllSpawnedMonsters();
 	void Expand();
 	void Shrink();
+
+	void OnOutOfRange(BreachMonster* monster);
+	void CreateBreachMonster(float posX, float posY);
+	void DeleteBreachMonster(BreachMonster* monster);
+
+	void OnExpandTick();
+	void OnShrinkTick();
+
+	// Utilities
+	float GetRadius();
 
 	// CTor
 	BreachLeagueEncounter();

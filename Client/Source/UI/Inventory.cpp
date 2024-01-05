@@ -1,6 +1,7 @@
 #include "Inventory.h"
-#include "../Miscellaneous/Log.h"
-#include "../Managers/GameManager.h"
+#include "Miscellaneous/Log.h"
+#include "Managers/GameManager.h"
+#include "Managers/UIManager.h"
 
 Inventory::Inventory() : UIElement("Assets/Sprites/UI/Inventory/background.png") {
 	isAutomaticRenderingDisabled = true;
@@ -30,6 +31,14 @@ bool Inventory::Add(UIItem* item) {
 	if (emptySlot > cellCapacity)
 		return false;
 
+	// Get the smart pointer of the item
+	std::shared_ptr<UIElement> itemBasePTR = UIMgr.Get(item->guid);
+	std::shared_ptr<UIItem> itemPTR = std::static_pointer_cast<UIItem>(itemBasePTR);
+
+	// If the item shared pointer was not found in UIManager's collection, what the heck?!
+	if (!itemPTR) 
+		return false;
+
 	// Pick an empty space as <row, col>.
 	uint32_t row = emptySlot % cellCols;
 	uint32_t col = emptySlot / cellCols;
@@ -38,20 +47,26 @@ bool Inventory::Add(UIItem* item) {
 	static float offsetX = GAME.screenWidth - renderer.width + 45;
 	static float offsetY = 638;
 
+	// Free up the space from the OccupiedSpaceFlag so we can place items there next time.
+	inventoryOccupiedSpaceFlag = ((1ull << emptySlot) | inventoryOccupiedSpaceFlag);
+
 	// Set the position of the item and push it into the vector.
 	item->transform.SetPosition(Vector2(row * cellSizeW + offsetX, col * cellSizeH + offsetY));
-	allItems[emptySlot] = item;
+	allItems[emptySlot] = itemPTR;
 
 	// We successfully added the UIItem to the inventory.
 	return true;
 }
 
 void Inventory::Drop(uint32_t x, uint32_t y) { Drop(x + y * cellCols); }
-void Inventory::Drop(UIItem* item) { for (size_t i = 0; i < cellCapacity; ++i) if (allItems[i] == item) Drop(i); return; }
+void Inventory::Drop(UIItem* item) { for (size_t i = 0; i < cellCapacity; ++i) if (allItems[i].get() == item) Drop(i); return; }
 void Inventory::Drop(uint32_t slotIndex) {
 	// Get the item by slotIndex.
-	UIItem* item = allItems[slotIndex];
+	std::shared_ptr<UIItem> item = allItems[slotIndex];
 	if (!item) return;
+
+	// Free up the space from the OccupiedSpaceFlag so we can place items there next time.
+	inventoryOccupiedSpaceFlag &= ~(1ull << slotIndex);
 
 	// Delete from the array and free the memory.
 	allItems[slotIndex] = nullptr;
@@ -61,11 +76,14 @@ void Inventory::Drop(uint32_t slotIndex) {
 	item->Delete();
 }
 void Inventory::Remove(uint32_t x, uint32_t y) { Remove(x + y * cellCols); }
-void Inventory::Remove(UIItem* item) { for (size_t i = 0; i < cellCapacity; ++i) if (allItems[i] == item) Remove(i); return; }
+void Inventory::Remove(UIItem* item) { for (size_t i = 0; i < cellCapacity; ++i) if (allItems[i].get() == item) Remove(i); return; }
 void Inventory::Remove(uint32_t slotIndex) {
 	// Get the item by slotIndex.
-	UIItem* item = allItems[slotIndex];
+	std::shared_ptr<UIItem>& item = allItems[slotIndex];
 	if (!item) return;
+
+	// Free up the space from the OccupiedSpaceFlag so we can place items there next time.
+	inventoryOccupiedSpaceFlag &= ~(1ull << slotIndex);
 
 	// Delete from the array and free the memory.
 	allItems[slotIndex] = nullptr;
@@ -73,7 +91,7 @@ void Inventory::Remove(uint32_t slotIndex) {
 
 void Inventory::Render() {
 	Super::Render();
-	for (UIItem* item: allItems)
+	for (std::shared_ptr<UIItem>& item: allItems)
 		if (item) item->Render();
 }
 
@@ -81,7 +99,7 @@ void Inventory::SetVisible(bool flag) {
 	Super::SetVisible(flag);
 
 	// Change state of all items' interactability and visibility based on the flag.
-	for (UIItem* item : allItems) {
+	for (std::shared_ptr<UIItem>& item : allItems) {
 		if (!item) continue;
 		item->SetVisible(flag);
 		item->SetInteractable(flag);
@@ -91,7 +109,8 @@ void Inventory::SetVisible(bool flag) {
 // naive bruteforce approach O(n) --> @todo improve this.
 uint32_t Inventory::FindEmptySlot() {
 	for (size_t i = 0; i < cellCapacity; ++i)
-		if (!allItems[i]) return i;
+		if (!(inventoryOccupiedSpaceFlag & (1ull << i))) 
+			return i;
 
 	return cellCapacity + 1;
 }

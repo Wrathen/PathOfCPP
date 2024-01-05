@@ -1,6 +1,8 @@
 #include "BreachMonster.h"
 
 #include "../../Miscellaneous/Random.h"
+#include "Managers/EntityManager.h"
+#include "Game/League/Breach/BreachLeagueEncounter.h"
 
 // [To-Do] 
 // After you implement a Shader class, dump these and switch to using a simple shader color outlining the sprite.
@@ -15,4 +17,21 @@ BreachMonster::BreachMonster(std::string name) : Monster(name) {
 	flags = flags | EntityFlags::IsBreachLeagueSpecific;
 	//CMoveTowardsTarget->SetEnabled(false);
 	renderer.AssignTexture(all_TexturePaths[(int)rarity]);
+}
+
+void BreachMonster::OnDeath() {
+	// Here, we need to inform the league encounter that we died.
+	if (breachMonsterAI && breachMonsterAI->parentBreach) {
+		static_cast<BreachLeagueEncounter*>(breachMonsterAI->parentBreach)->DeleteBreachMonster(this);
+	}
+
+	// This drops loot and destroys us.
+	Monster::OnDeath();
+}
+
+BreachMonster::~BreachMonster() {
+	if (breachMonsterAI) {
+		delete breachMonsterAI;
+		breachMonsterAI = nullptr;
+	}
 }

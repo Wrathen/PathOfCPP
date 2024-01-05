@@ -34,8 +34,8 @@ public:
     void Render() override;
 
     // Main Functions
-    void OnKill() override {}
-    void OnDeath() override;
+    virtual void OnKill() override {}
+    virtual void OnDeath() override;
 
     // Utility Functions
     std::string ToString() override {

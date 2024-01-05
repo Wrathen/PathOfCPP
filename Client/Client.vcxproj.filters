@@ -166,6 +166,7 @@
     <ClInclude Include="Source\Game\Ability\ShootArrow.h" />
     <ClInclude Include="Source\Game\Ability\Fireball.h" />
     <ClInclude Include="Source\Game\Ability\Dash.h" />
+    <ClInclude Include="Source\Behaviour\Leagues\Breach\BreachMonsterAI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Components\SpriteRenderer.cpp" />
@@ -234,6 +235,7 @@
     <ClCompile Include="Source\Game\Ability\Fireball.cpp" />
     <ClCompile Include="Source\Game\Ability\Dash.cpp" />
     <ClCompile Include="Source\Game\Ability\Ability.cpp" />
+    <ClCompile Include="Source\Behaviour\Leagues\Breach\BreachMonsterAI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Source\ToDoList.txt" />

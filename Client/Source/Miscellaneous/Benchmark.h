@@ -42,7 +42,7 @@ public:
 		std::cout << std::setprecision(2) << std::fixed << ("##### FPS: " + std::to_string(1000.0f / Time::frameTime) +
 			", FrameTime: " + std::to_string(Time::frameTime)) +
 			", DeltaTime: " + std::to_string(Time::deltaTime) +
-			", Amount of Entities: " + std::to_string(EntityMgr.GetAll()->size()) +
+			", Amount of Entities: " + std::to_string(EntityMgr.GetAll().size()) +
 			", TotalKilledEnemies: " + std::to_string(GAME.GetPlayer()->CStats->totalKills) +
 			", NumberOfProjectiles: " + std::to_string(GAME.GetPlayer()->CStats->GetNumberOfProjectiles()) << std::endl;
 		std::cout << "<----------------------------------------------------->" << std::endl;

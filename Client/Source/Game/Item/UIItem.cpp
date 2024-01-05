@@ -40,7 +40,7 @@ bool UIItem::OnClick() {
 }
 void UIItem::OnDelete() {
 	// Update the UI Tooltip if we were being hovered on.
-	if (UIMgr.currentHoveredElement == this) {
+	if (UIMgr.currentHoveredElement.get() == this) {
 		UIMgr.currentHoveredElement = nullptr;
 		UI.UpdateTooltip(nullptr, nullptr, TooltipPositionType::NONE);
 	}

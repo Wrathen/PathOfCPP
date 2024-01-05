@@ -34,7 +34,7 @@ void GameManager::Init() {
 void GameManager::Update() {
 	// Count frames
 	static Timer debugTimer{};
-	static bool debugProfilerMsgEnabled = true;
+	static bool debugProfilerMsgEnabled = false;
 	static bool limitFramerate = false;
 	Timer frameTimer;
 	float frameTime;

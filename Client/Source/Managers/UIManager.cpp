@@ -1,17 +1,15 @@
 #include <algorithm>
 #include "UIManager.h"
 #include "GameManager.h"
-#include "../Miscellaneous/Mouse.h"
-#include "../Miscellaneous/Point.h"
 #include "../Miscellaneous/ErrorHandler.h"
 #include "../UI/UserInterface.h"
 
 void UIManager::Update() {
 	// If the Collection is dirty, which means the list has either some new element added or removed.
 	// So we should sort the array to reflect on Z-Indexing.
-	auto& allElements = *GetAll();
+	auto& allElements = GetAll();
 	if (isDirty) {
-		std::sort(allElements.begin(), allElements.end(), [](UIElement* a, UIElement* b) { return a->zIndex > b->zIndex; });
+		std::sort(allElements.begin(), allElements.end(), [](std::shared_ptr<UIElement> a, std::shared_ptr<UIElement> b) { return a->zIndex > b->zIndex; });
 		isDirty = false;
 	}
 
@@ -78,10 +76,10 @@ void UIManager::OnMouseMove() {
 	int screenHeight = GAME.screenHeight;
 
 	// Naive bruteforce O(n) -- Maybe we could use spatial hash here too.
-	for (auto& element : *GetAll()) {
+	for (auto& element : GetAll()) {
 		if (!element->isInteractable || element->isToBeDeleted) continue;
 		// We can't mouse over to the currently held item.
-		if (element == currentHeldItem) continue;
+		if (element.get() == currentHeldItem) continue;
 
 		// Check whether the screen position of the element is within screen bounds.
 		Vector2 elementScreenPos = element->transform.GetScreenPosition();
@@ -134,37 +132,14 @@ bool UIManager::OnMouseDown() {
 	if (!powerUpsAreShown && currentHoveredElement && !currentHoveredElement->isToBeDeleted)
 		return currentHoveredElement->OnClick();
 
-	// Get Mouse Position
-	Point mousePos = Mouse::GetPosition().ToPoint();
-
-	// Get The List of Elements we are going to check
-	auto elementVector =
-		powerUpsAreShown ? UI.powerUpGroup->GetCurrentShownPowerUps() : *GetAll();
-
-	// Iterate over all viable elements and send them the OnClick event.
-	for (auto& element : elementVector) {
-		if (!element || !element->isInteractable || element->isToBeDeleted) continue;
-		auto target = element;
-
-		Vector2 targetPos = target->transform.GetScreenPosition();
-		auto targetWidth = target->renderer.width;
-		auto targetHeight = target->renderer.height;
-		Rect targetCollider{ (int)targetPos.x, (int)targetPos.y, (int)targetWidth, (int)targetHeight };
-
-		// If it gets offsetted by getting drawn centered, we should offset back.
-		if (target->renderer.shouldDrawCentered) {
-			targetCollider.x -= targetWidth / 2;
-			targetCollider.y -= targetHeight / 2;
-		}
-
-		if (mousePos.Intersects(targetCollider)) {
-			bool raycastBlocked = target->OnClick();
-			if (raycastBlocked) return true;
-		}
+	// If the power ups are shown, we should only consider power up UI's for mouse clicks.
+	if (powerUpsAreShown) {
+		auto allShownPowerUps = UI.powerUpGroup->GetCurrentShownPowerUps();
+		return HandleMouseDown(allShownPowerUps);
 	}
 
-	// Return false, indicating further raycasts are not blocked.
-	return false;
+	// Return true or false regarding further raycasting.
+	return HandleMouseDown(GetAll());
 }
 void UIManager::PickItemToHand(UIItem* item) {
 	// Enforce that we are currently not holding an item.
@@ -173,7 +148,7 @@ void UIManager::PickItemToHand(UIItem* item) {
 
 	// Set the current held item variable to the item and if we were hovering over that item, we shouldn't.
 	currentHeldItem = item;
-	if (currentHoveredElement == item) {
+	if (currentHoveredElement.get() == item) {
 		currentHoveredElement = nullptr;
 		UI.UpdateTooltip(nullptr, nullptr, TooltipPositionType::NONE);
 	}
