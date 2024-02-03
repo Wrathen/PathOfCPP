@@ -1,5 +1,5 @@
-# PathOfCPP
-2D ARPG heavily inspired by
+# Ascendants (formerly known as PathOfCPP)
+2D ARPG inspired by
 - Path of Exile
 - Vampire Survivors
 
@@ -19,6 +19,7 @@ Feel free to create issues & pull requests.
 - Custom <a href="https://wrathen.github.io/PathOfCPP/ZoneTool/" target="_blank">Zone Maker Tool</a> made in JS.
 - <a href="https://github.com/libsdl-org/SDL">SDL2</a> Library for WinAPI & Rendering (DirectX).
 - <a href="https://github.com/sqlite/sqlite">SQLite3</a> Library for Database.
+- <a href="https://github.com/skypjack/entt">EnTT</a> Library for ECS.
 
 <h2> Video Showcases </h2>
 
