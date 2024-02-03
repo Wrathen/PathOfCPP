@@ -1,7 +1,7 @@
 # Ascendants
-Ascendants -formerly known as PathOfCPP- is a 2D online ARPG written in C++ with the initial intend of getting used to the language. 
+**Ascendants** *(formerly known as PathOfCPP)* is a 2D online ARPG written in C++ with the initial intend of getting used to the language. 
 
-Ascendants is inspired by
+It is inspired by:
 - Path of Exile
 - Vampire Survivors
 
