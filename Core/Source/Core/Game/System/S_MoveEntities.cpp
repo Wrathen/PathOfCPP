@@ -18,7 +18,7 @@ void S_MoveEntities::Update() {
 		Vector2 velocityNormalized = transform.velocity.Normalize();
 		if (velocityNormalized.Magnitude() > 0.01f) {
 			// Check if the target position is movable.
-			Vector2 nextFramePosition = transform.position + (velocityNormalized * (stats.moveSpeed * Time::deltaTime));
+			Vector2 nextFramePosition = transform.position + (velocityNormalized * (stats.moveSpeed * (float)Time::deltaTime));
 
 			// If the entity has a BoxColliderComponent, we should also check whether the position is movable.
 			if (reg.any_of<BoxColliderComponent>(entity)) {

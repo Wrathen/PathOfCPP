@@ -23,6 +23,10 @@ namespace Core {
 		int totalNumberOfSpawnedPlayers = 0;
 		unsigned int monsterLevel = 1;
 
+		// Variables controlled by SceneManager.
+		bool isActive = false; // This determines whether the scene is currently active and the main one.
+		bool isStarted = false; // This determines whether the zone is already loaded, like monsters, players being spawned.
+
 		// Constructors
 		BaseScene();
 		BaseScene(const std::string& _zoneDataPath);

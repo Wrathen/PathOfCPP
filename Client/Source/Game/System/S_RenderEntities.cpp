@@ -41,7 +41,7 @@ void S_RenderEntities::Update() {
 		}
 
 		// Calculate the Rotation in Degrees.
-		float rotationDegrees = transform.rotation * 57.2957795; // radians to degrees formula
+		float rotationDegrees = transform.rotation * 57.2957795f; // radians to degrees formula
 
 		// Render Sprite.
 		SDL_SetTextureColorMod(tex.texture, renderer.color.r, renderer.color.g, renderer.color.b);

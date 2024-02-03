@@ -33,7 +33,7 @@ namespace Core {
 		}
 
 		operator bool() {
-			return scene && raw_entity != entt::null;
+			return scene && scene->isActive && raw_entity != entt::null;
 		}
 
 	private:

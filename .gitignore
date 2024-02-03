@@ -1,14 +1,10 @@
+.vs/
+/Core/.vs/
+/Server/.vs/
 /Client/.vs/
-/Client/Build/
-/Client/Debug/
-/Client/Release/
-/Client/x64/Debug/
 *.ipch
 *.vsidx
 *.lock
 *.db-wal
 *.opendb
 *.db-shm
-.vs/
-.vs/PoC/v17/.suo
-.vs/PoC/v17/fileList.bin

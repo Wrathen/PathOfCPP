@@ -11,7 +11,7 @@ namespace Core {
 	BaseScene::BaseScene(const std::string& _zoneDataPath) : BaseScene(_zoneDataPath, "Unnamed BaseScene") {}
 	BaseScene::BaseScene(const std::string& _zoneDataPath, const std::string& _name) : zoneDataPath(_zoneDataPath), name(_name) {}
 
-	void BaseScene::Start() { 
+	void BaseScene::Start() {
 		LoadZone();
 
 		// Add all the necessary systems for a generic Core::BaseScene.
@@ -28,8 +28,6 @@ namespace Core {
 	void BaseScene::Clear() {
 		for (auto& system : activeSystems)
 			system.get()->Destroy();
-
-		reg.clear();
 	}
 
 	void BaseScene::LoadZone() {

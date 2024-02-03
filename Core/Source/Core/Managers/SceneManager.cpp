@@ -13,9 +13,22 @@ namespace Core {
 			return;
 		}
 
-		if (currentScene) currentScene->Clear();
+		// Clear the old scene.
+		auto oldScene = currentScene;
+		if (oldScene) {
+			oldScene->Clear();
+			oldScene->isActive = false;
+		}
+
+		// Update current scene with the new one.
 		currentScene = sceneList[name];
-		currentScene->Start();
+		currentScene->isActive = true;
+
+		// Start the new current scene if it didnt start already.
+		if (!currentScene->isStarted) {
+			currentScene->Start();
+			currentScene->isStarted = true;
+		}
 	}
 
 	BaseScene* SceneManager::GetCurrentScene() { return currentScene; }
