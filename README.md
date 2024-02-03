@@ -9,6 +9,7 @@ It is inspired by:
 
 - Clone the project.
 - Open with Visual Studio.
+- On Solution Explorer, Click on **Client** Project and set it as Startup Project.
 - Build & Play. (works perfectly fine with Win10/11 MSVC C++17 compiler.)
 
 Feel free to create issues & pull requests.
