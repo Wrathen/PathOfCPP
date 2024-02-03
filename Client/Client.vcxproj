@@ -132,7 +132,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);$(SolutionDir)/3rdParty/sqlite/lib/sqlite3.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_gpu.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_image.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_mixer.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_ttf.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2main.lib;$(SolutionDir)Core/Build/x64/Debug/Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);$(SolutionDir)/3rdParty/sqlite/lib/x64/sqlite3.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_gpu.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_image.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_mixer.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_ttf.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2main.lib;$(SolutionDir)Core/Build/x64/Debug/Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,7 +151,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(CoreLibraryDependencies);$(SolutionDir)/3rdParty/sqlite/lib/sqlite3.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_gpu.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_image.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_mixer.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2_ttf.lib;$(SolutionDir)/3rdParty/sdl2/lib/SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);$(SolutionDir)/3rdParty/sqlite/lib/x64/sqlite3.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_gpu.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_image.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_mixer.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2_ttf.lib;$(SolutionDir)/3rdParty/sdl2/lib/x64/SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
