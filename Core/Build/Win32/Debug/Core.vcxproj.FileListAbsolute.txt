@@ -1,0 +1,1 @@
+C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Debug\Core.lib

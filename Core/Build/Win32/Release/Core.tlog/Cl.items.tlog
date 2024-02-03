@@ -1,0 +1,11 @@
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\System\S_MoveEntities.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\S_MoveEntities.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Managers\SceneManager.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\SceneManager.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Managers\CollisionManager.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\CollisionManager.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Miscellaneous\Rect.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\Rect.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Miscellaneous\Point.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\Point.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\Entity\Entity.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\Entity.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\Core.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\Scene\Scene.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\Scene.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\Zone\Zone.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\Zone.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Miscellaneous\Vector.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\Vector.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\System\S_CastAbility.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\Win32\Release\S_CastAbility.obj

@@ -1,0 +1,10 @@
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Managers\SceneManager.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\SceneManager.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Managers\CollisionManager.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\CollisionManager.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Miscellaneous\Rect.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Rect.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Miscellaneous\Point.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Point.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\Entity\Entity.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Entity.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Core.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\Scene\Scene.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Scene.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Game\Zone\Zone.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Zone.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Miscellaneous\Vector.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Vector.obj
+C:\Users\Frost\source\repos\Ascendants\Core\Source\Core\Managers\SpawnManager.cpp;C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\SpawnManager.obj

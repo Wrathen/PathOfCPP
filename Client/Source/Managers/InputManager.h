@@ -2,9 +2,8 @@
 #include <SDL.h>
 #include <unordered_map>
 #include <vector>
-#include "../Miscellaneous/Singleton.h"
-#include "../Miscellaneous/Vector.h"
-#include "../Miscellaneous/Timer.h"
+#include "Core/Miscellaneous/Vector.h"
+#include "Core/Miscellaneous/Timer.h"
 
 enum class KeyState {
     EMPTY = 0,
@@ -14,12 +13,12 @@ enum class KeyState {
 };
 
 #define InputMgr InputManager::GetInstance()
-class InputManager : public Singleton<InputManager> { 
-    friend class Singleton;
-    friend class GameManager;
+class InputManager { friend class GameManager;
 public:
+    static InputManager& GetInstance() { static InputManager _i; return _i; }
+
     std::unordered_map<SDL_Keycode, KeyState> keyStates{};
-    Vector2 lastMousePos { 0, 0 };
+    Vector2 lastMousePos{ 0, 0 };
 
     // Base Functions
     void Update();
@@ -35,7 +34,7 @@ private:
     // Pressed&released keys this tick.
     std::vector<SDL_Keycode> pressedKeys;
     std::vector<SDL_Keycode> releasedKeys;
-    float mouseEventsDisableCountdown = 0;
+    double mouseEventsDisableCountdown = 0;
     bool isMouseEventsDisabled = false;
 
     // Events

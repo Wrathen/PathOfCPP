@@ -3,13 +3,12 @@
 #include <SDL_ttf.h>
 #include <SDL_gpu.h>
 #include <unordered_map>
-#include "../Miscellaneous/Singleton.h"
-#include "../Miscellaneous/GUID.h"
-#include "../Components/SpriteRenderer.h"
 
 #define MainRenderer Renderer::GetInstance()
-class Renderer : public Singleton<Renderer> { friend class Singleton;
+class Renderer {
 public:
+    static Renderer& GetInstance() { static Renderer _i; return _i; }
+
     SDL_Window* window = nullptr;
     SDL_Renderer* renderer = nullptr;
     std::unordered_map<int, TTF_Font*> fontMap;
@@ -19,7 +18,6 @@ public:
     const int SCREEN_HEIGHT = 1080;
 
     void Init();
-    void Start();
     void Clear();
     void Draw();
     TTF_Font* GetFont(int size);

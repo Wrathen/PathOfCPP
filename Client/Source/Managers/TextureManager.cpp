@@ -1,6 +1,6 @@
 #include "TextureManager.h"
 #include "RenderManager.h"
-#include "../Miscellaneous/Log.h"
+#include "Core/Miscellaneous/Log.h"
 
 // Static Functions
 SDL_Point TextureManager::GetDimensions(SDL_Texture* tex) {

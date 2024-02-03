@@ -1,19 +1,18 @@
 #pragma once
-#include "../Miscellaneous/Singleton.h"
-#include "../Entities/Entity.h"
+#include "Core/Miscellaneous/Vector.h"
 
 #define Camera CameraManager::GetInstance()
-class CameraManager : public Singleton<CameraManager> { friend class Singleton;
+class CameraManager {
 public:
-	Entity* target = nullptr;
-	Transform transform;
+	static CameraManager& GetInstance() { static CameraManager _i; return _i; }
 
 	// Base Functions
 	void Update();
 
 	// Main Functions
-	void SetTarget(Entity* t) { target = t; }
-	const Vector2& GetPosition() const { return transform.GetPosition(); }
+	const Vector2& GetPosition() const { return position; }
+
+	Vector2 position = Vector2(0, 0);
 
 private:
 	CameraManager() {}

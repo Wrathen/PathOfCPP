@@ -1,243 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Source\Components\SpriteRenderer.h" />
-    <ClInclude Include="Source\Components\Stats.h" />
-    <ClInclude Include="Source\Components\Transform.h" />
-    <ClInclude Include="Source\Entities\Monster.h" />
-    <ClInclude Include="Source\Managers\EntityManager.h" />
-    <ClInclude Include="Source\Managers\GameManager.h" />
-    <ClInclude Include="Source\Managers\InputManager.h" />
-    <ClInclude Include="Source\Managers\RenderManager.h" />
-    <ClInclude Include="Source\Miscellaneous\GUID.h" />
-    <ClInclude Include="Source\Miscellaneous\Vector.h" />
-    <ClInclude Include="sdk\sdl2\include\begin_code.h" />
-    <ClInclude Include="sdk\sdl2\include\close_code.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_assert.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_atomic.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_audio.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_bits.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_blendmode.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_clipboard.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_config.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_cpuinfo.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_egl.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_endian.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_error.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_events.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_filesystem.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_gamecontroller.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_gesture.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_haptic.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_hidapi.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_hints.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_image.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_joystick.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_keyboard.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_keycode.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_loadso.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_locale.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_log.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_main.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_messagebox.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_metal.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_misc.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_mixer.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_mouse.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_mutex.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_name.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengl.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengl_glext.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengles.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengles2.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengles2_gl2.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengles2_gl2ext.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengles2_gl2platform.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_opengles2_khrplatform.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_pixels.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_platform.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_power.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_quit.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_rect.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_render.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_revision.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_rwops.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_scancode.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_sensor.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_shape.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_stdinc.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_surface.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_system.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_syswm.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_assert.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_common.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_compare.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_crc32.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_font.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_fuzzer.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_harness.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_images.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_log.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_md5.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_memory.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_test_random.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_thread.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_timer.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_touch.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_ttf.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_types.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_version.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_video.h" />
-    <ClInclude Include="sdk\sdl2\include\SDL_vulkan.h" />
-    <ClInclude Include="Source\Managers\TextureManager.h" />
-    <ClInclude Include="Source\Entities\Player.h" />
-    <ClInclude Include="Source\Managers\CameraManager.h" />
-    <ClInclude Include="Source\Miscellaneous\Time.h" />
-    <ClInclude Include="Source\Behaviour\AI\MoveTowardsTarget.h" />
-    <ClInclude Include="Source\Entities\Entity.h" />
-    <ClInclude Include="Source\Miscellaneous\Random.h" />
-    <ClInclude Include="Source\Entities\Projectile.h" />
-    <ClInclude Include="Source\Miscellaneous\Log.h" />
-    <ClInclude Include="Source\Entities\Monsters\Zombie.h" />
-    <ClInclude Include="Source\Entities\Monsters\Boar.h" />
-    <ClInclude Include="Source\Managers\UIManager.h" />
-    <ClInclude Include="Source\UI\UIElement.h" />
-    <ClInclude Include="Source\Components\HealthBar.h" />
-    <ClInclude Include="Source\Components\Collision\BoxCollider.h" />
-    <ClInclude Include="Source\Managers\CollisionManager.h" />
-    <ClInclude Include="Source\Components\Collision\Collider.h" />
-    <ClInclude Include="Source\Miscellaneous\Collection.h" />
-    <ClInclude Include="Source\Miscellaneous\Singleton.h" />
-    <ClInclude Include="Source\Miscellaneous\Timer.h" />
-    <ClInclude Include="Source\Components\Collision\QuadTree.h" />
-    <ClInclude Include="Source\Components\Collision\SpatialHash.h" />
-    <ClInclude Include="Source\Managers\EnemySpawnManager.h" />
-    <ClInclude Include="Source\Components\Component.h" />
-    <ClInclude Include="Source\UI\Background.h" />
-    <ClInclude Include="Source\Game\Item\Item.h" />
-    <ClInclude Include="Source\Game\Item\LootableItem.h" />
-    <ClInclude Include="Source\Miscellaneous\Mouse.h" />
-    <ClInclude Include="Source\Components\TextRenderer.h" />
-    <ClInclude Include="Source\Entities\NPCs\NPC.h" />
-    <ClInclude Include="Source\Entities\NPCs\Gambler.h" />
-    <ClInclude Include="Source\Entities\NPCs\Merchant.h" />
-    <ClInclude Include="Source\Entities\NPCs\Blacksmith.h" />
-    <ClInclude Include="Source\Scenes\Scene.h" />
-    <ClInclude Include="Source\Scenes\Scene_Town.h" />
-    <ClInclude Include="Source\UI\XPBar.h" />
-    <ClInclude Include="Source\Managers\SceneManager.h" />
-    <ClInclude Include="Source\Scenes\Scene_Forest.h" />
-    <ClInclude Include="Source\Game\Item\Equipment\Equipment.h" />
-    <ClInclude Include="Source\Game\Item\Currency\Currency.h" />
-    <ClInclude Include="Source\Game\Item\Equipment\EquipmentStats.h" />
-    <ClInclude Include="Source\Game\Item\Equipment\EquipmentTexturePaths.h" />
-    <ClInclude Include="Source\UI\UserInterface.h" />
-    <ClInclude Include="Source\UI\CurrencyBar.h" />
-    <ClInclude Include="Source\UI\Tooltip.h" />
-    <ClInclude Include="Source\Miscellaneous\Rect.h" />
-    <ClInclude Include="Source\Miscellaneous\Point.h" />
-    <ClInclude Include="Source\Game\PowerUp\AllPowerUps.cpp" />
-    <ClInclude Include="Source\Game\PowerUp\PowerUp.h" />
-    <ClInclude Include="Source\UI\PowerUpGroup.h" />
-    <ClInclude Include="Source\Components\Health.h" />
-    <ClInclude Include="Source\Components\Animation.h" />
-    <ClInclude Include="Source\Components\Animator.h" />
-    <ClInclude Include="Source\UI\FPSBar.h" />
-    <ClInclude Include="Source\UI\SceneTitleBar.h" />
-    <ClInclude Include="Source\Game\Zone\Zone.h" />
-    <ClInclude Include="Source\Entities\NPCs\Portal.h" />
-    <ClInclude Include="Source\Scenes\Scene_DefiledCathedral.h" />
-    <ClInclude Include="Source\Entities\Explosions\Explosion.h" />
-    <ClInclude Include="Source\Entities\Beam\Beam.h" />
-    <ClInclude Include="Source\Game\Item\UIItem.h" />
-    <ClInclude Include="Source\UI\Inventory.h" />
-    <ClInclude Include="Source\Managers\DatabaseManager.h" />
-    <ClInclude Include="Source\Miscellaneous\ErrorHandler.h" />
-    <ClInclude Include="Source\Database\Item\ItemModifier.h" />
-    <ClInclude Include="Source\Miscellaneous\Math.h" />
-    <ClInclude Include="Source\Game\League\Breach\BreachLeague.h" />
-    <ClInclude Include="Source\Game\League\Breach\BreachLeagueEncounter.h" />
-    <ClInclude Include="Source\Entities\Monsters\BreachMonster.h" />
-    <ClInclude Include="Source\Miscellaneous\Benchmark.h" />
-    <ClInclude Include="Source\Miscellaneous\UtilityMacros.h" />
-    <ClInclude Include="Source\Game\Ability\Ability.h" />
-    <ClInclude Include="Source\Game\Ability\ShootArrow.h" />
-    <ClInclude Include="Source\Game\Ability\Fireball.h" />
-    <ClInclude Include="Source\Game\Ability\Dash.h" />
-    <ClInclude Include="Source\Behaviour\Leagues\Breach\BreachMonsterAI.h" />
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Components\SpriteRenderer.cpp" />
-    <ClCompile Include="Source\Entities\Entity.cpp" />
-    <ClCompile Include="Source\Entities\Monster.cpp" />
-    <ClCompile Include="Source\Managers\EntityManager.cpp" />
-    <ClCompile Include="Source\Managers\GameManager.cpp" />
-    <ClCompile Include="Source\Managers\InputManager.cpp" />
-    <ClCompile Include="Source\Managers\RenderManager.cpp" />
-    <ClCompile Include="Source\Miscellaneous\Vector.cpp" />
-    <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\Managers\TextureManager.cpp" />
-    <ClCompile Include="Source\Entities\Player.cpp" />
-    <ClCompile Include="Source\Managers\CameraManager.cpp" />
-    <ClCompile Include="Source\Miscellaneous\Time.cpp" />
-    <ClCompile Include="Source\Behaviour\AI\MoveTowardsTarget.cpp" />
-    <ClCompile Include="Source\Entities\Projectile.cpp" />
-    <ClCompile Include="Source\Components\Transform.cpp" />
-    <ClCompile Include="Source\Entities\Monsters\Zombie.cpp" />
-    <ClCompile Include="Source\Entities\Monsters\Boar.cpp" />
-    <ClCompile Include="Source\Managers\UIManager.cpp" />
-    <ClCompile Include="Source\UI\UIElement.cpp" />
-    <ClCompile Include="Source\Components\Collision\BoxCollider.cpp" />
-    <ClCompile Include="Source\Managers\CollisionManager.cpp" />
-    <ClCompile Include="Source\Components\Collision\Collider.cpp" />
-    <ClCompile Include="Source\Managers\EnemySpawnManager.cpp" />
-    <ClCompile Include="Source\Game\Item\Item.cpp" />
-    <ClCompile Include="Source\Game\Item\LootableItem.cpp" />
-    <ClCompile Include="Source\Components\TextRenderer.cpp" />
-    <ClCompile Include="Source\Entities\NPCs\NPC.cpp" />
-    <ClCompile Include="Source\Entities\NPCs\Gambler.cpp" />
-    <ClCompile Include="Source\Entities\NPCs\Merchant.cpp" />
-    <ClCompile Include="Source\Entities\NPCs\Blacksmith.cpp" />
-    <ClCompile Include="Source\Scenes\Scene_Town.cpp" />
-    <ClCompile Include="Source\UI\XPBar.cpp" />
-    <ClCompile Include="Source\Components\HealthBar.cpp" />
-    <ClCompile Include="Source\Managers\SceneManager.cpp" />
-    <ClCompile Include="Source\Scenes\Scene_Forest.cpp" />
-    <ClCompile Include="Source\Game\Item\Equipment\Equipment.cpp" />
-    <ClCompile Include="Source\Game\Item\Currency\Currency.cpp" />
-    <ClCompile Include="Source\UI\UserInterface.cpp" />
-    <ClCompile Include="Source\UI\CurrencyBar.cpp" />
-    <ClCompile Include="Source\UI\Tooltip.cpp" />
-    <ClCompile Include="Source\Miscellaneous\Point.cpp" />
-    <ClCompile Include="Source\Miscellaneous\Rect.cpp" />
-    <ClCompile Include="Source\Game\PowerUp\PowerUp.cpp" />
-    <ClCompile Include="Source\UI\PowerUpGroup.cpp" />
-    <ClCompile Include="Source\Components\Health.cpp" />
-    <ClCompile Include="Source\Components\Animation.cpp" />
-    <ClCompile Include="Source\Components\Animator.cpp" />
-    <ClCompile Include="Source\UI\FPSBar.cpp" />
-    <ClCompile Include="Source\UI\SceneTitleBar.cpp" />
-    <ClCompile Include="Source\Game\Zone\Zone.cpp" />
-    <ClCompile Include="Source\Entities\NPCs\Portal.cpp" />
-    <ClCompile Include="Source\Scenes\Scene_DefiledCathedral.cpp" />
-    <ClCompile Include="Source\Entities\Explosions\Explosion.cpp" />
-    <ClCompile Include="Source\Entities\Beam\Beam.cpp" />
-    <ClCompile Include="Source\Game\Item\UIItem.cpp" />
-    <ClCompile Include="Source\UI\Inventory.cpp" />
-    <ClCompile Include="Source\Managers\DatabaseManager.cpp" />
-    <ClCompile Include="Source\Database\Item\ItemModifier.cpp" />
-    <ClCompile Include="Source\Game\League\Breach\BreachLeague.cpp" />
-    <ClCompile Include="Source\Game\League\Breach\BreachLeagueEncounter.cpp" />
-    <ClCompile Include="Source\Entities\Monsters\BreachMonster.cpp" />
-    <ClCompile Include="Source\Game\Ability\ShootArrow.cpp" />
-    <ClCompile Include="Source\Game\Ability\Fireball.cpp" />
-    <ClCompile Include="Source\Game\Ability\Dash.cpp" />
-    <ClCompile Include="Source\Game\Ability\Ability.cpp" />
-    <ClCompile Include="Source\Behaviour\Leagues\Breach\BreachMonsterAI.cpp" />
+    <ClCompile Include="Client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\GameManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\RenderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\CameraManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\Scene\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\System\S_RenderEntities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\System\S_UpdateAnimators.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\System\S_HandleLocalPlayerInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Source\ToDoList.txt" />
+    <ClInclude Include="Source\Managers\GameManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Miscellaneous\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\RenderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Miscellaneous\Mouse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\CameraManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Component\Components.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\Scene\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\System\S_RenderEntities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\System\S_UpdateAnimators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\System\S_HandleLocalPlayerInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

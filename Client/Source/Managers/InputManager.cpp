@@ -1,8 +1,8 @@
 #include "InputManager.h"
 #include "GameManager.h"
-#include "EntityManager.h"
-#include "UIManager.h"
-#include "../Miscellaneous/Mouse.h"
+//#include "EntityManager.h"
+//#include "UIManager.h"
+#include "Miscellaneous/Mouse.h"
 
 void InputManager::Update() {
 	Vector2 mousePos = Mouse::GetPosition();
@@ -15,7 +15,7 @@ void InputManager::Update() {
 
 	// Handle disabling mouse events for duration.
 	if (isMouseEventsDisabled) {
-		if (mouseEventsDisableCountdown > 0.0f) 
+		if (mouseEventsDisableCountdown > 0.0f)
 			mouseEventsDisableCountdown -= Time::deltaTime;
 		if (mouseEventsDisableCountdown < 0.0f)
 			isMouseEventsDisabled = false;
@@ -63,22 +63,22 @@ void InputManager::OnMouseDown() {
 	if (isMouseEventsDisabled) return;
 
 	// Player Attack State
-	Player* player = GAME.GetPlayer();
-	if (player) player->OnMouseDown();
+	//Player* player = GAME.GetPlayer();
+	//if (player) player->OnMouseDown();
 
 	// Notify UIManager
-	bool raycast = UIMgr.OnMouseDown();
-	if (raycast) return;
+	//bool raycast = UIMgr.OnMouseDown();
+	//if (raycast) return;
 }
 void InputManager::OnMouseUp() {
 	if (isMouseEventsDisabled) return;
 
 	// Player Attack State
-	Player* player = GAME.GetPlayer();
-	if (player) player->OnMouseUp();
+	//Player* player = GAME.GetPlayer();
+	//if (player) player->OnMouseUp();
 
 	// Notify UIManager
 	//bool raycast = UIMgr.OnMouseUp();
 	//if (raycast) return;
 }
-void InputManager::OnMouseMove() { UIMgr.OnMouseMove(); }
+void InputManager::OnMouseMove() { /*UIMgr.OnMouseMove();*/ }

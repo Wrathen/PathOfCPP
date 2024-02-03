@@ -1,0 +1,1 @@
+C:\Users\Frost\source\repos\Ascendants\Core\Build\x64\Debug\Core.lib
