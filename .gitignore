@@ -2,6 +2,9 @@
 /Core/.vs/
 /Server/.vs/
 /Client/.vs/
+/Core/Build/
+/Server/Build/
+/Client/Build/
 *.ipch
 *.vsidx
 *.lock
