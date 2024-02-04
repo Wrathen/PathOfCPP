@@ -18,7 +18,7 @@ namespace Core {
 		void Update();
 		void UpdateCollection();
 
-		bool IsPositionMovable(const Rect& rect);
+		CollisionResult IsPositionOccupied(const Rect& rect);
 
 	private:
 		CollisionManager() {}

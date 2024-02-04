@@ -20,11 +20,17 @@ enum class MonsterRarity {
 	Unique = 3,
 	Count = 4
 };
-enum AbilityCostType {
+enum class AbilityCostType {
 	NONE = 0,
 	Mana = 1,
 	Rage = 2,
 	Energy = 3
+};
+
+enum class MonsterAIState {
+	Wandering = 0,
+	Chasing = 1,
+	Evading = 2
 };
 
 struct PlayerComponent {
@@ -80,8 +86,8 @@ struct HealthComponent {
 
 struct BoxColliderComponent {
 	Vector2 offset = { 0, 0 };
-	size_t w = 16;
-	size_t h = 16;
+	int w = 16;
+	int h = 16;
 	bool isCentered = true; // This offsets the calculations to the center of the transform.
 };
 
@@ -167,8 +173,10 @@ struct MonsterDetailsComponent {
 	MonsterDetailsComponent(MonsterRarity _rarity, unsigned int _monsterID) : rarity(_rarity), monsterID(_monsterID) {};
 };
 
-struct MoveTowardsTargetComponent {
+struct MonsterAIComponent {
+	MonsterAIState state = MonsterAIState::Wandering;
 	entt::entity target = entt::null;
+	float vicinityThreshold = 1500.0f; // Threshold in distance, for chasing foes.
 	bool isEnabled = true;
 };
 

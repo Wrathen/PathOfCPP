@@ -1,9 +1,9 @@
 #pragma once
 #include "Core/Game/System/BaseSystem.h"
 
-struct S_MoveEntities : Core::IBaseSystem {
+struct S_DebugHelper : Core::IBaseSystem {
 	void Start() override {}
 	void Update() override;
-	void LateUpdate() override {}
+	void LateUpdate() override;
 	void Destroy() override {}
 };

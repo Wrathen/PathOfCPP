@@ -4,6 +4,7 @@
 #include "Core/Miscellaneous/Time.h"
 #include "Core/Miscellaneous/Vector.h"
 #include "Core/Game/Entity/Entity.h"
+#include "Core/Miscellaneous/Benchmark.h"
 
 #define GAME GameManager::GetInstance()
 class GameManager {
@@ -12,6 +13,7 @@ public:
 
 	SDL_Event event{};
 	Core::Entity localPlayer;
+	Benchmark benchmark;
 
 	bool isGameRunning = true;
 	bool isGamePaused = false;

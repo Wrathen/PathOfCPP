@@ -33,8 +33,8 @@ void S_UpdateAnimators::Update() {
         // Set the renderer positions accordingly.
         renderer.width = anim->spriteWidth;
         renderer.height = anim->spriteHeight;
-        renderer.sourceOffset.x = anim->currentX * anim->spriteWidth;
-        renderer.sourceOffset.y = anim->currentY * anim->spriteHeight;
+        renderer.sourceOffset.x = (float)(anim->currentX * anim->spriteWidth);
+        renderer.sourceOffset.y = (float)(anim->currentY * anim->spriteHeight);
 
         // Reset the Animation Timer for the next tick interval.
         anim->timer.Reset();

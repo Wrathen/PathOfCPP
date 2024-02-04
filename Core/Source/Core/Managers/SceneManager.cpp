@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "Core/Miscellaneous/Log.h"
+#include "Core/Managers/CollisionManager.h"
 
 namespace Core {
 	void SceneManager::AddScenes(std::vector<BaseScene*> scenes) {
@@ -25,10 +26,13 @@ namespace Core {
 		currentScene->isActive = true;
 
 		// Start the new current scene if it didnt start already.
-		if (!currentScene->isStarted) {
+		if (!currentScene->isLoaded) {
 			currentScene->Start();
-			currentScene->isStarted = true;
+			currentScene->isLoaded = true;
 		}
+
+		// Update the Static Colliders.
+		CollisionMgr.AddStaticColliders(currentScene->GetZone().GetColliders());
 	}
 
 	BaseScene* SceneManager::GetCurrentScene() { return currentScene; }

@@ -187,6 +187,7 @@
     <ClInclude Include="Source\Core\Miscellaneous\Vector.h" />
     <ClInclude Include="Source\Core\Miscellaneous\Time.h" />
     <ClInclude Include="Source\Core\Game\System\S_CastAbility.h" />
+    <ClInclude Include="Source\Core\Game\System\S_BaseMonsterAI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Game\System\S_MoveEntities.cpp" />
@@ -200,6 +201,7 @@
     <ClCompile Include="Source\Core\Game\Zone\Zone.cpp" />
     <ClCompile Include="Source\Core\Miscellaneous\Vector.cpp" />
     <ClCompile Include="Source\Core\Game\System\S_CastAbility.cpp" />
+    <ClCompile Include="Source\Core\Game\System\S_BaseMonsterAI.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

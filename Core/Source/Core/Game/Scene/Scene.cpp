@@ -5,6 +5,7 @@
 #include "Core/Game/Entity/Monsters.h"
 #include "Core/Game/Entity/NPCs.h"
 #include "Core/Game/System/S_MoveEntities.h"
+#include "Core/Game/System/S_BaseMonsterAI.h"
 
 namespace Core {
 	BaseScene::BaseScene() : BaseScene("Zone_Empty.PZD") {}
@@ -16,6 +17,7 @@ namespace Core {
 
 		// Add all the necessary systems for a generic Core::BaseScene.
 		AddSystem<S_MoveEntities>();
+		AddSystem<S_BaseMonsterAI>();
 	}
 	void BaseScene::Update() { 
 		for (auto& system : activeSystems)
@@ -30,9 +32,10 @@ namespace Core {
 			system.get()->Destroy();
 	}
 
+	Zone BaseScene::GetZone() { return Zone::FromSaveFile(zoneDataPath); }
 	void BaseScene::LoadZone() {
 		// Load and parse Zone data file.
-		Zone zone = Zone::FromSaveFile("../Assets/Zones/" + zoneDataPath);
+		Zone zone = GetZone();
 		name = zone.GetGeneralData().name;
 
 		// Set SpawnManager Variables, Add Entities and SpawnZones
@@ -42,31 +45,24 @@ namespace Core {
 		AddNPCs(zone.GetEntities());
 		AddSpawnZones(zone.GetSpawnZones());
 		AddPortals(zone.GetPortals());
-
-		// Instantiate Static Colliders
-		AddStaticColliders(zone.GetColliders());
 	}
 
-	entt::entity BaseScene::SpawnEntity() {
-		return reg.create();
-	}
+	entt::entity BaseScene::SpawnEntity() { return reg.create(); }
 	entt::entity BaseScene::SpawnPlayer(float posX, float posY) {
+		entt::entity entity = CreatePlayer(this, posX, posY).GetRaw();
+		players.push_back(entity);
+
 		++totalNumberOfSpawnedPlayers;
-		return CreatePlayer(this, posX, posY).GetRaw();
+		return entity;
 	}
 	entt::entity BaseScene::SpawnNPC(float posX, float posY, int type) {
-		// Do some statistics :^)
-		++totalNumberOfSpawnedNPCs; 
-		
-		// Create the NPC based on its type ID.
+		++totalNumberOfSpawnedNPCs;
 		return (type == 0) ? CreateMerchant(this, posX, posY).GetRaw()   :
 			   (type == 1) ? CreateGambler(this, posX, posY).GetRaw()   :
 							 CreateBlacksmith(this, posX, posY).GetRaw();
 	}
 	entt::entity BaseScene::SpawnMonster(float posX, float posY) {
-		// Do some statistics :^)
 		++totalNumberOfSpawnedMonsters;
-
 		return CreateRandomMonster(this, posX, posY, monsterLevel).GetRaw();
 	}
 	entt::entity BaseScene::SpawnMonsterInZone(const ZoneSpawnZoneData& zone) {
@@ -81,6 +77,7 @@ namespace Core {
 		for (const ZoneEntityData& npc : entities)
 			SpawnNPC(npc.position.x - 2000, npc.position.y - 2000, npc.ID);
 	}
+
 	void BaseScene::AddSpawnZones(const std::vector<ZoneSpawnZoneData>& spawnZoneData) {
 		spawnZones = spawnZoneData;
 		// @todo this should be a stat of zones. think like map multipliers.
@@ -90,11 +87,12 @@ namespace Core {
 			for (uint32_t i = 0; i < spawnZone.amount * monsterMultiplier; ++i)
 				SpawnMonsterInZone(spawnZone);
 	}
+
 	void BaseScene::AddPortals(const std::vector<ZonePortalData>& portalData) {
 		for (const ZonePortalData& portal : portalData)
 			CreatePortal(this, portal.position.x, portal.position.y, portal.w, portal.h, portal.nextZone);
 	}
-	void BaseScene::AddStaticColliders(const std::vector<ZoneColliderData>& colliderData) { CollisionMgr.AddStaticColliders(colliderData); }
+
 	void BaseScene::Reset() {
 		monsterLevel = 1;
 		totalNumberOfSpawnedNPCs = 0;

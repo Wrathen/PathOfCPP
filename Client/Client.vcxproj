@@ -165,6 +165,7 @@
     <ClCompile Include="Source\Managers\TextureManager.cpp" />
     <ClCompile Include="Source\Game\System\S_UpdateAnimators.cpp" />
     <ClCompile Include="Source\Game\System\S_HandleLocalPlayerInput.cpp" />
+    <ClCompile Include="Source\Game\System\S_DebugHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">
@@ -172,6 +173,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Globals.h" />
     <ClInclude Include="Source\Game\Scene\Scene.h" />
     <ClInclude Include="Source\Game\Component\Components.h" />
     <ClInclude Include="Source\Game\System\S_RenderEntities.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="Source\Miscellaneous\Utils.h" />
     <ClInclude Include="Source\Game\System\S_UpdateAnimators.h" />
     <ClInclude Include="Source\Game\System\S_HandleLocalPlayerInput.h" />
+    <ClInclude Include="Source\Game\System\S_DebugHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

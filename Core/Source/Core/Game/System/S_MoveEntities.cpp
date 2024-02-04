@@ -1,14 +1,9 @@
 #include "S_MoveEntities.h"
-#include <iostream>
 #include "Core/Managers/SceneManager.h"
 #include "Core/Managers/CollisionManager.h"
 #include "Core/Game/Component/Components.h"
 #include <Core/Miscellaneous/Time.h>
 #include <Core/Miscellaneous/Log.h>
-
-void S_MoveEntities::Start() {
-
-}
 
 void S_MoveEntities::Update() {
 	auto& reg = Core::SceneMgr.GetCurrentScene()->reg;
@@ -23,28 +18,28 @@ void S_MoveEntities::Update() {
 			// If the entity has a BoxColliderComponent, we should also check whether the position is movable.
 			if (reg.any_of<BoxColliderComponent>(entity)) {
 				auto& collider = reg.get<BoxColliderComponent>(entity);
-				Rect nextFrameRectX = Rect(nextFramePosition.x - collider.w / 2, transform.position.y - collider.h / 2,
-					collider.w, collider.h);
-				Rect nextFrameRectY = Rect(transform.position.x - collider.w / 2, nextFramePosition.y - collider.h / 2,
-					collider.w, collider.h);
+				Rect newPosHorizontal = Rect((int)(nextFramePosition.x - collider.w / 2), 
+										     (int)(transform.position.y - collider.h / 2),
+										     collider.w, collider.h);
+				Rect newPosVertical   = Rect((int)(transform.position.x - collider.w / 2),
+									     	 (int)(nextFramePosition.y - collider.h / 2),
+										     collider.w, collider.h);
 
-				if (!Core::CollisionMgr.IsPositionMovable(nextFrameRectX))
-					transform.velocity.x = 0;
-				if (!Core::CollisionMgr.IsPositionMovable(nextFrameRectY))
-					transform.velocity.y = 0;
+				// Check whether the next frame position is occupied.
+				CollisionResult resultHorizontal = Core::CollisionMgr.IsPositionOccupied(newPosHorizontal);
+				CollisionResult resultVertical = Core::CollisionMgr.IsPositionOccupied(newPosVertical);
+				
+				// If any collision happened either Horizontal or Vertical, we need to update the nextFramePosition accordingly.
+				if (resultHorizontal || resultVertical) {
+					if (resultHorizontal) transform.velocity.x = 0;
+					if (resultVertical) transform.velocity.y = 0;
 
-				nextFramePosition = transform.position + (transform.velocity.Normalize() * (stats.moveSpeed * Time::deltaTime));
+					nextFramePosition = transform.position + (transform.velocity.Normalize() * (stats.moveSpeed * (float)Time::deltaTime));
+				}
 			}
 
 			// Set the new position.
 			transform.position = nextFramePosition;
 		}
 	});
-}
-
-void S_MoveEntities::LateUpdate() {
-
-}
-
-void S_MoveEntities::Destroy() {
 }

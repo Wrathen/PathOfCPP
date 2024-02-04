@@ -15,28 +15,28 @@ namespace Core {
 		auto& reg = SceneMgr.GetCurrentScene()->reg;
 		auto group = reg.group<BoxColliderComponent>(entt::get<TransformComponent>);
 
-		for (auto& entity : group) {
-			auto& entityPos = reg.get<TransformComponent>(entity).position;
-			spatialHash.Insert(entity, (int)entityPos.x, (int)entityPos.y);
-		}
-
-		//spatialHash.RenderDebug();
+		group.each([&](auto entity, auto& _, auto& transform) {
+			spatialHash.Insert(entity, (int)transform.position.x, (int)transform.position.y);
+		});
 	}
 
 	void CollisionManager::Update() { ResetSpatialHash(); }
 	void CollisionManager::UpdateCollection() { }
 
-	// @todo Will use SpatialHash soon instead of this bruteforce approach
 	// @todo clear out all -2000's from the codebase.
-	bool CollisionManager::IsPositionMovable(const Rect& rect) {
+	CollisionResult CollisionManager::IsPositionOccupied(const Rect& rect) {
+		// @todo we should use SpatialHash instead of Bruteforce.
 		for (size_t i = 0; i < staticColliders.size(); ++i) {
 			auto& col = staticColliders[i];
-			bool intersects = Rect::IntersectsRect((int)col.position.x - 2000, (int)col.position.y - 2000, col.w, col.h,
-												   rect.x, rect.y, rect.w, rect.h);
+			Rect colRect { (int)col.position.x - 2000, (int)col.position.y - 2000, (int)col.w, (int)col.h };
+			CollisionResult result = colRect.Intersects(rect);
 			
-			if (intersects) return false;
+			// If there was a collision, return the collision result.
+			if (result) 
+				return result;
 		}
 
-		return true;
+		// No collision were found, return a null object.
+		return CollisionResult();
 	}
 }

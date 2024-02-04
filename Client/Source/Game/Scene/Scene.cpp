@@ -10,6 +10,9 @@
 #include "Game/System/S_RenderEntities.h"
 #include "Game/System/S_UpdateAnimators.h"
 #include "Game/System/S_HandleLocalPlayerInput.h"
+#include "Game/System/S_DebugHelper.h"
+
+#include "Game/Globals.h"
 
 // Constructors
 Scene::Scene() : Scene("Zone_Empty.PZD") {}
@@ -27,6 +30,10 @@ void Scene::Start() {
 	AddSystem<S_RenderEntities>();
 	AddSystem<S_UpdateAnimators>();
 	AddSystem<S_HandleLocalPlayerInput>();
+
+#if DEBUG_ENABLED
+	AddSystem<S_DebugHelper>();
+#endif
 }
 
 void Scene::Update() {
@@ -50,7 +57,7 @@ void Scene::AddBackground() {
 	Core::Entity background = Core::Entity(this, SpawnEntity());
 
 	// Parse the Zone.PSD to get the Background Texture Path.
-	Core::Zone zone = Core::Zone::FromSaveFile("../Assets/Zones/" + zoneDataPath);
+	Core::Zone zone = Core::Zone::FromSaveFile(zoneDataPath);
 	
 	// Load the texture from the Assets, we will use this to initialize C_Texture component.
 	SDL_Texture* tex;

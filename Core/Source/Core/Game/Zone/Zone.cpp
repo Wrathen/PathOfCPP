@@ -50,7 +50,7 @@ namespace Core {
 	// Create a Zone from a Save File (.PSD).
 	Zone Zone::FromSaveFile(std::string filePath) {
 		// Read json file and parse the raw data to JSON.
-		std::ifstream jsonRawData(filePath);
+		std::ifstream jsonRawData("../Assets/Zones/" + filePath);
 		json data = json::parse(jsonRawData);
 
 		return Zone(data);

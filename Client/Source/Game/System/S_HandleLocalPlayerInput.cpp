@@ -1,4 +1,5 @@
 #include "S_HandleLocalPlayerInput.h"
+#include "Core/Game/Entity/Entity.h"
 #include "Managers/InputManager.h"
 #include "Managers/RenderManager.h"
 #include "Managers/GameManager.h"
@@ -47,24 +48,10 @@ void S_HandleLocalPlayerInput::HandleAbilities() {
     
 }
 
-void S_HandleLocalPlayerInput::HandleDebug() {
-    auto curSceneName = Core::SceneMgr.GetCurrentScene()->name;
-    if (InputMgr.IsKeyPressed(SDLK_g)) {
-        if (curSceneName == "Town")
-            Core::SceneMgr.ChangeScene("DefiledCathedral");
-        else
-            Core::SceneMgr.ChangeScene("Town");
-    }
-}
-
 void S_HandleLocalPlayerInput::Start() {}
 void S_HandleLocalPlayerInput::Update() {
     HandleMovement();
     HandleAbilities();
-
-#if _DEBUG
-    HandleDebug();
-#endif
 }
 
 void S_HandleLocalPlayerInput::LateUpdate() {}

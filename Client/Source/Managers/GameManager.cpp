@@ -2,7 +2,6 @@
 #include "GameManager.h"
 #include "RenderManager.h"
 #include "InputManager.h"
-//#include "EntityManager.h"
 #include "CameraManager.h"
 #include "Core/Managers/SceneManager.h"
 #include "Core/Managers/CollisionManager.h"
@@ -11,9 +10,7 @@
 //#include "UI/UserInterface.h"
 #include "Core/Miscellaneous/Log.h"
 #include "Core/Miscellaneous/Timer.h"
-#include "Core/Miscellaneous/Benchmark.h"
 //#include "Game/PowerUp/PowerUp.h"
-//#include "Database/Item/ItemModifier.h"
 #include "Game/Component/Components.h"
 #include "Game/Scene/Scene.h"
 
@@ -23,7 +20,7 @@ void GameManager::Init() {
 	MainRenderer.Init();
 	//PowerUp::InitAllPowerUps();
 
-	// Todo, read these from the Database.
+	// @Todo, read these from the Database.
 	Core::SceneMgr.AddScenes({
 		new Scene("Zone_Town.PZD", "Town"),
 		new Scene("Zone_Forest.PZD", "Forest"),
@@ -36,13 +33,10 @@ void GameManager::Init() {
 }
 void GameManager::Update() {
 	// Count frames
-	static Timer debugTimer{};
-	static bool debugProfilerMsgEnabled = true;
 	static bool limitFramerate = false;
 	Timer frameTimer;
 	double frameTime;
 
-	Benchmark benchmark;
 	benchmark.Add("PollEvents", [&] { PollEvents(); });
 	benchmark.Add("MainRenderer.Clear", [] { MainRenderer.Clear(); });
 	//benchmark.Add("CollisionMgr.Update", [] { CollisionMgr.Update(); });
@@ -57,6 +51,13 @@ void GameManager::Update() {
 		// Execute all the main loop functions and benchmark them individually.
 		benchmark.ExecuteAll();
 
+		// Late-Update the Input Manager to handle input states.
+		InputMgr.LateUpdate();
+
+		// Late-Update the Scene
+		if (Core::BaseScene* currentScene = Core::SceneMgr.GetCurrentScene())
+			currentScene->LateUpdate();
+
 		// Frame Timers, Delays
 		frameTime = frameTimer.GetTimeMS();
 		if (limitFramerate && Time::FRAME_DELAY > frameTime) {
@@ -67,19 +68,6 @@ void GameManager::Update() {
 		// Update Global Time variables.
 		Time::frameTime = frameTime;
 		Time::deltaTime = 1 / (1000.0f / frameTime);
-
-		// Output Benchmarks
-		if (debugProfilerMsgEnabled && debugTimer.GetTimeMS() > 2000) {
-			benchmark.Log();
-			debugTimer.Reset();
-		}
-
-		// Late-Update the Input Manager to handle input states.
-		InputMgr.LateUpdate();
-
-		// Late-Update the Scene
-		if (Core::BaseScene* currentScene = Core::SceneMgr.GetCurrentScene())
-			currentScene->LateUpdate();
 
 		// Reset the Frame Timer.
 		frameTimer.Reset();
@@ -125,7 +113,7 @@ Core::Entity GameManager::GetLocalPlayer() {
 	// Let's check if any entities in the scene has the LocalPlayerComponent.
 	{
 		auto view = currentScene->reg.view<LocalPlayerComponent>();
-		int amountOfComponents = view.size();
+		size_t amountOfComponents = view.size();
 
 		if (amountOfComponents != 0) {
 			if (amountOfComponents > 1)
@@ -139,7 +127,7 @@ Core::Entity GameManager::GetLocalPlayer() {
 	// Then we should go through all the PlayerComponents and pick the first one as the local one.
 	{
 		auto view = currentScene->reg.view<PlayerComponent>();
-		int amountOfComponents = view.size();
+		size_t amountOfComponents = view.size();
 
 		if (amountOfComponents == 0) {
 			Error("No player was found in the current scene.");
