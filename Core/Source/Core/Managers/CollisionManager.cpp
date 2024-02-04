@@ -6,6 +6,10 @@ namespace Core {
 	// Adds static colliders based on zone data.
 	void CollisionManager::AddStaticColliders(const std::vector<ZoneColliderData>& colliders) {
 		staticColliders = colliders;
+	
+		staticCollidersSpatialHash.Clear();
+		for (auto& data : colliders)
+			staticCollidersSpatialHash.Add(data, (int)data.position.x, (int)data.position.y, (int)data.w, (int)data.h);
 	}
 
 	void CollisionManager::ResetSpatialHash() {
@@ -23,12 +27,12 @@ namespace Core {
 	void CollisionManager::Update() { ResetSpatialHash(); }
 	void CollisionManager::UpdateCollection() { }
 
-	// @todo clear out all -2000's from the codebase.
 	CollisionResult CollisionManager::IsPositionOccupied(const Rect& rect) {
 		// @todo we should use SpatialHash instead of Bruteforce.
-		for (size_t i = 0; i < staticColliders.size(); ++i) {
-			auto& col = staticColliders[i];
-			Rect colRect { (int)col.position.x - 2000, (int)col.position.y - 2000, (int)col.w, (int)col.h };
+		auto nearbyColliders = staticCollidersSpatialHash.Query(rect.x, rect.y, (float)rect.w);
+		for (size_t i = 0; i < nearbyColliders.size(); ++i) {
+			auto& col = nearbyColliders[i];
+			Rect colRect { (int)col.position.x, (int)col.position.y, (int)col.w, (int)col.h };
 			CollisionResult result = colRect.Intersects(rect);
 			
 			// If there was a collision, return the collision result.

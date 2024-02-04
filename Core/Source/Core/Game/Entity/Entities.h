@@ -39,7 +39,7 @@ namespace Core {
 		// Create In-Common Components.
 		entity.AddComponent<EntityDetailsComponent>(nextZone, EntityType::Portal);
 		entity.AddComponent<PortalComponent>(nextZone);
-		entity.AddComponent<TransformComponent>(Vector2(posX + width / 2 - 2000, posY + height / 2 - 2000));
+		entity.AddComponent<TransformComponent>(Vector2(posX + width / 2, posY + height / 2));
 
 		// Return the new entity.
 		return entity;

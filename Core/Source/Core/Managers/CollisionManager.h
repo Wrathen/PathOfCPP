@@ -2,6 +2,7 @@
 #include <entt.hpp>
 #include <vector>
 #include "Core/Miscellaneous/SpatialHash.h"
+#include "Core/Miscellaneous/NewSpatialHash.h"
 #include "Core/Game/Zone/Zone.h"
 
 namespace Core {
@@ -12,6 +13,7 @@ namespace Core {
 
 		std::vector<ZoneColliderData> staticColliders;
 		SpatialHash<entt::entity> spatialHash{ 4000, 4000, 80 };
+		NewSpatialHash<ZoneColliderData> staticCollidersSpatialHash { 4000u, 500u };
 
 		void AddStaticColliders(const std::vector<ZoneColliderData>& colliders);
 		void ResetSpatialHash();

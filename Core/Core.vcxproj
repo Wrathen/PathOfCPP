@@ -175,6 +175,7 @@
     <ClInclude Include="Source\Core\Miscellaneous\ErrorHandler.h" />
     <ClInclude Include="Source\Core\Miscellaneous\GUID.h" />
     <ClInclude Include="Source\Core\Miscellaneous\Log.h" />
+    <ClInclude Include="Source\Core\Miscellaneous\NewSpatialHash.h" />
     <ClInclude Include="Source\Core\Miscellaneous\Random.h" />
     <ClInclude Include="Source\Core\Miscellaneous\Rect.h" />
     <ClInclude Include="Source\Core\Miscellaneous\Point.h" />

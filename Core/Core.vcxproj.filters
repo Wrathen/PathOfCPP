@@ -90,6 +90,9 @@
     <ClInclude Include="Source\Core\Game\System\S_BaseMonsterAI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Core\Miscellaneous\NewSpatialHash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core.cpp">

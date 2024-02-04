@@ -67,15 +67,15 @@ namespace Core {
 	}
 	entt::entity BaseScene::SpawnMonsterInZone(const ZoneSpawnZoneData& zone) {
 		auto randomOffset = RandomVector((float)zone.w, (float)zone.h);
-		return SpawnMonster(zone.position.x + randomOffset.x - 2000,
-							zone.position.y + randomOffset.y - 2000);
+		return SpawnMonster(zone.position.x + randomOffset.x,
+							zone.position.y + randomOffset.y);
 	}
 
 	void BaseScene::AddNPCs(const std::vector<ZoneEntityData>& entityData) {
 		entities = entityData;
 
 		for (const ZoneEntityData& npc : entities)
-			SpawnNPC(npc.position.x - 2000, npc.position.y - 2000, npc.ID);
+			SpawnNPC(npc.position.x, npc.position.y, npc.ID);
 	}
 
 	void BaseScene::AddSpawnZones(const std::vector<ZoneSpawnZoneData>& spawnZoneData) {

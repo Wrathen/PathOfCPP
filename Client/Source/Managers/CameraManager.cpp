@@ -17,6 +17,6 @@ void CameraManager::Update() {
 	position.y = pPos.y - MainRenderer.SCREEN_HEIGHT / 2;
 
 	// Clamp the camera position inside the map.
-	position.x = position.x < -2000 ? -2000 : position.x > 0 ? 0 : position.x;
-	position.y = position.y < -2000 ? -2000 : position.y > 900 ? 900 : position.y;
+	//position.x = position.x < -2000 ? -2000 : position.x > 0 ? 0 : position.x;
+	//position.y = position.y < -2000 ? -2000 : position.y > 900 ? 900 : position.y;
 }

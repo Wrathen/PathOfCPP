@@ -67,6 +67,7 @@ void Scene::AddBackground() {
 	auto& C_Transform = background.AddComponent<TransformComponent>();
 	auto& C_Texture = background.AddComponent<TextureComponent>(tex);
 	auto& C_SpriteRenderer = background.AddComponent<SpriteRendererComponent>(TextureMgr.GetDimensions(C_Texture.texture));
+	C_SpriteRenderer.shouldDrawCentered = false;
 }
 entt::entity Scene::SpawnPlayer(float posX, float posY) {
 	Core::Entity player = Core::Entity(this, BaseScene::SpawnPlayer(posX, posY));

@@ -3,8 +3,8 @@
         "Name": "Defiled Cathedral (T16)",
         "MonsterLevel": 83,
         "PlayerSpawnPosition": {
-            "x": 0,
-            "y": 0
+            "x": 2000,
+            "y": 2000
         }
     },
     "BGData": {
@@ -12,13 +12,13 @@
     },
     "ColliderData": [
         {
-            "PosX": -9,
-            "PosY": -16,
+            "PosX": 0,
+            "PosY": 0,
             "Width": 200,
             "Height": 3436
         },
         {
-            "PosX": -15,
+            "PosX": 0,
             "PosY": 3417,
             "Width": 304,
             "Height": 576
@@ -33,19 +33,19 @@
             "PosX": 287,
             "PosY": 3456,
             "Width": 40,
-            "Height": 545
+            "Height": 530
         },
         {
             "PosX": 317,
             "PosY": 3516,
             "Width": 78,
-            "Height": 486
+            "Height": 480
         },
         {
             "PosX": 386,
             "PosY": 3585,
             "Width": 96,
-            "Height": 418
+            "Height": 414
         },
         {
             "PosX": 479,
@@ -63,18 +63,18 @@
             "PosX": 614,
             "PosY": 3678,
             "Width": 478,
-            "Height": 322
+            "Height": 320
         },
         {
             "PosX": 1076.6666666666667,
-            "PosY": 3712.6666666666665,
+            "PosY": 3711,
             "Width": 1739.9999999999998,
-            "Height": 292
+            "Height": 288
         },
         {
             "PosX": 2812.6666666666665,
-            "PosY": 3744.3333333333335,
-            "Width": 1189.3333333333335,
+            "PosY": 3740.3333333333335,
+            "Width": 1180.3333333333335,
             "Height": 258.6666666666665
         },
         {
@@ -86,7 +86,7 @@
         {
             "PosX": 3612.4,
             "PosY": 3614.8,
-            "Width": 388,
+            "Width": 380,
             "Height": 63.19999999999982
         },
         {
@@ -102,8 +102,8 @@
             "Height": 60.80000000000018
         },
         {
-            "PosX": 3734,
-            "PosY": -7,
+            "PosX": 3724,
+            "PosY": 0,
             "Width": 272,
             "Height": 3504
         },
@@ -132,9 +132,9 @@
             "Height": 128
         },
         {
-            "PosX": -13,
-            "PosY": -5,
-            "Width": 4020,
+            "PosX": 0,
+            "PosY": 0,
+            "Width": 3999,
             "Height": 264
         },
         {
