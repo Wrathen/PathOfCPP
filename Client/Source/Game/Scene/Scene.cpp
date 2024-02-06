@@ -12,8 +12,6 @@
 #include "Game/System/S_HandleLocalPlayerInput.h"
 #include "Game/System/S_DebugHelper.h"
 
-#include "Game/Globals.h"
-
 // Constructors
 Scene::Scene() : Scene("Zone_Empty.PZD") {}
 Scene::Scene(const std::string& _zoneDataPath) : BaseScene(_zoneDataPath, "Unnamed Scene") {}

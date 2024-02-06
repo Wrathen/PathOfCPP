@@ -90,10 +90,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions);ENTT_DISABLE_ASSERT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)/Source/;$(SolutionDir)/3rdParty/sqlite/include/;$(SolutionDir)/3rdParty/sdl2/include/;$(SolutionDir)/3rdParty/json/;$(SolutionDir)/3rdParty/entt/;$(SolutionDir)/Core/Source/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <SupportJustMyCode>false</SupportJustMyCode>
+      <Optimization>MaxSpeed</Optimization>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ForcedIncludeFiles>Game/Globals.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,10 +128,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions);ENTT_DISABLE_ASSERT</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)/Source/;$(SolutionDir)/3rdParty/sqlite/include/;$(SolutionDir)/3rdParty/sdl2/include/;$(SolutionDir)/3rdParty/json/;$(SolutionDir)/3rdParty/entt/;$(SolutionDir)/Core/Source/</AdditionalIncludeDirectories>
+      <SupportJustMyCode>false</SupportJustMyCode>
+      <Optimization>MaxSpeed</Optimization>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ForcedIncludeFiles>Game/Globals.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
