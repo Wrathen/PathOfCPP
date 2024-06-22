@@ -3,21 +3,23 @@
 #include "Core/Game/Entity/Entities.h"
 #include "Core/Miscellaneous/Time.h"
 #include "Core/Miscellaneous/Log.h"
+#include "Core/Miscellaneous/ErrorHandler.h"
 
-void S_CastAbility::CastAbility(Core::Entity entity, const std::string& abilityName) {
-	if (!entity.HasComponent<AbilitySystemComponent>())
+void S_CastAbility::CastAbility(Entity* source, Entity* target, IAbilityPayload abilityPayload) {
+	if (!source->HasComponent<AbilitySystemComponent>())
 		return;
 
 	// Get the AbilitySystemComponent from the entity.
-	auto& abilitySystem = entity.GetComponent<AbilitySystemComponent>();
-	AbilityComponent* activeAbility = nullptr;
+	auto& abilitySystem = source->GetComponent<AbilitySystemComponent>();
+	IAbilityInstance* activeAbility = nullptr;
+	int32_t abilityID = abilityPayload.read<int32_t>(true);
 
 	// Check if we actually have the ability assigned to us.
 	{
 		bool isEligible = false;
 
 		for (size_t i = 0; i < abilitySystem.abilities.size(); ++i) {
-			if (abilitySystem.abilities[i] == abilityName) {
+			if (abilitySystem.abilities[i] == abilityID) {
 				isEligible = true;
 				break;
 			}
@@ -27,13 +29,13 @@ void S_CastAbility::CastAbility(Core::Entity entity, const std::string& abilityN
 			return;
 	}
 	
-	// Check if the target ability is already active.
+	// Enforce UniqueInstance. Check if the target ability is already active.
 	{
 		for (size_t i = 0; i < abilitySystem.activeAbilities.size(); ++i) {
-			if (abilitySystem.activeAbilities[i]->name == abilityName) {
+			if (abilitySystem.activeAbilities[i]->ID == abilityID) {
 				activeAbility = abilitySystem.activeAbilities[i];
 
-				if (!activeAbility || activeAbility->uniqueInstance)
+				if (activeAbility->uniqueInstance)
 					return;
 
 				break;
@@ -43,54 +45,35 @@ void S_CastAbility::CastAbility(Core::Entity entity, const std::string& abilityN
 
 	// Check cooldown eligibility.
 	{
-		if (Time::GetTime() < activeAbility->cooldownResetTime)
+		if (activeAbility && Time::GetTimeMS() < activeAbility->cooldownResetTime)
 			return;
 	}
 
 	// Finally, if everything was OK so far, we should now be casting it.
-	Internal_CastAbility(entity, abilityName);
+	Internal_CastAbility(source, target, abilityPayload);
 }
-void S_CastAbility::Internal_CastAbility(Core::Entity entity, const std::string& abilityName) {
-	auto& abilitySystem = entity.GetComponent<AbilitySystemComponent>();
-	AbilityComponent* abilityInstance = Internal_CreateAbilityInstance(abilityName);
-	
-	if (!abilityInstance) {
-		Error("Ability Instance was not created properly in S_CastAbility.cpp");
-		return;
-	}
-	
-	abilitySystem.activeAbilities.push_back(abilityInstance);
-}
+void S_CastAbility::Internal_CastAbility(Entity* source, Entity* target, IAbilityPayload& abilityPayload) {
+	auto& abilitySystem = source->GetComponent<AbilitySystemComponent>();
+	int32_t abilityID = abilityPayload.read<int32_t>(true);
+	IAbilityInstance* abilityInstance = nullptr;
 
-AbilityComponent* S_CastAbility::Internal_CreateAbilityInstance(const std::string& abilityName) {
-	Core::BaseScene* scene = Core::SceneMgr.GetCurrentScene();
-	auto& reg = scene->reg;
-
-	int abilityID = abilityDB[abilityName];
-	switch (abilityID) {
-		case 0: // Fireball
-			// todo
-			//Core::CreateProjectile(scene, )
-			return new AbilityComponent{
-				abilityID,
-				abilityName,
-				AbilityCostType::Mana,
-				10.0f,
-				0.5f,
-				0,
-				false
-			};
-		case 1: // Dash
-			return new AbilityComponent{
-				abilityID,
-				abilityName,
-				AbilityCostType::Mana,
-				10.0f,
-				0.5f,
-				0,
-				false
-			};
+	switch (abilityID)
+	{
+		case 0:
+			abilitySystem.activeAbilities.emplace_back(new A_Fireball(abilityPayload));
+			break;
+		case 1:
+			abilitySystem.activeAbilities.emplace_back(new A_Dash(abilityPayload));
+			break;
 		default:
-			return nullptr;
+			Error("Ability Instance was not created properly in S_CastAbility.cpp");
+			return;
 	}
+
+	abilityInstance = abilitySystem.activeAbilities.back();
+	abilityInstance->Init(source, target);
+
+	// If we have an on begin function defined, lets call it here.
+	if (abilityInstance->onBegin)
+		abilityInstance->onBegin();
 }

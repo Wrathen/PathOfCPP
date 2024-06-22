@@ -18,7 +18,7 @@ struct NewSpatialHash {
 	size_t ToIndex(int x, int y) { return (y / cellSize) * (worldSize / cellSize) + x / cellSize; }
 	bool IsPositionValid(int x, int y, float radius = 0) {
 		if (x < 0 || y < 0 || x > (int)worldSize || y > (int)worldSize || radius < 0) {
-			std::cout << "[Error] NewSpatialHash received faulty parameters. " << x << " , " << y << " , " << radius << "\n";
+			//std::cout << "[Error] NewSpatialHash received faulty parameters. " << x << " , " << y << " , " << radius << "\n";
 			return false;
 		}
 
@@ -40,8 +40,8 @@ struct NewSpatialHash {
 			return;
 		}
 
-		for (int i = x; i <= x + w; i = ((i / cellSize) + 1) * cellSize + 1)
-			for (int j = y; j <= y + h; j = ((j / cellSize) + 1) * cellSize + 1)
+		for (int i = x; i <= x + w; i = ((i / (int)cellSize) + 1) * (int)cellSize + 1)
+			for (int j = y; j <= y + h; j = ((j / (int)cellSize) + 1) * (int)cellSize + 1)
 				Add(object, i, j);
 	}
 	void Remove(T object, int x, int y) {
@@ -61,7 +61,7 @@ struct NewSpatialHash {
 
 		for (size_t i = x - (size_t)radius; i <= x + (size_t)radius; i += cellSize)
 			for (size_t j = y - (size_t)radius; j <= y + (size_t)radius; j += cellSize)
-				result.insert(result.end(), objects[ToIndex(i, j)].begin(), objects[ToIndex(i, j)].end());
+				result.insert(result.end(), objects[ToIndex((int)i, (int)j)].begin(), objects[ToIndex((int)i, (int)j)].end());
 
 		return result;
 	}

@@ -42,9 +42,11 @@ namespace Core {
 		virtual entt::entity SpawnEntity();
 		virtual entt::entity SpawnPlayer(float posX, float posY);
 		virtual entt::entity SpawnNPC(float posX, float posY, int type);
+		virtual entt::entity SpawnProjectile(float posX, float posY, float speed, float angle, uint64_t lifetime = 3000, int piercingAmount = 1, float damageAmount = 1);
 		virtual entt::entity SpawnMonster(float posX, float posY);
 		virtual entt::entity SpawnMonsterInZone(const ZoneSpawnZoneData& zone);
 
+		void Delete(struct Entity* entity);
 		Zone GetZone();
 
 		// Getters && Setters

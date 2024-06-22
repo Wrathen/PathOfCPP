@@ -64,8 +64,8 @@ void Scene::AddBackground() {
 	// Add components to the background entity.
 	auto& C_Transform = background.AddComponent<TransformComponent>();
 	auto& C_Texture = background.AddComponent<TextureComponent>(tex);
-	auto& C_SpriteRenderer = background.AddComponent<SpriteRendererComponent>(TextureMgr.GetDimensions(C_Texture.texture));
-	C_SpriteRenderer.shouldDrawCentered = false;
+	//auto& C_SpriteRenderer = background.AddComponent<SpriteRendererComponent>(TextureMgr.GetDimensions(C_Texture.texture));
+	//C_SpriteRenderer.shouldDrawCentered = false;
 }
 entt::entity Scene::SpawnPlayer(float posX, float posY) {
 	Core::Entity player = Core::Entity(this, BaseScene::SpawnPlayer(posX, posY));
@@ -84,7 +84,7 @@ entt::entity Scene::SpawnPlayer(float posX, float posY) {
 	auto& C_SpriteRenderer = player.AddComponent<SpriteRendererComponent>(TextureMgr.GetDimensions(C_Texture.texture));
 	auto& C_HealthBar = player.AddComponent<HealthBarComponent>();
 	auto& C_Animator = player.AddComponent<AnimatorComponent>();
-
+	
 	// Add Animations
 	C_Animator.map.emplace("Idle", AnimationComponent("Idle", 120, 64, 64, 0, 0, 9, 0, true));
 	C_Animator.map.emplace("Move", AnimationComponent("Move", 30, 64, 64, 0, 1, 3, 1, true));
@@ -119,6 +119,38 @@ entt::entity Scene::SpawnNPC(float posX, float posY, int type) {
 	//C_SpriteRenderer.localScale.y = 0.05f;
 
 	return npc.GetRaw();
+}
+entt::entity Scene::SpawnProjectile(float posX, float posY, float speed, float angle, uint64_t lifetime, int piercingAmount, float damageAmount)
+{
+	Core::Entity projectile = Core::Entity(this, BaseScene::SpawnProjectile(posX, posY, speed, angle, lifetime, piercingAmount, damageAmount));
+
+	if (!projectile)
+	{
+		return entt::null;
+	}
+
+	// [To-do] This will change. Should ask database about this information. This is OK right now due to small amount of variety.
+	std::string texturePath = "../Assets/VFX/Dark VFX 1 (40x32).png";
+
+	// Load the texture from the Assets, we will use this to initialize C_Texture component.
+	SDL_Texture* tex;
+	TextureMgr.LoadTexture(texturePath, &tex);
+
+	// Create In-Common Components.
+	auto& C_Texture = projectile.AddComponent<TextureComponent>(tex);
+	auto& C_SpriteRenderer = projectile.AddComponent<SpriteRendererComponent>(TextureMgr.GetDimensions(C_Texture.texture));
+	auto& C_Animator = projectile.AddComponent<AnimatorComponent>();
+	auto& C_Stats = projectile.AddComponent<StatsComponent>();
+
+	// Add Animations
+	C_Animator.map.emplace("Idle", AnimationComponent("Idle", 25, 40, 32, 0, 0, 9, 1, true));
+	C_Animator.currentAnimation = &C_Animator.map["Idle"];
+
+	// Set the initial width to 0 to skip the first iteration of viewing the whole sprite atlas.
+	// this gets overridden in S_UpdateAnimators.cpp anyways.
+	C_SpriteRenderer.width = 0;
+
+	return projectile.GetRaw();
 }
 entt::entity Scene::SpawnMonster(float posX, float posY) {
 	Core::Entity monster = Core::Entity(this, BaseScene::SpawnMonster(posX, posY));

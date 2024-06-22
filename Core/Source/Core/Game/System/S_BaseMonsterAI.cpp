@@ -1,11 +1,10 @@
 #include "S_BaseMonsterAI.h"
-#include <limits>
 #include "Core/Managers/SceneManager.h"
 #include "Core/Game/Component/Components.h"
 
 static inline void LookForNearestEnemy(Core::BaseScene* scene, entt::entity entity, MonsterAIComponent& ai, TransformComponent& transform) {
 	entt::entity closestPlayer = entt::null;
-	float closestDistance = std::numeric_limits<float>::max();
+	float closestDistance = FLT_MAX;
 
 	// In the future, we should be doing something better than this using spatialhash.
 	// Find closest player

@@ -13,6 +13,7 @@ struct Scene : public Core::BaseScene {
 
 	entt::entity SpawnPlayer(float posX, float posY) override;
 	entt::entity SpawnNPC(float posX, float posY, int type) override;
+	entt::entity SpawnProjectile(float posX, float posY, float speed, float angle, uint64_t lifetime = 3000, int piercingAmount = 1, float damageAmount = 1) override;
 	entt::entity SpawnMonster(float posX, float posY) override;
 	entt::entity SpawnMonsterInZone(const Core::ZoneSpawnZoneData& zone) override;
 

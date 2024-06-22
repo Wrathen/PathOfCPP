@@ -1,5 +1,6 @@
 #pragma once
 #include <ctime>
+#include <chrono>
 
 struct Time {
 	// Maximum Frames Per Second
@@ -18,4 +19,5 @@ struct Time {
 	static constexpr inline const unsigned int FRAME_DELAY = 1000 / MAX_FPS;
 
 	static inline long long GetTime() { return std::time(0); }
+	static inline long long GetTimeMS() { return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count(); }
 };

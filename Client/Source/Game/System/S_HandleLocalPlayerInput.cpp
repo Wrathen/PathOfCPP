@@ -6,6 +6,8 @@
 #include "Miscellaneous/Mouse.h"
 #include "Miscellaneous/Utils.h"
 #include "Game/Component/Components.h"
+#include "Core/Game/System/S_CastAbility.h"
+#include <Core/Game/Ability/Abilities.h>
 
 void S_HandleLocalPlayerInput::HandleMovement() {
     Core::Entity localPlayer = GAME.GetLocalPlayer();
@@ -42,13 +44,26 @@ void S_HandleLocalPlayerInput::HandleMovement() {
     }
 }
 
-void S_HandleLocalPlayerInput::HandleAbilities() {
-    Core::Entity localPlayer = GAME.GetLocalPlayer();
-    auto& abilitySystem = localPlayer.GetComponent<AbilitySystemComponent>();
-    
+void S_HandleLocalPlayerInput::HandleAbilities() 
+{
+    /*InputMgr.onMouseDown = []() {
+        Core::Entity localPlayer = GAME.GetLocalPlayer();
+        TransformComponent& transform = localPlayer.GetComponent<TransformComponent>();
+        S_CastAbility::CastAbility(&localPlayer, nullptr, AP_Fireball(transform.position.x, transform.position.y).Pack());
+    };*/
+
+    if (InputMgr.IsMouseHeld())
+    {
+        Core::Entity localPlayer = GAME.GetLocalPlayer();
+        TransformComponent& transform = localPlayer.GetComponent<TransformComponent>();
+        Vector2 PlayerPos = transform.position;
+        Vector2 FireballPos = Camera.position + InputMgr.lastMousePos;
+        S_CastAbility::CastAbility(&localPlayer, nullptr, AP_Fireball(FireballPos.x, FireballPos.y, 200.0f, Vector2::AngleBetween(PlayerPos, FireballPos)).Pack());
+    }
 }
 
 void S_HandleLocalPlayerInput::Start() {}
+
 void S_HandleLocalPlayerInput::Update() {
     HandleMovement();
     HandleAbilities();

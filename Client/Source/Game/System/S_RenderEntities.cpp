@@ -11,7 +11,7 @@ void S_RenderEntities::Start() {
 
 void S_RenderEntities::Update() {
 	auto& reg = Utils::GetRegistry();
-	auto group = reg.group<SpriteRendererComponent>(entt::get<TransformComponent, TextureComponent>);
+	auto group = reg.view<SpriteRendererComponent, TransformComponent, TextureComponent>();
 
 	group.each([](auto entity, auto& renderer, auto& transform, auto& tex) {
 		if (!renderer.isVisible || !tex.texture)

@@ -3,6 +3,9 @@
 #include <entt.hpp>
 #include "Core/Miscellaneous/Vector.h"
 #include "Core/Miscellaneous/Timer.h"
+#include <Core/Miscellaneous/Time.h>
+#include <Core/Miscellaneous/ErrorHandler.h>
+#include <Core/Game/Entity/Entity.h>
 
 enum class EntityType {
 	NONE = 0,
@@ -19,12 +22,6 @@ enum class MonsterRarity {
 	Rare = 2,
 	Unique = 3,
 	Count = 4
-};
-enum class AbilityCostType {
-	NONE = 0,
-	Mana = 1,
-	Rage = 2,
-	Energy = 3
 };
 
 enum class MonsterAIState {
@@ -191,40 +188,4 @@ struct BreachMonsterComponent {
 	float someVariableToAvoidCrashes = 0;
 };
 
-// Collection of Abilities, tracks active abilities, and ability keybindings.
-struct AbilitySystemComponent {
-	/*
-		*	Vector of all added abilities to this entity.
-		*
-		*	Vector indexes are used as "Input Slot ID".
-		*	[0] = LMB, [1] = RMB, [2] = Q, [3] = W, [4] = E, [5] = R, [6] = T
-		*
-		*   First 7 indexes are reserved and can be empty strings.
-		*   Rest of the indexes are abilities that are given and can be activated without the usage of inputs.
-		*/
-	std::vector<std::string> abilities{ "", "", "", "", "", "", "" };
-
-	// Vector of all currently active ability instances by this entity.
-	std::vector<struct AbilityComponent*> activeAbilities;
-};
-
-// A single ability.
-struct AbilityComponent {
-	// Generic
-	int ID;
-	std::string name;
-
-	// Cost
-	AbilityCostType costType;
-	float cost;
-
-	// Cooldown
-	float baseCooldown;
-	long long cooldownResetTime; // the time since epoch that the cooldown will reset at.
-
-	// Specifies that the ability can be re-casted while there already are active instances of the same ability.
-	bool uniqueInstance = true;
-	
-	AbilityComponent(int _ID, const std::string& _name, AbilityCostType _costType, float _cost, float _baseCooldown, long long _cooldownResetTime = 0, bool _uniqueInstance = true) :
-					 ID(_ID), name(_name), costType(_costType), cost(_cost), baseCooldown(_baseCooldown), cooldownResetTime(_cooldownResetTime), uniqueInstance(_uniqueInstance) {}
-};
+struct AbilitySystemComponent; // declared in Abilities.h

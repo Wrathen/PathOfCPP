@@ -59,26 +59,11 @@ bool InputManager::IsKeyReleased(SDL_Keycode keycode) {
 	return keyStates[keycode] == KeyState::IsReleased;
 }
 
-void InputManager::OnMouseDown() {
-	if (isMouseEventsDisabled) return;
-
-	// Player Attack State
-	//Player* player = GAME.GetPlayer();
-	//if (player) player->OnMouseDown();
-
-	// Notify UIManager
-	//bool raycast = UIMgr.OnMouseDown();
-	//if (raycast) return;
+bool InputManager::IsMouseHeld()
+{
+	return isMouseHeld;
 }
-void InputManager::OnMouseUp() {
-	if (isMouseEventsDisabled) return;
 
-	// Player Attack State
-	//Player* player = GAME.GetPlayer();
-	//if (player) player->OnMouseUp();
-
-	// Notify UIManager
-	//bool raycast = UIMgr.OnMouseUp();
-	//if (raycast) return;
-}
-void InputManager::OnMouseMove() { /*UIMgr.OnMouseMove();*/ }
+void InputManager::OnMouseDown() { if (isMouseEventsDisabled) return; isMouseHeld = true; if (onMouseDown) onMouseDown(); }
+void InputManager::OnMouseUp() { if (isMouseEventsDisabled) return; isMouseHeld = false; if (onMouseUp) onMouseUp(); }
+void InputManager::OnMouseMove() { if (isMouseEventsDisabled) return; if (onMouseMove) onMouseMove(); }

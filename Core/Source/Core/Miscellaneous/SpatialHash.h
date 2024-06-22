@@ -101,8 +101,8 @@ public:
 		int maxCellX = (x + width) / m_cellSize + m_quarterNumCellsX;
 		int maxCellY = (y + height) / m_cellSize + m_quarterNumCellsY;
 
-		maxCellX = std::min(m_numCellsX - 1, maxCellX);
-		maxCellY = std::min(m_numCellsY - 1, maxCellY);
+		maxCellX = min(m_numCellsX - 1, maxCellX);
+		maxCellY = min(m_numCellsY - 1, maxCellY);
 
 		// Let's do some caching so we don't calculate everything from ground-up for the same requests.
 		static int cachedMinCellX;

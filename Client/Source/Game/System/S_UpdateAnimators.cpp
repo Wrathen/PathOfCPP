@@ -5,7 +5,7 @@
 void S_UpdateAnimators::Start() {}
 void S_UpdateAnimators::Update() {
 	auto& reg = Utils::GetRegistry();
-	auto group = reg.group<AnimatorComponent>(entt::get<SpriteRendererComponent>);
+	auto group = reg.view<AnimatorComponent, SpriteRendererComponent>();
 
     // Update each animator's current animation.
     group.each([](auto entity, auto& animator, auto& renderer){

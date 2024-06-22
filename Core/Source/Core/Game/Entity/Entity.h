@@ -42,6 +42,7 @@ namespace Core {
 	
 	public:
 		entt::entity GetRaw() { return raw_entity; }
-		BaseScene* GetScene() { return scene; }
+		BaseScene* GetScene() { return scene; } 
+		void Delete() { if (!scene) return; scene->Delete(this); }
 	};
 }

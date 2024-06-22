@@ -93,6 +93,12 @@
     <ClInclude Include="Source\Core\Miscellaneous\NewSpatialHash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Core\Game\System\S_GCAbilityInstances.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Core\Game\Ability\Abilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core.cpp">
@@ -129,6 +135,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Core\Game\System\S_BaseMonsterAI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\Game\System\S_GCAbilityInstances.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

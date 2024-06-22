@@ -2,6 +2,7 @@
 #include <entt.hpp>
 #include "Core/Managers/SceneManager.h"
 #include "Core/Game/Component/Components.h"
+#include "Core/Game/Ability/Abilities.h"
 #include "Entity.h"
 
 namespace Core {
@@ -16,11 +17,11 @@ namespace Core {
 		entity.AddComponent<StatsComponent>();
 		entity.AddComponent<HealthComponent>(100.0f);
 		entity.AddComponent<BoxColliderComponent>();
-		auto& abilitySystem = entity.AddComponent<AbilitySystemComponent>();
+		auto& C_AbilitySystem = entity.AddComponent<AbilitySystemComponent>();
 
 		// Assign a few slots to abilities as default.
-		abilitySystem.abilities[0] = "Fireball"; // Left click assigned to Fireball
-		abilitySystem.abilities[4] = "Dash"; // E is assigned to Dash.
+		C_AbilitySystem.abilities[0] = 0; // Left click assigned to Fireball
+		C_AbilitySystem.abilities[4] = 1; // E is assigned to Dash.
 
 		// Return the new entity.
 		return entity;

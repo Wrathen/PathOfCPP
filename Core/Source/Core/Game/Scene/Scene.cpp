@@ -6,6 +6,7 @@
 #include "Core/Game/Entity/NPCs.h"
 #include "Core/Game/System/S_MoveEntities.h"
 #include "Core/Game/System/S_BaseMonsterAI.h"
+#include "Core/Game/System/S_GCAbilityInstances.h"
 
 namespace Core {
 	BaseScene::BaseScene() : BaseScene("Zone_Empty.PZD") {}
@@ -18,6 +19,7 @@ namespace Core {
 		// Add all the necessary systems for a generic Core::BaseScene.
 		AddSystem<S_MoveEntities>();
 		AddSystem<S_BaseMonsterAI>();
+		AddSystem<S_GCAbilityInstances>();
 	}
 	void BaseScene::Update() { 
 		for (auto& system : activeSystems)
@@ -47,6 +49,7 @@ namespace Core {
 		AddPortals(zone.GetPortals());
 	}
 
+	void BaseScene::Delete(Core::Entity* entity) { reg.destroy(entity->GetRaw()); }
 	entt::entity BaseScene::SpawnEntity() { return reg.create(); }
 	entt::entity BaseScene::SpawnPlayer(float posX, float posY) {
 		entt::entity entity = CreatePlayer(this, posX, posY).GetRaw();
@@ -64,6 +67,10 @@ namespace Core {
 	entt::entity BaseScene::SpawnMonster(float posX, float posY) {
 		++totalNumberOfSpawnedMonsters;
 		return CreateRandomMonster(this, posX, posY, monsterLevel).GetRaw();
+	}
+	entt::entity BaseScene::SpawnProjectile(float posX, float posY, float speed, float angle, uint64_t lifetime, int piercingAmount, float damageAmount)
+	{
+		return CreateProjectile(this, posX, posY, speed, angle, lifetime, piercingAmount, damageAmount).GetRaw();
 	}
 	entt::entity BaseScene::SpawnMonsterInZone(const ZoneSpawnZoneData& zone) {
 		auto randomOffset = RandomVector((float)zone.w, (float)zone.h);

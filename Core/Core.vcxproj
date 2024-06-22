@@ -169,6 +169,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Core\Game\Ability\Abilities.h" />
     <ClInclude Include="Source\Core\Game\System\BaseSystem.h" />
     <ClInclude Include="Source\Core\Game\Component\Components.h" />
     <ClInclude Include="Source\Core\Game\Entity\Entities.h" />
@@ -195,6 +196,7 @@
     <ClInclude Include="Source\Core\Miscellaneous\Time.h" />
     <ClInclude Include="Source\Core\Game\System\S_CastAbility.h" />
     <ClInclude Include="Source\Core\Game\System\S_BaseMonsterAI.h" />
+    <ClInclude Include="Source\Core\Game\System\S_GCAbilityInstances.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Game\System\S_MoveEntities.cpp" />
@@ -209,6 +211,7 @@
     <ClCompile Include="Source\Core\Miscellaneous\Vector.cpp" />
     <ClCompile Include="Source\Core\Game\System\S_CastAbility.cpp" />
     <ClCompile Include="Source\Core\Game\System\S_BaseMonsterAI.cpp" />
+    <ClCompile Include="Source\Core\Game\System\S_GCAbilityInstances.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
