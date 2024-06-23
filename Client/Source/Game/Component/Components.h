@@ -29,6 +29,9 @@ struct SpriteRendererComponent {
 	int width = 32;
 	int height = 32;
 
+	// Higher = front
+	int32_t zIndex = 0;
+
 	bool isFlipped = false;
 	bool isVisible = true;
 	bool isAbsolutePositioned = false;

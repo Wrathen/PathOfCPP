@@ -1,5 +1,7 @@
 #include "S_RenderEntities.h"
 #include <iostream>
+#include <algorithm>
+#include <tuple>
 #include "Core/Managers/SceneManager.h"
 #include "Game/Component/Components.h"
 #include <Managers/CameraManager.h>
@@ -13,7 +15,10 @@ void S_RenderEntities::Update() {
 	auto& reg = Utils::GetRegistry();
 	auto group = reg.view<SpriteRendererComponent, TransformComponent, TextureComponent>();
 
-	group.each([](auto entity, auto& renderer, auto& transform, auto& tex) {
+	typedef std::tuple<SpriteRendererComponent*, TransformComponent*, TextureComponent*> test;
+	std::vector<test>zOrderedList;
+
+	group.each([&](auto entity, auto& renderer, auto& transform, auto& tex) {
 		if (!renderer.isVisible || !tex.texture)
 			return;
 
@@ -40,6 +45,19 @@ void S_RenderEntities::Update() {
 			}
 		}
 
+		zOrderedList.emplace_back(&renderer, &transform, &tex);
+	});
+
+	// Sort the zOrderedList based on Z-Indexes.
+	std::sort(zOrderedList.begin(), zOrderedList.end(), [](test& a, test& b) { return std::get<0>(a)->zIndex < std::get<0>(b)->zIndex; });
+
+	// Render Z-Ordered Objects
+	for (size_t i = 0; i < zOrderedList.size(); ++i)
+	{
+		auto& renderer = *std::get<0>(zOrderedList[i]);
+		auto& transform = *std::get<1>(zOrderedList[i]);
+		auto& tex = *std::get<2>(zOrderedList[i]);
+
 		// Calculate the Rotation in Degrees.
 		float rotationDegrees = transform.rotation * 57.2957795f; // radians to degrees formula
 
@@ -48,7 +66,7 @@ void S_RenderEntities::Update() {
 		SDL_SetTextureAlphaMod(tex.texture, renderer.color.a);
 		SDL_RenderCopyEx(MainRenderer.renderer, tex.texture, &renderer.srcRect, &renderer.destRect,
 			rotationDegrees, NULL, renderer.isFlipped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-	});
+	}
 }
 
 void S_RenderEntities::LateUpdate() {

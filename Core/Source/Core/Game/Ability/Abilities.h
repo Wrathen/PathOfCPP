@@ -30,13 +30,13 @@ struct AbilitySystemComponent {
 
 struct IAbilityPayload
 {
-	unsigned char* buffer;
+	char* buffer;
 	unsigned long long size, index;
 
 	IAbilityPayload(unsigned long long _size)
 	{
 		size = _size;
-		buffer = (unsigned char*)malloc(_size);
+		buffer = (char*)malloc(_size);
 		index = 0; // current reading index at the buffer.
 	}
 
@@ -55,7 +55,7 @@ struct IAbilityPayload
 	void pack(VarType x, bool resetIndex = false) {
 		if (resetIndex) index = 0;
 
-		unsigned char* p = (unsigned char*)&x;
+		char* p = (char*)&x;
 		for (size_t i = 0; i < sizeof(VarType); ++i)
 			buffer[index++] = p[i];
 	}

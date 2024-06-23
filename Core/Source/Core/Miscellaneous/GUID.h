@@ -1,4 +1,5 @@
 #pragma once
-#include <cstdint>
-
-using GUID = uint32_t;
+namespace Core
+{
+	using GUID = uint32_t;
+}

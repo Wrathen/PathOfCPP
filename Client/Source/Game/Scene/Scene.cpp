@@ -64,8 +64,10 @@ void Scene::AddBackground() {
 	// Add components to the background entity.
 	auto& C_Transform = background.AddComponent<TransformComponent>();
 	auto& C_Texture = background.AddComponent<TextureComponent>(tex);
-	//auto& C_SpriteRenderer = background.AddComponent<SpriteRendererComponent>(TextureMgr.GetDimensions(C_Texture.texture));
-	//C_SpriteRenderer.shouldDrawCentered = false;
+	auto& C_SpriteRenderer = background.AddComponent<SpriteRendererComponent>(TextureMgr.GetDimensions(C_Texture.texture));
+	C_SpriteRenderer.shouldDrawCentered = false;
+
+	C_SpriteRenderer.zIndex = -100;
 }
 entt::entity Scene::SpawnPlayer(float posX, float posY) {
 	Core::Entity player = Core::Entity(this, BaseScene::SpawnPlayer(posX, posY));
@@ -91,6 +93,8 @@ entt::entity Scene::SpawnPlayer(float posX, float posY) {
 	C_Animator.map.emplace("Attack", AnimationComponent("Attack", 10, 64, 64, 0, 2, 3, 2, false));
 
 	C_Animator.currentAnimation = &C_Animator.map["Idle"];
+
+	C_SpriteRenderer.zIndex = 100;
 
 	return player.GetRaw();
 }
@@ -124,11 +128,6 @@ entt::entity Scene::SpawnProjectile(float posX, float posY, float speed, float a
 {
 	Core::Entity projectile = Core::Entity(this, BaseScene::SpawnProjectile(posX, posY, speed, angle, lifetime, piercingAmount, damageAmount));
 
-	if (!projectile)
-	{
-		return entt::null;
-	}
-
 	// [To-do] This will change. Should ask database about this information. This is OK right now due to small amount of variety.
 	std::string texturePath = "../Assets/VFX/Dark VFX 1 (40x32).png";
 
@@ -149,6 +148,7 @@ entt::entity Scene::SpawnProjectile(float posX, float posY, float speed, float a
 	// Set the initial width to 0 to skip the first iteration of viewing the whole sprite atlas.
 	// this gets overridden in S_UpdateAnimators.cpp anyways.
 	C_SpriteRenderer.width = 0;
+	C_SpriteRenderer.zIndex = 1;
 
 	return projectile.GetRaw();
 }

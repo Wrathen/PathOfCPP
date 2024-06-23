@@ -197,6 +197,8 @@
     <ClInclude Include="Source\Core\Game\System\S_CastAbility.h" />
     <ClInclude Include="Source\Core\Game\System\S_BaseMonsterAI.h" />
     <ClInclude Include="Source\Core\Game\System\S_GCAbilityInstances.h" />
+    <ClInclude Include="Source\Core\Network\Configs.h" />
+    <ClInclude Include="Source\Core\Network\Windows.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Game\System\S_MoveEntities.cpp" />
