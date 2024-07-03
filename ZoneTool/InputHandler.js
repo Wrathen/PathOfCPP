@@ -106,6 +106,9 @@ function mouseWheel(event) {
     // If there is an active DOM element (it means focused, such as inputfields etc...) then don't do anything.
     if (document.activeElement != document.body) return;
 
+    // This function gets called by two events. MouseWheel and DOMMouseWheel. Ignore DOMMouseWheel cuz it is problematic on some browsers.
+    if (event.deltaY === undefined) return;
+
     // CLose selection menu bar if it's open.
     resetSelectionMenuBar();
 
