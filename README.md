@@ -1,3 +1,6 @@
+# Master branch has been discontinued! Check out the [ECS-Rewrite Branch](https://github.com/Wrathen/PathOfCPP/tree/Project_Rewrite_ECS_Ascendants)
+# There's heavy work ongoing on the ECS-rewrite branch. Master branch is more feature-complete, but it is written in OOP and has been discontinued.
+
 # PathOfCPP
 2D ARPG heavily inspired by
 - Path of Exile
